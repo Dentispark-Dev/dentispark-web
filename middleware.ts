@@ -33,6 +33,7 @@ const protectedRoutes = [
   "/community-hub",
   "/guidance-hub",
   "/profile-setup",
+  "/admin",
 ];
 
 function isRouteMatch(pathname: string, routes: string[]): boolean {

@@ -82,7 +82,7 @@ export function Footer() {
           <ul className="space-y-3 text-xs">
             <li>
               <Link
-                href="/about"
+                href="/about-us"
                 className="cursor-pointer transition hover:text-white"
               >
                 About Us
@@ -90,7 +90,7 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/contact"
+                href="/contact-us"
                 className="cursor-pointer transition hover:text-white"
               >
                 Contact Us
@@ -112,7 +112,7 @@ export function Footer() {
           <ul className="space-y-3 text-xs">
             <li>
               <Link
-                href="/become-mentor"
+                href="/become-a-mentor"
                 className="cursor-pointer transition hover:text-white"
               >
                 Become a Mentor

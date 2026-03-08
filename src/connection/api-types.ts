@@ -443,6 +443,8 @@ export interface MentorQuery {
   platformMemberCategory?: string;
   platformMemberProfileStatus?: string;
   verified?: boolean;
+  page?: number;
+  perPage?: number;
 }
 
 export interface MentorMetricResponse {

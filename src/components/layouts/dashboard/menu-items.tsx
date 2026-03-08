@@ -975,6 +975,67 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
+const adminMenuItems: MenuItem[] = [
+  {
+    id: "admin-dashboard",
+    label: "Admin Dashboard",
+    href: "/admin",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems[0].icon,
+  },
+  {
+    id: "admin-students",
+    label: "Manage Students",
+    href: "/admin/students",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "student-matching")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-mentors",
+    label: "Manage Mentors",
+    href: "/admin/mentors",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "mentorship")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-universities",
+    label: "Universities",
+    href: "/admin/content/universities",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "university-hub")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-courses",
+    label: "Courses",
+    href: "/admin/content/courses",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "applications")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-resources",
+    label: "Resources",
+    href: "/admin/content/resources",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "resources")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-users",
+    label: "System Admins",
+    href: "/admin/settings/admins",
+    allowedMemberTypes: ["PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-audit",
+    label: "Audit Logs",
+    href: "/admin/audit-logs",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "quality-control")?.icon || menuItems[0].icon,
+  },
+];
+
+menuItems.push(...adminMenuItems);
+
 // Helper function to filter menu items based on user memberType
 export function getFilteredMenuItems(
   memberType:

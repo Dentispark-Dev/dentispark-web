@@ -24,6 +24,7 @@ interface AuthContextType {
   isPremium: boolean;
   isStudent: boolean;
   isMentor: boolean;
+  isAdmin: boolean;
   roles: string[];
 }
 
@@ -326,6 +327,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     [user?.memberType],
   );
 
+  const isAdmin = useMemo(
+    () => user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM",
+    [user?.memberType],
+  );
+
   const value: AuthContextType = useMemo(
     () => ({
       user,
@@ -339,6 +345,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isPremium,
       isStudent,
       isMentor,
+      isAdmin,
       roles,
     }),
     [
@@ -353,6 +360,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isPremium,
       isStudent,
       isMentor,
+      isAdmin,
       roles,
     ],
   );
