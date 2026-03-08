@@ -40,7 +40,7 @@ export function ProtectedRoute({
         user?.profileStatus === "COMPLETED" &&
         window.location.pathname === "/profile-setup"
       ) {
-        router.replace("/overview");
+        router.replace("/dashboard");
         return;
       }
     }

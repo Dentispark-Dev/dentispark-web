@@ -24,7 +24,7 @@ export function PublicRoute({
   useEffect(() => {
     if (!isLoading && isAuthenticated && redirectIfAuthenticated) {
       const defaultRedirect =
-        user?.profileStatus === "PENDING" ? "/profile-setup" : "/overview";
+        user?.profileStatus === "PENDING" ? "/profile-setup" : "/dashboard";
       router.replace(redirectTo || defaultRedirect);
     }
   }, [

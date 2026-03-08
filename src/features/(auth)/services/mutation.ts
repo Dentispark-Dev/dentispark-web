@@ -80,7 +80,7 @@ export const useLogin = () => {
       } else {
         toast.error(
           data.responseMessage ||
-            "Login failed. Please check your credentials and try again.",
+          "Login failed. Please check your credentials and try again.",
         );
       }
     },
@@ -114,7 +114,7 @@ export const useProfileSetup = () => {
         toast.success(
           data.responseMessage || "Profile setup completed successfully!",
         );
-        router.push("/overview");
+        router.push("/dashboard");
       } else {
         toast.error(
           data.responseMessage || "Profile setup failed. Please try again.",
@@ -136,12 +136,12 @@ export const useForgotPassword = () => {
       if (data.responseCode === "00") {
         toast.success(
           data.responseMessage ||
-            "Password reset instructions have been sent to your email.",
+          "Password reset instructions have been sent to your email.",
         );
       } else {
         toast.error(
           data.responseMessage ||
-            "Failed to send reset instructions. Please try again.",
+          "Failed to send reset instructions. Please try again.",
         );
       }
     },
@@ -162,7 +162,7 @@ export const useResetPassword = () => {
       if (data.responseCode === "00") {
         toast.success(
           data.responseMessage ||
-            "Password reset successfully! You can now log in with your new password.",
+          "Password reset successfully! You can now log in with your new password.",
         );
         router.push("/login");
       } else {
@@ -190,13 +190,13 @@ export const useVerifyEmail = () => {
       if (data.responseCode === "00") {
         toast.success(
           data.responseMessage ||
-            "Email verified successfully! You can now log in to your account.",
+          "Email verified successfully! You can now log in to your account.",
         );
         router.push("/login");
       } else {
         toast.error(
           data.responseMessage ||
-            "Failed to verify email. Please check your code and try again.",
+          "Failed to verify email. Please check your code and try again.",
         );
       }
     },
@@ -217,12 +217,12 @@ export const useResendCode = () => {
       if (data.responseCode === "00") {
         toast.success(
           data.responseMessage ||
-            "Verification code has been resent to your email.",
+          "Verification code has been resent to your email.",
         );
       } else {
         toast.error(
           data.responseMessage ||
-            "Failed to resend verification code. Please try again.",
+          "Failed to resend verification code. Please try again.",
         );
       }
     },

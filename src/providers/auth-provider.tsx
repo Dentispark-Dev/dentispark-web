@@ -57,7 +57,7 @@ const AUTH_ROUTES = [
 ];
 
 const PROTECTED_ROUTES = [
-  "/overview",
+  "/dashboard",
   "/profile",
   "/applications",
   "/university-hub",
@@ -220,7 +220,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             redirectTo = "/mentor/overview";
           } else {
             // Default to student dashboard
-            redirectTo = "/overview";
+            redirectTo = "/dashboard";
           }
 
           router.replace(redirectTo);
@@ -257,7 +257,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         redirectTo = "/mentor/overview";
       } else {
         // Default to student dashboard
-        redirectTo = "/overview";
+        redirectTo = "/dashboard";
       }
 
       router.replace(redirectTo);
