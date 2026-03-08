@@ -6,9 +6,10 @@ import {
     DashboardSidebar,
     DashboardHeader,
     MobileMenuOverlay,
-    menuItems,
+    getFilteredMenuItems,
 } from "@/src/components/layouts/dashboard";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/src/providers/auth-provider";
 
 export default function MentorLayout({
     children,
@@ -17,6 +18,9 @@ export default function MentorLayout({
 }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const pathname = usePathname();
+    const { user } = useAuth();
+
+    const filteredMenuItems = getFilteredMenuItems(user?.memberType as "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "PLATFORM_SYSTEM" | undefined);
 
     return (
         <ProtectedRoute requiresProfile>
@@ -28,7 +32,7 @@ export default function MentorLayout({
                 <DashboardSidebar
                     isOpen={isSidebarOpen}
                     onClose={() => setIsSidebarOpen(false)}
-                    menuItems={menuItems}
+                    menuItems={filteredMenuItems}
                     currentPath={pathname}
                 />
                 <div className="flex w-full flex-col lg:pl-64">

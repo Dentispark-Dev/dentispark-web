@@ -6,9 +6,10 @@ import {
     DashboardSidebar,
     DashboardHeader,
     MobileMenuOverlay,
-    menuItems,
+    getFilteredMenuItems,
 } from "@/src/components/layouts/dashboard";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/src/providers/auth-provider";
 
 export default function DashboardLayout({
     children,
@@ -17,6 +18,10 @@ export default function DashboardLayout({
 }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const pathname = usePathname();
+    const { user } = useAuth();
+
+    // Filter menu items based on logged-in user's role
+    const filteredMenuItems = getFilteredMenuItems(user?.memberType as "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "PLATFORM_SYSTEM" | undefined);
 
     // Hide sidebar and header on onboarding/profile setup pages if they live here
     const isProfileSetup = pathname.includes("/profile-setup");
@@ -38,7 +43,7 @@ export default function DashboardLayout({
                 <DashboardSidebar
                     isOpen={isSidebarOpen}
                     onClose={() => setIsSidebarOpen(false)}
-                    menuItems={menuItems}
+                    menuItems={filteredMenuItems}
                     currentPath={pathname}
                 />
 

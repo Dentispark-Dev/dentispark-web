@@ -1,15 +1,15 @@
 "use client";
 
-export default function MentorProfileSettingsPage() {
+import { MentorProfileSettingsHeader } from "@/src/features/(mentor-dashboard)/profile-settings/components/mentor-profile-settings-header";
+import { MentorPersonalInformation } from "@/src/features/(mentor-dashboard)/profile-settings/components/mentor-personal-information";
+import { MentorEducationWork } from "@/src/features/(mentor-dashboard)/profile-settings/components/mentor-education-work";
+
+export default function MentorProfileSettingsRoute() {
     return (
         <div className="space-y-6">
-            <div className="mb-6">
-                <h1 className="text-black-800 text-2xl font-semibold">Profile Settings</h1>
-                <p className="text-gray-500 mt-1 text-sm">Manage your mentor profile and account settings.</p>
-            </div>
-            <div className="border-greys-200 rounded-xl border bg-white p-8 text-center">
-                <p className="text-gray-500">Profile settings will appear here.</p>
-            </div>
+            <MentorProfileSettingsHeader />
+            <MentorPersonalInformation />
+            <MentorEducationWork />
         </div>
     );
 }
