@@ -423,7 +423,13 @@ export interface StudentRecord {
 
 export interface StudentDetail extends StudentRecord {
   phoneNumber: string;
-  academicHistory: any[]; // Define more specifically if needed
+  academicHistory?: Record<string, unknown>[];
+  currentAcademicYear?: number;
+  gcseResult?: string;
+  ucatScore?: number;
+  casperScore?: number;
+  goals?: string;
+  whyDentistry?: string;
 }
 
 export interface UpdateStatusPayload {
