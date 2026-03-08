@@ -114,7 +114,7 @@ export const useProfileSetup = () => {
         toast.success(
           data.responseMessage || "Profile setup completed successfully!",
         );
-        router.push("/dashboard");
+        router.push("/overview");
       } else {
         toast.error(
           data.responseMessage || "Profile setup failed. Please try again.",
