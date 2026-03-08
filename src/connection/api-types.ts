@@ -591,13 +591,18 @@ export interface CreateResourcePayload {
 }
 
 // Admin Dashboard & Analytics Types
+export interface MemberMetricResponseData {
+  description: string;
+  currentTotalCount: number;
+  percentageChange: number;
+  days: number;
+}
+
 export interface DashboardSummary {
-  totalStudents: number;
-  totalMentors: number;
-  activeCourses: number;
-  totalResources: number;
-  pendingVerifications: number;
-  totalBookings: number;
+  totalSummary: MemberMetricResponseData;
+  studentSummary: MemberMetricResponseData;
+  mentorSummary: MemberMetricResponseData;
+  revenueSummary: MemberMetricResponseData;
 }
 
 export interface GrowthAnalytics {

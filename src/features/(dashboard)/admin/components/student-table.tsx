@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     Search,
@@ -8,15 +8,11 @@ import {
     ChevronLeft,
     ChevronRight,
     MoreVertical,
-    User,
-    Mail,
-    Calendar,
-    ShieldCheck,
-    ShieldAlert,
+    Plus,
     Loader2
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
-import { StudentRecord, StudentQuery } from "@/src/connection/api-types";
+import { StudentQuery } from "@/src/connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -40,7 +36,7 @@ export function StudentTable() {
 
     const [searchInput, setSearchInput] = useState("");
 
-    const { data, isLoading, isError, refetch } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["admin-students", query],
         queryFn: () => adminService.getStudentRecords(query),
     });

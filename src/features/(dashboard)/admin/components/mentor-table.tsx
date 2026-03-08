@@ -9,12 +9,12 @@ import {
     ChevronRight,
     MoreVertical,
     CheckCircle,
-    XCircle,
     Loader2,
+    Shield,
     UserCheck
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
-import { MentorRecord, MentorQuery } from "@/src/connection/api-types";
+import { MentorQuery } from "@/src/connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -39,7 +39,7 @@ export function MentorTable() {
 
     const [searchInput, setSearchInput] = useState("");
 
-    const { data, isLoading, isError } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["admin-mentors", query],
         queryFn: () => adminService.getMentorRecords(query),
     });

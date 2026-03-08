@@ -14,7 +14,7 @@ import {
     Clock
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { AdminResourceRecord, AdminResourceQuery } from "@/src/connection/api-types";
+import { AdminResourceQuery } from "@/src/connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {

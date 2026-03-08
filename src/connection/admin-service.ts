@@ -23,7 +23,10 @@ import {
     MentorQuery,
     AdminUniversityQuery,
     AdminCourseQuery,
-    AdminResourceQuery
+    AdminResourceQuery,
+    DashboardSummary,
+    GrowthAnalytics,
+    GlobalActivity
 } from "./api-types";
 
 /**
@@ -142,16 +145,16 @@ export const adminService = {
 
     // --- Dashboard & Analytics ---
 
-    getDashboardSummary: async (): Promise<ApiResponse<any>> => {
-        return apiClient.get<ApiResponse<any>>("/admin/dashboard/summary");
+    getDashboardSummary: async (): Promise<ApiResponse<DashboardSummary>> => {
+        return apiClient.get<ApiResponse<DashboardSummary>>("/admin/dashboard/summary");
     },
 
-    getGrowthAnalytics: async (days: number = 30): Promise<ApiResponse<any[]>> => {
-        return apiClient.get<ApiResponse<any[]>>(`/admin/dashboard/growth-analytics?days=${days}`);
+    getGrowthAnalytics: async (days: number = 30): Promise<ApiResponse<GrowthAnalytics[]>> => {
+        return apiClient.get<ApiResponse<GrowthAnalytics[]>>(`/admin/dashboard/growth-analytics?days=${days}`);
     },
 
-    getGlobalActivity: async (page: number = 0, size: number = 10): Promise<PaginatedResponse<any>> => {
-        return apiClient.get<PaginatedResponse<any>>(`/admin/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`);
+    getGlobalActivity: async (page: number = 0, size: number = 10): Promise<PaginatedResponse<GlobalActivity>> => {
+        return apiClient.get<PaginatedResponse<GlobalActivity>>(`/admin/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`);
     },
 
     // --- Content Management: Resources ---

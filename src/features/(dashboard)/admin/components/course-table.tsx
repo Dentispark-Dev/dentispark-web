@@ -14,7 +14,7 @@ import {
     GraduationCap
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
-import { AdminCourseRecord, AdminCourseQuery } from "@/src/connection/api-types";
+import { AdminCourseQuery } from "@/src/connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {

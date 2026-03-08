@@ -14,7 +14,7 @@ import {
     Globe
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { AdminUniversityRecord, AdminUniversityQuery } from "@/src/connection/api-types";
+import { AdminUniversityQuery } from "@/src/connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {

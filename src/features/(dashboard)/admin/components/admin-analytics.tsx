@@ -20,7 +20,7 @@ export function AdminDashboardAnalytics() {
         queryFn: () => adminService.getDashboardSummary(),
     });
 
-    const { data: growthData, isLoading: isGrowthLoading } = useQuery({
+    useQuery({
         queryKey: ["admin-growth-analytics"],
         queryFn: () => adminService.getGrowthAnalytics(7),
     });
