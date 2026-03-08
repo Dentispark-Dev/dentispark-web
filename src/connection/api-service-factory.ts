@@ -79,20 +79,20 @@ export class ApiServiceFactory {
   createAuthService() {
     return {
       login: async (credentials: {
-        email: string;
+        emailAddress: string;
         password: string;
-        remember_me?: boolean;
+        rememberMe?: boolean;
       }) => {
         return this.baseApi.post("/auth/platform-member/login", credentials);
       },
 
       register: async (userData: {
-        first_name: string;
-        last_name: string;
-        email: string;
+        firstName: string;
+        lastName: string;
+        emailAddress: string;
         password: string;
-        password_confirmation: string;
-        terms_accepted: boolean;
+        passwordConfirmation: string;
+        termsAccepted: boolean;
       }) => {
         return this.baseApi.post("/auth/register", userData);
       },
@@ -106,25 +106,25 @@ export class ApiServiceFactory {
         }
       },
 
-      forgotPassword: async (email: string) => {
-        return this.baseApi.post("/auth/forgot-password", { email });
+      forgotPassword: async (emailAddress: string) => {
+        return this.baseApi.post("/auth/forgot-password", { emailAddress });
       },
 
       resetPassword: async (data: {
         token: string;
-        email: string;
+        emailAddress: string;
         password: string;
-        password_confirmation: string;
+        passwordConfirmation: string;
       }) => {
         return this.baseApi.post("/auth/reset-password", data);
       },
 
-      verifyEmail: async (data: { token: string; email: string }) => {
+      verifyEmail: async (data: { token: string; emailAddress: string }) => {
         return this.baseApi.post("/auth/verify-email", data);
       },
 
-      resendVerification: async (email: string) => {
-        return this.baseApi.post("/auth/resend-verification", { email });
+      resendVerification: async (emailAddress: string) => {
+        return this.baseApi.post("/auth/resend-verification", { emailAddress });
       },
 
       getCurrentUser: async () => {
@@ -132,9 +132,9 @@ export class ApiServiceFactory {
       },
 
       updatePassword: async (data: {
-        current_password: string;
+        currentPassword: string;
         password: string;
-        password_confirmation: string;
+        passwordConfirmation: string;
       }) => {
         return this.baseApi.put("/auth/password", data);
       },

@@ -21,15 +21,11 @@ export interface LegacyApiResponse {
 }
 
 export type PaginatedResponse<T> = BaseApiResponse<{
-  data: T[];
-  pagination: {
-    current_page: number;
-    per_page: number;
-    total: number;
-    total_pages: number;
-    has_next_page: boolean;
-    has_prev_page: boolean;
-  };
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  pageNumber: number;
+  pageSize: number;
 }>;
 
 export interface ApiError {
@@ -41,25 +37,25 @@ export interface ApiError {
 
 // Authentication related types
 export interface LoginRequest {
-  email: string;
+  emailAddress: string;
   password: string;
-  remember_me?: boolean;
 }
 
 export type LoginResponse = BaseApiResponse<{
-  user: User;
-  access_token: string;
-  token_type: string;
-  expires_in: number;
+  platformAdmin: User;
+  accessToken: string;
+  tokenType: string;
+  tokenIssuedAt: string;
+  tokenExpiredAt: string;
 }>;
 
 export interface RegisterRequest {
-  first_name: string;
-  last_name: string;
-  email: string;
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
   password: string;
-  password_confirmation: string;
-  terms_accepted: boolean;
+  passwordConfirmation: string;
+  termsAccepted: boolean;
 }
 
 export type RegisterResponse = BaseApiResponse<{
@@ -68,42 +64,52 @@ export type RegisterResponse = BaseApiResponse<{
 }>;
 
 export interface ForgotPasswordRequest {
-  email: string;
+  emailAddress: string;
+}
+
+export interface VerifyResetCodeRequest {
+  emailAddress: string;
+  code: string;
+}
+
+export interface CompletePasswordResetRequest {
+  emailAddress: string;
+  token: string;
+  newPassword: string;
 }
 
 export interface ResetPasswordRequest {
-  token: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
+  adminEmailAddress: string;
+  currentPassword: string;
+  newPassword: string;
 }
 
 export interface VerifyEmailRequest {
   token: string;
-  email: string;
+  emailAddress: string;
 }
 
 export interface ResendVerificationRequest {
-  email: string;
+  emailAddress: string;
 }
 
 // User related types
 export interface User {
   id: string;
-  first_name: string;
-  last_name: string;
-  full_name: string;
-  email: string;
-  email_verified_at?: string;
-  phone_number?: string;
-  linkedin_url?: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  emailAddress: string;
+  emailVerifiedAt?: string;
+  phoneNumber?: string;
+  linkedinUrl?: string;
   biography?: string;
-  profile_image?: string;
+  profileImage?: string;
   role: "student" | "mentor" | "admin";
   status: "active" | "inactive" | "suspended";
-  academic_profile?: AcademicProfile;
-  created_at: string;
-  updated_at: string;
+  academicProfile?: AcademicProfile;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AcademicProfile {
@@ -144,12 +150,12 @@ export interface Application {
   university_id: string;
   course_id: string;
   status:
-    | "draft"
-    | "submitted"
-    | "under_review"
-    | "accepted"
-    | "rejected"
-    | "waitlisted";
+  | "draft"
+  | "submitted"
+  | "under_review"
+  | "accepted"
+  | "rejected"
+  | "waitlisted";
   submitted_at?: string;
   university: University;
   course: Course;
@@ -162,11 +168,11 @@ export interface ApplicationDocument {
   id: string;
   application_id: string;
   document_type:
-    | "personal_statement"
-    | "cv"
-    | "transcript"
-    | "reference_letter"
-    | "other";
+  | "personal_statement"
+  | "cv"
+  | "transcript"
+  | "reference_letter"
+  | "other";
   file_name: string;
   file_path: string;
   file_size: number;
@@ -320,10 +326,10 @@ export interface Notification {
   id: string;
   user_id: string;
   type:
-    | "application_update"
-    | "mentorship_request"
-    | "community_activity"
-    | "system_announcement";
+  | "application_update"
+  | "mentorship_request"
+  | "community_activity"
+  | "system_announcement";
   title: string;
   message: string;
   data?: Record<string, unknown>;
@@ -378,4 +384,285 @@ export interface FileUploadResponse extends BaseApiResponse {
 
 export interface UploadProgressCallback {
   (progress: number): void;
+}
+
+// Student Management Types
+export interface StudentQuery {
+  searchKey?: string;
+  platformMemberCategory?: string;
+  platformMemberProfileStatus?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface StudentMetricResponse {
+  totalSummary: MemberMetric;
+  bdsStudent: MemberMetric;
+  nursingStudent: MemberMetric;
+  hygieneTherapyStudent: MemberMetric;
+}
+
+export interface MemberMetric {
+  category?: string;
+  description: string;
+  currentTotalCount: number;
+  percentageChange: number;
+  days: number;
+}
+
+export interface StudentRecord {
+  sid: string;
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  activationStatus: string;
+  activationStatusDesc: string;
+  dentalSchoolGateway: string;
+  dateStamped: string;
+}
+
+export interface StudentDetail extends StudentRecord {
+  phoneNumber: string;
+  academicHistory: any[]; // Define more specifically if needed
+}
+
+export interface UpdateStatusPayload {
+  status: string;
+  reason?: string;
+}
+
+// Mentor Management Types
+export interface MentorQuery {
+  searchKey?: string;
+  platformMemberCategory?: string;
+  platformMemberProfileStatus?: string;
+  verified?: boolean;
+}
+
+export interface MentorMetricResponse {
+  totalSummary: MemberMetric;
+  verifiedMentors: MemberMetric;
+  pendingVerification: MemberMetric;
+}
+
+export interface MentorRecord {
+  hid: string;
+  mentorName: string;
+  activationStatus: string;
+  activationStatusDesc: string;
+  verified: boolean;
+  dentalSchoolGateway: string;
+  dateStamped: string;
+  action: string;
+}
+
+export interface MentorDetail {
+  hid: string;
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  phoneNumber: string;
+  activationStatus: string;
+  activationStatusDesc: string;
+  verified: boolean;
+  dentalSchoolGateway: string;
+  dateStamped: string;
+  yearsInDentistry: number;
+  dentalSchoolExperience: string;
+  areaOfSpecialization: string;
+  whyMentor: string;
+  interviewDate: string;
+  averageRating: number;
+  totalReviews: number;
+}
+
+export interface VerifyMentorPayload {
+  verify: boolean;
+}
+// Admin Content Management Types
+export interface AdminUniversityQuery {
+  searchKey?: string;
+  dentalSchoolPathway?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface AdminUniversityRecord {
+  hid: string;
+  name: string;
+  location: string;
+  ranking?: number;
+  dentalSchoolPathway: string;
+  createdAt: string;
+}
+
+export interface AdminUniversityDetail extends AdminUniversityRecord {
+  description?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+}
+
+export interface CreateUniversityPayload {
+  name: string;
+  description?: string;
+  location?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+  ranking?: number;
+  dentalSchoolPathway?: string;
+}
+
+export interface AdminCourseQuery {
+  searchKey?: string;
+  universityId?: number;
+  degreeType?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface AdminCourseRecord {
+  hid: string;
+  courseName: string;
+  degreeType: string;
+  durationYears: number;
+  universityName: string;
+  createdAt: string;
+}
+
+export interface AdminCourseDetail extends AdminCourseRecord {
+  universityHid: string;
+  entryRequirements?: string;
+  description?: string;
+  feesDomestic?: number;
+  feesInternational?: number;
+  applicationDeadline?: string;
+}
+
+export interface CreateCoursePayload {
+  universityHid: string;
+  courseName: string;
+  degreeType?: string;
+  durationYears?: number;
+  entryRequirements?: string;
+  description?: string;
+  feesDomestic?: number;
+  feesInternational?: number;
+  applicationDeadline?: string;
+}
+
+export interface AdminResourceQuery {
+  searchKey?: string;
+  dentalSchoolPathWay?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface AdminResourceRecord {
+  hid: string;
+  title: string;
+  dentalSchoolPathWay: string;
+  authorName: string;
+  academicYear: string;
+  createdAt: string;
+}
+
+export interface AdminResourceDetail extends AdminResourceRecord {
+  body: string;
+  images?: string;
+  imageCaption?: string;
+}
+
+export interface CreateResourcePayload {
+  title: string;
+  body: string;
+  images?: string;
+  imageCaption?: string;
+  dentalSchoolPathWay?: string;
+  authorName?: string;
+  academicYear?: string;
+}
+
+// Admin Dashboard & Analytics Types
+export interface DashboardSummary {
+  totalStudents: number;
+  totalMentors: number;
+  activeCourses: number;
+  totalResources: number;
+  pendingVerifications: number;
+  totalBookings: number;
+}
+
+export interface GrowthAnalytics {
+  date: string;
+  studentCount: number;
+  mentorCount: number;
+}
+
+export interface GlobalActivity {
+  userId: string;
+  fullName: string;
+  status: string;
+  statusDesc: string;
+  memberType: string;
+  memberTypeDesc: string;
+  action: string;
+  timeAndDate: string;
+}
+
+// Admin Management Types
+export interface AdminQuery {
+  searchKey?: string;
+  status?: string;
+  activationStatus?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface AdminRecord {
+  username: string;
+  emailAddress: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  status: string;
+  activationStatus: string;
+  rolesAndPermissions: PlatformRolePermissionMapping[];
+}
+
+// Role & Permission Management Types
+export interface PlatformPermissionData {
+  guid: string;
+  name: string;
+  description: string;
+}
+
+export interface PlatformRoleData {
+  guid: string;
+  name: string;
+  description: string;
+  users?: number;
+}
+
+export interface PlatformRolePermissionMapping extends PlatformRoleData {
+  permissions: PlatformPermissionData[];
+}
+
+// Audit Log Types
+export interface AuditQuery {
+  action?: string;
+  actor?: string;
+  searchKey?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface AuditData {
+  guid: string;
+  actor: string;
+  action: string;
+  actionMessage: string;
+  entity: string;
+  entityId: string;
+  ipAddress: string;
+  actionDateTime: string;
 }
