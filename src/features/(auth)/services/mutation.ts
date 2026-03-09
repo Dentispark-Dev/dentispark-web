@@ -61,13 +61,27 @@ export const useOAuth2Signup = () => {
   });
 };
 
-// Student Login Hook
-export const useLogin = () => {
+// Unified Login Hook
+export const useUnifiedLogin = () => {
   const { login } = useAuth();
 
   return useMutation<ApiResponse<LoginResponseData>, Error, LoginRequest>({
     mutationKey: ["auth", "login"],
-    mutationFn: authApi.LOGIN,
+    mutationFn: async (data: LoginRequest) => {
+      try {
+        const response = await authApi.LOGIN(data);
+        if (response.responseCode === "00") {
+          return response;
+        }
+        throw new Error(response.responseMessage || "Login failed");
+      } catch (error: any) {
+        // If member user doesn't exist, try super admin fallback
+        if (error?.responseCode === "03" || error?.message?.includes("record does not exist")) {
+          return await authApi.ADMIN_LOGIN(data);
+        }
+        throw error;
+      }
+    },
     onSuccess: (data) => {
       if (data.responseCode === "00") {
         const { auth } = data.responseData;
@@ -76,7 +90,12 @@ export const useLogin = () => {
         authCookies.setUserData(data.responseData);
         login(data.responseData);
 
-        toast.success("Login successful! Welcome back to Dentispark!");
+        const memberType = data.responseData.memberType;
+        if (memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM") {
+          toast.success("Admin login successful!");
+        } else {
+          toast.success("Login successful! Welcome back to Dentispark!");
+        }
       } else {
         toast.error(
           data.responseMessage ||
@@ -84,39 +103,12 @@ export const useLogin = () => {
         );
       }
     },
-    onError: (error) => {
-      console.error("Student login error:", error);
-      toast.error("An error occurred during login. Please try again.");
-    },
-  });
-};
-
-// Admin Login Hook
-export const useAdminLogin = () => {
-  const { login } = useAuth();
-
-  return useMutation<ApiResponse<LoginResponseData>, Error, LoginRequest>({
-    mutationKey: ["auth", "admin-login"],
-    mutationFn: authApi.ADMIN_LOGIN,
-    onSuccess: (data) => {
-      if (data.responseCode === "00") {
-        const { auth } = data.responseData;
-
-        authCookies.setAccessToken(auth.accessToken, auth.tokenExpiredAt);
-        authCookies.setUserData(data.responseData);
-        login(data.responseData);
-
-        toast.success("Admin login successful!");
-      } else {
-        toast.error(
-          data.responseMessage ||
-          "Admin login failed. Please check your credentials.",
-        );
-      }
-    },
-    onError: (error) => {
-      console.error("Admin login error:", error);
-      toast.error("An error occurred during admin login. Please try again.");
+    onError: (error: any) => {
+      console.error("Login error:", error);
+      toast.error(
+        error.message ||
+        "An error occurred during login. Please try again."
+      );
     },
   });
 };

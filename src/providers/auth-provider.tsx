@@ -210,12 +210,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (isAuth && isAuthRoute) {
           // Determine redirect based on both user type and current path
           const isMentor = user?.memberType === "ACADEMIC_MENTOR";
+          const isAdminUser = user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM";
           const isOnMentorRoute = pathname.startsWith("/mentor");
 
           let redirectTo: string;
 
           if (user?.profileStatus === "PENDING") {
             redirectTo = "/profile-setup";
+          } else if (isAdminUser) {
+            redirectTo = "/admin";
           } else if (isOnMentorRoute || isMentor) {
             // If on mentor route or user is a mentor, go to mentor dashboard
             redirectTo = "/mentor/overview";
@@ -247,12 +250,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (isAuthenticated && isAuthRoute) {
       // Determine redirect based on both user type and current path
       const isMentor = user?.memberType === "ACADEMIC_MENTOR";
+      const isAdminUser = user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM";
       const isOnMentorRoute = pathname.startsWith("/mentor");
 
       let redirectTo: string;
 
       if (user?.profileStatus === "PENDING") {
         redirectTo = "/profile-setup";
+      } else if (isAdminUser) {
+        redirectTo = "/admin";
       } else if (isOnMentorRoute || isMentor) {
         // If on mentor route or user is a mentor, go to mentor dashboard
         redirectTo = "/mentor/overview";

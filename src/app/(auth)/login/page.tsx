@@ -19,7 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-import { useLogin, useAdminLogin } from "@/src/features/(auth)/services";
+import { useUnifiedLogin } from "@/src/features/(auth)/services";
 
 // Form validation schema
 const loginSchema = z.object({
@@ -31,10 +31,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isAdminLogin, setIsAdminLogin] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const loginMutation = useLogin();
-  const adminLoginMutation = useAdminLogin();
+  const loginMutation = useUnifiedLogin();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -46,11 +44,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     startTransition(() => {
-      if (isAdminLogin) {
-        adminLoginMutation.mutate(data);
-      } else {
-        loginMutation.mutate(data);
-      }
+      loginMutation.mutate(data);
     });
   };
 
@@ -105,22 +99,22 @@ export default function LoginPage() {
         {/* Header */}
         <motion.div className="text-center" variants={itemVariants}>
           <h1 className="text-3xl leading-[160%] font-semibold text-gray-900">
-            {isAdminLogin ? "Admin Login" : "Log in to your Dentispark account"}
+            Log in to your Dentispark account
           </h1>
           <p className="font-sora mt-2 text-sm text-gray-600">
-            {isAdminLogin ? "Secure super admin portal." : "Student & Mentor login portal."}
+            Student, Mentor, and Admin portal.
           </p>
         </motion.div>
 
         {/* Social Login Buttons (Hidden for Admin) */}
-        {!isAdminLogin && (
+        {true && (
           <>
             <motion.div className="space-y-4" variants={itemVariants}>
               <Button
                 type="button"
                 className="border-greys-300 text-black-700 font-sora flex w-full items-center justify-center border bg-white py-5 text-xs"
                 onClick={() => handleSocialLogin("google")}
-                disabled={isPending || loginMutation.isPending || adminLoginMutation.isPending}
+                disabled={isPending || loginMutation.isPending}
               >
                 <svg className="mr-3 size-6" viewBox="0 0 24 24">
                   <path
@@ -147,7 +141,7 @@ export default function LoginPage() {
                 type="button"
                 className="border-greys-300 text-black-700 font-sora flex w-full items-center justify-center border bg-white py-5 text-xs"
                 onClick={() => handleSocialLogin("linkedin")}
-                disabled={isPending || loginMutation.isPending || adminLoginMutation.isPending}
+                disabled={isPending || loginMutation.isPending}
               >
                 <svg className="mr-3 size-5" fill="#0A66C2" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -246,15 +240,13 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 className="w-full py-5 text-sm font-medium"
-                disabled={isPending || loginMutation.isPending || adminLoginMutation.isPending}
+                disabled={isPending || loginMutation.isPending}
               >
-                {isPending || loginMutation.isPending || adminLoginMutation.isPending ? (
+                {isPending || loginMutation.isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Logging in...
                   </>
-                ) : isAdminLogin ? (
-                  "Log in as Admin"
                 ) : (
                   "Log in"
                 )}
@@ -263,19 +255,6 @@ export default function LoginPage() {
           </Form>
         </motion.div>
 
-        {/* Admin Login Toggle */}
-        <motion.div className="text-center" variants={itemVariants}>
-          <p className="font-sora text-xs text-gray-600">
-            {isAdminLogin ? "Not an admin? " : "Are you an administrator? "}
-            <button
-              type="button"
-              onClick={() => setIsAdminLogin(!isAdminLogin)}
-              className="text-primary font-sora cursor-pointer text-xs underline"
-            >
-              {isAdminLogin ? "Student/Mentor Login" : "Admin Login"}
-            </button>
-          </p>
-        </motion.div>
 
         {/* Sign Up Link */}
         <motion.div className="text-center" variants={itemVariants}>
