@@ -91,6 +91,36 @@ export const useLogin = () => {
   });
 };
 
+// Admin Login Hook
+export const useAdminLogin = () => {
+  const { login } = useAuth();
+
+  return useMutation<ApiResponse<LoginResponseData>, Error, LoginRequest>({
+    mutationKey: ["auth", "admin-login"],
+    mutationFn: authApi.ADMIN_LOGIN,
+    onSuccess: (data) => {
+      if (data.responseCode === "00") {
+        const { auth } = data.responseData;
+
+        authCookies.setAccessToken(auth.accessToken, auth.tokenExpiredAt);
+        authCookies.setUserData(data.responseData);
+        login(data.responseData);
+
+        toast.success("Admin login successful!");
+      } else {
+        toast.error(
+          data.responseMessage ||
+          "Admin login failed. Please check your credentials.",
+        );
+      }
+    },
+    onError: (error) => {
+      console.error("Admin login error:", error);
+      toast.error("An error occurred during admin login. Please try again.");
+    },
+  });
+};
+
 export const useProfileSetup = () => {
   const router = useRouter();
   const { login } = useAuth();

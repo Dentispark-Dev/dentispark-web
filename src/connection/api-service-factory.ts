@@ -78,6 +78,13 @@ export class ApiServiceFactory {
    */
   createAuthService() {
     return {
+      adminLogin: async (credentials: {
+        emailAddress: string;
+        password: string;
+      }) => {
+        return this.baseApi.post("/auth/login", credentials);
+      },
+
       login: async (credentials: {
         emailAddress: string;
         password: string;

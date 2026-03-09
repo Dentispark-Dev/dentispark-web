@@ -3,7 +3,7 @@ export { authApi } from "./api";
 
 export { authKeys } from "./query";
 
-export { useSignup, useOAuth2Signup, useLogin } from "./mutation";
+export { useSignup, useOAuth2Signup, useLogin, useAdminLogin } from "./mutation";
 
 // Export types
 export type * from "../type";

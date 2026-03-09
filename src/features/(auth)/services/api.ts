@@ -29,6 +29,15 @@ export const authApi = {
     );
   },
 
+  ADMIN_LOGIN: async (
+    data: LoginRequest,
+  ): Promise<ApiResponse<LoginResponseData>> => {
+    return apiClient.postFullResponse<LoginResponseData>(
+      "/auth/login",
+      data,
+    );
+  },
+
   LOGIN: async (
     data: LoginRequest,
   ): Promise<ApiResponse<LoginResponseData>> => {
