@@ -26,7 +26,16 @@ import {
     AdminResourceQuery,
     DashboardSummary,
     GrowthAnalytics,
-    GlobalActivity
+    GlobalActivity,
+    AdminQuery,
+    AdminRecord,
+    AdminInvitationPayload,
+    UpdateAdminPayload,
+    PlatformRoleData,
+    PlatformPermissionData,
+    PlatformRolePermissionMapping,
+    CreateRolePayload,
+    AddRolePermissionsPayload
 } from "./api-types";
 
 /**
@@ -183,5 +192,54 @@ export const adminService = {
 
     deleteResource: async (resourceId: string): Promise<ApiResponse<string>> => {
         return apiClient.delete<ApiResponse<string>>(`/admin/content/resources/${resourceId}`);
+    },
+
+    // --- Admin & Role Management ---
+
+    getAdminRecords: async (query: AdminQuery): Promise<PaginatedResponse<AdminRecord>> => {
+        const params = new URLSearchParams();
+        if (query.searchKey) params.append("searchKey", query.searchKey);
+        if (query.status) params.append("status", query.status);
+        if (query.activationStatus) params.append("activationStatus", query.activationStatus);
+        if (query.page !== undefined) params.append("pageNumber", query.page.toString());
+        if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
+
+        return apiClient.get<PaginatedResponse<AdminRecord>>(`/admin/mgt/records?${params.toString()}`);
+    },
+
+    inviteAdmin: async (payload: AdminInvitationPayload): Promise<ApiResponse<string>> => {
+        return apiClient.post<ApiResponse<string>>("/admin/mgt/invite", payload);
+    },
+
+    updateAdmin: async (payload: UpdateAdminPayload): Promise<ApiResponse<AdminRecord>> => {
+        return apiClient.patch<ApiResponse<AdminRecord>>("/admin/mgt/update", payload);
+    },
+
+    deactivateAdmin: async (emailAddress: string, reason?: string): Promise<ApiResponse<string>> => {
+        return apiClient.patch<ApiResponse<string>>("/admin/mgt/deactivate", { emailAddress, deactivationReason: reason });
+    },
+
+    getPlatformRoles: async (): Promise<ApiResponse<PlatformRoleData[]>> => {
+        return apiClient.get<ApiResponse<PlatformRoleData[]>>("/auth/mgt/platform-role");
+    },
+
+    getPlatformPermissions: async (): Promise<ApiResponse<PlatformPermissionData[]>> => {
+        return apiClient.get<ApiResponse<PlatformPermissionData[]>>("/auth/mgt/platform-permissions");
+    },
+
+    getRolePermissions: async (roleGuid: string): Promise<ApiResponse<PlatformRolePermissionMapping>> => {
+        return apiClient.get<ApiResponse<PlatformRolePermissionMapping>>(`/auth/mgt/platform-role-permissions?roleGuid=${roleGuid}`);
+    },
+
+    createRole: async (payload: CreateRolePayload): Promise<ApiResponse<string>> => {
+        return apiClient.post<ApiResponse<string>>("/auth/mgt/platform-role", payload);
+    },
+
+    addRolePermissions: async (payload: AddRolePermissionsPayload): Promise<ApiResponse<string>> => {
+        return apiClient.put<ApiResponse<string>>("/auth/mgt/platform-role-permissions", payload);
+    },
+
+    createRoleWithPermissions: async (payload: CreateRolePayload): Promise<ApiResponse<string>> => {
+        return apiClient.post<ApiResponse<string>>("/auth/mgt/platform-role-permissions", payload);
     }
 };

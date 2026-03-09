@@ -632,6 +632,7 @@ export interface AdminQuery {
 }
 
 export interface AdminRecord {
+  hid: string;
   username: string;
   emailAddress: string;
   firstName: string;
@@ -640,6 +641,18 @@ export interface AdminRecord {
   status: string;
   activationStatus: string;
   rolesAndPermissions: PlatformRolePermissionMapping[];
+}
+
+export interface AdminInvitationPayload {
+  emailAddress: string;
+  fullName: string;
+  username: string;
+  roleGuids: string[];
+}
+
+export interface UpdateAdminPayload {
+  emailAddress: string;
+  roles: string[];
 }
 
 // Role & Permission Management Types
@@ -658,6 +671,17 @@ export interface PlatformRoleData {
 
 export interface PlatformRolePermissionMapping extends PlatformRoleData {
   permissions: PlatformPermissionData[];
+}
+
+export interface CreateRolePayload {
+  roleName: string;
+  description?: string;
+  permissionEnums: string[];
+}
+
+export interface AddRolePermissionsPayload {
+  roleGuid: string;
+  permissionEnums: string[];
 }
 
 // Audit Log Types

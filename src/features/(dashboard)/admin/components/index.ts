@@ -4,3 +4,7 @@ export { AdminDashboardAnalytics } from "./admin-analytics";
 export { UniversityTable } from "./university-table";
 export { CourseTable } from "./course-table";
 export { ResourceTable } from "./resource-table";
+export { AdminTable } from "./admin-table";
+export { RoleTable } from "./role-table";
+export { InviteAdminModal } from "./invite-admin-modal";
+export { CreateRoleModal } from "./create-role-modal";

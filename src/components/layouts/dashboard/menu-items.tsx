@@ -1022,8 +1022,15 @@ const adminMenuItems: MenuItem[] = [
     id: "admin-users",
     label: "System Admins",
     href: "/admin/settings/admins",
-    allowedMemberTypes: ["PLATFORM_SYSTEM"],
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-roles",
+    label: "Manage Roles",
+    href: "/admin/settings/roles",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "quality-control")?.icon || menuItems[0].icon,
   },
   {
     id: "admin-audit",

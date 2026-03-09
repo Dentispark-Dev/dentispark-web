@@ -1,13 +1,33 @@
 "use client";
 
-export default function AdminUsersPage() {
+import { useState } from "react";
+import { AdminTable, InviteAdminModal } from "@/src/features/(dashboard)/admin/components";
+
+export default function AdminsPage() {
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const handleSuccess = () => {
+        setRefreshKey(prev => prev + 1);
+    };
+
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900">System Admins</h1>
-            <p className="text-gray-600">Manage administrative users and their permissions.</p>
-            <div className="rounded-xl bg-white p-8 shadow-sm border border-gray-100 text-center">
-                <p className="text-gray-400">Admin user management table coming soon...</p>
+            <div>
+                <h1 className="text-2xl font-bold text-gray-900">System Administrators</h1>
+                <p className="text-gray-500">Manage administrative users, invite new team members, and assign roles.</p>
             </div>
+
+            <AdminTable
+                key={refreshKey}
+                onInviteClick={() => setIsInviteModalOpen(true)}
+            />
+
+            <InviteAdminModal
+                isOpen={isInviteModalOpen}
+                onClose={() => setIsInviteModalOpen(false)}
+                onSuccess={handleSuccess}
+            />
         </div>
     );
 }
