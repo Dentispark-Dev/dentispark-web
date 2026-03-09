@@ -63,6 +63,7 @@ export const useOAuth2Signup = () => {
 
 // Unified Login Hook
 export const useUnifiedLogin = () => {
+  const router = useRouter();
   const { login } = useAuth();
 
   return useMutation<ApiResponse<LoginResponseData>, Error, LoginRequest>({
@@ -95,8 +96,10 @@ export const useUnifiedLogin = () => {
         const memberType = data.responseData.memberType;
         if (memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM") {
           toast.success("Admin login successful!");
+          router.push("/admin");
         } else {
           toast.success("Login successful! Welcome back to Dentispark!");
+          router.push("/overview");
         }
       } else {
         toast.error(
