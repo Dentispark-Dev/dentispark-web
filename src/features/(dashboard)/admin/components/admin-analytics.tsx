@@ -33,7 +33,7 @@ export function AdminDashboardAnalytics() {
         );
     }
 
-    const summary = summaryData?.responseData;
+    const summary = summaryData;
     const totalUsers = summary?.totalSummary?.currentTotalCount || 0;
     const totalStudents = summary?.studentSummary?.currentTotalCount || 0;
     const totalMentors = summary?.mentorSummary?.currentTotalCount || 0;

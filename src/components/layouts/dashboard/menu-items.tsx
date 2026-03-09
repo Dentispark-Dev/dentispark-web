@@ -987,7 +987,7 @@ const adminMenuItems: MenuItem[] = [
     id: "admin-students",
     label: "Manage Students",
     href: "/admin/students",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
     icon: menuItems.find((i) => i.id === "student-matching")?.icon || menuItems[0].icon,
   },
   {
@@ -1001,7 +1001,7 @@ const adminMenuItems: MenuItem[] = [
     id: "admin-universities",
     label: "Universities",
     href: "/admin/content/universities",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
     icon: menuItems.find((i) => i.id === "university-hub")?.icon || menuItems[0].icon,
   },
   {
@@ -1039,6 +1039,13 @@ const adminMenuItems: MenuItem[] = [
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: menuItems.find((i) => i.id === "quality-control")?.icon || menuItems[0].icon,
   },
+  {
+    id: "admin-moderators",
+    label: "Moderators",
+    href: "/admin/moderators",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
+  },
 ];
 
 menuItems.push(...adminMenuItems);
@@ -1050,6 +1057,7 @@ export function getFilteredMenuItems(
     | "ACADEMIC_MENTOR"
     | "PLATFORM_ADMIN"
     | "PLATFORM_SYSTEM"
+    | "MODERATOR"
     | undefined,
 ): MenuItem[] {
   if (!memberType) return [];

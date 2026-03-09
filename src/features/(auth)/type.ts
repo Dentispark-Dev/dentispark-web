@@ -5,10 +5,11 @@ export interface SignupRequest {
   firstName: string;
   lastName: string;
   memberType:
-    | "ACADEMIC_MENTOR"
-    | "STUDENT"
-    | "PLATFORM_ADMIN"
-    | "PLATFORM_SYSTEM";
+  | "ACADEMIC_MENTOR"
+  | "STUDENT"
+  | "PLATFORM_ADMIN"
+  | "PLATFORM_SYSTEM"
+  | "MODERATOR";
   password: string;
 }
 
@@ -18,10 +19,11 @@ export interface OAuth2SignupRequest {
   oauth2ProviderAuthorizationCode: string;
   authProvider: "GOOGLE" | "LINKEDIN" | "FACEBOOK";
   memberType:
-    | "ACADEMIC_MENTOR"
-    | "STUDENT"
-    | "PLATFORM_ADMIN"
-    | "PLATFORM_SYSTEM";
+  | "ACADEMIC_MENTOR"
+  | "STUDENT"
+  | "PLATFORM_ADMIN"
+  | "PLATFORM_SYSTEM"
+  | "MODERATOR";
 }
 
 export type OAuth2SignupResponse = ApiResponse<string>;
@@ -41,10 +43,11 @@ export interface LoginResponseData {
   mobileNumber: string;
   biography: string;
   memberType:
-    | "ACADEMIC_MENTOR"
-    | "STUDENT"
-    | "PLATFORM_ADMIN"
-    | "PLATFORM_SYSTEM";
+  | "ACADEMIC_MENTOR"
+  | "STUDENT"
+  | "PLATFORM_ADMIN"
+  | "PLATFORM_SYSTEM"
+  | "MODERATOR";
   memberStatus: "ACTIVE" | "SUSPENDED" | "DEACTIVATED";
   profileStatus: "PENDING" | "COMPLETED";
   profileSetupStep: "STEP1" | "STEP2" | "STEP3";

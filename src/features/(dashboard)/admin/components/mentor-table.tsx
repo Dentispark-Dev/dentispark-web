@@ -24,8 +24,10 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
+import { InviteMentorModal } from "./invite-mentor-modal";
 
 export function MentorTable() {
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<MentorQuery>({
         page: 0,
@@ -88,7 +90,7 @@ export function MentorTable() {
         }
     };
 
-    const paginatedData = data?.responseData;
+    const paginatedData = data;
     const mentors = paginatedData?.content || [];
     const totalPages = paginatedData?.totalPages || 0;
     const currentPage = paginatedData?.pageNumber || 0;
@@ -109,12 +111,16 @@ export function MentorTable() {
                 </div>
 
                 <div className="flex gap-2 w-full md:w-auto">
+                    <Button
+                        onClick={() => setIsInviteModalOpen(true)}
+                        className="bg-secondary-600 hover:bg-secondary-700 text-white gap-2 h-10"
+                    >
+                        <UserCheck className="h-4 w-4" />
+                        Invite Mentor
+                    </Button>
                     <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
                         <Filter className="h-4 w-4" />
                         Filter
-                    </Button>
-                    <Button className="h-10 bg-primary-600 hover:bg-primary-700 font-medium">
-                        Add Mentor
                     </Button>
                 </div>
             </div>
@@ -155,7 +161,7 @@ export function MentorTable() {
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 rounded-full bg-secondary-50 flex items-center justify-center text-secondary-600 font-semibold">
-                                                    {mentor.mentorName[0]}
+                                                    {mentor.mentorName?.[0] || "?"}
                                                 </div>
                                                 <div>
                                                     <p className="text-sm font-medium text-gray-900">{mentor.mentorName}</p>
@@ -244,6 +250,11 @@ export function MentorTable() {
                     </div>
                 )}
             </div>
+            {/* Modal */}
+            <InviteMentorModal
+                isOpen={isInviteModalOpen}
+                onClose={() => setIsInviteModalOpen(false)}
+            />
         </div>
     );
 }

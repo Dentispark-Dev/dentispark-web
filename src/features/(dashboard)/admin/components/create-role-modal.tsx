@@ -61,7 +61,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
         setIsLoadingPermissions(true);
         try {
             const response = await adminService.getPlatformPermissions();
-            setPermissions(response.responseData);
+            setPermissions(response);
         } catch (error) {
             toast.error("Failed to load permissions");
         } finally {
@@ -74,7 +74,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
             const response = await adminService.getRolePermissions(guid);
             setFormData(prev => ({
                 ...prev,
-                permissionEnums: response.responseData.permissions.map(p => p.name) // Permissions are identified by Enum Name in the payload
+                permissionEnums: response.permissions.map(p => p.name) // Permissions are identified by Enum Name in the payload
             }));
         } catch (error) {
             console.error("Failed to fetch role permissions:", error);

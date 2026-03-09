@@ -62,7 +62,7 @@ export function CourseTable() {
         setQuery(prev => ({ ...prev, page: newPage }));
     };
 
-    const paginatedData = data?.responseData;
+    const paginatedData = data;
     const courses = paginatedData?.content || [];
     const totalPages = paginatedData?.totalPages || 0;
     const currentPage = paginatedData?.pageNumber || 0;

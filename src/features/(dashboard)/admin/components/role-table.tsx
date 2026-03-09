@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import {
     MoreHorizontal,
-    Plus,
     Loader2,
     Shield,
     Users,
@@ -18,7 +17,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
@@ -36,7 +34,7 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
         setIsLoading(true);
         try {
             const response = await adminService.getPlatformRoles();
-            setRoles(response.responseData);
+            setRoles(response);
         } catch (error) {
             console.error("Failed to fetch roles:", error);
             toast.error("Failed to load roles");

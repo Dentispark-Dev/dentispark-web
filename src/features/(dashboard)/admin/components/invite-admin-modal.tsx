@@ -45,8 +45,8 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
         setIsLoadingRoles(true);
         try {
             const response = await adminService.getPlatformRoles();
-            setRoles(response.responseData);
-        } catch (error) {
+            setRoles(response);
+        } catch {
             toast.error("Failed to load roles");
         } finally {
             setIsLoadingRoles(false);
@@ -75,7 +75,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
             toast.success("Invitation sent successfully");
             onSuccess();
             onClose();
-        } catch (error) {
+        } catch {
             toast.error("Failed to send invitation");
         } finally {
             setIsSubmitting(false);

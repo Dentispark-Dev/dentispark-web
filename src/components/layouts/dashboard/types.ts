@@ -11,6 +11,7 @@ export interface MenuItem {
     | "ACADEMIC_MENTOR"
     | "PLATFORM_ADMIN"
     | "PLATFORM_SYSTEM"
+    | "MODERATOR"
   )[];
 }
 

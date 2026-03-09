@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     Search,
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
 import { AdminUniversityQuery } from "@/src/connection/api-types";
+import { CreateUniversityModal } from "./create-university-modal";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -26,6 +28,7 @@ import {
 import { toast } from "sonner";
 
 export function UniversityTable() {
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<AdminUniversityQuery>({
         page: 0,
@@ -60,7 +63,7 @@ export function UniversityTable() {
         setQuery(prev => ({ ...prev, page: newPage }));
     };
 
-    const paginatedData = data?.responseData;
+    const paginatedData = data;
     const universities = paginatedData?.content || [];
     const totalPages = paginatedData?.totalPages || 0;
     const currentPage = paginatedData?.pageNumber || 0;
@@ -85,7 +88,10 @@ export function UniversityTable() {
                         <Filter className="h-4 w-4" />
                         Filter
                     </Button>
-                    <Button className="h-10 bg-primary-600 hover:bg-primary-700 flex gap-2">
+                    <Button
+                        onClick={() => setIsCreateModalOpen(true)}
+                        className="h-10 bg-primary-600 hover:bg-primary-700 flex gap-2"
+                    >
                         <Plus className="h-4 w-4" />
                         Add University
                     </Button>
@@ -157,8 +163,10 @@ export function UniversityTable() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem onClick={() => window.location.href = `/admin/content/universities/${uni.hid}`}>
-                                                        Edit Details
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href={`/admin/content/universities/${uni.hid}`}>
+                                                            Edit Details
+                                                        </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem onClick={() => deleteMutation.mutate(uni.hid)} className="text-red-600">
                                                         Delete
@@ -202,6 +210,11 @@ export function UniversityTable() {
                     </div>
                 )}
             </div>
+            {/* Modal */}
+            <CreateUniversityModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
+            />
         </div>
     );
 }

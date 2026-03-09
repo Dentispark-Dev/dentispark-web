@@ -20,13 +20,13 @@ export interface LegacyApiResponse {
   message?: string;
 }
 
-export type PaginatedResponse<T> = BaseApiResponse<{
+export type PaginatedResponse<T> = {
   content: T[];
   totalElements: number;
   totalPages: number;
   pageNumber: number;
   pageSize: number;
-}>;
+};
 
 export interface ApiError {
   message: string;
@@ -653,6 +653,20 @@ export interface AdminInvitationPayload {
 export interface UpdateAdminPayload {
   emailAddress: string;
   roles: string[];
+}
+
+export interface StudentInvitationPayload {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  platformMemberCategory: string;
+}
+
+export interface MentorInvitationPayload {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  platformMemberCategory: string;
 }
 
 // Role & Permission Management Types

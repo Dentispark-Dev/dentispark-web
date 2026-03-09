@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     Search,
@@ -8,7 +9,8 @@ import {
     ChevronLeft,
     ChevronRight,
     MoreVertical,
-    Loader2
+    Loader2,
+    UserPlus
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
 import { StudentQuery } from "@/src/connection/api-types";
@@ -22,8 +24,10 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
+import { InviteStudentModal } from "./invite-student-modal";
 
 export function StudentTable() {
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<StudentQuery>({
         page: 0,
@@ -75,7 +79,7 @@ export function StudentTable() {
         }
     };
 
-    const paginatedData = data?.responseData;
+    const paginatedData = data;
     const students = paginatedData?.content || [];
     const totalPages = paginatedData?.totalPages || 0;
     const currentPage = paginatedData?.pageNumber || 0;
@@ -96,12 +100,16 @@ export function StudentTable() {
                 </div>
 
                 <div className="flex gap-2 w-full md:w-auto">
+                    <Button
+                        onClick={() => setIsInviteModalOpen(true)}
+                        className="bg-primary-600 hover:bg-primary-700 text-white gap-2 h-10"
+                    >
+                        <UserPlus className="h-4 w-4" />
+                        Invite Student
+                    </Button>
                     <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
                         <Filter className="h-4 w-4" />
                         Filter
-                    </Button>
-                    <Button className="h-10 bg-primary-600 hover:bg-primary-700">
-                        Export JSON
                     </Button>
                 </div>
             </div>
@@ -142,7 +150,7 @@ export function StudentTable() {
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 font-semibold">
-                                                    {student.firstName[0]}{student.lastName[0]}
+                                                    {(student.firstName?.[0] || "")}{(student.lastName?.[0] || "")}
                                                 </div>
                                                 <div>
                                                     <p className="text-sm font-medium text-gray-900">{student.firstName} {student.lastName}</p>
@@ -170,8 +178,10 @@ export function StudentTable() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem onClick={() => window.location.href = `/admin/students/${student.sid}`}>
-                                                        View Profile
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href={`/admin/students/${student.sid}`}>
+                                                            View Profile
+                                                        </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem onClick={() => updateStatusMutation.mutate({ id: student.sid, status: "ACTIVE" })}>
                                                         Activate Account
@@ -218,6 +228,11 @@ export function StudentTable() {
                     </div>
                 )}
             </div>
+            {/* Modal */}
+            <InviteStudentModal
+                isOpen={isInviteModalOpen}
+                onClose={() => setIsInviteModalOpen(false)}
+            />
         </div>
     );
 }

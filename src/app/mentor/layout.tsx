@@ -20,7 +20,7 @@ export default function MentorLayout({
     const pathname = usePathname();
     const { user } = useAuth();
 
-    const filteredMenuItems = getFilteredMenuItems(user?.memberType as "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "PLATFORM_SYSTEM" | undefined);
+    const filteredMenuItems = getFilteredMenuItems(user?.memberType as "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "PLATFORM_SYSTEM" | "MODERATOR" | undefined);
 
     return (
         <ProtectedRoute requiresProfile>

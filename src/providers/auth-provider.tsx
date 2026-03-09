@@ -210,7 +210,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (isAuth && isAuthRoute) {
           // Determine redirect based on both user type and current path
           const isMentor = user?.memberType === "ACADEMIC_MENTOR";
-          const isAdminUser = user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM";
+          const isAdminUser = user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM" || user?.memberType === "MODERATOR";
           const isOnMentorRoute = pathname.startsWith("/mentor");
 
           let redirectTo: string;
@@ -250,7 +250,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (isAuthenticated && isAuthRoute) {
       // Determine redirect based on both user type and current path
       const isMentor = user?.memberType === "ACADEMIC_MENTOR";
-      const isAdminUser = user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM";
+      const isAdminUser = user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM" || user?.memberType === "MODERATOR";
       const isOnMentorRoute = pathname.startsWith("/mentor");
 
       let redirectTo: string;
@@ -334,7 +334,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 
   const isAdmin = useMemo(
-    () => user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM",
+    () => user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM" || user?.memberType === "MODERATOR",
     [user?.memberType],
   );
 

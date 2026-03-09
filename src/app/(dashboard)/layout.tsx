@@ -21,7 +21,7 @@ export default function DashboardLayout({
     const { user } = useAuth();
 
     // Filter menu items based on logged-in user's role
-    const filteredMenuItems = getFilteredMenuItems(user?.memberType as "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "PLATFORM_SYSTEM" | undefined);
+    const filteredMenuItems = getFilteredMenuItems(user?.memberType as "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "PLATFORM_SYSTEM" | "MODERATOR" | undefined);
 
     // Hide sidebar and header on onboarding/profile setup pages if they live here
     const isProfileSetup = pathname.includes("/profile-setup");
@@ -48,7 +48,7 @@ export default function DashboardLayout({
                 />
 
                 {/* Main Content Area */}
-                <div className="flex w-full flex-col lg:pl-64">
+                <div className="flex w-full flex-col lg:pl-[300px]">
                     <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
 
                     <main className="bg-background-body flex-1 p-4 md:p-6 lg:p-8">
