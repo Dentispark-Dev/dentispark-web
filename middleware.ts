@@ -65,6 +65,22 @@ function hasValidToken(request: NextRequest): boolean {
   }
 }
 
+function getUserMemberType(request: NextRequest): string | null {
+  const userData = request.cookies.get("userData")?.value;
+
+  if (!userData) {
+    return null;
+  }
+
+  try {
+    const parsedUserData = JSON.parse(userData);
+    return parsedUserData.memberType || null;
+  } catch (error) {
+    console.error("Error parsing user data for member type:", error);
+    return null;
+  }
+}
+
 function getUserProfileStatus(
   request: NextRequest,
 ): "PENDING" | "COMPLETED" | null {
@@ -88,6 +104,10 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = hasValidToken(request);
   const profileStatus = getUserProfileStatus(request);
 
+  const memberType = getUserMemberType(request);
+  const isAdmin = memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM";
+  const isMentor = memberType === "ACADEMIC_MENTOR";
+
   // Allow public routes
   if (isRouteMatch(pathname, publicRoutes)) {
     return NextResponse.next();
@@ -97,8 +117,14 @@ export function middleware(request: NextRequest) {
   if (isRouteMatch(pathname, authRoutes)) {
     if (isAuthenticated) {
       // Redirect authenticated users away from auth pages
-      const redirectTo =
-        profileStatus === "PENDING" ? "/profile-setup" : "/overview";
+      let redirectTo: string;
+      if (isAdmin) {
+        redirectTo = "/admin";
+      } else if (isMentor) {
+        redirectTo = "/mentor/overview";
+      } else {
+        redirectTo = profileStatus === "PENDING" ? "/profile-setup" : "/overview";
+      }
       return NextResponse.redirect(new URL(redirectTo, request.url));
     }
     return NextResponse.next();
@@ -115,12 +141,12 @@ export function middleware(request: NextRequest) {
 
     // Handle profile setup requirements
     if (pathname === "/profile-setup") {
-      if (profileStatus === "COMPLETED") {
-        // Redirect to overview if profile is already completed
-        return NextResponse.redirect(new URL("/overview", request.url));
+      if (profileStatus === "COMPLETED" || isAdmin) {
+        // Redirect to overview if profile is already completed (or user is admin)
+        return NextResponse.redirect(new URL(isAdmin ? "/admin" : "/overview", request.url));
       }
-    } else {
-      // Other protected routes require completed profile
+    } else if (!isAdmin) {
+      // Other protected routes require completed profile (skip for admins)
       if (profileStatus === "PENDING") {
         return NextResponse.redirect(new URL("/profile-setup", request.url));
       }
