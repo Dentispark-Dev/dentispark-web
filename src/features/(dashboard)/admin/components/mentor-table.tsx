@@ -10,7 +10,6 @@ import {
     MoreVertical,
     CheckCircle,
     Loader2,
-    Shield,
     UserCheck
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";

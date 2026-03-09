@@ -8,7 +8,6 @@ import {
     ChevronLeft,
     ChevronRight,
     MoreVertical,
-    Plus,
     Loader2
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";

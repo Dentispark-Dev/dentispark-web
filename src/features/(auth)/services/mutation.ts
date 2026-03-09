@@ -74,9 +74,10 @@ export const useUnifiedLogin = () => {
           return response;
         }
         throw new Error(response.responseMessage || "Login failed");
-      } catch (error: any) {
+      } catch (error: unknown) {
         // If member user doesn't exist, try super admin fallback
-        if (error?.responseCode === "03" || error?.message?.includes("record does not exist")) {
+        const err = error as { responseCode?: string; message?: string };
+        if (err?.responseCode === "03" || err?.message?.includes("record does not exist")) {
           return await authApi.ADMIN_LOGIN(data);
         }
         throw error;
@@ -103,10 +104,11 @@ export const useUnifiedLogin = () => {
         );
       }
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error("Login error:", error);
+      const err = error as { message?: string };
       toast.error(
-        error.message ||
+        err?.message ||
         "An error occurred during login. Please try again."
       );
     },
