@@ -1,3 +1,6 @@
+"use client";
+
+import { use } from "react";
 import { MentorProfileView } from "@/src/features/(dashboard)/admin/components";
 
 interface PageProps {
@@ -6,8 +9,8 @@ interface PageProps {
     }>;
 }
 
-export default async function MentorDetailPage({ params }: PageProps) {
-    const { id } = await params;
+export default function MentorDetailPage({ params }: PageProps) {
+    const { id } = use(params);
     return (
         <div className="space-y-6">
             <MentorProfileView mentorId={id} />
