@@ -102,7 +102,7 @@ export function StudentTable() {
                 <div className="flex gap-2 w-full md:w-auto">
                     <Button
                         onClick={() => setIsInviteModalOpen(true)}
-                        className="bg-primary-600 hover:bg-primary-700 text-white gap-2 h-10"
+                        className="bg-green-600 hover:bg-green-700 text-white gap-2 h-10"
                     >
                         <UserPlus className="h-4 w-4" />
                         Invite Student

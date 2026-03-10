@@ -113,7 +113,7 @@ export function MentorTable() {
                 <div className="flex gap-2 w-full md:w-auto">
                     <Button
                         onClick={() => setIsInviteModalOpen(true)}
-                        className="bg-secondary-600 hover:bg-secondary-700 text-white gap-2 h-10"
+                        className="bg-green-600 hover:bg-green-700 text-white gap-2 h-10"
                     >
                         <UserCheck className="h-4 w-4" />
                         Invite Mentor

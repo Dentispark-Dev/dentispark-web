@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     Search,
     MoreHorizontal,
@@ -35,7 +35,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [searchKey, setSearchKey] = useState("");
 
-    const fetchModerators = async () => {
+    const fetchModerators = useCallback(async () => {
         setIsLoading(true);
         try {
             // We fetch all admins and filter by 'Moderator' role
@@ -52,17 +52,16 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
             );
 
             setModerators(filtered);
-        } catch (error) {
-            console.error("Failed to fetch moderators:", error);
+        } catch {
             toast.error("Failed to load moderators");
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [searchKey]);
 
     useEffect(() => {
         fetchModerators();
-    }, [searchKey]);
+    }, [fetchModerators]);
 
     const handleDeactivate = async (email: string) => {
         try {
@@ -104,7 +103,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                 <div className="flex gap-2 w-full md:w-auto">
                     <Button
                         variant="default"
-                        className="flex gap-2 h-10 bg-primary-600 hover:bg-primary-700 text-white"
+                        className="flex gap-2 h-10 bg-green-600 hover:bg-green-700 text-white"
                         onClick={onInviteClick}
                     >
                         <Plus className="h-4 w-4" />

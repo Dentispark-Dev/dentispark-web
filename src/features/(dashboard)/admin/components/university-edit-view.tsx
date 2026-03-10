@@ -18,9 +18,10 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Textarea } from "@/src/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/src/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
 import { toast } from "sonner";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface UniversityEditViewProps {
@@ -166,7 +167,6 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                             <BookOpen className="h-5 w-5 text-primary-600" />
                             General Information
                         </CardTitle>
-                        <CardDescription>Main details about the university and its pathway.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -239,7 +239,14 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                         </CardHeader>
                         <CardContent className="flex flex-col items-center justify-center p-6 text-center">
                             {formData.logoUrl ? (
-                                <img src={formData.logoUrl} alt="Logo Preview" className="h-16 w-16 object-contain mb-4 rounded-lg bg-white p-2 border" />
+                                <div className="relative h-16 w-16 mb-4 rounded-lg bg-white p-2 border">
+                                    <Image
+                                        src={formData.logoUrl}
+                                        alt="Logo Preview"
+                                        fill
+                                        className="object-contain"
+                                    />
+                                </div>
                             ) : (
                                 <div className="h-16 w-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4 border border-dashed border-gray-300">
                                     <Globe className="h-8 w-8 text-gray-300" />

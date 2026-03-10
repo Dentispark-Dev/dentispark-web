@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     Dialog,
     DialogContent,
@@ -16,7 +16,7 @@ import { adminService } from "@/src/connection/admin-service";
 import { PlatformRoleData } from "@/src/connection/api-types";
 import { toast } from "sonner";
 import { Checkbox } from "@/src/components/ui/checkbox";
-import { Loader2 } from "lucide-react";
+import { Loader2, Shield } from "lucide-react";
 
 interface InviteAdminModalProps {
     isOpen: boolean;
@@ -35,13 +35,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
         roleGuids: [] as string[]
     });
 
-    useEffect(() => {
-        if (isOpen) {
-            fetchRoles();
-        }
-    }, [isOpen]);
-
-    const fetchRoles = async () => {
+    const fetchRoles = useCallback(async () => {
         setIsLoadingRoles(true);
         try {
             const response = await adminService.getPlatformRoles();
@@ -51,7 +45,13 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
         } finally {
             setIsLoadingRoles(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        if (isOpen) {
+            fetchRoles();
+        }
+    }, [isOpen, fetchRoles]);
 
     const handleRoleToggle = (guid: string) => {
         setFormData(prev => ({
@@ -129,26 +129,39 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                         </div>
 
                         <div className="grid gap-3">
-                            <Label>Assign Roles</Label>
-                            <div className="grid grid-cols-1 gap-2 border border-gray-100 rounded-lg p-3 bg-gray-50/50 max-h-40 overflow-y-auto">
+                            <Label className="text-sm font-semibold text-gray-700">Assign Roles</Label>
+                            <div className="grid grid-cols-1 gap-2 border border-gray-200 rounded-xl p-4 bg-gray-50/50 max-h-60 overflow-y-auto shadow-inner">
                                 {isLoadingRoles ? (
-                                    <div className="flex items-center justify-center p-4">
-                                        <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                                    <div className="flex flex-col items-center justify-center p-8 gap-3">
+                                        <Loader2 className="h-6 w-6 animate-spin text-primary-500" />
+                                        <p className="text-xs text-gray-400 font-medium">Fetching available roles...</p>
+                                    </div>
+                                ) : roles.length === 0 ? (
+                                    <div className="text-center p-6 space-y-2">
+                                        <Shield className="h-8 w-8 text-gray-200 mx-auto" strokeWidth={1.5} />
+                                        <p className="text-xs text-gray-500">No roles found in the system.</p>
+                                        <p className="text-[10px] text-gray-400">Please create roles in the &quot;Roles&quot; tab first.</p>
                                     </div>
                                 ) : (
                                     roles.map((role) => (
-                                        <div key={role.guid} className="flex items-center space-x-2">
-                                            <Checkbox
-                                                id={`role-${role.guid}`}
-                                                checked={formData.roleGuids.includes(role.guid)}
-                                                onCheckedChange={() => handleRoleToggle(role.guid)}
-                                            />
+                                        <div
+                                            key={role.guid}
+                                            className="flex items-start space-x-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-gray-100 group"
+                                        >
+                                            <div className="pt-0.5">
+                                                <Checkbox
+                                                    id={`role-${role.guid}`}
+                                                    checked={formData.roleGuids.includes(role.guid)}
+                                                    onCheckedChange={() => handleRoleToggle(role.guid)}
+                                                    className="border-gray-300 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600"
+                                                />
+                                            </div>
                                             <Label
                                                 htmlFor={`role-${role.guid}`}
-                                                className="text-sm font-normal cursor-pointer flex-1"
+                                                className="text-sm font-medium text-gray-700 cursor-pointer flex-1 leading-tight"
                                             >
                                                 {role.name}
-                                                <span className="block text-xs text-gray-400">{role.description}</span>
+                                                <span className="block text-[10px] text-gray-400 mt-1 font-normal group-hover:text-gray-500">{role.description || "No description provided"}</span>
                                             </Label>
                                         </div>
                                     ))
