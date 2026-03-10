@@ -12,5 +12,8 @@ export { InviteStudentModal } from "./invite-student-modal";
 export { InviteMentorModal } from "./invite-mentor-modal";
 export { CreateUniversityModal } from "./create-university-modal";
 export { StudentProfileView } from "./student-profile-view";
+export { MentorProfileView } from "./mentor-profile-view";
+export { AuditLogTable } from "./audit-log-table";
 export { UniversityEditView } from "./university-edit-view";
 export { ModeratorTable } from "./moderator-table";
+

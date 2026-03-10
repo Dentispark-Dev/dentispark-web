@@ -36,7 +36,9 @@ import {
     CreateRolePayload,
     AddRolePermissionsPayload,
     StudentInvitationPayload,
-    MentorInvitationPayload
+    MentorInvitationPayload,
+    AuditQuery,
+    AuditData
 } from "./api-types";
 
 /**
@@ -250,5 +252,17 @@ export const adminService = {
 
     inviteMentor: async (payload: MentorInvitationPayload): Promise<string> => {
         return apiClient.post<string>("/mentors/invite", payload);
-    }
+    },
+
+    // --- Audit Logs ---
+
+    getAuditLogs: async (query: AuditQuery): Promise<import("./api-types").PaginatedResponse<AuditData>> => {
+        const params = new URLSearchParams();
+        if (query.action) params.append("action", query.action);
+        if (query.actor) params.append("actor", query.actor);
+        if (query.searchKey) params.append("searchKey", query.searchKey);
+        if (query.page !== undefined) params.append("pageNumber", query.page.toString());
+        if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
+        return apiClient.get<import("./api-types").PaginatedResponse<AuditData>>(`/audit?${params.toString()}`);
+    },
 };

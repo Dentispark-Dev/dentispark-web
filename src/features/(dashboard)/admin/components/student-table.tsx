@@ -20,7 +20,9 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
+    DropdownMenuSeparator,
+    DropdownMenuLabel
 } from "@/src/components/ui/dropdown-menu";
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
@@ -107,10 +109,42 @@ export function StudentTable() {
                         <UserPlus className="h-4 w-4" />
                         Invite Student
                     </Button>
-                    <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
-                        <Filter className="h-4 w-4" />
-                        Filter
-                    </Button>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
+                                <Filter className="h-4 w-4" />
+                                Filter
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuLabel>Status</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "", page: 0 }))}>
+                                All Statuses
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "ACTIVE", page: 0 }))}>
+                                Active
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", page: 0 }))}>
+                                Inactive
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Category</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "", page: 0 }))}>
+                                All Categories
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "BDS", page: 0 }))}>
+                                BDS
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "NURSING", page: 0 }))}>
+                                Nursing
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "HYGIENE_THERAPY", page: 0 }))}>
+                                Hygiene Therapy
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
 

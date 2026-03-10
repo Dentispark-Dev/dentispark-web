@@ -90,7 +90,7 @@ export function UniversityTable() {
                     </Button>
                     <Button
                         onClick={() => setIsCreateModalOpen(true)}
-                        className="h-10 bg-primary-600 hover:bg-primary-700 flex gap-2"
+                        className="h-10 bg-green-600 hover:bg-green-700 flex gap-2"
                     >
                         <Plus className="h-4 w-4" />
                         Add University

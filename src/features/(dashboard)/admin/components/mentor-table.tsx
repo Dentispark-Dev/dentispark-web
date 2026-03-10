@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     Search,
@@ -20,7 +21,9 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
+    DropdownMenuSeparator,
+    DropdownMenuLabel
 } from "@/src/components/ui/dropdown-menu";
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
@@ -118,10 +121,39 @@ export function MentorTable() {
                         <UserCheck className="h-4 w-4" />
                         Invite Mentor
                     </Button>
-                    <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
-                        <Filter className="h-4 w-4" />
-                        Filter
-                    </Button>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
+                                <Filter className="h-4 w-4" />
+                                Filter
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuLabel>Status</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "", page: 0 }))}>
+                                All Statuses
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "ACTIVE", page: 0 }))}>
+                                Active
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", page: 0 }))}>
+                                Inactive
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Verification</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, verified: undefined, page: 0 }))}>
+                                All
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, verified: true, page: 0 }))}>
+                                Verified
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}>
+                                Unverified
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
 
@@ -199,8 +231,10 @@ export function MentorTable() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem onClick={() => window.location.href = `/admin/mentors/${mentor.hid}`}>
-                                                        View Profile
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href={`/admin/mentors/${mentor.hid}`}>
+                                                            View Profile
+                                                        </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem onClick={() => verifyMentorMutation.mutate({ id: mentor.hid, verify: !mentor.verified })}>
                                                         {mentor.verified ? "Unverify Mentor" : "Verify Mentor"}
