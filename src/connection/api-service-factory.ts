@@ -290,9 +290,10 @@ export class ApiServiceFactory {
   /**
    * Creates a custom service with provided methods
    */
-  createCustomService<
-    T extends Record<string, (...args: unknown[]) => Promise<unknown>>,
-  >(serviceMethods: (api: BaseAPI) => T): T {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createCustomService<T extends Record<string, (...args: any[]) => Promise<any>>>(
+    serviceMethods: (api: BaseAPI) => T,
+  ): T {
     return serviceMethods(this.baseApi);
   }
 }

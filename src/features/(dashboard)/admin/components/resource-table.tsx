@@ -14,7 +14,8 @@ import {
     Clock
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { AdminResourceQuery } from "@/src/connection/api-types";
+import { AdminResourceQuery, PaginatedResponse, AdminResourceRecord } from "@/src/connection/api-types";
+import { useSearch } from "@/src/hooks/use-search";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -37,7 +38,13 @@ export function ResourceTable() {
         dentalSchoolPathWay: ""
     });
 
-    const [searchInput, setSearchInput] = useState("");
+    const {
+        value: searchInput,
+        setValue: setSearchInput,
+    } = useSearch({
+        paramName: "searchKey",
+        onSearch: (val) => setQuery(prev => ({ ...prev, searchKey: val, page: 0 }))
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ["admin-resources", query],
@@ -54,10 +61,6 @@ export function ResourceTable() {
             toast.error("Failed to delete resource");
         }
     });
-
-    const handleSearch = () => {
-        setQuery(prev => ({ ...prev, searchKey: searchInput, page: 0 }));
-    };
 
     const handlePageChange = (newPage: number) => {
         setQuery(prev => ({ ...prev, page: newPage }));
@@ -80,7 +83,6 @@ export function ResourceTable() {
                             className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                         />
                     </div>
 

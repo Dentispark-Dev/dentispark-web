@@ -1,19 +1,24 @@
+import dynamic from "next/dynamic";
+
+// Tables (Immediate or near-immediate need, but can be lazy loaded for tab performance)
 export { StudentTable } from "./student-table";
 export { MentorTable } from "./mentor-table";
-export { AdminDashboardAnalytics } from "./admin-analytics";
 export { UniversityTable } from "./university-table";
 export { CourseTable } from "./course-table";
 export { ResourceTable } from "./resource-table";
 export { AdminTable } from "./admin-table";
 export { RoleTable } from "./role-table";
-export { InviteAdminModal } from "./invite-admin-modal";
-export { CreateRoleModal } from "./create-role-modal";
-export { InviteStudentModal } from "./invite-student-modal";
-export { InviteMentorModal } from "./invite-mentor-modal";
-export { CreateUniversityModal } from "./create-university-modal";
-export { StudentProfileView } from "./student-profile-view";
-export { MentorProfileView } from "./mentor-profile-view";
 export { AuditLogTable } from "./audit-log-table";
-export { UniversityEditView } from "./university-edit-view";
 export { ModeratorTable } from "./moderator-table";
+
+// Heavy components / Modals (Lazy loaded)
+export const AdminDashboardAnalytics = dynamic(() => import("./admin-analytics").then(mod => mod.AdminDashboardAnalytics));
+export const InviteAdminModal = dynamic(() => import("./invite-admin-modal").then(mod => mod.InviteAdminModal));
+export const CreateRoleModal = dynamic(() => import("./create-role-modal").then(mod => mod.CreateRoleModal));
+export const InviteStudentModal = dynamic(() => import("./invite-student-modal").then(mod => mod.InviteStudentModal));
+export const InviteMentorModal = dynamic(() => import("./invite-mentor-modal").then(mod => mod.InviteMentorModal));
+export const CreateUniversityModal = dynamic(() => import("./create-university-modal").then(mod => mod.CreateUniversityModal));
+export const StudentProfileView = dynamic(() => import("./student-profile-view").then(mod => mod.StudentProfileView));
+export const MentorProfileView = dynamic(() => import("./mentor-profile-view").then(mod => mod.MentorProfileView));
+export const UniversityEditView = dynamic(() => import("./university-edit-view").then(mod => mod.UniversityEditView));
 

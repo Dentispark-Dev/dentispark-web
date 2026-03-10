@@ -14,7 +14,8 @@ import {
     UserCheck
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
-import { MentorQuery } from "@/src/connection/api-types";
+import { MentorQuery, PaginatedResponse, MentorRecord } from "@/src/connection/api-types";
+import { useSearch } from "@/src/hooks/use-search";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -41,7 +42,13 @@ export function MentorTable() {
         verified: undefined
     });
 
-    const [searchInput, setSearchInput] = useState("");
+    const {
+        value: searchInput,
+        setValue: setSearchInput,
+    } = useSearch({
+        paramName: "searchKey",
+        onSearch: (val) => setQuery(prev => ({ ...prev, searchKey: val, page: 0 }))
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ["admin-mentors", query],
@@ -51,12 +58,38 @@ export function MentorTable() {
     const updateStatusMutation = useMutation({
         mutationFn: ({ id, status }: { id: string; status: string }) =>
             adminService.updateMentorStatus(id, { status }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
-            toast.success("Mentor status updated successfully");
+        onMutate: async ({ id, status }) => {
+            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+            await queryClient.cancelQueries({ queryKey: ["admin-mentors", query] });
+
+            // Snapshot the previous value
+            const previousData = queryClient.getQueryData<PaginatedResponse<MentorRecord>>(["admin-mentors", query]);
+
+            // Optimistically update to the new value
+            if (previousData) {
+                queryClient.setQueryData(["admin-mentors", query], {
+                    ...previousData,
+                    content: previousData.content.map(mentor =>
+                        mentor.hid === id ? { ...mentor, activationStatus: status } : mentor
+                    )
+                });
+            }
+
+            return { previousData };
         },
-        onError: () => {
+        onError: (_err, _newStatus, context) => {
+            // Rollback to the previous value if mutation fails
+            if (context?.previousData) {
+                queryClient.setQueryData(["admin-mentors", query], context.previousData);
+            }
             toast.error("Failed to update mentor status");
+        },
+        onSettled: () => {
+            // Always refetch after error or success to ensure sync with server
+            queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
+        },
+        onSuccess: () => {
+            toast.success("Mentor status updated successfully");
         }
     });
 
@@ -71,10 +104,6 @@ export function MentorTable() {
             toast.error("Failed to update mentor verification");
         }
     });
-
-    const handleSearch = () => {
-        setQuery(prev => ({ ...prev, searchKey: searchInput, page: 0 }));
-    };
 
     const handlePageChange = (newPage: number) => {
         setQuery(prev => ({ ...prev, page: newPage }));
@@ -109,7 +138,6 @@ export function MentorTable() {
                         className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                 </div>
 

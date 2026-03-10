@@ -134,9 +134,10 @@ export class BaseAPI {
     // Request interceptor
     this.axiosInstance.interceptors.request.use(
       async (config: InternalAxiosRequestConfig) => {
-        if (this.token) {
+        const currentToken = this.getStoredToken();
+        if (currentToken) {
           config.headers = config.headers || {};
-          config.headers.Authorization = `Bearer ${this.token}`;
+          config.headers.Authorization = `Bearer ${currentToken}`;
         }
 
         const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;

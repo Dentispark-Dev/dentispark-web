@@ -14,7 +14,8 @@ import {
     GraduationCap
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
-import { AdminCourseQuery } from "@/src/connection/api-types";
+import { AdminCourseQuery, PaginatedResponse, AdminCourseRecord } from "@/src/connection/api-types";
+import { useSearch } from "@/src/hooks/use-search";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -38,7 +39,13 @@ export function CourseTable() {
         degreeType: ""
     });
 
-    const [searchInput, setSearchInput] = useState("");
+    const {
+        value: searchInput,
+        setValue: setSearchInput,
+    } = useSearch({
+        paramName: "searchKey",
+        onSearch: (val) => setQuery(prev => ({ ...prev, searchKey: val, page: 0 }))
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ["admin-courses", query],
@@ -55,10 +62,6 @@ export function CourseTable() {
             toast.error("Failed to delete course");
         }
     });
-
-    const handleSearch = () => {
-        setQuery(prev => ({ ...prev, searchKey: searchInput, page: 0 }));
-    };
 
     const handlePageChange = (newPage: number) => {
         setQuery(prev => ({ ...prev, page: newPage }));
@@ -81,7 +84,6 @@ export function CourseTable() {
                             className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                         />
                     </div>
 

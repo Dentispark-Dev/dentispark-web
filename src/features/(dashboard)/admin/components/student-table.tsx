@@ -13,7 +13,8 @@ import {
     UserPlus
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
-import { StudentQuery } from "@/src/connection/api-types";
+import { StudentQuery, PaginatedResponse, StudentRecord } from "@/src/connection/api-types";
+import { useSearch } from "@/src/hooks/use-search";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -39,7 +40,13 @@ export function StudentTable() {
         platformMemberProfileStatus: ""
     });
 
-    const [searchInput, setSearchInput] = useState("");
+    const {
+        value: searchInput,
+        setValue: setSearchInput,
+    } = useSearch({
+        paramName: "searchKey",
+        onSearch: (val) => setQuery(prev => ({ ...prev, searchKey: val, page: 0 }))
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ["admin-students", query],
@@ -49,18 +56,40 @@ export function StudentTable() {
     const updateStatusMutation = useMutation({
         mutationFn: ({ id, status }: { id: string; status: string }) =>
             adminService.updateStudentStatus(id, { status }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-students"] });
-            toast.success("Student status updated successfully");
+        onMutate: async ({ id, status }) => {
+            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+            await queryClient.cancelQueries({ queryKey: ["admin-students", query] });
+
+            // Snapshot the previous value
+            const previousData = queryClient.getQueryData<PaginatedResponse<StudentRecord>>(["admin-students", query]);
+
+            // Optimistically update to the new value
+            if (previousData) {
+                queryClient.setQueryData(["admin-students", query], {
+                    ...previousData,
+                    content: previousData.content.map(student =>
+                        student.sid === id ? { ...student, activationStatus: status } : student
+                    )
+                });
+            }
+
+            return { previousData };
         },
-        onError: () => {
+        onError: (_err, _newStatus, context) => {
+            // Rollback to the previous value if mutation fails
+            if (context?.previousData) {
+                queryClient.setQueryData(["admin-students", query], context.previousData);
+            }
             toast.error("Failed to update student status");
+        },
+        onSettled: () => {
+            // Always refetch after error or success to ensure sync with server
+            queryClient.invalidateQueries({ queryKey: ["admin-students"] });
+        },
+        onSuccess: () => {
+            toast.success("Student status updated successfully");
         }
     });
-
-    const handleSearch = () => {
-        setQuery(prev => ({ ...prev, searchKey: searchInput, page: 0 }));
-    };
 
     const handlePageChange = (newPage: number) => {
         setQuery(prev => ({ ...prev, page: newPage }));
@@ -97,7 +126,6 @@ export function StudentTable() {
                         className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                 </div>
 

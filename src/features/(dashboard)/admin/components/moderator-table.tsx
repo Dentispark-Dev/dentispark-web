@@ -46,9 +46,12 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
             });
 
             const filtered = response.content.filter(admin =>
-                admin.rolesAndPermissions?.some(rp =>
-                    rp.name.toLowerCase().includes("moderator")
-                )
+                !admin.rolesAndPermissions ||
+                admin.rolesAndPermissions.length === 0 ||
+                admin.rolesAndPermissions.some(rp => {
+                    const name = rp.name.toLowerCase();
+                    return name.includes("moderator") || name.includes("admin");
+                })
             );
 
             setModerators(filtered);

@@ -15,7 +15,8 @@ import {
     Globe
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { AdminUniversityQuery } from "@/src/connection/api-types";
+import { AdminUniversityQuery, PaginatedResponse, AdminUniversityRecord } from "@/src/connection/api-types";
+import { useSearch } from "@/src/hooks/use-search";
 import { CreateUniversityModal } from "./create-university-modal";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -37,7 +38,13 @@ export function UniversityTable() {
         dentalSchoolPathway: ""
     });
 
-    const [searchInput, setSearchInput] = useState("");
+    const {
+        value: searchInput,
+        setValue: setSearchInput,
+    } = useSearch({
+        paramName: "searchKey",
+        onSearch: (val) => setQuery(prev => ({ ...prev, searchKey: val, page: 0 }))
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ["admin-universities", query],
@@ -54,10 +61,6 @@ export function UniversityTable() {
             toast.error("Failed to delete university");
         }
     });
-
-    const handleSearch = () => {
-        setQuery(prev => ({ ...prev, searchKey: searchInput, page: 0 }));
-    };
 
     const handlePageChange = (newPage: number) => {
         setQuery(prev => ({ ...prev, page: newPage }));
@@ -79,7 +82,6 @@ export function UniversityTable() {
                         className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                 </div>
 
