@@ -16,6 +16,7 @@ import {
     AlertTriangle
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
+import { LoginSession } from "@/src/connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { toast } from "sonner";
 import {
@@ -156,7 +157,7 @@ export function LoginHistoryTable() {
                                     </td>
                                 </tr>
                             ) : (
-                                sessions.map((session: any) => (
+                                sessions.map((session: LoginSession) => (
                                     <tr key={session.guid} className="hover:bg-gray-50/50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex flex-col">

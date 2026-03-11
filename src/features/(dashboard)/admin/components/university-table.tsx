@@ -15,7 +15,7 @@ import {
     Globe
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { AdminUniversityQuery, PaginatedResponse, AdminUniversityRecord } from "@/src/connection/api-types";
+import { AdminUniversityQuery } from "@/src/connection/api-types";
 import { useSearch } from "@/src/hooks/use-search";
 import { CreateUniversityModal } from "./create-university-modal";
 import { Button } from "@/src/components/ui/button";

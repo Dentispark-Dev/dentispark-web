@@ -71,7 +71,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
             await adminService.deactivateAdmin(email, "Deactivated by super admin");
             toast.success("Moderator deactivated successfully");
             fetchModerators();
-        } catch (error) {
+        } catch {
             toast.error("Failed to deactivate moderator");
         }
     };

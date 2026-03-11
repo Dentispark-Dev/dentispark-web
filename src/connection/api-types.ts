@@ -613,7 +613,7 @@ export interface GrowthAnalytics {
 
 export interface TrafficAnalytics {
   label: string;
-  value: number;
+  value?: number;
   percentage: number;
 }
 
@@ -727,4 +727,14 @@ export interface AuditData {
   entityId: string;
   ipAddress: string;
   actionDateTime: string;
+}
+
+export interface LoginSession {
+  guid: string;
+  userEmail: string;
+  userType: string;
+  ipAddress: string;
+  location: string;
+  device: string;
+  loginAt: string;
 }

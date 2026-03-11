@@ -39,7 +39,8 @@ import {
     MentorInvitationPayload,
     AuditQuery,
     AuditData,
-    TrafficSummary
+    TrafficSummary,
+    LoginSession
 } from "./api-types";
 
 /**
@@ -220,7 +221,7 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getLoginHistory: (page: number = 0, size: number = 20) =>
-        api.get<PaginatedResponse<any>>(`/admin-mgt/sessions?pageNumber=${page}&pageSize=${size}`),
+        api.get<PaginatedResponse<LoginSession>>(`/admin-mgt/sessions?pageNumber=${page}&pageSize=${size}`),
 
     clearLoginHistory: () => api.delete<void>("/admin-mgt/sessions"),
 

@@ -6,8 +6,6 @@ import {
     UserCheck,
     BookOpen,
     TrendingUp,
-    Loader2,
-    Calendar,
     ArrowUpRight,
     ArrowDownRight,
     Monitor,
@@ -17,17 +15,13 @@ import {
     Zap
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { TrafficAnalytics } from "../../../../connection/api-types";
 
 export function AdminDashboardAnalytics() {
     const { data: summaryData, isLoading: isSummaryLoading } = useQuery({
         queryKey: ["admin-dashboard-summary"],
         queryFn: () => adminService.getDashboardSummary(),
-    });
-
-    const { data: growthData } = useQuery({
-        queryKey: ["admin-growth-analytics"],
-        queryFn: () => adminService.getGrowthAnalytics(7),
     });
 
     const { data: trafficData } = useQuery({
@@ -230,7 +224,7 @@ export function AdminDashboardAnalytics() {
                                     {label: 'Desktop', percentage: 65},
                                     {label: 'Mobile', percentage: 30},
                                     {label: 'Tablet', percentage: 5}
-                                ]).map((device: any) => {
+                                ]).map((device: TrafficAnalytics) => {
                                     const Icon = getDeviceIcon(device.label);
                                     return (
                                         <div key={device.label} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-gray-50/50 border border-gray-100/50 hover:bg-white transition-colors duration-300">
@@ -255,7 +249,7 @@ export function AdminDashboardAnalytics() {
                                     {label: 'United States', percentage: 15},
                                     {label: 'India', percentage: 10},
                                     {label: 'Others', percentage: 15}
-                                ]).map((loc: any) => (
+                                ]).map((loc: TrafficAnalytics) => (
                                     <div key={loc.label} className="space-y-1.5">
                                         <div className="flex items-center justify-between text-xs font-bold">
                                             <span className="text-gray-700">{loc.label}</span>

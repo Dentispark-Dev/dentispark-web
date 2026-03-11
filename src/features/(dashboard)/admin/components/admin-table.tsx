@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     Search,
-    Filter,
     MoreHorizontal,
     Mail,
     Shield,
@@ -34,36 +33,33 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
     const [admins, setAdmins] = useState<AdminRecord[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchKey, setSearchKey] = useState("");
-    const [status, setStatus] = useState<string>("");
 
-    const fetchAdmins = async () => {
+    const fetchAdmins = useCallback(async () => {
         setIsLoading(true);
         try {
             const response = await adminService.getAdminRecords({
                 searchKey,
-                status: status || undefined,
                 page: 0,
                 perPage: 100
             });
             setAdmins(response.content);
-        } catch (error) {
-            console.error("Failed to fetch admins:", error);
+        } catch {
             toast.error("Failed to load administrative users");
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [searchKey]);
 
     useEffect(() => {
         fetchAdmins();
-    }, [searchKey, status]);
+    }, [fetchAdmins]);
 
     const handleDeactivate = async (email: string) => {
         try {
             await adminService.deactivateAdmin(email, "Deactivated by super admin");
             toast.success("Admin deactivated successfully");
             fetchAdmins();
-        } catch (error) {
+        } catch {
             toast.error("Failed to deactivate admin");
         }
     };

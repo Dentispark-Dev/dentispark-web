@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     Dialog,
     DialogContent,
@@ -36,6 +36,19 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
         permissionEnums: [] as string[]
     });
 
+    const fetchPermissions = useCallback(async () => {
+        if (permissions.length > 0) return;
+        setIsLoadingPermissions(true);
+        try {
+            const response = await adminService.getPlatformPermissions();
+            setPermissions(response);
+        } catch {
+            toast.error("Failed to load permissions");
+        } finally {
+            setIsLoadingPermissions(false);
+        }
+    }, [permissions.length]);
+
     useEffect(() => {
         if (isOpen) {
             fetchPermissions();
@@ -54,20 +67,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                 });
             }
         }
-    }, [isOpen, editRole]);
-
-    const fetchPermissions = async () => {
-        if (permissions.length > 0) return;
-        setIsLoadingPermissions(true);
-        try {
-            const response = await adminService.getPlatformPermissions();
-            setPermissions(response);
-        } catch (error) {
-            toast.error("Failed to load permissions");
-        } finally {
-            setIsLoadingPermissions(false);
-        }
-    };
+    }, [isOpen, editRole, fetchPermissions]);
 
     const fetchRolePermissions = async (guid: string) => {
         try {
@@ -76,8 +76,8 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                 ...prev,
                 permissionEnums: response.permissions.map(p => p.name) // Permissions are identified by Enum Name in the payload
             }));
-        } catch (error) {
-            console.error("Failed to fetch role permissions:", error);
+        } catch {
+            console.error("Failed to fetch role permissions");
         }
     };
 
@@ -106,7 +106,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
             }
             onSuccess();
             onClose();
-        } catch (error) {
+        } catch {
             toast.error("Failed to save role");
         } finally {
             setIsSubmitting(false);
