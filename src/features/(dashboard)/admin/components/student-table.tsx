@@ -245,7 +245,7 @@ export function StudentTable() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/admin/students/${student.sid}`}>
+                                                        <Link href={`/admin/students/${encodeURIComponent(student.sid)}`}>
                                                             View Profile
                                                         </Link>
                                                     </DropdownMenuItem>

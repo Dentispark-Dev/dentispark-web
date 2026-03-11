@@ -60,10 +60,10 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getStudentDetail: (studentId: string) =>
-        api.get<StudentDetail>(`/students/${studentId}/detail`),
+        api.get<StudentDetail>(`/students/${encodeURIComponent(studentId)}/detail`),
 
     updateStudentStatus: (studentId: string, payload: UpdateStatusPayload) =>
-        api.patch<string>(`/students/${studentId}/status`, payload),
+        api.patch<string>(`/students/${encodeURIComponent(studentId)}/status`, payload),
 
     // --- Mentor Management ---
     getMentorMetrics: (days: number = 30) =>
@@ -79,13 +79,13 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getMentorDetail: (mentorId: string) =>
-        api.get<MentorDetail>(`/mentors/${mentorId}/detail`),
+        api.get<MentorDetail>(`/mentors/${encodeURIComponent(mentorId)}/detail`),
 
     updateMentorStatus: (mentorId: string, payload: UpdateStatusPayload) =>
-        api.patch<string>(`/mentors/${mentorId}/status`, payload),
+        api.patch<string>(`/mentors/${encodeURIComponent(mentorId)}/status`, payload),
 
     verifyMentor: (mentorId: string, payload: VerifyMentorPayload) =>
-        api.post<string>(`/mentors/${mentorId}/verify`, payload),
+        api.post<string>(`/mentors/${encodeURIComponent(mentorId)}/verify`, payload),
 
     // --- Content Management: Universities ---
     getUniversityRecords: (query: AdminUniversityQuery) => {
@@ -98,16 +98,16 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getUniversityDetail: (universityId: string) =>
-        api.get<AdminUniversityDetail>(`/admin-content/universities/${universityId}`),
+        api.get<AdminUniversityDetail>(`/admin-content/universities/${encodeURIComponent(universityId)}`),
 
     createUniversity: (payload: CreateUniversityPayload) =>
         api.post<string>("/admin-content/universities", payload),
 
     updateUniversity: (universityId: string, payload: CreateUniversityPayload) =>
-        api.put<string>(`/admin-content/universities/${universityId}`, payload),
+        api.put<string>(`/admin-content/universities/${encodeURIComponent(universityId)}`, payload),
 
     deleteUniversity: (universityId: string) =>
-        api.delete<string>(`/admin-content/universities/${universityId}`),
+        api.delete<string>(`/admin-content/universities/${encodeURIComponent(universityId)}`),
 
     // --- Content Management: Courses ---
     getCourseRecords: (query: AdminCourseQuery) => {
@@ -121,16 +121,16 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getCourseDetail: (courseId: string) =>
-        api.get<AdminCourseDetail>(`/admin-content/courses/${courseId}`),
+        api.get<AdminCourseDetail>(`/admin-content/courses/${encodeURIComponent(courseId)}`),
 
     createCourse: (payload: CreateCoursePayload) =>
         api.post<string>("/admin-content/courses", payload),
 
     updateCourse: (courseId: string, payload: CreateCoursePayload) =>
-        api.put<string>(`/admin-content/courses/${courseId}`, payload),
+        api.put<string>(`/admin-content/courses/${encodeURIComponent(courseId)}`, payload),
 
     deleteCourse: (courseId: string) =>
-        api.delete<string>(`/admin-content/courses/${courseId}`),
+        api.delete<string>(`/admin-content/courses/${encodeURIComponent(courseId)}`),
 
     // --- Dashboard & Analytics ---
     getDashboardSummary: () => api.get<DashboardSummary>("/dashboard/summary"),
@@ -152,16 +152,16 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getResourceDetail: (resourceId: string) =>
-        api.get<AdminResourceDetail>(`/admin-content/resources/${resourceId}`),
+        api.get<AdminResourceDetail>(`/admin-content/resources/${encodeURIComponent(resourceId)}`),
 
     createResource: (payload: CreateResourcePayload) =>
         api.post<string>("/admin-content/resources", payload),
 
     updateResource: (resourceId: string, payload: CreateResourcePayload) =>
-        api.put<string>(`/admin-content/resources/${resourceId}`, payload),
+        api.put<string>(`/admin-content/resources/${encodeURIComponent(resourceId)}`, payload),
 
     deleteResource: (resourceId: string) =>
-        api.delete<string>(`/admin-content/resources/${resourceId}`),
+        api.delete<string>(`/admin-content/resources/${encodeURIComponent(resourceId)}`),
 
     // --- Admin & Role Management ---
     getAdminRecords: (query: AdminQuery) => {

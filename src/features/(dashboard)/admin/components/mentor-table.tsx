@@ -264,7 +264,7 @@ export function MentorTable() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/admin/mentors/${mentor.hid}`}>
+                                                        <Link href={`/admin/mentors/${encodeURIComponent(mentor.hid)}`}>
                                                             View Profile
                                                         </Link>
                                                     </DropdownMenuItem>
