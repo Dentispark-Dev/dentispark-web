@@ -1040,6 +1040,13 @@ const adminMenuItems: MenuItem[] = [
     icon: menuItems.find((i) => i.id === "quality-control")?.icon || menuItems[0].icon,
   },
   {
+    id: "admin-login-history",
+    label: "Login History",
+    href: "/admin/login-history",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "overview")?.icon || menuItems[0].icon,
+  },
+  {
     id: "admin-moderators",
     label: "Moderators",
     href: "/admin/moderators",

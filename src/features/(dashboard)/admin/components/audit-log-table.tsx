@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     Search,
     ChevronLeft,
@@ -10,7 +10,9 @@ import {
     Shield,
     Clock,
     User,
-    Filter
+    Filter,
+    Trash2,
+    AlertTriangle
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
 import { AuditQuery } from "@/src/connection/api-types";
@@ -25,6 +27,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuLabel
 } from "@/src/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogClose,
+} from "@/src/components/ui/dialog";
 
 const ACTION_COLORS: Record<string, string> = {
     CREATE: "bg-green-100 text-green-700",
@@ -35,9 +48,11 @@ const ACTION_COLORS: Record<string, string> = {
     ACTIVATE: "bg-emerald-100 text-emerald-700",
     DEACTIVATE: "bg-orange-100 text-orange-700",
     VERIFY: "bg-teal-100 text-teal-700",
+    CREATE_ASSET: "bg-green-100 text-green-700",
+    UPDATE_ASSET: "bg-blue-100 text-blue-700",
 };
 
-const ACTION_TYPES = ["CREATE", "UPDATE", "DELETE", "LOGIN", "LOGOUT", "ACTIVATE", "DEACTIVATE", "VERIFY"];
+const ACTION_TYPES = ["CREATE", "UPDATE", "DELETE", "LOGIN", "LOGOUT", "ACTIVATE", "DEACTIVATE", "VERIFY", "CREATE_ASSET", "UPDATE_ASSET"];
 
 export function AuditLogTable() {
     const [query, setQuery] = useState<AuditQuery>({
@@ -52,6 +67,18 @@ export function AuditLogTable() {
     const { data, isLoading } = useQuery({
         queryKey: ["admin-audit-logs", query],
         queryFn: () => adminService.getAuditLogs(query),
+    });
+ 
+    const queryClient = useQueryClient();
+    const clearLogsMutation = useMutation({
+        mutationFn: () => adminService.clearAuditLogs(),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["admin-audit-logs"] });
+            toast.success("Audit logs cleared successfully");
+        },
+        onError: () => {
+            toast.error("Failed to clear audit logs");
+        }
     });
 
     const handleSearch = () => {
@@ -109,6 +136,41 @@ export function AuditLogTable() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+ 
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button 
+                                variant="outline" 
+                                className="flex gap-2 h-10 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                                disabled={logs.length === 0 || clearLogsMutation.isPending}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                                Clear All Logs
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-[400px]">
+                            <DialogHeader>
+                                <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
+                                    <AlertTriangle className="h-6 w-6 text-red-600" />
+                                </div>
+                                <DialogTitle className="text-xl font-bold text-gray-900">Clear Audit Logs?</DialogTitle>
+                                <DialogDescription className="text-gray-500">
+                                    This action will permanently delete all audit log records from the database. This cannot be undone.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                                <DialogClose asChild>
+                                    <Button variant="outline" className="rounded-xl border-gray-200">Cancel</Button>
+                                </DialogClose>
+                                <Button 
+                                    onClick={() => clearLogsMutation.mutate()}
+                                    className="bg-red-600 hover:bg-red-700 text-white rounded-xl"
+                                >
+                                    {clearLogsMutation.isPending ? "Clearing..." : "Yes, Clear All"}
+                                </Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
 

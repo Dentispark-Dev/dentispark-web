@@ -38,7 +38,8 @@ import {
     StudentInvitationPayload,
     MentorInvitationPayload,
     AuditQuery,
-    AuditData
+    AuditData,
+    TrafficSummary
 } from "./api-types";
 
 /**
@@ -141,6 +142,8 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     getGlobalActivity: (page: number = 0, size: number = 10) =>
         api.get<PaginatedResponse<GlobalActivity>>(`/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`),
 
+    getTrafficAnalytics: () => api.get<TrafficSummary>("/dashboard/traffic"),
+
     // --- Content Management: Resources ---
     getResourceRecords: (query: AdminResourceQuery) => {
         const params = new URLSearchParams();
@@ -214,5 +217,12 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
         if (query.page !== undefined) params.append("pageNumber", query.page.toString());
         if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
         return api.get<PaginatedResponse<AuditData>>(`/audit?${params.toString()}`);
-    }
+    },
+
+    getLoginHistory: (page: number = 0, size: number = 20) =>
+        api.get<PaginatedResponse<any>>(`/admin-mgt/sessions?pageNumber=${page}&pageSize=${size}`),
+
+    clearLoginHistory: () => api.delete<void>("/admin-mgt/sessions"),
+
+    clearAuditLogs: () => api.delete<void>("/audit")
 }));

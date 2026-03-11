@@ -611,6 +611,17 @@ export interface GrowthAnalytics {
   mentorCount: number;
 }
 
+export interface TrafficAnalytics {
+  label: string;
+  value: number;
+  percentage: number;
+}
+
+export interface TrafficSummary {
+  deviceDistribution: TrafficAnalytics[];
+  locationDistribution: TrafficAnalytics[];
+}
+
 export interface GlobalActivity {
   userId: string;
   fullName: string;
