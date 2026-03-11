@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface UseSearchOptions {
@@ -24,6 +24,7 @@ export function useSearch({
     const initialValue = searchParams.get(paramName) || "";
     const [value, setValue] = useState(initialValue);
     const [debouncedValue, setDebouncedValue] = useState(initialValue);
+    const lastValueRef = useRef(initialValue);
 
     // Update debounced value
     useEffect(() => {
@@ -37,6 +38,7 @@ export function useSearch({
     // Synchronize with URL and trigger callback
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
+        const currentUrlValue = searchParams.get(paramName) || "";
 
         if (debouncedValue) {
             params.set(paramName, debouncedValue);
@@ -44,13 +46,17 @@ export function useSearch({
             params.delete(paramName);
         }
 
-        // Only push if the value actually changed to avoid unnecessary history entries
-        if (params.get(paramName) !== searchParams.get(paramName)) {
-            const query = params.toString();
-            router.push(`${pathname}${query ? `?${query}` : ""}`, { scroll: false });
+        const newQueryString = params.toString();
+        const nextUrl = `${pathname}${newQueryString ? `?${newQueryString}` : ""}`;
+
+        // Only push if the URL value actually changed to avoid unnecessary history entries
+        if (debouncedValue !== currentUrlValue) {
+            router.push(nextUrl, { scroll: false });
         }
 
-        if (onSearch) {
+        // Only trigger onSearch if the value changed to prevent infinite loops
+        if (onSearch && debouncedValue !== lastValueRef.current) {
+            lastValueRef.current = debouncedValue;
             onSearch(debouncedValue);
         }
     }, [debouncedValue, paramName, pathname, router, searchParams, onSearch]);

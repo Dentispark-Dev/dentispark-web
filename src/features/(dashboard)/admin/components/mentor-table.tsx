@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -42,12 +42,16 @@ export function MentorTable() {
         verified: undefined
     });
 
+    const handleSearch = useCallback((val: string) => {
+        setQuery(prev => ({ ...prev, searchKey: val, page: 0 }));
+    }, []);
+
     const {
         value: searchInput,
         setValue: setSearchInput,
     } = useSearch({
         paramName: "searchKey",
-        onSearch: (val) => setQuery(prev => ({ ...prev, searchKey: val, page: 0 }))
+        onSearch: handleSearch
     });
 
     const { data, isLoading } = useQuery({
