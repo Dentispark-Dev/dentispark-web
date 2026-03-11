@@ -78,6 +78,7 @@ export function ProtectedRoute({
   if (
     !requiresProfile &&
     user?.profileStatus === "COMPLETED" &&
+    typeof window !== "undefined" &&
     window.location.pathname === "/profile-setup"
   ) {
     return null; // Router will handle redirect

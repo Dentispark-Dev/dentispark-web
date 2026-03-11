@@ -48,13 +48,15 @@ export default function DashboardSidebar({
                     }
                   }}
                 />
-              ) : (
+              ) : user?.fullName ? (
                 <div className="bg-primary font-sora flex size-10 items-center justify-center rounded-full font-medium text-white">
-                  {user?.fullName
+                  {user.fullName
                     .split(" ")
                     .map((name) => name[0])
                     .join("")}
                 </div>
+              ) : (
+                <div className="bg-primary size-10 rounded-full" />
               )}
             </div>
             <div>

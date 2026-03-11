@@ -64,13 +64,15 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                   className="size-10 rounded-full object-cover"
                 />
               </div>
-            ) : (
+            ) : user?.fullName ? (
               <div className="bg-primary font-sora flex size-10 items-center justify-center rounded-full font-medium text-white uppercase">
-                {user?.fullName
+                {user.fullName
                   .split(" ")
                   .map((name) => name[0])
                   .join("")}
               </div>
+            ) : (
+              <div className="bg-primary size-10 rounded-full" />
             )}
             <div className="font-sora">
               <p className="text-black-700 text-sm font-medium">
