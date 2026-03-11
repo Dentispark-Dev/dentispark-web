@@ -1,6 +1,8 @@
 "use client";
 
+import { Suspense } from "react";
 import { StudentTable } from "@/src/features/(dashboard)/admin/components";
+import { Loader2 } from "lucide-react";
 
 export default function AdminStudentsPage() {
     return (
@@ -10,7 +12,13 @@ export default function AdminStudentsPage() {
                 <p className="text-gray-500 mt-1">View, search and manage all registered students.</p>
             </div>
 
-            <StudentTable />
+            <Suspense fallback={
+                <div className="flex items-center justify-center p-12">
+                    <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
+                </div>
+            }>
+                <StudentTable />
+            </Suspense>
         </div>
     );
 }

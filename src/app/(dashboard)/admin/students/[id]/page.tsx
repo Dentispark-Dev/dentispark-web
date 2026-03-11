@@ -1,7 +1,8 @@
 "use client";
 
-import { use } from "react";
+import { use, Suspense } from "react";
 import { StudentProfileView } from "@/src/features/(dashboard)/admin/components";
+import { Loader2 } from "lucide-react";
 
 interface PageProps {
     params: Promise<{
@@ -13,7 +14,13 @@ export default function StudentDetailPage({ params }: PageProps) {
     const { id } = use(params);
     return (
         <div className="space-y-6">
-            <StudentProfileView studentId={id} />
+            <Suspense fallback={
+                <div className="flex items-center justify-center p-12">
+                    <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
+                </div>
+            }>
+                <StudentProfileView studentId={id} />
+            </Suspense>
         </div>
     );
 }

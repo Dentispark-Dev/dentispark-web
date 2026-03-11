@@ -1,6 +1,8 @@
 "use client";
 
+import { Suspense } from "react";
 import { AdminDashboardAnalytics } from "@/src/features/(dashboard)/admin/components";
+import { Loader2 } from "lucide-react";
 
 export default function AdminDashboardPage() {
     return (
@@ -10,7 +12,13 @@ export default function AdminDashboardPage() {
                 <p className="text-gray-500 mt-1">Platform overview and performance metrics.</p>
             </div>
 
-            <AdminDashboardAnalytics />
+            <Suspense fallback={
+                <div className="flex items-center justify-center p-12">
+                    <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
+                </div>
+            }>
+                <AdminDashboardAnalytics />
+            </Suspense>
         </div>
     );
 }

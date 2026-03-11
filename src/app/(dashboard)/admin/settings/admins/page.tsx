@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { AdminTable, InviteAdminModal } from "@/src/features/(dashboard)/admin/components";
+import { Loader2 } from "lucide-react";
 
 export default function AdminsPage() {
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -18,16 +19,18 @@ export default function AdminsPage() {
                 <p className="text-gray-500">Manage administrative users, invite new team members, and assign roles.</p>
             </div>
 
-            <AdminTable
-                key={refreshKey}
-                onInviteClick={() => setIsInviteModalOpen(true)}
-            />
+            <Suspense fallback={<Loader2 className="h-8 w-8 animate-spin mx-auto mt-12" />}>
+                <AdminTable
+                    key={refreshKey}
+                    onInviteClick={() => setIsInviteModalOpen(true)}
+                />
 
-            <InviteAdminModal
-                isOpen={isInviteModalOpen}
-                onClose={() => setIsInviteModalOpen(false)}
-                onSuccess={handleSuccess}
-            />
+                <InviteAdminModal
+                    isOpen={isInviteModalOpen}
+                    onClose={() => setIsInviteModalOpen(false)}
+                    onSuccess={handleSuccess}
+                />
+            </Suspense>
         </div>
     );
 }
