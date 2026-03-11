@@ -12,10 +12,12 @@ import {
     Plus,
     Loader2,
     MapPin,
-    Globe
+    Globe,
+    BookPlus
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
 import { AdminUniversityQuery } from "@/src/connection/api-types";
+import { CreateCourseModal } from "./create-course-modal";
 import { useSearch } from "@/src/hooks/use-search";
 import { CreateUniversityModal } from "./create-university-modal";
 import { Button } from "@/src/components/ui/button";
@@ -30,6 +32,7 @@ import { toast } from "sonner";
 
 export function UniversityTable() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [selectedUniForProgram, setSelectedUniForProgram] = useState<string | undefined>(undefined);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<AdminUniversityQuery>({
         page: 0,
@@ -37,6 +40,13 @@ export function UniversityTable() {
         searchKey: "",
         dentalSchoolPathway: ""
     });
+
+    const [isCreateProgramModalOpen, setIsCreateProgramModalOpen] = useState(false);
+
+    const handleAddProgramSet = (hid: string) => {
+        setSelectedUniForProgram(hid);
+        setIsCreateProgramModalOpen(true);
+    };
 
     const handleSearch = useCallback((val: string) => {
         setQuery(prev => ({ ...prev, searchKey: val, page: 0 }));
@@ -174,6 +184,10 @@ export function UniversityTable() {
                                                             Edit Details
                                                         </Link>
                                                     </DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => handleAddProgramSet(uni.hid)} className="text-green-600">
+                                                        <BookPlus className="h-4 w-4 mr-2" />
+                                                        Add Program
+                                                    </DropdownMenuItem>
                                                     <DropdownMenuItem onClick={() => deleteMutation.mutate(uni.hid)} className="text-red-600">
                                                         Delete
                                                     </DropdownMenuItem>
@@ -220,6 +234,14 @@ export function UniversityTable() {
             <CreateUniversityModal
                 isOpen={isCreateModalOpen}
                 onClose={() => setIsCreateModalOpen(false)}
+            />
+            <CreateCourseModal 
+                isOpen={isCreateProgramModalOpen}
+                onClose={() => {
+                    setIsCreateProgramModalOpen(false);
+                    setSelectedUniForProgram(undefined);
+                }}
+                initialUniversityHid={selectedUniForProgram}
             />
         </div>
     );

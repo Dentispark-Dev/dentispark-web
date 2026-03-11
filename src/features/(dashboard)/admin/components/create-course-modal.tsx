@@ -13,12 +13,13 @@ import { X, Loader2 } from "lucide-react";
 interface CreateCourseModalProps {
     isOpen: boolean;
     onClose: () => void;
+    initialUniversityHid?: string;
 }
 
-export function CreateCourseModal({ isOpen, onClose }: CreateCourseModalProps) {
+export function CreateCourseModal({ isOpen, onClose, initialUniversityHid }: CreateCourseModalProps) {
     const queryClient = useQueryClient();
     const [formData, setFormData] = useState<CreateCoursePayload>({
-        universityHid: "",
+        universityHid: initialUniversityHid || "",
         courseName: "",
         degreeType: "",
         durationYears: undefined,
@@ -41,7 +42,17 @@ export function CreateCourseModal({ isOpen, onClose }: CreateCourseModalProps) {
             queryClient.invalidateQueries({ queryKey: ["admin-courses"] });
             toast.success("Course created successfully");
             onClose();
-            setFormData({ universityHid: "", courseName: "", degreeType: "", durationYears: undefined, entryRequirements: "", description: "", feesDomestic: undefined, feesInternational: undefined, applicationDeadline: "" });
+            setFormData({ 
+                universityHid: initialUniversityHid || "", 
+                courseName: "", 
+                degreeType: "", 
+                durationYears: undefined, 
+                entryRequirements: "", 
+                description: "", 
+                feesDomestic: undefined, 
+                feesInternational: undefined, 
+                applicationDeadline: "" 
+            });
         },
         onError: () => {
             toast.error("Failed to create course");

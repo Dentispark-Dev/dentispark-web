@@ -1006,7 +1006,7 @@ const adminMenuItems: MenuItem[] = [
   },
   {
     id: "admin-courses",
-    label: "Courses",
+    label: "Programs",
     href: "/admin/content/courses",
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: menuItems.find((i) => i.id === "applications")?.icon || menuItems[0].icon,
@@ -1022,6 +1022,13 @@ const adminMenuItems: MenuItem[] = [
     id: "admin-users",
     label: "System Admins",
     href: "/admin/settings/admins",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
+  },
+  {
+    id: "admin-moderators",
+    label: "Moderators",
+    href: "/admin/moderators",
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
   },
@@ -1045,13 +1052,6 @@ const adminMenuItems: MenuItem[] = [
     href: "/admin/login-history",
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: menuItems.find((i) => i.id === "overview")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-moderators",
-    label: "Moderators",
-    href: "/admin/moderators",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
   },
 ];
 

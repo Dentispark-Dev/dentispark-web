@@ -1,8 +1,5 @@
-"use client";
-
-import { use, Suspense } from "react";
-import { MentorProfileView } from "@/src/features/(dashboard)/admin/components";
-import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
+import { MentorProfileClientWrapper } from "./client-page";
 
 interface PageProps {
     params: Promise<{
@@ -10,17 +7,7 @@ interface PageProps {
     }>;
 }
 
-export default function MentorDetailPage({ params }: PageProps) {
-    const { id } = use(params);
-    return (
-        <div className="space-y-6">
-            <Suspense fallback={
-                <div className="flex items-center justify-center p-12">
-                    <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
-                </div>
-            }>
-                <MentorProfileView mentorId={id} />
-            </Suspense>
-        </div>
-    );
+export default async function MentorDetailPage({ params }: PageProps) {
+    const { id } = await params;
+    return <MentorProfileClientWrapper id={id} />;
 }

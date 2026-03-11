@@ -221,15 +221,17 @@ export function MentorTable() {
                                 </tr>
                             ) : (
                                 mentors.map((mentor) => (
-                                    <tr key={mentor.hid} className="hover:bg-gray-50/50 transition-colors group">
+                                    <tr key={mentor.hid} className="hover:bg-gray-50/50 transition-colors group group/link">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 rounded-full bg-secondary-50 flex items-center justify-center text-secondary-600 font-semibold">
                                                     {mentor.mentorName?.[0] || "?"}
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-900">{mentor.mentorName}</p>
-                                                    <p className="text-xs text-gray-500">Joined on {new Date(mentor.dateStamped).toLocaleDateString("en-GB")}</p>
+                                                <div className="flex-1 min-w-0">
+                                                    <Link href={`/admin/mentors/${encodeURIComponent(mentor.hid)}`} className="group-hover/link:underline block">
+                                                        <p className="text-sm font-medium text-gray-900 group-hover/link:text-primary-600 transition-colors truncate">{mentor.mentorName}</p>
+                                                    </Link>
+                                                    <p className="text-xs text-gray-500 truncate">Joined on {new Date(mentor.dateStamped).toLocaleDateString("en-GB")}</p>
                                                 </div>
                                             </div>
                                         </td>

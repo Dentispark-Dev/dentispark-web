@@ -212,15 +212,17 @@ export function StudentTable() {
                                 </tr>
                             ) : (
                                 students.map((student) => (
-                                    <tr key={student.sid} className="hover:bg-gray-50/50 transition-colors group">
+                                    <tr key={student.sid} className="hover:bg-gray-50/50 transition-colors group group/link">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 font-semibold">
                                                     {(student.firstName?.[0] || "")}{(student.lastName?.[0] || "")}
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-900">{student.firstName} {student.lastName}</p>
-                                                    <p className="text-xs text-gray-500">{student.emailAddress}</p>
+                                                <div className="flex-1 min-w-0">
+                                                    <Link href={`/admin/students/${encodeURIComponent(student.sid)}`} className="group-hover/link:underline block">
+                                                        <p className="text-sm font-medium text-gray-900 group-hover/link:text-primary-600 transition-colors truncate">{student.firstName} {student.lastName}</p>
+                                                        <p className="text-xs text-gray-500 group-hover/link:text-primary-500 transition-colors truncate">{student.emailAddress}</p>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </td>
