@@ -8,6 +8,7 @@ import { cn } from "@/src/lib/utils";
 
 import { useAuth } from "@/src/providers/auth-provider";
 import { useRouter } from "next/navigation";
+import { LanguageSwitcher } from "../../common/language-switcher";
 
 export default function DashboardSidebar({
   isOpen,
@@ -83,6 +84,46 @@ export default function DashboardSidebar({
           </button>
         </div>
 
+        {/* Smart Application Progress - Only for Students */}
+        {isStudent && (
+          <div className="px-6 py-4 border-b border-greys-300 bg-primary-50/30">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-black-700 uppercase tracking-wider">Application Progress</span>
+              <span className="text-xs font-bold text-primary-700">65%</span>
+            </div>
+            <div className="h-2 w-full bg-greys-300 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-primary-600 rounded-full transition-all duration-1000 ease-out"
+                style={{ width: "65%" }}
+              />
+            </div>
+            <p className="text-[10px] text-black-500 mt-2 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse" />
+              Next: Review Personal Statement
+            </p>
+          </div>
+        )}
+
+        {/* Deadline Micro-Widget */}
+        {isStudent && (
+          <div className="px-6 py-4 border-b border-greys-300">
+            <div className="flex items-center gap-3 p-3 bg-red-50 border border-red-100 rounded-2xl group hover:shadow-lg transition-all cursor-help">
+                <div className="w-10 h-10 rounded-xl bg-red-100 flex flex-col items-center justify-center text-red-600">
+                    <span className="text-xs font-black leading-none">215</span>
+                    <span className="text-[8px] font-black uppercase">Days</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                    <p className="text-[10px] font-black text-red-800 uppercase tracking-tight truncate">UCAS Main Deadline</p>
+                    <div className="flex items-center gap-1 mt-1">
+                        <div className="h-1 flex-1 bg-red-200 rounded-full overflow-hidden">
+                            <div className="h-full bg-red-500" style={{ width: "45%" }} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        )}
+
         {/* Navigation */}
         <nav className="font-sora mt-4 flex-1 space-y-2 px-4 py-6 text-sm md:mt-0">
           {menuItems.map((item) => {
@@ -144,6 +185,10 @@ export default function DashboardSidebar({
             </svg>
             <span className="text-error-600">Logout</span>
           </button>
+
+          <div className="pt-8 px-4">
+            <LanguageSwitcher />
+          </div>
         </nav>
 
         {/* Premium Upgrade UI - Only show if user is a student and not premium */}

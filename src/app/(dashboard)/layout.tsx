@@ -7,9 +7,11 @@ import {
     DashboardHeader,
     MobileMenuOverlay,
     getFilteredMenuItems,
+    CommandBar,
 } from "@/src/components/layouts/dashboard";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/src/providers/auth-provider";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DashboardLayout({
     children,
@@ -32,30 +34,43 @@ export default function DashboardLayout({
 
     return (
         <ProtectedRoute requiresProfile>
-            <div className="bg-background-body flex min-h-screen">
-                {/* Mobile Menu Overlay */}
-                <MobileMenuOverlay
-                    isOpen={isSidebarOpen}
-                    onClose={() => setIsSidebarOpen(false)}
-                />
+            <CommandBar>
+                <div className="bg-background-body flex min-h-screen">
+                    {/* Mobile Menu Overlay */}
+                    <MobileMenuOverlay
+                        isOpen={isSidebarOpen}
+                        onClose={() => setIsSidebarOpen(false)}
+                    />
 
-                {/* Sidebar */}
-                <DashboardSidebar
-                    isOpen={isSidebarOpen}
-                    onClose={() => setIsSidebarOpen(false)}
-                    menuItems={filteredMenuItems}
-                    currentPath={pathname}
-                />
+                    {/* Sidebar */}
+                    <DashboardSidebar
+                        isOpen={isSidebarOpen}
+                        onClose={() => setIsSidebarOpen(false)}
+                        menuItems={filteredMenuItems}
+                        currentPath={pathname}
+                    />
 
-                {/* Main Content Area */}
-                <div className="flex w-full flex-col lg:pl-[300px]">
-                    <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
+                    {/* Main Content Area */}
+                    <div className="flex w-full flex-col lg:pl-[300px]">
+                        <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
 
-                    <main className="bg-background-body flex-1 p-4 md:p-6 lg:p-8 mt-18">
-                        <div className="mx-auto max-w-[1600px]">{children}</div>
-                    </main>
+                        <main className="bg-background-body flex-1 p-4 md:p-6 lg:p-8 mt-18">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={pathname}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                    className="mx-auto max-w-[1600px]"
+                                >
+                                    {children}
+                                </motion.div>
+                            </AnimatePresence>
+                        </main>
+                    </div>
                 </div>
-            </div>
+            </CommandBar>
         </ProtectedRoute>
     );
 }

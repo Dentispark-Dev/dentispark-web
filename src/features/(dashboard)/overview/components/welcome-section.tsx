@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useI18n } from "@/src/providers/i18n-provider";
 
 interface WelcomeSectionProps {
   userName?: string;
@@ -11,11 +12,13 @@ export default function WelcomeSection({
   userName = "John",
   userYear = "Year 12",
 }: WelcomeSectionProps) {
+  const { t } = useI18n();
+
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Good Morning";
-    if (hour < 18) return "Good Afternoon";
-    return "Good Evening";
+    if (hour < 12) return t("welcome_greeting_morning");
+    if (hour < 18) return t("welcome_greeting_afternoon");
+    return t("welcome_greeting_evening");
   };
 
   return (
@@ -31,7 +34,7 @@ export default function WelcomeSection({
             {getGreeting()}, {userName}
           </h1>
           <p className="text-black-300 font-sora text-xs md:text-sm">
-            Your dream school is just a step away.
+            {t("welcome_subtitle")}
           </p>
         </div>
         <div className="bg-white-100 border-greys-300 font-sora hidden items-center gap-1 rounded-[8px] border px-3 py-2 text-sm font-semibold text-black md:flex">

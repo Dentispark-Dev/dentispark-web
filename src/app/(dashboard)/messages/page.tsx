@@ -1,30 +1,16 @@
 "use client";
 
-import { MessagingDashboard } from "@/src/features/messaging/components/MessagingDashboard";
-import { useAuth } from "@/src/providers/auth-provider";
-import { Loader2 } from "lucide-react";
+import React from "react";
+import { MentorSidebar } from "@/src/features/chat/components/mentor-sidebar";
+import { ChatWindow } from "@/src/features/chat/components/chat-window";
 
 export default function MessagesPage() {
-  const { user } = useAuth();
-
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Conversations</h1>
-        <p className="text-sm text-gray-500 text-muted-foreground">
-          Chat with your mentors and mentees
-        </p>
+    <div className="fixed inset-x-0 bottom-0 top-18 lg:left-[300px] bg-white flex overflow-hidden">
+      <div className="w-[350px] flex-shrink-0 hidden xl:block">
+        <MentorSidebar />
       </div>
-
-      <MessagingDashboard currentUserEmail={user.emailAddress} />
+      <ChatWindow />
     </div>
   );
 }

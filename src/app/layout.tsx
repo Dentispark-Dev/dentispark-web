@@ -6,6 +6,10 @@ import genralSans from "@/src/lib/font";
 import { ModalProvider } from "@/src/components/ui/modal-provider";
 import { AuthProvider } from "@/src/providers/auth-provider";
 import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
+import { GDPRBanner } from "@/src/components/common/gdpr-banner";
+import { NotificationPrompt } from "@/src/features/automation/components/notification-prompt";
+import { I18nProvider } from "@/src/providers/i18n-provider";
+import { OfflineBanner } from "@/src/components/common/offline-banner";
 
 export const metadata: Metadata = {
   title: "Dentispark - Dental School Guidance & Mentorship",
@@ -31,6 +35,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Service Worker Registration
+  if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").then(
+        (registration) => console.log("SW registered:", registration.scope),
+        (err) => console.log("SW registration failed:", err)
+      );
+    });
+  }
+
   return (
     <html lang="en" className={genralSans.className}>
       <head>
@@ -39,14 +53,21 @@ export default function RootLayout({
           async
           defer
         ></script>
+        {/* Performance Monitoring */}
+        <script async src="https://cdn.vercel-insights.com/v1/speed-insights.js"></script>
       </head>
       <body suppressHydrationWarning={true}>
         <ReactQueryProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <I18nProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </I18nProvider>
         </ReactQueryProvider>
         <ModalProvider />
         <DentiBuddy />
         <Toaster richColors />
+        <GDPRBanner />
+        <NotificationPrompt />
+        <OfflineBanner />
       </body>
     </html>
   );

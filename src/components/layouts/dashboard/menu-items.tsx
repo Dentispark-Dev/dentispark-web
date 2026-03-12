@@ -2,6 +2,48 @@ import { MenuItem } from "./types";
 
 export const menuItems: MenuItem[] = [
   {
+    id: "ai-hub",
+    label: "AI Application Hub",
+    href: "/ai-hub",
+    allowedMemberTypes: ["STUDENT"],
+    icon: {
+      inactive: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#868686"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 4.5V12h8.5" />
+          <path d="M18 11a7 7 0 1 0-14 0c0 2.5 2 5 2 7H4" />
+          <path d="M10 22h4" />
+          <path d="M15 5a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z" />
+        </svg>
+      ),
+      active: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#12AC75"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 4.5V12h8.5" />
+          <path d="M18 11a7 7 0 1 0-14 0c0 2.5 2 5 2 7H4" />
+          <path d="M10 22h4" />
+          <path d="M15 5a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z" />
+        </svg>
+      ),
+    },
+  },
+  {
     id: "overview",
     label: "Overview",
     href: "/overview",
