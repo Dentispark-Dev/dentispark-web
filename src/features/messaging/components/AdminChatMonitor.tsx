@@ -10,7 +10,6 @@ import {
   Eye
 } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
-import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
 import { format } from "date-fns";
 import { ChatWindow } from "./ChatWindow";
@@ -63,7 +62,7 @@ export function AdminChatMonitor() {
                 <p>No conversations found</p>
               </div>
             ) : (
-              allConversations.map((conv: any) => (
+              allConversations.map((conv: Conversation) => (
                 <button
                   key={conv.id}
                   onClick={() => {

@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ChatMessage, ConversationParticipant } from "@/src/connection/api-types";
 import { chatService } from "@/src/connection/chat-service";
 import { MessageBubble } from "./MessageBubble";
-import { Send, Loader2, User } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { toast } from "sonner";
@@ -18,19 +18,7 @@ export function ChatWindow({ selectedConversation, currentUserEmail }: ChatWindo
   const [newMessage, setNewMessage] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (selectedConversation) {
-      fetchMessages();
-    }
-  }, [selectedConversation]);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await chatService.getConversationMessages(selectedConversation.conversationId);
@@ -43,7 +31,19 @@ export function ChatWindow({ selectedConversation, currentUserEmail }: ChatWindo
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [selectedConversation.conversationId]);
+
+  useEffect(() => {
+    if (selectedConversation) {
+      fetchMessages();
+    }
+  }, [selectedConversation, fetchMessages]);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();

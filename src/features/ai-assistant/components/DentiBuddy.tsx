@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, X, Send, User, Bot, Loader2, Zap, MessageSquare } from "lucide-react";
-import { Button } from "@/src/components/ui/button";
+import { Sparkles, X, Send, Bot, Loader2, Zap, MessageSquare } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
 import { aiService, AIMessage } from "../services/ai-service";
 

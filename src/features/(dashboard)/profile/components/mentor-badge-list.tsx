@@ -1,11 +1,12 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, GraduationCap, Award, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, GraduationCap, Award, CheckCircle2, LucideIcon } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
 interface BadgeConfig {
-  icon: any;
+  icon: LucideIcon | React.ElementType;
   label: string;
   color: string;
   bgColor: string;

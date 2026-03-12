@@ -87,7 +87,6 @@ function InsightRow({ label, status, color }: { label: string; status: string; c
 export function StudentProfileView({ studentId }: StudentProfileViewProps) {
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabKey>("profile");
-    const [showFullGoals, setShowFullGoals] = useState(false);
     const [showFullWhy, setShowFullWhy] = useState(false);
 
     const { data: student, isLoading, error } = useQuery({

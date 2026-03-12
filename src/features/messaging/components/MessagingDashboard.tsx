@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ConversationParticipant } from "@/src/connection/api-types";
 import { chatService } from "@/src/connection/chat-service";
 import { ConversationList } from "./ConversationList";
 import { ChatWindow } from "./ChatWindow";
 import { useQuery } from "@tanstack/react-query";
-import { MessageSquare, Loader2 } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 
 interface MessagingDashboardProps {

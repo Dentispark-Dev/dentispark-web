@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { StudentProfileClientWrapper } from "./client-page";
 
 interface PageProps {
