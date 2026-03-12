@@ -42,7 +42,7 @@ export interface LoginResponseData {
   linkedinUrl: string;
   mobileNumber: string;
   biography: string;
-  whyDentistry: string;
+  whyDentistry?: string;
   memberType:
   | "ACADEMIC_MENTOR"
   | "STUDENT"
