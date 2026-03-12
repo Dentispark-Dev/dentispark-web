@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import genralSans from "@/src/lib/font";
 import { ModalProvider } from "@/src/components/ui/modal-provider";
 import { AuthProvider } from "@/src/providers/auth-provider";
+import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
 
 export const metadata: Metadata = {
   title: "Dentispark - Dental School Guidance & Mentorship",
@@ -44,6 +45,7 @@ export default function RootLayout({
           <AuthProvider>{children}</AuthProvider>
         </ReactQueryProvider>
         <ModalProvider />
+        <DentiBuddy />
         <Toaster richColors />
       </body>
     </html>
