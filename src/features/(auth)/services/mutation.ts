@@ -78,8 +78,8 @@ export const useUnifiedLogin = () => {
         throw new Error(response.responseMessage || "Admin login failed");
       } catch (error: unknown) {
         const err = error as { responseCode?: string; message?: string };
-        // If admin record not found, only then try regular member login
-        if (err?.responseCode === "03" || err?.message?.includes("record does not exist")) {
+        // If admin record not found (03) or unauthorized (97), only then try regular member login
+        if (err?.responseCode === "03" || err?.responseCode === "97" || err?.message?.includes("record does not exist")) {
           return await authApi.LOGIN(data);
         }
         throw error;
