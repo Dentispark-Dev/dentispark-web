@@ -1,14 +1,6 @@
 "use client";
 
 import { Badge } from "@/src/components/ui/badge";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/src/components/ui/table";
 import { Mail, Calendar, Users, Eye } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 
@@ -57,28 +49,28 @@ export function NewsletterHistory() {
                 </h3>
             </div>
             <div className="overflow-x-auto">
-                <Table>
-                    <TableHeader className="bg-gray-50/50">
-                        <TableRow>
-                            <TableHead className="font-semibold px-6 py-4">Subject</TableHead>
-                            <TableHead className="font-semibold px-6 py-4">Recipients</TableHead>
-                            <TableHead className="font-semibold px-6 py-4">Sent Date</TableHead>
-                            <TableHead className="font-semibold px-6 py-4">Status</TableHead>
-                            <TableHead className="font-semibold px-6 py-4 text-right">Action</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
+                <table className="w-full text-left border-collapse">
+                    <thead className="bg-gray-50/50">
+                        <tr className="border-b border-gray-100">
+                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Subject</th>
+                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Recipients</th>
+                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Sent Date</th>
+                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                            <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
                         {mockHistory.map((item) => (
-                            <TableRow key={item.id} className="hover:bg-gray-50/50 transition-colors">
-                                <TableCell className="px-6 py-4">
+                            <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
+                                <td className="px-6 py-4">
                                     <div className="flex items-center gap-3">
                                         <div className="h-8 w-8 rounded-lg bg-primary-50 flex items-center justify-center">
                                             <Mail className="h-4 w-4 text-primary-600" />
                                         </div>
                                         <p className="text-sm font-medium text-gray-900">{item.subject}</p>
                                     </div>
-                                </TableCell>
-                                <TableCell className="px-6 py-4">
+                                </td>
+                                <td className="px-6 py-4 text-sm">
                                     <div className="flex flex-col gap-1">
                                         <div className="flex gap-1 flex-wrap">
                                             {item.recipients.map((r) => (
@@ -92,29 +84,29 @@ export function NewsletterHistory() {
                                             {item.recipientCount} people
                                         </p>
                                     </div>
-                                </TableCell>
-                                <TableCell className="px-6 py-4 text-sm text-gray-500">
+                                </td>
+                                <td className="px-6 py-4 text-sm text-gray-500">
                                     {new Date(item.date).toLocaleDateString("en-GB", {
                                         day: "numeric",
                                         month: "short",
                                         year: "numeric",
                                     })}
-                                </TableCell>
-                                <TableCell className="px-6 py-4">
+                                </td>
+                                <td className="px-6 py-4 text-sm">
                                     <Badge className="bg-green-100 text-green-700 hover:bg-green-200 border-none capitalize">
                                         {item.status.toLowerCase()}
                                     </Badge>
-                                </TableCell>
-                                <TableCell className="px-6 py-4 text-right">
+                                </td>
+                                <td className="px-6 py-4 text-right">
                                     <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-gray-500 hover:text-primary-600">
                                         <Eye className="h-3.5 w-3.5" />
                                         View
                                     </Button>
-                                </TableCell>
-                            </TableRow>
+                                </td>
+                            </tr>
                         ))}
-                    </TableBody>
-                </Table>
+                    </tbody>
+                </table>
             </div>
         </div>
     );
