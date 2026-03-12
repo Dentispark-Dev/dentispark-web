@@ -51,7 +51,7 @@ export default function DashboardLayout({
                 <div className="flex w-full flex-col lg:pl-[300px]">
                     <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
 
-                    <main className="bg-background-body flex-1 p-4 md:p-6 lg:p-8">
+                    <main className="bg-background-body flex-1 p-4 md:p-6 lg:p-8 mt-18">
                         <div className="mx-auto max-w-[1600px]">{children}</div>
                     </main>
                 </div>
