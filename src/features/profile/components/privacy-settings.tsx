@@ -116,4 +116,4 @@ export function PrivacySettings() {
   );
 }
 
-const cn = (...classes: any[]) => classes.filter(Boolean).join(" ");
+const cn = (...classes: (string | undefined | null | boolean)[]) => classes.filter(Boolean).join(" ");

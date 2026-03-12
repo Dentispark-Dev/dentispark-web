@@ -13,7 +13,8 @@ import {
   Trash2,
   BrainCircuit,
   FileCode,
-  Zap
+  Zap,
+  RefreshCcw
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";

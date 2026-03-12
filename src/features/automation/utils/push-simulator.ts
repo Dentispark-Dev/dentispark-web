@@ -8,7 +8,6 @@ export const simulatePush = (title: string, body: string, url: string = "/overvi
         icon: "/favicon.png",
         badge: "/favicon.png",
         data: { url },
-        vibrate: [100, 50, 100],
       });
     });
   }

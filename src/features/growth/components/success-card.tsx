@@ -39,7 +39,7 @@ export function SuccessCard({ score, milestone, category }: SuccessCardProps) {
                 </div>
             </div>
             <p className="text-sm font-medium text-white/50 px-8">
-              "{milestone}"
+              &quot;{milestone}&quot;
             </p>
           </div>
 

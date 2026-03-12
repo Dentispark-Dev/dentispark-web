@@ -85,7 +85,7 @@ export function PlanSelector({ onSelect }: PlanSelectorProps) {
                       animate={{ opacity: 1 }}
                       className="text-xs font-bold text-green-600 flex items-center gap-1"
                     >
-                      <strike className="text-black-300">£{plan.basePrice}</strike>
+                      <s className="text-black-300">£{plan.basePrice}</s>
                       Save {pricing.discountPercentage}% with selected factors
                     </motion.p>
                   )}

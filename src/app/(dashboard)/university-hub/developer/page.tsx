@@ -43,12 +43,12 @@ export default function InstitutionalDeveloperPage() {
   );
 }
 
-function StatusItem({ icon, label, status }: any) {
+function StatusItem({ icon, label, status }: { icon: React.ReactElement, label: string, status: string }) {
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-greys-50 flex items-center justify-center text-black-400">
-                    {React.cloneElement(icon, { size: 16 })}
+                    {React.cloneElement(icon as React.ReactElement<{ size?: number }>, { size: 16 })}
                 </div>
                 <span className="text-[11px] font-bold text-black-600 uppercase tracking-tight">{label}</span>
             </div>

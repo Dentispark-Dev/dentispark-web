@@ -73,7 +73,7 @@ export function SentimentVisualizer() {
           <div>
             <p className="text-xs font-black text-primary-900 uppercase tracking-tight">AI Insight</p>
             <p className="text-[11px] text-primary-700 font-medium leading-relaxed mt-1">
-              Your "Clarity" score dropped during technical questions. Focus on steady pacing and avoid "filler" words to increase professional presence by ~15%.
+              Your &quot;Clarity&quot; score dropped during technical questions. Focus on steady pacing and avoid &quot;filler&quot; words to increase professional presence by ~15%.
             </p>
           </div>
         </div>

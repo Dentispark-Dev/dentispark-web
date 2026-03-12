@@ -25,7 +25,7 @@ export default function PersonalStatementReviewer() {
   const [inputMode, setInputMode] = useState<"text" | "upload">("text");
   const [text, setText] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<{ score: number, metrics: {name: string, score: number, feedback: string}[], suggestions: string[] } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleStartAnalysis = async () => {
@@ -181,12 +181,12 @@ export default function PersonalStatementReviewer() {
           >
             {/* Score Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <ScoreGauge score={results.score} />
+                <ScoreGauge score={results!.score} />
 
                 <div className="md:col-span-2 space-y-4">
                     <h3 className="text-lg font-bold text-black-800">Category Breakdown</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {results.metrics.map((m: any) => (
+                        {results!.metrics.map((m: { name: string, score: number, feedback: string }) => (
                             <FeedbackCard 
                                 key={m.name} 
                                 name={m.name} 
@@ -205,7 +205,7 @@ export default function PersonalStatementReviewer() {
                     Key AI Suggestions
                 </h3>
                 <div className="space-y-4">
-                    {results.suggestions.map((s: string, i: number) => (
+                    {results!.suggestions.map((s: string, i: number) => (
                         <div key={i} className="flex gap-4 p-4 rounded-xl bg-primary-50 border border-primary-100 items-start">
                             <div className="h-6 w-6 rounded-full bg-primary-200 text-primary-700 flex items-center justify-center shrink-0 font-bold text-xs">
                                 {i + 1}

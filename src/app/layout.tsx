@@ -9,7 +9,6 @@ import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
 import { GDPRBanner } from "@/src/components/common/gdpr-banner";
 import { NotificationPrompt } from "@/src/features/automation/components/notification-prompt";
 import { I18nProvider } from "@/src/providers/i18n-provider";
-import { OfflineBanner } from "@/src/components/common/offline-banner";
 
 export const metadata: Metadata = {
   title: "Dentispark - Dental School Guidance & Mentorship",
@@ -67,7 +66,6 @@ export default function RootLayout({
         <Toaster richColors />
         <GDPRBanner />
         <NotificationPrompt />
-        <OfflineBanner />
       </body>
     </html>
   );

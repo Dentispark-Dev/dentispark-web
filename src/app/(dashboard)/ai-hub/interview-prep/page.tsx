@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { 
   ArrowLeft, 
   Mic, 
-  Player, 
   Play, 
   Square, 
   RefreshCcw, 
@@ -14,7 +13,8 @@ import {
   AlertCircle,
   BarChart3,
   Award,
-  ChevronRight
+  ChevronRight,
+  Sparkles
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -214,7 +214,7 @@ export default function InterviewPrepPage() {
             {/* Feedback Header */}
             <div className="text-center space-y-4">
                 <div className="inline-flex items-center gap-2 px-6 py-2 bg-primary-100 text-primary-700 rounded-full border border-primary-200 text-sm font-bold">
-                    <award className="w-4 h-4" />
+                    <Award className="w-4 h-4" />
                     Interview Successfully Completed
                 </div>
                 <h2 className="text-4xl font-black text-black-900 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-black-900 to-primary-600">Performance Analytics</h2>
@@ -263,7 +263,7 @@ export default function InterviewPrepPage() {
                     <div className="space-y-4 p-6 rounded-3xl bg-amber-50/50 border border-amber-100">
                         <h4 className="text-sm font-bold text-amber-800 uppercase tracking-wider">Critical Improvements</h4>
                         <ul className="space-y-2 text-sm text-amber-700">
-                            <li>• Leadership example lacked specific "outcome" metrics.</li>
+                            <li>• Leadership example lacked specific &quot;outcome&quot; metrics.</li>
                             <li>• Slight hesitancy when discussing NHS funding structures.</li>
                             <li>• Eye-contact (simulated) could be improved in panel mode.</li>
                         </ul>

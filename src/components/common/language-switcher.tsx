@@ -39,7 +39,7 @@ export function LanguageSwitcher() {
               <button
                 key={lang.code}
                 onClick={() => {
-                  setLocale(lang.code as any);
+                  setLocale(lang.code as "en" | "fr" | "ar");
                   setIsOpen(false);
                 }}
                 className={`w-full h-10 px-3 rounded-xl flex items-center justify-between hover:bg-primary-50 transition-all ${locale === lang.code ? 'bg-primary-50' : ''}`}

@@ -58,7 +58,7 @@ export default function AIAnalyticsPage() {
   );
 }
 
-function QuickAction({ title, desc, icon, color }: any) {
+function QuickAction({ title, desc, icon, color }: { title: string, desc: string, icon: React.ReactNode, color: string }) {
     return (
         <button className="glass-card bg-white p-6 rounded-3xl border-greys-100 shadow-lg hover:shadow-xl hover:translate-y-[-4px] transition-all flex items-center gap-4 text-left">
             <div className={`w-12 h-12 rounded-2xl ${color} flex items-center justify-center text-white`}>
@@ -72,7 +72,7 @@ function QuickAction({ title, desc, icon, color }: any) {
     )
 }
 
-function SessionItem({ title, date, score }: any) {
+function SessionItem({ title, date, score }: { title: string, date: string, score: number }) {
     return (
         <div className="flex items-center justify-between p-3 hover:bg-greys-50 rounded-xl transition-colors cursor-pointer">
             <div className="flex items-center gap-3">
