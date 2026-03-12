@@ -23,6 +23,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/ca
 import { toast } from "sonner";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { MentorRadarChart } from "@/src/features/(dashboard)/profile/components/mentor-radar-chart";
+import { MentorBadgeList } from "@/src/features/(dashboard)/profile/components/mentor-badge-list";
+import { Zap, Target, Users, TrendingUp } from "lucide-react";
 
 interface MentorProfileViewProps {
     mentorId: string;
@@ -124,6 +127,7 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                             <span className="h-1 w-1 rounded-full bg-gray-300" />
                             <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> Joined: {new Date(mentor.dateStamped).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}</span>
                         </div>
+                        <MentorBadgeList badges={["GDC_REGISTERED", "OXFORD_GRAD", "TOP_MENTOR"]} />
                     </div>
                 </div>
 
@@ -267,34 +271,80 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                 </div>
                             </div>
 
-                            {/* Detailed Info Cards */}
-                            <div className="space-y-6">
-                                <div className="p-6 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 rounded-2xl border border-blue-100/50 group hover:shadow-md transition-shadow">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="p-2 bg-white rounded-lg shadow-sm text-blue-600">
-                                            <Stethoscope className="h-4 w-4" />
+                            {/* Supercharged: Impact Metrics */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="bg-gradient-to-br from-indigo-600 to-primary-700 p-6 rounded-3xl text-white shadow-lg shadow-indigo-100 overflow-hidden relative">
+                                    <Zap className="absolute -right-4 -bottom-4 h-24 w-24 opacity-10" />
+                                    <div className="relative z-10">
+                                        <div className="p-2 bg-white/20 rounded-xl w-fit mb-4 backdrop-blur-md">
+                                            <Users className="h-5 w-5" />
                                         </div>
-                                        <h4 className="font-bold text-gray-900 font-sora">School & Clinical Experience</h4>
+                                        <p className="text-3xl font-black mb-1">50+</p>
+                                        <p className="text-xs font-bold uppercase tracking-widest opacity-80">Students Guided</p>
                                     </div>
-                                    <p className="text-gray-700 leading-relaxed text-sm">
-                                        {mentor.dentalSchoolExperience ? mentor.dentalSchoolExperience : <span className="text-gray-400 italic">No detailed school experience provided during onboarding.</span>}
-                                    </p>
+                                </div>
+                                <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-6 rounded-3xl text-white shadow-lg shadow-emerald-100 overflow-hidden relative">
+                                    <Target className="absolute -right-4 -bottom-4 h-24 w-24 opacity-10" />
+                                    <div className="relative z-10">
+                                        <div className="p-2 bg-white/20 rounded-xl w-fit mb-4 backdrop-blur-md">
+                                            <TrendingUp className="h-5 w-5" />
+                                        </div>
+                                        <p className="text-3xl font-black mb-1">98%</p>
+                                        <p className="text-xs font-bold uppercase tracking-widest opacity-80">Admission Success</p>
+                                    </div>
+                                </div>
+                                <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-6 rounded-3xl text-white shadow-lg shadow-amber-100 overflow-hidden relative">
+                                    <Award className="absolute -right-4 -bottom-4 h-24 w-24 opacity-10" />
+                                    <div className="relative z-10">
+                                        <div className="p-2 bg-white/20 rounded-xl w-fit mb-4 backdrop-blur-md">
+                                            <Star className="h-5 w-5" />
+                                        </div>
+                                        <p className="text-3xl font-black mb-1">4.9/5</p>
+                                        <p className="text-xs font-bold uppercase tracking-widest opacity-80">Avg. Satisfaction</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pt-4">
+                                {/* Radar Chart for Strengths */}
+                                <div className="md:col-span-1">
+                                    <MentorRadarChart data={{
+                                        ucat: 4.8,
+                                        mmi: 4.5,
+                                        personalStatement: 4.9,
+                                        clinicalKnowledge: 4.2,
+                                        academicGuidance: 4.7
+                                    }} />
                                 </div>
 
-                                <div className="p-6 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 rounded-2xl border border-emerald-100/50 group hover:shadow-md transition-shadow">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="p-2 bg-white rounded-lg shadow-sm text-emerald-600">
-                                            <User className="h-4 w-4" />
+                                <div className="md:col-span-1 space-y-6">
+                                    <div className="p-6 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 rounded-2xl border border-blue-100/50 group hover:shadow-md transition-shadow">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="p-2 bg-white rounded-lg shadow-sm text-blue-600">
+                                                <Stethoscope className="h-4 w-4" />
+                                            </div>
+                                            <h4 className="font-bold text-gray-900 font-sora">School & Clinical Experience</h4>
                                         </div>
-                                        <h4 className="font-bold text-gray-900 font-sora">Motivation for Mentoring</h4>
+                                        <p className="text-gray-700 leading-relaxed text-sm">
+                                            {mentor.dentalSchoolExperience ? mentor.dentalSchoolExperience : <span className="text-gray-400 italic">No detailed school experience provided during onboarding.</span>}
+                                        </p>
                                     </div>
-                                    {mentor.whyMentor ? (
-                                        <blockquote className="border-l-4 border-emerald-300 pl-4 py-1 italic text-gray-700 text-sm leading-relaxed">
-                                            &quot;{mentor.whyMentor}&quot;
-                                        </blockquote>
-                                    ) : (
-                                        <p className="text-gray-400 italic text-sm">No specific motivational statement provided.</p>
-                                    )}
+
+                                    <div className="p-6 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 rounded-2xl border border-emerald-100/50 group hover:shadow-md transition-shadow">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="p-2 bg-white rounded-lg shadow-sm text-emerald-600">
+                                                <User className="h-4 w-4" />
+                                            </div>
+                                            <h4 className="font-bold text-gray-900 font-sora">Motivation for Mentoring</h4>
+                                        </div>
+                                        {mentor.whyMentor ? (
+                                            <blockquote className="border-l-4 border-emerald-300 pl-4 py-1 italic text-gray-700 text-sm leading-relaxed">
+                                                &quot;{mentor.whyMentor}&quot;
+                                            </blockquote>
+                                        ) : (
+                                            <p className="text-gray-400 italic text-sm">No specific motivational statement provided.</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </CardContent>

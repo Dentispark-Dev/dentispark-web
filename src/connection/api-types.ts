@@ -484,6 +484,14 @@ export interface MentorDetail {
   interviewDate: string;
   averageRating: number;
   totalReviews: number;
+  strengths?: {
+    ucat?: number;
+    mmi?: number;
+    personalStatement?: number;
+    clinicalKnowledge?: number;
+    academicGuidance?: number;
+  };
+  verifiedBadges?: string[];
 }
 
 export interface VerifyMentorPayload {
