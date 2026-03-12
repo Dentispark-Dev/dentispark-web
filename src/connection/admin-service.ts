@@ -62,7 +62,7 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getStudentDetail: (studentId: string) =>
-        api.get<StudentDetail>(`/students/${encodeURIComponent(studentId)}/detail`),
+        api.get<StudentDetail>(`/students/${encodeURIComponent(studentId)}`),
 
     updateStudentStatus: (studentId: string, payload: UpdateStatusPayload) =>
         api.patch<string>(`/students/${encodeURIComponent(studentId)}/status`, payload),
@@ -81,7 +81,7 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     getMentorDetail: (mentorId: string) =>
-        api.get<MentorDetail>(`/mentors/${encodeURIComponent(mentorId)}/detail`),
+        api.get<MentorDetail>(`/mentors/${encodeURIComponent(mentorId)}`),
 
     updateMentorStatus: (mentorId: string, payload: UpdateStatusPayload) =>
         api.patch<string>(`/mentors/${encodeURIComponent(mentorId)}/status`, payload),

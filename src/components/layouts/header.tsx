@@ -8,9 +8,17 @@ import { Button } from "../ui/button";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/src/lib/utils";
+import { useAuth } from "@/src/providers/auth-provider";
 
 export default function Header() {
   const pathname = usePathname();
+  const { isAuthenticated, user, isAdmin, isMentor } = useAuth();
+
+  const dashboardHref = isAdmin
+    ? "/admin/overview"
+    : isMentor
+      ? "/mentor/overview"
+      : "/overview";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navItems = [
@@ -133,8 +141,8 @@ export default function Header() {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            <Link href="/" className="cursor-pointer">
-              <Logo className="h-[35px] w-[150px]" />
+            <Link href="/" className="cursor-pointer group">
+              <Logo className="h-[35px] w-[150px] transition-opacity group-hover:opacity-90" />
             </Link>
           </motion.div>
 
@@ -181,45 +189,55 @@ export default function Header() {
           </motion.nav>
         </motion.div>
 
-        {/* Desktop Action buttons */}
+        {/* Desktop Action buttons / Logged-in user */}
         <motion.div
           className="hidden items-center space-x-4 md:flex"
           variants={itemVariants}
         >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Link href="/login">
-              <Button className="font-sora h-10" variant="outline">
-                Log In
-              </Button>
+          {isAuthenticated && user ? (
+            <Link href={dashboardHref} className="flex items-center gap-3 group">
+              <div className="bg-primary font-sora flex size-9 shrink-0 items-center justify-center rounded-full font-bold text-white uppercase ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
+                {user.fullName?.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+              </div>
+              <div className="font-sora">
+                <p className="text-sm font-semibold text-gray-900 leading-tight">{user.fullName}</p>
+                <p className="text-xs text-primary font-medium">Go to Dashboard →</p>
+              </div>
             </Link>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Link href="/sign-up">
-              <Button className="font-sora h-10">Sign Up</Button>
-            </Link>
-          </motion.div>
+          ) : (
+            <>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
+                <Link href="/login">
+                  <Button className="font-sora h-10" variant="outline">Log In</Button>
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
+                <Link href="/sign-up">
+                  <Button className="font-sora h-10">Sign Up</Button>
+                </Link>
+              </motion.div>
+            </>
+          )}
         </motion.div>
 
-        {/* Mobile Sign Up button */}
+        {/* Mobile: show avatar if logged in, else Sign Up */}
         <motion.div
           className="block md:hidden"
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link href="/sign-up">
-            <Button className="font-sora h-10 px-5 py-2 text-sm">
-              Sign Up
-            </Button>
-          </Link>
+          {isAuthenticated && user ? (
+            <Link href={dashboardHref}>
+              <div className="bg-primary font-sora flex size-9 items-center justify-center rounded-full font-bold text-white uppercase">
+                {user.fullName?.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+              </div>
+            </Link>
+          ) : (
+            <Link href="/sign-up">
+              <Button className="font-sora h-10 px-5 py-2 text-sm">Sign Up</Button>
+            </Link>
+          )}
         </motion.div>
       </Container>
 

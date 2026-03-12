@@ -12,7 +12,9 @@ export function Footer() {
       <Container className="font-sora grid grid-cols-1 gap-8 md:grid-cols-4 lg:grid-cols-5">
         {/* Logo & contact */}
         <div className="flex flex-col space-y-6">
-          <WhiteLogo className="h-8 w-36" />
+          <Link href="/" className="cursor-pointer transition-opacity hover:opacity-80">
+            <WhiteLogo className="h-8 w-36" />
+          </Link>
           <div className="flex space-x-6">
             <Link href="#" aria-label="Twitter" className="cursor-pointer">
               <Twitter className="h-6 w-6 transition hover:text-white" />

@@ -118,14 +118,14 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
 
     if (error || !student) {
         return (
-            <div className="bg-red-50/50 border border-red-100 rounded-3xl p-12 text-center">
-                <div className="bg-red-100 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="bg-red-50/50 border border-red-100 rounded-3xl p-12 text-center backdrop-blur-sm">
+                <div className="bg-red-100 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                     <AlertCircle className="h-10 w-10 text-red-500" />
                 </div>
-                <h3 className="text-xl font-bold text-red-900 mb-2 font-sora">Profile Unavailable</h3>
-                <p className="text-red-700 mb-8 max-w-md mx-auto">We couldn&apos;t retrieve the student profile. It may have been removed or the server is unresponsive.</p>
-                <Button asChild className="bg-red-600 hover:bg-red-700 text-white rounded-full px-8">
-                    <Link href="/admin/students">Return to Directory</Link>
+                <h3 className="text-xl font-black text-red-900 mb-2 font-sora tracking-tight">Profile Data Unreachable</h3>
+                <p className="text-red-700 mb-8 max-w-sm mx-auto font-medium">We were unable to synchronize with the admissions database. The student record may be restricted or temporarily offline.</p>
+                <Button asChild className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white rounded-full px-10 py-6 font-bold shadow-lg shadow-red-200">
+                    <Link href="/admin/students">Return to Student Directory</Link>
                 </Button>
             </div>
         );
