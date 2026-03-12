@@ -740,6 +740,10 @@ export interface AuditData {
 }
 
 export interface LoginSession {
+  guid: string;
+  userEmail: string;
+  userType: string;
+  ipAddress: string;
   location: string;
   device: string;
   loginAt: string;
