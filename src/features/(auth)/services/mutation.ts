@@ -70,19 +70,24 @@ export const useUnifiedLogin = () => {
     mutationKey: ["auth", "login"],
     mutationFn: async (data: LoginRequest) => {
       try {
-        // Try Admin login first to handle super admin accounts that might also exist in the student table
+        // Try Admin login first
         const response = await authApi.ADMIN_LOGIN(data);
+
+        // If successful, return immediately
         if (response.responseCode === "00") {
           return response;
         }
-        throw new Error(response.responseMessage || "Admin login failed");
-      } catch (error: unknown) {
-        const err = error as { responseCode?: string; message?: string };
-        // If admin record not found (03) or unauthorized (97), only then try regular member login
-        if (err?.responseCode === "03" || err?.responseCode === "97" || err?.message?.includes("record does not exist")) {
+
+        // If admin record not found (03) or unauthorized (97), try regular member login
+        if (response.responseCode === "03" || response.responseCode === "97") {
           return await authApi.LOGIN(data);
         }
-        throw error;
+
+        // Otherwise return the admin failure response (which onSuccess will handle)
+        return response;
+      } catch (_error: unknown) {
+        // If there was a network/structural error in the admin call, fallback to student login as a last resort
+        return await authApi.LOGIN(data);
       }
     },
     onSuccess: (data) => {
