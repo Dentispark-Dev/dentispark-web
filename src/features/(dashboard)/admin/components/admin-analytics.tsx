@@ -1,5 +1,4 @@
-"use client";
-
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
     Users,
@@ -12,21 +11,28 @@ import {
     Smartphone,
     Tablet,
     MapPin,
-    Zap
+    Zap,
+    XCircle,
+    Download
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { TrafficAnalytics } from "../../../../connection/api-types";
+import { Button } from "@/src/components/ui/button";
+import { Badge } from "@/src/components/ui/badge";
 
 export function AdminDashboardAnalytics() {
+    const [selectedDevice, setSelectedDevice] = useState<string | undefined>(undefined);
+    const [selectedLocation, setSelectedLocation] = useState<string | undefined>(undefined);
+
     const { data: summaryData, isLoading: isSummaryLoading } = useQuery({
         queryKey: ["admin-dashboard-summary"],
         queryFn: () => adminService.getDashboardSummary(),
     });
 
-    const { data: trafficData } = useQuery({
-        queryKey: ["admin-traffic-analytics"],
-        queryFn: () => adminService.getTrafficAnalytics(),
+    const { data: trafficData, isLoading: isTrafficLoading } = useQuery({
+        queryKey: ["admin-traffic-analytics", selectedDevice, selectedLocation],
+        queryFn: () => adminService.getTrafficAnalytics(selectedDevice, selectedLocation),
     });
 
     if (isSummaryLoading) {
@@ -90,8 +96,51 @@ export function AdminDashboardAnalytics() {
         return Monitor;
     };
 
+    const clearFilters = () => {
+        setSelectedDevice(undefined);
+        setSelectedLocation(undefined);
+    };
+
+    const hasFilters = !!selectedDevice || !!selectedLocation;
+
     return (
         <div className="space-y-8 pb-10">
+            {/* Header & Filter Controls */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                    <AnimatePresence>
+                        {hasFilters && (
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                className="flex items-center gap-2"
+                            >
+                                <Badge className="bg-primary-50 text-primary-700 border-none hover:bg-primary-100 flex items-center gap-2 px-3 py-1 text-xs">
+                                    Filtering Active
+                                </Badge>
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    onClick={clearFilters}
+                                    className="h-8 text-xs text-gray-400 hover:text-red-500 hover:bg-red-50"
+                                >
+                                    <XCircle className="h-3.5 w-3.5 mr-1" />
+                                    Clear All
+                                </Button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                    <Button variant="outline" size="sm" className="h-9 px-4 text-xs font-bold rounded-xl bg-white border-gray-100 shadow-sm hover:shadow-md transition-all active:scale-95">
+                        <Download className="h-3.5 w-3.5 mr-2" />
+                        Export Report
+                    </Button>
+                </div>
+            </div>
+
             {/* Glassmorphic Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
@@ -148,7 +197,6 @@ export function AdminDashboardAnalytics() {
                     </div>
 
                     <div className="h-72 relative mt-4">
-                        {/* Simple SVG Chart */}
                         <svg className="w-full h-full" viewBox="0 0 1000 300" preserveAspectRatio="none">
                             <defs>
                                 <linearGradient id="gradient-students" x1="0" y1="0" x2="0" y2="1">
@@ -156,7 +204,6 @@ export function AdminDashboardAnalytics() {
                                     <stop offset="100%" stopColor="#12ac75" stopOpacity="0" />
                                 </linearGradient>
                             </defs>
-                            {/* Static Curve Placeholder */}
                             <path 
                                 d="M0,250 C100,220 200,260 300,180 C400,100 500,150 600,80 C700,10 800,90 1000,40 L1000,300 L0,300 Z" 
                                 fill="url(#gradient-students)" 
@@ -173,7 +220,6 @@ export function AdminDashboardAnalytics() {
                             />
                         </svg>
                         
-                        {/* Animated Bubbles for Data Points */}
                         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                             {[250, 180, 80, 40].map((y, i) => (
                                 <motion.div
@@ -210,14 +256,17 @@ export function AdminDashboardAnalytics() {
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="bg-white/60 backdrop-blur-xl p-8 rounded-3xl shadow-2xl shadow-gray-200/40 border border-white/50"
                 >
-                    <h3 className="text-xl font-black text-gray-900 tracking-tight mb-8">Traffic Origins</h3>
+                    <div className="flex items-center justify-between mb-8">
+                        <h3 className="text-xl font-black text-gray-900 tracking-tight">Traffic Origins</h3>
+                        {isTrafficLoading && <div className="h-4 w-4 border-2 border-primary-600 border-t-transparent animate-spin rounded-full" />}
+                    </div>
                     
                     <div className="space-y-8">
                         {/* Device Breakdown */}
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Devices</span>
-                                <span className="text-[10px] font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">Device Mix</span>
+                                <span className="text-[10px] font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">Interactive</span>
                             </div>
                             <div className="grid grid-cols-3 gap-3">
                                 {(trafficData?.deviceDistribution || [
@@ -226,12 +275,21 @@ export function AdminDashboardAnalytics() {
                                     {label: 'Tablet', percentage: 5}
                                 ]).map((device: TrafficAnalytics) => {
                                     const Icon = getDeviceIcon(device.label);
+                                    const isActive = selectedDevice === device.label;
                                     return (
-                                        <div key={device.label} className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-gray-50/50 border border-gray-100/50 hover:bg-white transition-colors duration-300">
-                                            <Icon className="h-4 w-4 text-gray-400" />
-                                            <span className="text-[10px] font-bold text-gray-500">{device.label}</span>
-                                            <span className="text-sm font-black text-gray-900">{device.percentage}%</span>
-                                        </div>
+                                        <button 
+                                            key={device.label} 
+                                            onClick={() => setSelectedDevice(isActive ? undefined : device.label)}
+                                            className={`flex flex-col items-center gap-2 p-3 rounded-2xl border transition-all duration-300 relative ${
+                                                isActive 
+                                                ? "bg-primary-50 border-primary-200 shadow-sm ring-1 ring-primary-500/20" 
+                                                : "bg-gray-50/50 border-gray-100/50 hover:bg-white hover:border-primary-100"
+                                            }`}
+                                        >
+                                            <Icon className={`h-4 w-4 ${isActive ? "text-primary-600" : "text-gray-400"}`} />
+                                            <span className={`text-[10px] font-bold ${isActive ? "text-primary-700" : "text-gray-500"}`}>{device.label}</span>
+                                            <span className={`text-sm font-black ${isActive ? "text-primary-900" : "text-gray-900"}`}>{device.percentage}%</span>
+                                        </button>
                                     );
                                 })}
                             </div>
@@ -249,22 +307,34 @@ export function AdminDashboardAnalytics() {
                                     {label: 'United States', percentage: 15},
                                     {label: 'India', percentage: 10},
                                     {label: 'Others', percentage: 15}
-                                ]).map((loc: TrafficAnalytics) => (
-                                    <div key={loc.label} className="space-y-1.5">
-                                        <div className="flex items-center justify-between text-xs font-bold">
-                                            <span className="text-gray-700">{loc.label}</span>
-                                            <span className="text-gray-400">{loc.percentage}%</span>
-                                        </div>
-                                        <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                                            <motion.div 
-                                                initial={{ width: 0 }}
-                                                animate={{ width: `${loc.percentage}%` }}
-                                                transition={{ duration: 1, delay: 0.8 }}
-                                                className="h-full bg-primary-500 rounded-full shadow-[0_0_8px_rgba(18,172,117,0.4)]"
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
+                                ]).map((loc: TrafficAnalytics) => {
+                                    const isActive = selectedLocation === loc.label;
+                                    return (
+                                        <button 
+                                            key={loc.label} 
+                                            onClick={() => setSelectedLocation(isActive ? undefined : loc.label)}
+                                            className={`w-full group text-left space-y-1.5 p-2 rounded-xl transition-all ${
+                                                isActive ? "bg-primary-50 ring-1 ring-primary-500/10" : "hover:bg-gray-50"
+                                            }`}
+                                        >
+                                            <div className="flex items-center justify-between text-xs font-bold">
+                                                <span className={`${isActive ? "text-primary-700" : "text-gray-700"}`}>{loc.label}</span>
+                                                <span className={`${isActive ? "text-primary-600" : "text-gray-400"}`}>{loc.percentage}%</span>
+                                            </div>
+                                            <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                                                <motion.div 
+                                                    initial={false}
+                                                    animate={{ 
+                                                        width: `${loc.percentage}%`,
+                                                        backgroundColor: isActive ? "#10b981" : "#12ac75"
+                                                    }}
+                                                    transition={{ duration: 1, delay: 0.2 }}
+                                                    className="h-full rounded-full"
+                                                />
+                                            </div>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>

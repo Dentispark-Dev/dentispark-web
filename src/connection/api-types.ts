@@ -391,6 +391,7 @@ export interface StudentQuery {
   searchKey?: string;
   platformMemberCategory?: string;
   platformMemberProfileStatus?: string;
+  paymentStatus?: "FREE" | "PAID";
   page?: number;
   perPage?: number;
 }
@@ -417,6 +418,7 @@ export interface StudentRecord {
   emailAddress: string;
   activationStatus: string;
   activationStatusDesc: string;
+  paymentStatus: "FREE" | "PAID";
   dentalSchoolGateway: string;
   dateStamped: string;
 }
@@ -730,11 +732,52 @@ export interface AuditData {
 }
 
 export interface LoginSession {
-  guid: string;
-  userEmail: string;
-  userType: string;
-  ipAddress: string;
   location: string;
   device: string;
   loginAt: string;
+}
+
+// Chat Management Types
+export interface ChatMessage {
+  id: string;
+  conversationId: string;
+  senderEmail: string;
+  senderName: string;
+  senderType: string;
+  message: string;
+  attachmentUrls: string[];
+  createdAt: string;
+}
+
+export interface Conversation {
+  id: string;
+  type: "PEER" | "GROUP";
+  title?: string;
+  creatorEmail: string;
+  lastMessage?: string;
+  lastMessageAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ConversationParticipant {
+  id: string;
+  conversationId: string;
+  participantEmail: string;
+  participantName: string;
+  participantType: string;
+  unreadCount: number;
+  lastReadAt?: string;
+  conversation: Conversation;
+}
+
+export interface UpsertPeerConversationRequest {
+  participantEmail: string;
+  participantName: string;
+  participantType: string;
+}
+
+export interface CreateGroupConversationRequest {
+  title: string;
+  participantEmails: string[];
 }

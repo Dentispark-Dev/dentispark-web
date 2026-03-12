@@ -56,6 +56,7 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
         if (query.searchKey) params.append("searchKey", query.searchKey);
         if (query.platformMemberCategory) params.append("platformMemberCategory", query.platformMemberCategory);
         if (query.platformMemberProfileStatus) params.append("platformMemberProfileStatus", query.platformMemberProfileStatus);
+        if (query.paymentStatus) params.append("paymentStatus", query.paymentStatus);
         if (query.page !== undefined) params.append("pageNumber", query.page.toString());
         if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
         return api.get<PaginatedResponse<StudentRecord>>(`/students/records?${params.toString()}`);
@@ -143,7 +144,13 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     getGlobalActivity: (page: number = 0, size: number = 10) =>
         api.get<PaginatedResponse<GlobalActivity>>(`/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`),
 
-    getTrafficAnalytics: () => api.get<TrafficSummary>("/dashboard/traffic"),
+    getTrafficAnalytics: (device?: string, location?: string) => {
+        const params = new URLSearchParams();
+        if (device) params.append("device", device);
+        if (location) params.append("location", location);
+        const query = params.toString();
+        return api.get<TrafficSummary>(`/dashboard/traffic${query ? `?${query}` : ""}`);
+    },
 
     // --- Content Management: Resources ---
     getResourceRecords: (query: AdminResourceQuery) => {

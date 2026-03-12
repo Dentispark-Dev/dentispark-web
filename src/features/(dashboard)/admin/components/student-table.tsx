@@ -161,19 +161,16 @@ export function StudentTable() {
                                 Inactive
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuLabel>Category</DropdownMenuLabel>
+                            <DropdownMenuLabel>Payment Status</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "", page: 0 }))}>
-                                All Categories
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, paymentStatus: undefined, page: 0 }))}>
+                                All Payments
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "BDS", page: 0 }))}>
-                                BDS
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, paymentStatus: "PAID", page: 0 }))}>
+                                Paid
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "NURSING", page: 0 }))}>
-                                Nursing
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, platformMemberCategory: "HYGIENE_THERAPY", page: 0 }))}>
-                                Hygiene Therapy
+                            <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, paymentStatus: "FREE", page: 0 }))}>
+                                Free
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -189,6 +186,7 @@ export function StudentTable() {
                                 <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Student</th>
                                 <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">SID</th>
                                 <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
+                                <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Payment</th>
                                 <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                                 <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Joined Date</th>
                                 <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
@@ -231,6 +229,13 @@ export function StudentTable() {
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-600">
                                             {student.dentalSchoolGateway || "BDS"}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {student.paymentStatus === "PAID" ? (
+                                                <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 border-none">Paid</Badge>
+                                            ) : (
+                                                <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-200 border-none">Free</Badge>
+                                            )}
                                         </td>
                                         <td className="px-6 py-4">
                                             {getStatusBadge(student.activationStatus)}
