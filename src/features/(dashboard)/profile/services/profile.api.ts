@@ -7,6 +7,19 @@ export interface UpdateStudentProfileRequest {
   profilePicture?: string;
   linkedinUrl?: string;
   biography?: string;
+  whyDentistry?: string;
+}
+
+export interface UpdateAcademicProfileRequest {
+  yearOfStudy?: string;
+  gcseResult?: string;
+  ucatScore?: string;
+  casperScore?: string;
+  goals?: string;
+  biologyGrade?: string;
+  chemistryGrade?: string;
+  otherSubject?: string;
+  otherSubjectGrade?: string;
 }
 
 export interface StudentProfileData {
@@ -16,6 +29,7 @@ export interface StudentProfileData {
   profilePicture?: string;
   linkedinProfileUrl?: string;
   biography?: string;
+  whyDentistry?: string;
 }
 
 class ProfileAPIService extends BaseAPI {
@@ -31,6 +45,12 @@ class ProfileAPIService extends BaseAPI {
     payload: UpdateStudentProfileRequest,
   ): Promise<StudentProfileData> {
     return this.patch<StudentProfileData>("/student/profile", payload);
+  }
+
+  async UPDATEACADEMICPROFILE(
+    payload: UpdateAcademicProfileRequest,
+  ): Promise<AcademicProfile> {
+    return this.patch<AcademicProfile>("/student/academic-profile", payload);
   }
 }
 

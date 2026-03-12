@@ -1020,6 +1020,44 @@ const adminMenuItems: MenuItem[] = [
     icon: menuItems[0].icon,
   },
   {
+    id: "admin-newsletter",
+    label: "Newsletter",
+    href: "/admin/newsletter",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: {
+      inactive: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#868686"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      ),
+      active: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#12AC75"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      ),
+    },
+  },
+  {
     id: "admin-students",
     label: "Manage Students",
     href: "/admin/students",

@@ -45,7 +45,9 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
     ...(academicProfileData && {
       yearOfStudy: academicProfileData.yearOfStudy,
       gcseResult: academicProfileData.gcseResult,
-      ucatScore: academicProfileData.casperScore || "",
+      ucatScore: academicProfileData.ucatScore || "",
+      casperScore: academicProfileData.casperScore || "",
+      goals: academicProfileData.goals || "",
       biologyGrade:
         academicProfileData?.aLevelGrades?.find(
           (grade) => grade.subject.toLowerCase() === "biology",
@@ -160,6 +162,24 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
               <div className="border-greys-300 bg-white-100 mt-1 flex h-12 items-center rounded-md border px-3 text-sm">
                 {data.ucatScore || "Not provided"}
               </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                CASPer Score
+              </label>
+              <div className="border-greys-300 bg-white-100 mt-1 flex h-12 items-center rounded-md border px-3 text-sm">
+                {data.casperScore || "Not provided"}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Target Schools/Goals
+            </label>
+            <div className="border-greys-300 bg-white-100 mt-1 flex min-h-12 items-center rounded-md border px-3 py-2 text-sm">
+              {data.goals || "Not specified"}
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { profileAPIService } from "./profile.api";
-import type { UpdateStudentProfileRequest } from "./profile.api";
+import type { UpdateStudentProfileRequest, UpdateAcademicProfileRequest } from "./profile.api";
 import { toast } from "sonner";
 import { useAuth } from "@/src/providers/auth-provider";
 import { LoginResponseData } from "@/src/features/(auth)/type";
@@ -22,6 +22,24 @@ export const useUpdateStudentProfileMutation = () => {
     },
     onError: () => {
       toast.error("updating profile failed");
+    },
+  });
+};
+
+// Update academic profile mutation
+export const useUpdateAcademicProfileMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: UpdateAcademicProfileRequest) =>
+      profileAPIService.UPDATEACADEMICPROFILE(payload),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["academicProfile"] });
+      toast.success("Academic profile updated successfully!");
+    },
+    onError: () => {
+      toast.error("Updating academic profile failed");
     },
   });
 };

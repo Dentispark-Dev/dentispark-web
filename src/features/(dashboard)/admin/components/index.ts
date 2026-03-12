@@ -27,3 +27,6 @@ export const MentorProfileView = dynamic(() => import("./mentor-profile-view").t
 export const UniversityEditView = dynamic(() => import("./university-edit-view").then(mod => mod.UniversityEditView), { ssr: false });
 export const ActivityFeed = dynamic(() => import("./activity-feed").then(mod => mod.ActivityFeed), { ssr: false });
 export const LoginHistoryTable = dynamic(() => import("./login-history-table").then(mod => mod.LoginHistoryTable), { ssr: false });
+export const NewsletterForm = dynamic(() => import("./newsletter-form").then(mod => mod.NewsletterForm), { ssr: false });
+export const NewsletterHistory = dynamic(() => import("./newsletter-history").then(mod => mod.NewsletterHistory), { ssr: false });
+export const SMTPSettings = dynamic(() => import("./smtp-settings").then(mod => mod.SMTPSettings), { ssr: false });

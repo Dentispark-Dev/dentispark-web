@@ -39,6 +39,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
     phoneNumber: user?.mobileNumber || "",
     biography: user?.biography || "",
     linkedinUrl: user?.linkedinUrl || "",
+    whyDentistry: user?.whyDentistry || "",
   };
 
   const form = useForm<ProfileFormData>({
@@ -56,7 +57,8 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
       emailAddress: user?.emailAddress || "",
       phoneNumber: user?.mobileNumber || "",
       biography: user?.biography || "",
-      linkedinUrl: user?.linkedinUrl,
+      linkedinUrl: user?.linkedinUrl || "",
+      whyDentistry: user?.whyDentistry || "",
       ...initialData,
     });
   }, [
@@ -66,6 +68,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
     user?.mobileNumber,
     user?.biography,
     user?.linkedinUrl,
+    user?.whyDentistry,
     initialData,
   ]);
 
@@ -78,6 +81,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
         mobileNumber: data.phoneNumber,
         biography: data.biography,
         linkedinUrl: data.linkedinUrl,
+        whyDentistry: data.whyDentistry,
         // Optional fields when you wire them up in the UI
         // profilePicture: undefined,
         // linkedinProfileUrl: undefined,
@@ -287,6 +291,29 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
                         {...field}
                         disabled={!isEditing}
                         className="min-h-[100px] resize-none"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="whyDentistry"
+              render={({ field }) => (
+                <FormItem className="flex flex-col md:flex-row md:items-start">
+                  <FormLabel className="mb-2 text-sm font-medium text-gray-700 md:mb-0 md:basis-2/4">
+                    Motivation Statement
+                  </FormLabel>
+                  <div className="w-full">
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Why do you want to study dentistry?"
+                        disabled={!isEditing}
+                        className="min-h-[150px] resize-none"
                       />
                     </FormControl>
                     <FormMessage />

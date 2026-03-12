@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { toast } from "sonner";
 
 import { Button } from "@/src/components/ui/button";
 import {
@@ -30,7 +29,11 @@ import {
   gcseOptions,
   defaultAcademicData,
 } from "../constants";
-// Note: This modal is for display/editing only - actual API updates would need to be implemented
+import { useUpdateAcademicProfileMutation } from "../services";
+import { Input } from "@/src/components/ui/input";
+import { Textarea } from "@/src/components/ui/textarea";
+
+// Note: This modal now uses real API integration
 
 // Extended schema to include course of interest
 const academicModalSchema = academicSchema.extend({
@@ -55,7 +58,7 @@ export function AcademicProfileModal({
   onSubmit,
   onCancel,
 }: AcademicProfileModalProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const updateAcademicProfileMutation = useUpdateAcademicProfileMutation();
 
   const form = useForm<AcademicModalFormData>({
     resolver: zodResolver(academicModalSchema),
@@ -67,16 +70,21 @@ export function AcademicProfileModal({
   });
 
   const handleSubmit = async (data: AcademicModalFormData) => {
-    setIsSubmitting(true);
     try {
-      // For now, just simulate the update - real API integration would go here
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await updateAcademicProfileMutation.mutateAsync({
+        yearOfStudy: data.yearOfStudy,
+        gcseResult: data.gcseResult,
+        ucatScore: data.ucatScore,
+        casperScore: data.casperScore,
+        goals: data.goals,
+        biologyGrade: data.biologyGrade,
+        chemistryGrade: data.chemistryGrade,
+        otherSubject: data.otherSubject,
+        otherSubjectGrade: data.otherSubjectGrade,
+      });
       onSubmit(data);
-      toast.success("Academic profile updated successfully!");
     } catch {
-      toast.error("Failed to update academic profile. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+      // Error handled by mutation toast
     }
   };
 
@@ -150,6 +158,69 @@ export function AcademicProfileModal({
               )}
             />
           </div>
+
+          {/* Scores Section */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="ucatScore"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    UCAT Score
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Enter your UCAT score"
+                      className="h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="casperScore"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    CASPer Score
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Enter your CASPer score"
+                      className="h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="goals"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium text-gray-700">
+                  Target Schools/Goals
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="List your target schools or academic goals"
+                    className="min-h-[80px] resize-none"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* A-Level Grades Section */}
           <div className="space-y-4">
@@ -387,16 +458,20 @@ export function AcademicProfileModal({
               variant="outline"
               className="hover:text-primary h-12 flex-1/2 px-8 hover:bg-white"
               onClick={onCancel}
-              disabled={isSubmitting}
+              disabled={updateAcademicProfileMutation.isPending}
             >
               Cancel
             </Button>
             <Button
               type="submit"
               className="bg-primary hover:bg-primary-700 h-12 flex-1/2 px-8"
-              disabled={isSubmitting}
+              disabled={updateAcademicProfileMutation.isPending}
             >
-              {isSubmitting ? "Updating Profile" : "Update Profile"}
+              {updateAcademicProfileMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                "Update Profile"
+              )}
             </Button>
           </div>
         </form>

@@ -7,12 +7,15 @@ export const profileSchema = z.object({
   phoneNumber: z.string().optional(),
   linkedinUrl: z.string().optional(),
   biography: z.string().optional(),
+  whyDentistry: z.string().optional(),
 });
 
 export const academicSchema = z.object({
   yearOfStudy: z.string().min(1, "Please select your year of study"),
   gcseResult: z.string().min(1, "Please enter your GCSE result"),
   ucatScore: z.string().optional(),
+  casperScore: z.string().optional(),
+  goals: z.string().optional(),
   biologyGrade: z.string().min(1, "Please select Biology grade"),
   chemistryGrade: z.string().min(1, "Please select Chemistry grade"),
   otherSubject: z.string().optional(),
@@ -35,12 +38,15 @@ export interface ProfileData {
   phoneNumber?: string;
   linkedinUrl?: string;
   biography?: string;
+  whyDentistry?: string;
 }
 
 export interface AcademicData {
   yearOfStudy: string;
   gcseResult: string;
   ucatScore?: string;
+  casperScore?: string;
+  goals?: string;
   biologyGrade: string;
   chemistryGrade: string;
   otherSubject?: string;

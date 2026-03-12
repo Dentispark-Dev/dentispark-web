@@ -115,7 +115,9 @@ export interface User {
 export interface AcademicProfile {
   yearOfStudy: string;
   gcseResult: string;
-  casperScore: string;
+  ucatScore?: string;
+  casperScore?: string;
+  goals?: string;
   aLevelGrades: Array<{
     subject: string;
     grade: string;
