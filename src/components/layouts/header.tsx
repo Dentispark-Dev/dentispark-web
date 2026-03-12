@@ -15,7 +15,7 @@ export default function Header() {
   const { isAuthenticated, user, isAdmin, isMentor } = useAuth();
 
   const dashboardHref = isAdmin
-    ? "/admin/overview"
+    ? "/admin"
     : isMentor
       ? "/mentor/overview"
       : "/overview";

@@ -22,7 +22,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
         </div>
 
         {/* Clickable logo */}
-        <Link href="/admin/overview" className="cursor-pointer transition-opacity hover:opacity-80">
+        <Link href="/admin" className="cursor-pointer transition-opacity hover:opacity-80">
           <Logo className="h-16 w-32 md:h-20 md:w-48" />
         </Link>
 
