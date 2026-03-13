@@ -67,7 +67,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   return (
     <I18nContext.Provider value={{ locale, setLocale, t }}>
-      <div dir={locale === "ar" ? "rtl" : "ltr"}>
+      <div 
+        dir={locale === "ar" ? "rtl" : "ltr"}
+        style={{ display: "contents" }}
+      >
         {children}
       </div>
     </I18nContext.Provider>
