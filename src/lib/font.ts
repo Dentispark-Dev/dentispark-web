@@ -1,4 +1,11 @@
 import localFont from "next/font/local";
+import { Roboto_Slab } from "next/font/google";
+
+export const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-roboto-slab",
+});
 
 const genralSans = localFont({
   src: [

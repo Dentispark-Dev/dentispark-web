@@ -1,1057 +1,207 @@
 import { MenuItem } from "./types";
+import React from "react";
+
+// --- Icon Definitions ---
+
+const Icons = {
+  aiHub: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 4.5V12h8.5" /><path d="M18 11a7 7 0 1 0-14 0c0 2.5 2 5 2 7H4" /><path d="M10 22h4" /><path d="M15 5a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 4.5V12h8.5" /><path d="M18 11a7 7 0 1 0-14 0c0 2.5 2 5 2 7H4" /><path d="M10 22h4" /><path d="M15 5a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z" />
+      </svg>
+    ),
+  },
+  overview: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M12 18V15" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M10.0693 2.81985L3.13929 8.36985C2.35929 8.98985 1.85929 10.2998 2.02929 11.2798L3.35929 19.2398C3.59929 20.6598 4.95929 21.8098 6.39929 21.8098H17.5993C19.0293 21.8098 20.3993 20.6498 20.6393 19.2398L21.9693 11.2798C22.1293 10.2998 21.6293 8.98985 20.8593 8.36985L13.9293 2.82985C12.8593 1.96985 11.1293 1.96985 10.0693 2.81985Z" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.8319 6.01002L13.2819 0.770018C12.0019 -0.249982 10.0019 -0.259982 8.73192 0.760018L2.18192 6.01002C1.24192 6.76002 0.671916 8.26002 0.871916 9.44002L2.13192 16.98C2.42192 18.67 3.99192 20 5.70192 20H16.3019C17.9919 20 19.5919 18.64 19.8819 16.97L21.1419 9.43002C21.3219 8.26002 20.7519 6.76002 19.8319 6.01002ZM11.7519 16C11.7519 16.41 11.4119 16.75 11.0019 16.75C10.5919 16.75 10.2519 16.41 10.2519 16V13C10.2519 12.59 10.5919 12.25 11.0019 12.25C11.4119 12.25 11.7519 12.59 11.7519 13V16Z" fill="#12AC75" />
+      </svg>
+    ),
+  },
+  schedule: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2V5" stroke="#868686" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 2V5" stroke="#868686" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.5 9.08984H20.5" stroke="#868686" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#868686" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.75 3.56V2C16.75 1.59 16.41 1.25 16 1.25C15.59 1.25 15.25 1.59 15.25 2V3.5H8.74999V2C8.74999 1.59 8.40999 1.25 7.99999 1.25C7.58999 1.25 7.24999 1.59 7.24999 2V3.56C4.54999 3.81 3.23999 5.42 3.03999 7.81C3.01999 8.1 3.25999 8.34 3.53999 8.34H20.46C20.75 8.34 20.99 8.09 20.96 7.81C20.76 5.42 19.45 3.81 16.75 3.56Z" fill="#12AC75" />
+        <path d="M20 9.83984H4C3.45 9.83984 3 10.2898 3 10.8398V16.9998C3 19.9998 4.5 21.9998 8 21.9998H16C19.5 21.9998 21 19.9998 21 16.9998V10.8398C21 10.2898 20.55 9.83984 20 9.83984Z" fill="#12AC75" />
+      </svg>
+    ),
+  },
+  studentMatching: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.16 10.87C9.06 10.86 8.94 10.86 8.83 10.87C6.45 10.79 4.56 8.84 4.56 6.44C4.56 3.99 6.54 2 9 2C11.45 2 13.44 3.99 13.44 6.44C13.43 8.84 11.54 10.79 9.16 10.87Z" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16.41 4C18.35 4 19.91 5.57 19.91 7.5C19.91 9.39 18.41 10.93 16.54 11C16.46 10.99 16.37 10.99 16.28 11" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M4.16 14.56C1.74 16.18 1.74 18.82 4.16 20.43C6.91 22.27 11.42 22.27 14.17 20.43C16.59 18.81 16.59 16.17 14.17 14.56C11.43 12.73 6.92 12.73 4.16 14.56Z" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M18.34 20C19.06 19.85 19.74 19.56 20.3 19.13C21.86 17.96 21.86 16.03 20.3 14.86C19.75 14.44 19.08 14.16 18.37 14" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C11.73 11.4 13.74 9.32 13.75 6.75C13.75 4.13 11.62 2 9 2Z" fill="#12AC75" />
+        <path d="M14.08 14.15C11.29 12.29 6.74 12.29 3.93 14.15C2.66 15 1.96 16.15 1.96 17.38C1.96 18.61 2.66 19.75 3.92 20.59C5.32 21.53 7.16 22 9 22C10.84 22 12.68 21.53 14.08 20.59C15.34 19.74 16.04 18.60 16.04 17.36C16.03 16.13 15.34 14.99 14.08 14.15Z" fill="#12AC75" />
+        <path d="M19.99 7.34C20.15 9.28 18.77 10.98 16.86 11.21C15.67 11.28 14.78 10.97 14.11 10.4C15.14 9.48 15.73 8.1 15.61 6.6C15.54 5.79 15.26 5.05 14.84 4.42C15.22 4.23 15.66 4.11 16.11 4.07C18.07 3.90 19.82 5.36 19.99 7.34Z" fill="#12AC75" />
+        <path d="M21.99 16.59C21.91 17.56 21.29 18.40 20.25 18.97C19.25 19.52 17.99 19.78 16.74 19.75C17.46 19.10 17.88 18.29 17.96 17.43C18.06 16.19 17.47 15 16.29 14.05C15.62 13.52 14.84 13.10 13.99 12.79C16.20 12.15 18.98 12.58 20.69 13.96C21.61 14.70 22.08 15.63 21.99 16.59Z" fill="#12AC75" />
+      </svg>
+    ),
+  },
+  messages: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    ),
+  },
+  university: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+      </svg>
+    ),
+  },
+  resources: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      </svg>
+    ),
+  },
+  quality: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+  },
+  profile: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+      </svg>
+    ),
+  },
+};
+
+// --- Main Menu Items ---
 
 export const menuItems: MenuItem[] = [
   {
-    id: "ai-hub",
-    label: "AI Application Hub",
-    href: "/ai-hub",
+    id: "ai-group",
+    label: "AI Excellence",
+    href: "#",
     allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#868686"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 4.5V12h8.5" />
-          <path d="M18 11a7 7 0 1 0-14 0c0 2.5 2 5 2 7H4" />
-          <path d="M10 22h4" />
-          <path d="M15 5a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z" />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#12AC75"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 4.5V12h8.5" />
-          <path d="M18 11a7 7 0 1 0-14 0c0 2.5 2 5 2 7H4" />
-          <path d="M10 22h4" />
-          <path d="M15 5a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z" />
-        </svg>
-      ),
-    },
+    icon: Icons.aiHub,
+    children: [
+      { id: "ai-hub", label: "AI Application Hub", href: "/ai-hub", allowedMemberTypes: ["STUDENT"], icon: Icons.aiHub },
+      { id: "guidance-hub", label: "Guidance Hub", href: "/guidance-hub", allowedMemberTypes: ["STUDENT"], icon: Icons.aiHub },
+    ],
   },
   {
-    id: "overview",
-    label: "Overview",
-    href: "/overview",
+    id: "journey-group",
+    label: "My Journey",
+    href: "#",
     allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-        >
-          <path
-            d="M12 18V15"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M10.0693 2.81985L3.13929 8.36985C2.35929 8.98985 1.85929 10.2998 2.02929 11.2798L3.35929 19.2398C3.59929 20.6598 4.95929 21.8098 6.39929 21.8098H17.5993C19.0293 21.8098 20.3993 20.6498 20.6393 19.2398L21.9693 11.2798C22.1293 10.2998 21.6293 8.98985 20.8593 8.36985L13.9293 2.82985C12.8593 1.96985 11.1293 1.96985 10.0693 2.81985Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 22 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M19.8319 6.01002L13.2819 0.770018C12.0019 -0.249982 10.0019 -0.259982 8.73192 0.760018L2.18192 6.01002C1.24192 6.76002 0.671916 8.26002 0.871916 9.44002L2.13192 16.98C2.42192 18.67 3.99192 20 5.70192 20H16.3019C17.9919 20 19.5919 18.64 19.8819 16.97L21.1419 9.43002C21.3219 8.26002 20.7519 6.76002 19.8319 6.01002ZM11.7519 16C11.7519 16.41 11.4119 16.75 11.0019 16.75C10.5919 16.75 10.2519 16.41 10.2519 16V13C10.2519 12.59 10.5919 12.25 11.0019 12.25C11.4119 12.25 11.7519 12.59 11.7519 13V16Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
+    icon: Icons.overview,
+    children: [
+      { id: "overview", label: "Overview", href: "/overview", allowedMemberTypes: ["STUDENT"], icon: Icons.overview },
+      { id: "applications", label: "Applications", href: "/applications", allowedMemberTypes: ["STUDENT"], icon: Icons.overview },
+      { id: "university-hub", label: "University Hub", href: "/university-hub", allowedMemberTypes: ["STUDENT"], icon: Icons.university },
+    ],
   },
   {
-    id: "overview",
-    label: "Overview",
-    href: "/mentor/overview",
+    id: "mentor-group",
+    label: "Mentor Center",
+    href: "#",
     allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-        >
-          <path
-            d="M12 18V15"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M10.0693 2.81985L3.13929 8.36985C2.35929 8.98985 1.85929 10.2998 2.02929 11.2798L3.35929 19.2398C3.59929 20.6598 4.95929 21.8098 6.39929 21.8098H17.5993C19.0293 21.8098 20.3993 20.6498 20.6393 19.2398L21.9693 11.2798C22.1293 10.2998 21.6293 8.98985 20.8593 8.36985L13.9293 2.82985C12.8593 1.96985 11.1293 1.96985 10.0693 2.81985Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 22 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M19.8319 6.01002L13.2819 0.770018C12.0019 -0.249982 10.0019 -0.259982 8.73192 0.760018L2.18192 6.01002C1.24192 6.76002 0.671916 8.26002 0.871916 9.44002L2.13192 16.98C2.42192 18.67 3.99192 20 5.70192 20H16.3019C17.9919 20 19.5919 18.64 19.8819 16.97L21.1419 9.43002C21.3219 8.26002 20.7519 6.76002 19.8319 6.01002ZM11.7519 16C11.7519 16.41 11.4119 16.75 11.0019 16.75C10.5919 16.75 10.2519 16.41 10.2519 16V13C10.2519 12.59 10.5919 12.25 11.0019 12.25C11.4119 12.25 11.7519 12.59 11.7519 13V16Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
+    icon: Icons.overview,
+    children: [
+      { id: "overview-mentor", label: "Overview", href: "/mentor/overview", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.overview },
+      { id: "schedule", label: "Schedule", href: "/mentor/schedule", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.schedule },
+    ],
   },
   {
-    id: "schedule",
-    label: "Schedule",
-    href: "/mentor/schedule",
+    id: "professional-group",
+    label: "Professional Tools",
+    href: "#",
     allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8 2V5"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16 2V5"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M3.5 9.08984H20.5"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M15.6947 13.7002H15.7037"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M15.6947 16.7002H15.7037"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M11.9955 13.7002H12.0045"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M11.9955 16.7002H12.0045"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8.29431 13.7002H8.30329"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8.29431 16.7002H8.30329"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M16.75 3.56V2C16.75 1.59 16.41 1.25 16 1.25C15.59 1.25 15.25 1.59 15.25 2V3.5H8.74999V2C8.74999 1.59 8.40999 1.25 7.99999 1.25C7.58999 1.25 7.24999 1.59 7.24999 2V3.56C4.54999 3.81 3.23999 5.42 3.03999 7.81C3.01999 8.1 3.25999 8.34 3.53999 8.34H20.46C20.75 8.34 20.99 8.09 20.96 7.81C20.76 5.42 19.45 3.81 16.75 3.56Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M20 9.83984H4C3.45 9.83984 3 10.2898 3 10.8398V16.9998C3 19.9998 4.5 21.9998 8 21.9998H16C19.5 21.9998 21 19.9998 21 16.9998V10.8398C21 10.2898 20.55 9.83984 20 9.83984ZM9.21 18.2098C9.11 18.3098 9 18.3898 8.88 18.4398C8.76 18.4898 8.63 18.5198 8.5 18.5198C8.37 18.5198 8.24 18.4898 8.12 18.4398C8 18.3898 7.89 18.3098 7.79 18.2098C7.61 18.0198 7.5 17.7598 7.5 17.4998C7.5 17.2398 7.61 16.9798 7.79 16.7898C7.89 16.6898 8 16.6098 8.12 16.5598C8.36 16.4598 8.64 16.4598 8.88 16.5598C9 16.6098 9.11 16.6898 9.21 16.7898C9.39 16.9798 9.5 17.2398 9.5 17.4998C9.5 17.7598 9.39 18.0198 9.21 18.2098ZM9.42 14.3798C9.37 14.4998 9.3 14.6098 9.21 14.7098C9.11 14.8098 9 14.8898 8.88 14.9398C8.76 14.9898 8.63 15.0198 8.5 15.0198C8.37 15.0198 8.24 14.9898 8.12 14.9398C8 14.8898 7.89 14.8098 7.79 14.7098C7.7 14.6098 7.63 14.4998 7.58 14.3798C7.53 14.2598 7.5 14.1298 7.5 13.9998C7.5 13.7398 7.61 13.4798 7.79 13.2898C7.89 13.1898 8 13.1098 8.12 13.0598C8.48 12.9098 8.93 12.9898 9.21 13.2898C9.39 13.4798 9.5 13.7398 9.5 13.9998C9.5 14.1298 9.47 14.2598 9.42 14.3798ZM12.71 14.7098C12.61 14.8098 12.5 14.8898 12.38 14.9398C12.26 14.9898 12.13 15.0198 12 15.0198C11.87 15.0198 11.74 14.9898 11.62 14.9398C11.5 14.8898 11.39 14.8098 11.29 14.7098C11.11 14.5198 11 14.2598 11 13.9998C11 13.7398 11.11 13.4798 11.29 13.2898C11.66 12.9198 12.34 12.9198 12.71 13.2898C12.89 13.4798 13 13.7398 13 13.9998C13 14.2598 12.89 14.5198 12.71 14.7098Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
+    icon: Icons.studentMatching,
+    children: [
+      { id: "student-matching", label: "Student Matching", href: "/mentor/student-matching", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.studentMatching },
+      { id: "mentor-services", label: "My Services", href: "/mentor/services", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.resources },
+      { id: "bookings", label: "Bookings", href: "/mentor/bookings", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.schedule },
+      { id: "resources-mentor", label: "Resources", href: "/mentor/resources", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.resources },
+      { id: "quality-control", label: "Quality Control", href: "/mentor/quality-control", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.quality },
+    ],
   },
   {
-    id: "student-matching",
-    label: "Student Matching",
-    href: "/mentor/student-matching",
-    allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9.16 10.87C9.06 10.86 8.94 10.86 8.83 10.87C6.45 10.79 4.56 8.84 4.56 6.44C4.56 3.99 6.54 2 9 2C11.45 2 13.44 3.99 13.44 6.44C13.43 8.84 11.54 10.79 9.16 10.87Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16.41 4C18.35 4 19.91 5.57 19.91 7.5C19.91 9.39 18.41 10.93 16.54 11C16.46 10.99 16.37 10.99 16.28 11"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M4.16 14.56C1.74 16.18 1.74 18.82 4.16 20.43C6.91 22.27 11.42 22.27 14.17 20.43C16.59 18.81 16.59 16.17 14.17 14.56C11.43 12.73 6.92 12.73 4.16 14.56Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M18.34 20C19.06 19.85 19.74 19.56 20.3 19.13C21.86 17.96 21.86 16.03 20.3 14.86C19.75 14.44 19.08 14.16 18.37 14"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C9.12 11.49 9.13 11.49 9.15 11.49C9.16 11.49 9.16 11.49 9.17 11.49C11.73 11.4 13.74 9.32 13.75 6.75C13.75 4.13 11.62 2 9 2Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M14.08 14.15C11.29 12.29 6.74 12.29 3.93 14.15C2.66 15 1.96 16.15 1.96 17.38C1.96 18.61 2.66 19.75 3.92 20.59C5.32 21.53 7.16 22 9 22C10.84 22 12.68 21.53 14.08 20.59C15.34 19.74 16.04 18.60 16.04 17.36C16.03 16.13 15.34 14.99 14.08 14.15Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M19.99 7.34C20.15 9.28 18.77 10.98 16.86 11.21C16.85 11.21 16.85 11.21 16.84 11.21H16.81C16.75 11.21 16.69 11.21 16.64 11.23C15.67 11.28 14.78 10.97 14.11 10.4C15.14 9.48 15.73 8.1 15.61 6.6C15.54 5.79 15.26 5.05 14.84 4.42C15.22 4.23 15.66 4.11 16.11 4.07C18.07 3.90 19.82 5.36 19.99 7.34Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M21.99 16.59C21.91 17.56 21.29 18.40 20.25 18.97C19.25 19.52 17.99 19.78 16.74 19.75C17.46 19.10 17.88 18.29 17.96 17.43C18.06 16.19 17.47 15 16.29 14.05C15.62 13.52 14.84 13.10 13.99 12.79C16.20 12.15 18.98 12.58 20.69 13.96C21.61 14.70 22.08 15.63 21.99 16.59Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-  {
-    id: "bookings",
-    label: "Bookings",
-    href: "/mentor/bookings",
-    allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21.9301 6.76001L18.5601 20.29C18.3201 21.3 17.4201 22 16.3801 22H3.24013C1.73013 22 0.650145 20.5199 1.10015 19.0699L5.31014 5.55005C5.60014 4.61005 6.47015 3.95996 7.45015 3.95996H19.7501C20.7001 3.95996 21.4901 4.53997 21.8201 5.33997C22.0101 5.76997 22.0501 6.26001 21.9301 6.76001Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-          />
-          <path
-            d="M16 22H20.78C22.07 22 23.08 20.91 22.99 19.62L22 6"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M9.68018 6.38049L10.7202 2.06055"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16.3799 6.38977L17.3199 2.0498"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M7.7002 12H15.7002"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M6.7002 16H14.7002"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M20.9 9.85L21.49 19.74C21.51 20.01 21.38 20.19 21.31 20.27C21.23 20.36 21.06 20.5 20.78 20.5H18.05L20.21 9.85H20.9ZM22 6L21.99 6.02C22.01 6.26 21.99 6.51 21.93 6.76L14.56 20.29C14.32 21.3 13.42 22 12.38 22H20.78C22.07 22 23.09 20.91 22.99 19.62L22 6Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M11.45 2.23941C11.55 1.83941 11.3 1.42941 10.9 1.32941C10.5 1.23941 10.09 1.47941 9.98999 1.87941L9.48999 3.94941H11.03L11.45 2.23941Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M18.05 2.21054C18.14 1.80054 17.88 1.41054 17.47 1.32054C17.07 1.23054 16.67 1.49054 16.58 1.90054L16.13 3.97054H17.67L18.05 2.21054Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M21.82 5.32945C21.49 4.52945 20.71 3.95945 19.75 3.95945H17.67L17.11 6.54945C17.03 6.89945 16.72 7.13945 16.38 7.13945C16.33 7.13945 16.27 7.13945 16.22 7.11945C15.82 7.02945 15.56 6.62945 15.64 6.22945L16.13 3.94945H11.03L10.4 6.54945C10.32 6.88945 10.01 7.11945 9.67 7.11945C9.61 7.11945 9.55 7.10945 9.49 7.09945C9.09 6.99945 8.84 6.59945 8.94 6.18945L9.48 3.93945H7.45C6.47 3.93945 5.6 4.57945 5.31 5.51945L1.1 19.0695C0.659999 20.5195 1.73 21.9995 3.24 21.9995H16.38C17.42 21.9995 18.32 21.2995 18.56 20.2895L21.93 6.75945C21.99 6.50945 22.01 6.25945 21.99 6.01945C21.97 5.77945 21.92 5.53945 21.82 5.32945ZM14.7 16.7495H6.7C6.29 16.7495 5.95 16.4095 5.95 15.9995C5.95 15.5895 6.29 15.2495 6.7 15.2495H14.7C15.11 15.2495 15.45 15.5895 15.45 15.9995C15.45 16.4095 15.11 16.7495 14.7 16.7495ZM15.7 12.7495H7.7C7.29 12.7495 6.95 12.4095 6.95 11.9995C6.95 11.5895 7.29 11.2495 7.7 11.2495H15.7C16.11 11.2495 16.45 11.5895 16.45 11.9995C16.45 12.4095 16.11 12.7495 15.7 12.7495Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-  {
-    id: "guidance-hub",
-    label: "Guidance Hub",
-    href: "/guidance-hub",
-    allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M11.9688 1.25C17.9058 1.25 22.7188 6.06294 22.7188 12C22.7188 17.9371 17.9058 22.75 11.9688 22.75C6.03169 22.75 1.21875 17.9371 1.21875 12C1.21875 6.06294 6.03169 1.25 11.9688 1.25Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5Z"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M4.89844 4.92969L8.43844 8.45969"
-            stroke="#868686"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M4.89844 19.0691L8.43844 15.5391"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M19.0517 19.0691L15.5117 15.5391"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M19.0517 4.92969L15.5117 8.45969"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7.49875 12.0005C7.49875 11.3374 7.64666 10.7076 7.90953 10.1377C8.11303 9.69642 8.07801 9.15973 7.73441 8.81613L5.15734 6.23906C4.74728 5.829 4.07116 5.85053 3.74017 6.32671C2.61973 7.93866 1.96875 9.89445 1.96875 12.0005C1.96875 14.1048 2.61872 16.0592 3.73152 17.6705C4.06153 18.1483 4.73868 18.1714 5.14982 17.7613L7.73289 15.1848C8.07726 14.8413 8.11268 14.304 7.90907 13.8623C7.64649 13.2926 7.49875 12.6632 7.49875 12.0005Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M12.0009 7.5C12.6641 7.5 13.2938 7.64791 13.8637 7.91078C14.305 8.11428 14.8417 8.07926 15.1853 7.73566L17.7345 5.18643C18.1438 4.77717 18.1233 4.10256 17.6486 3.77141C16.0425 2.65097 14.0854 2 11.9709 2C9.86674 2 7.91966 2.64985 6.31072 3.76248C5.8331 4.09277 5.80998 4.76993 6.22007 5.18107L8.78114 7.74868C9.12705 8.09546 9.66901 8.12873 10.1126 7.92105C10.6864 7.6524 11.3246 7.5 12.0009 7.5Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M19.8885 5.90437C19.7109 5.67475 19.3735 5.6628 19.1679 5.86784L15.9491 9.07838C15.7757 9.25133 15.7558 9.52303 15.8797 9.73427C16.2701 10.3997 16.4984 11.1705 16.4984 11.9983C16.4984 12.8263 16.27 13.5972 15.8794 14.2628C15.7556 14.4738 15.7753 14.7452 15.9483 14.9182L19.1679 18.1377C19.3734 18.3432 19.7111 18.3315 19.8889 18.1016C21.1942 16.4133 21.9684 14.2951 21.9684 11.9983C21.9684 9.70125 21.194 7.59144 19.8885 5.90437Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M11.9992 16.4984C11.1712 16.4984 10.4003 16.27 9.73473 15.8794C9.52372 15.7556 9.25233 15.7753 9.07933 15.9483L5.82976 19.1979C5.62427 19.4034 5.63601 19.7411 5.86592 19.9189C7.55424 21.2242 9.67239 21.9984 11.9692 21.9984C14.2764 21.9984 16.3961 21.2234 18.077 19.9092C18.305 19.7309 18.3156 19.3949 18.111 19.1902L14.8864 15.9656C14.7146 15.7938 14.4455 15.7731 14.2351 15.8945C13.572 16.277 12.8106 16.4984 11.9992 16.4984Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-
-  {
-    id: "mentorship",
-    label: "Mentorship",
-    href: "/mentorship",
-    allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9.15859 10.87C9.05859 10.86 8.93859 10.86 8.82859 10.87C6.44859 10.79 4.55859 8.84 4.55859 6.44C4.55859 3.99 6.53859 2 8.99859 2C11.4486 2 13.4386 3.99 13.4386 6.44C13.4286 8.84 11.5386 10.79 9.15859 10.87Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16.4112 4C18.3512 4 19.9112 5.57 19.9112 7.5C19.9112 9.39 18.4113 10.93 16.5413 11C16.4613 10.99 16.3713 10.99 16.2812 11"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M4.15875 14.56C1.73875 16.18 1.73875 18.82 4.15875 20.43C6.90875 22.27 11.4188 22.27 14.1688 20.43C16.5888 18.81 16.5888 16.17 14.1688 14.56C11.4288 12.73 6.91875 12.73 4.15875 14.56Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M18.3398 20C19.0598 19.85 19.7398 19.56 20.2998 19.13C21.8598 17.96 21.8598 16.03 20.2998 14.86C19.7498 14.44 19.0798 14.16 18.3698 14"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C9.12 11.49 9.13 11.49 9.15 11.49C9.16 11.49 9.16 11.49 9.17 11.49C11.73 11.4 13.74 9.32 13.75 6.75C13.75 4.13 11.62 2 9 2Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M14.0809 14.1528C11.2909 12.2928 6.74094 12.2928 3.93094 14.1528C2.66094 15.0028 1.96094 16.1528 1.96094 17.3828C1.96094 18.6128 2.66094 19.7528 3.92094 20.5928C5.32094 21.5328 7.16094 22.0028 9.00094 22.0028C10.8409 22.0028 12.6809 21.5328 14.0809 20.5928C15.3409 19.7428 16.0409 18.6028 16.0409 17.3628C16.0309 16.1328 15.3409 14.9928 14.0809 14.1528Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M19.9894 7.33815C20.1494 9.27815 18.7694 10.9781 16.8594 11.2081C16.8494 11.2081 16.8494 11.2081 16.8394 11.2081H16.8094C16.7494 11.2081 16.6894 11.2081 16.6394 11.2281C15.6694 11.2781 14.7794 10.9681 14.1094 10.3981C15.1394 9.47815 15.7294 8.09815 15.6094 6.59815C15.5394 5.78815 15.2594 5.04815 14.8394 4.41815C15.2194 4.22815 15.6594 4.10815 16.1094 4.06815C18.0694 3.89815 19.8194 5.35815 19.9894 7.33815Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M21.9883 16.5904C21.9083 17.5604 21.2883 18.4004 20.2483 18.9704C19.2483 19.5204 17.9883 19.7804 16.7383 19.7504C17.4583 19.1004 17.8783 18.2904 17.9583 17.4304C18.0583 16.1904 17.4683 15.0004 16.2883 14.0504C15.6183 13.5204 14.8383 13.1004 13.9883 12.7904C16.1983 12.1504 18.9783 12.5804 20.6883 13.9604C21.6083 14.7004 22.0783 15.6304 21.9883 16.5904Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-
-  {
-    id: "community-hub",
-    label: "Community Hub",
-    href: "/community-hub",
+    id: "networking-group",
+    label: "Networking",
+    href: "#",
     allowedMemberTypes: ["STUDENT", "ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M18.28 9.76178V12.9018C18.28 13.1018 18.27 13.3018 18.25 13.4918C18.07 15.6118 16.82 16.6718 14.52 16.6718H14.21C14.01 16.6718 13.82 16.7618 13.71 16.9218L12.77 18.1818C12.35 18.7418 11.68 18.7418 11.26 18.1818L10.32 16.9218C10.22 16.7918 9.99001 16.6718 9.82001 16.6718H9.51001C7.00001 16.6718 5.75 16.0518 5.75 12.9118V9.77176C5.75 7.47176 6.80999 6.22178 8.92999 6.04178C9.11999 6.02178 9.31999 6.01178 9.51999 6.01178H14.55C17.02 6.00178 18.28 7.26178 18.28 9.76178Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM18.28 12.91C18.28 13.11 18.27 13.31 18.25 13.5C18.07 15.62 16.82 16.68 14.52 16.68H14.2C14 16.68 13.81 16.77 13.7 16.93L12.76 18.19C12.34 18.75 11.67 18.75 11.25 18.19L10.31 16.93C10.21 16.8 9.98 16.68 9.81 16.68H9.49C6.98 16.68 5.73 16.06 5.73 12.92V9.76C5.73 7.46 6.79 6.21 8.91 6.03C9.08 6.01 9.28 6 9.49 6H14.52C17.03 6 18.28 7.26 18.28 9.76V12.91Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
+    icon: Icons.messages,
+    children: [
+      { id: "mentorship", label: "Mentorship", href: "/mentorship", allowedMemberTypes: ["STUDENT"], icon: Icons.studentMatching },
+      { id: "community-hub", label: "Community Hub", href: "/community-hub", allowedMemberTypes: ["STUDENT", "ACADEMIC_MENTOR"], icon: Icons.messages },
+      { id: "messages", label: "Messages", href: "/messages", allowedMemberTypes: ["STUDENT", "ACADEMIC_MENTOR"], icon: Icons.messages },
+    ],
   },
-
   {
-    id: "messages",
-    label: "Messages",
-    href: "/messages",
+    id: "account-group",
+    label: "Account",
+    href: "#",
     allowedMemberTypes: ["STUDENT", "ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#868686"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#12AC75"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
-      ),
-    },
-  },
-  {
-    id: "resources",
-    label: "Resources",
-    href: "/mentor/resources",
-    allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3.5 18V7C3.5 3 4.5 2 8.5 2H15.5C19.5 2 20.5 3 20.5 7V17C20.5 17.14 20.5 17.28 20.49 17.42"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M6.35 15H20.5V18.5C20.5 20.43 18.93 22 17 22H7C5.07 22 3.5 20.43 3.5 18.5V17.85C3.5 16.28 4.78 15 6.35 15Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8 7H16"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8 10.5H13"
-            stroke="#868686"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M20.5 16V18.5C20.5 20.43 18.93 22 17 22H7C5.07 22 3.5 20.43 3.5 18.5V17.85C3.5 16.28 4.78 15 6.35 15H19.5C20.05 15 20.5 15.45 20.5 16Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M15.5 2H8.5C4.5 2 3.5 3 3.5 7V14.58C4.26 13.91 5.26 13.5 6.35 13.5H19.5C20.05 13.5 20.5 13.05 20.5 12.5V7C20.5 3 19.5 2 15.5 2ZM13 10.75H8C7.59 10.75 7.25 10.41 7.25 10C7.25 9.59 7.59 9.25 8 9.25H13C13.41 9.25 13.75 9.59 13.75 10C13.75 10.41 13.41 10.75 13 10.75ZM16 7.25H8C7.59 7.25 7.25 6.91 7.25 6.5C7.25 6.09 7.59 5.75 8 5.75H16C16.41 5.75 16.75 6.09 16.75 6.5C16.75 6.91 16.41 7.25 16 7.25Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-
-  {
-    id: "quality-control",
-    label: "Quality Control",
-    href: "/mentor/quality-control",
-    allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.3 8.10961L14.62 10.7496C14.8 11.1096 15.28 11.4696 15.68 11.5296L18.07 11.9296C19.6 12.1896 19.96 13.2896 18.86 14.3896L17 16.2496C16.69 16.5596 16.51 17.1696 16.61 17.6096L17.14 19.9196C17.56 21.7396 16.59 22.4496 14.98 21.4996L12.74 20.1696C12.33 19.9296 11.67 19.9296 11.26 20.1696L9.01996 21.4996C7.40996 22.4496 6.43995 21.7396 6.85995 19.9196L7.38998 17.6096C7.48998 17.1796 7.30997 16.5696 6.99997 16.2496L5.13998 14.3896C4.03998 13.2896 4.39996 12.1796 5.92996 11.9296L8.31997 11.5296C8.71997 11.4596 9.19997 11.1096 9.37997 10.7496L10.7 8.10961C11.41 6.67961 12.59 6.67961 13.3 8.10961Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M6 9V2"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M18 9V2"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 4V2"
-            stroke="#868686"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.3 8.11032L14.62 10.7503C14.8 11.1103 15.28 11.4703 15.68 11.5303L18.07 11.9303C19.6 12.1903 19.96 13.2903 18.86 14.3903L17 16.2603C16.69 16.5703 16.51 17.1803 16.61 17.6203L17.14 19.9303C17.56 21.7503 16.59 22.4603 14.98 21.5103L12.74 20.1803C12.33 19.9403 11.67 19.9403 11.26 20.1803L9.00997 21.5003C7.39997 22.4503 6.42997 21.7403 6.84997 19.9203L7.37997 17.6103C7.47997 17.1803 7.29997 16.5703 6.98997 16.2503L5.13997 14.4003C4.03997 13.3003 4.39997 12.1903 5.92997 11.9403L8.31997 11.5403C8.71997 11.4703 9.19997 11.1203 9.37997 10.7603L10.7 8.12032C11.41 6.68032 12.59 6.68032 13.3 8.11032Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M6 9.75C5.59 9.75 5.25 9.41 5.25 9V2C5.25 1.59 5.59 1.25 6 1.25C6.41 1.25 6.75 1.59 6.75 2V9C6.75 9.41 6.41 9.75 6 9.75Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M18 9.75C17.59 9.75 17.25 9.41 17.25 9V2C17.25 1.59 17.59 1.25 18 1.25C18.41 1.25 18.75 1.59 18.75 2V9C18.75 9.41 18.41 9.75 18 9.75Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M12 4.75C11.59 4.75 11.25 4.41 11.25 4V2C11.25 1.59 11.59 1.25 12 1.25C12.41 1.25 12.75 1.59 12.75 2V4C12.75 4.41 12.41 4.75 12 4.75Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-
-  {
-    id: "university-hub",
-    label: "University Hub",
-    href: "/university-hub",
-    allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6.70001 18H4.15002C2.72002 18 2 17.28 2 15.85V4.15002C2 2.72002 2.72002 2 4.15002 2H8.45001C9.88001 2 10.6 2.72002 10.6 4.15002V6"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M17.3692 8.41998V19.58C17.3692 21.19 16.5692 22 14.9592 22H9.1192C7.5092 22 6.69922 21.19 6.69922 19.58V8.41998C6.69922 6.80998 7.5092 6 9.1192 6H14.9592C16.5692 6 17.3692 6.80998 17.3692 8.41998Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M13.3984 6V4.15002C13.3984 2.72002 14.1184 2 15.5484 2H19.8484C21.2784 2 21.9984 2.72002 21.9984 4.15002V15.85C21.9984 17.28 21.2784 18 19.8484 18H17.3684"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M10 11H14"
-            stroke="#868686"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M10 14H14"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 22V19"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10.6 4.15C10.6 4.34 10.44 4.5 10.25 4.5H9.12C6.96 4.5 5.2 6.26 5.2 8.42V17.65C5.2 17.84 5.04 18 4.85 18H4.15C2.96 18 2 17.04 2 15.85V4.15C2 2.96 2.96 2 4.15 2H8.45C9.64 2 10.6 2.96 10.6 4.15Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M21.9984 4.15V15.85C21.9984 17.04 21.0384 18 19.8484 18H19.2184C19.0284 18 18.8684 17.84 18.8684 17.65V8.42C18.8684 6.26 17.1084 4.5 14.9484 4.5H13.7484C13.5584 4.5 13.3984 4.34 13.3984 4.15C13.3984 2.96 14.3584 2 15.5484 2H19.8484C21.0384 2 21.9984 2.96 21.9984 4.15Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M14.9492 6H9.11922C7.77922 6 6.69922 7.08 6.69922 8.42V19.58C6.69922 20.92 7.77922 22 9.11922 22H10.7492C11.0292 22 11.2492 21.78 11.2492 21.5V19C11.2492 18.59 11.5892 18.25 11.9992 18.25C12.4092 18.25 12.7492 18.59 12.7492 19V21.5C12.7492 21.78 12.9692 22 13.2492 22H14.9592C16.2892 22 17.3692 20.92 17.3692 19.59V8.42C17.3692 7.08 16.2892 6 14.9492 6ZM13.9992 14.75H9.99922C9.58922 14.75 9.24922 14.41 9.24922 14C9.24922 13.59 9.58922 13.25 9.99922 13.25H13.9992C14.4092 13.25 14.7492 13.59 14.7492 14C14.7492 14.41 14.4092 14.75 13.9992 14.75ZM13.9992 11.75H9.99922C9.58922 11.75 9.24922 11.41 9.24922 11C9.24922 10.59 9.58922 10.25 9.99922 10.25H13.9992C14.4092 10.25 14.7492 10.59 14.7492 11C14.7492 11.41 14.4092 11.75 13.9992 11.75Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-  {
-    id: "applications",
-    label: "Applications",
-    href: "/applications",
-    allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21.6602 10.4385L20.6802 14.6185C19.8402 18.2285 18.1802 19.6885 15.0602 19.3885C14.5602 19.3485 14.0202 19.2585 13.4402 19.1185L11.7602 18.7185C7.59018 17.7285 6.30018 15.6685 7.28018 11.4885L8.26018 7.29854C8.46018 6.44854 8.70018 5.70854 9.00018 5.09854C10.1702 2.67854 12.1602 2.02854 15.5002 2.81854L17.1702 3.20854C21.3602 4.18854 22.6402 6.25854 21.6602 10.4385Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M15.0584 19.3916C14.4384 19.8116 13.6584 20.1616 12.7084 20.4716L11.1284 20.9916C7.15839 22.2716 5.06839 21.2016 3.77839 17.2316L2.49839 13.2816C1.21839 9.31156 2.27839 7.21156 6.24839 5.93156L7.82839 5.41156C8.23839 5.28156 8.62839 5.17156 8.99839 5.10156C8.69839 5.71156 8.45839 6.45156 8.25839 7.30156L7.27839 11.4916C6.29839 15.6716 7.58839 17.7316 11.7584 18.7216L13.4384 19.1216C14.0184 19.2616 14.5584 19.3516 15.0584 19.3916Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12.6406 8.53125L17.4906 9.76125"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M11.6602 12.3984L14.5602 13.1384"
-            stroke="#868686"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.5484 20.1619C13.2884 20.2719 13.0084 20.3719 12.7084 20.4719L11.1284 20.9919C7.15839 22.2719 5.06839 21.2019 3.77839 17.2319L2.49839 13.2819C1.21839 9.31187 2.27839 7.21187 6.24839 5.93187L7.78839 5.42188C7.59839 5.90187 7.43839 6.45188 7.28839 7.07188L6.30839 11.2619C5.20839 15.9719 6.81839 18.5719 11.5284 19.6919L13.2084 20.0919C13.3184 20.1219 13.4384 20.1419 13.5484 20.1619Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M17.1702 3.20854L15.5002 2.81854C12.1602 2.02854 10.1702 2.67854 9.00018 5.09854C8.70018 5.70854 8.46018 6.44854 8.26018 7.29854L7.28018 11.4885C6.30018 15.6685 7.59018 17.7285 11.7602 18.7185L13.4402 19.1185C14.0202 19.2585 14.5602 19.3485 15.0602 19.3885C18.1802 19.6885 19.8402 18.2285 20.6802 14.6185L21.6602 10.4385C22.6402 6.25854 21.3602 4.18854 17.1702 3.20854Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-  {
-    id: "profile",
-    label: "Profile",
-    href: "/profile",
-    allowedMemberTypes: ["STUDENT"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12.1187 12.7805C12.0487 12.7705 11.9587 12.7705 11.8787 12.7805C10.1187 12.7205 8.71875 11.2805 8.71875 9.51047C8.71875 7.70047 10.1787 6.23047 11.9987 6.23047C13.8087 6.23047 15.2787 7.70047 15.2787 9.51047C15.2687 11.2805 13.8787 12.7205 12.1187 12.7805Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M18.7417 19.3786C16.9617 21.0086 14.6017 21.9986 12.0017 21.9986C9.40172 21.9986 7.04172 21.0086 5.26172 19.3786C5.36172 18.4386 5.96172 17.5186 7.03172 16.7986C9.77172 14.9786 14.2517 14.9786 16.9717 16.7986C18.0417 17.5186 18.6417 18.4386 18.7417 19.3786Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M22 12C22 6.49 17.51 2 12 2C6.49 2 2 6.49 2 12C2 14.9 3.25 17.51 5.23 19.34C5.23 19.35 5.23 19.35 5.22 19.36C5.32 19.46 5.44 19.54 5.54 19.63C5.6 19.68 5.65 19.73 5.71 19.77C5.89 19.92 6.09 20.06 6.28 20.2C6.35 20.25 6.41 20.29 6.48 20.34C6.67 20.47 6.87 20.59 7.08 20.7C7.15 20.74 7.23 20.79 7.3 20.83C7.5 20.94 7.71 21.04 7.93 21.13C8.01 21.17 8.09 21.21 8.17 21.24C8.39 21.33 8.61 21.41 8.83 21.48C8.91 21.51 8.99 21.54 9.07 21.56C9.31 21.63 9.55 21.69 9.79 21.75C9.86 21.77 9.93 21.79 10.01 21.8C10.29 21.86 10.57 21.9 10.86 21.93C10.9 21.93 10.94 21.94 10.98 21.95C11.32 21.98 11.66 22 12 22C12.34 22 12.68 21.98 13.01 21.95C13.05 21.95 13.09 21.94 13.13 21.93C13.42 21.9 13.7 21.86 13.98 21.8C14.05 21.79 14.12 21.76 14.2 21.75C14.44 21.69 14.69 21.64 14.92 21.56C15 21.53 15.08 21.5 15.16 21.48C15.38 21.4 15.61 21.33 15.82 21.24C15.9 21.21 15.98 21.17 16.06 21.13C16.27 21.04 16.48 20.94 16.69 20.83C16.77 20.79 16.84 20.74 16.91 20.7C17.11 20.58 17.31 20.47 17.51 20.34C17.58 20.3 17.64 20.25 17.71 20.2C17.91 20.06 18.1 19.92 18.28 19.77C18.34 19.72 18.39 19.67 18.45 19.63C18.56 19.54 18.67 19.45 18.77 19.36C18.77 19.35 18.77 19.35 18.76 19.34C20.75 17.51 22 14.9 22 12ZM16.94 16.97C14.23 15.15 9.79 15.15 7.06 16.97C6.62 17.26 6.26 17.6 5.96 17.97C4.44 16.43 3.5 14.32 3.5 12C3.5 7.31 7.31 3.5 12 3.5C16.69 3.5 20.5 7.31 20.5 12C20.5 14.32 19.56 16.43 18.04 17.97C17.75 17.6 17.38 17.26 16.94 16.97Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M12 6.92969C9.93 6.92969 8.25 8.60969 8.25 10.6797C8.25 12.7097 9.84 14.3597 11.95 14.4197C11.98 14.4197 12.02 14.4197 12.04 14.4197C12.06 14.4197 12.09 14.4197 12.11 14.4197C12.12 14.4197 12.13 14.4197 12.13 14.4197C14.15 14.3497 15.74 12.7097 15.75 10.6797C15.75 8.60969 14.07 6.92969 12 6.92969Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
-  },
-  {
-    id: "profile-settings",
-    label: "Profile settings",
-    href: "/mentor/profile-settings",
-    allowedMemberTypes: ["ACADEMIC_MENTOR"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12.1187 12.7805C12.0487 12.7705 11.9587 12.7705 11.8787 12.7805C10.1187 12.7205 8.71875 11.2805 8.71875 9.51047C8.71875 7.70047 10.1787 6.23047 11.9987 6.23047C13.8087 6.23047 15.2787 7.70047 15.2787 9.51047C15.2687 11.2805 13.8787 12.7205 12.1187 12.7805Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M18.7417 19.3786C16.9617 21.0086 14.6017 21.9986 12.0017 21.9986C9.40172 21.9986 7.04172 21.0086 5.26172 19.3786C5.36172 18.4386 5.96172 17.5186 7.03172 16.7986C9.77172 14.9786 14.2517 14.9786 16.9717 16.7986C18.0417 17.5186 18.6417 18.4386 18.7417 19.3786Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-            stroke="#868686"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M22 12C22 6.49 17.51 2 12 2C6.49 2 2 6.49 2 12C2 14.9 3.25 17.51 5.23 19.34C5.23 19.35 5.23 19.35 5.22 19.36C5.32 19.46 5.44 19.54 5.54 19.63C5.6 19.68 5.65 19.73 5.71 19.77C5.89 19.92 6.09 20.06 6.28 20.2C6.35 20.25 6.41 20.29 6.48 20.34C6.67 20.47 6.87 20.59 7.08 20.7C7.15 20.74 7.23 20.79 7.3 20.83C7.5 20.94 7.71 21.04 7.93 21.13C8.01 21.17 8.09 21.21 8.17 21.24C8.39 21.33 8.61 21.41 8.83 21.48C8.91 21.51 8.99 21.54 9.07 21.56C9.31 21.63 9.55 21.69 9.79 21.75C9.86 21.77 9.93 21.79 10.01 21.8C10.29 21.86 10.57 21.9 10.86 21.93C10.9 21.93 10.94 21.94 10.98 21.95C11.32 21.98 11.66 22 12 22C12.34 22 12.68 21.98 13.01 21.95C13.05 21.95 13.09 21.94 13.13 21.93C13.42 21.9 13.7 21.86 13.98 21.8C14.05 21.79 14.12 21.76 14.2 21.75C14.44 21.69 14.69 21.64 14.92 21.56C15 21.53 15.08 21.5 15.16 21.48C15.38 21.4 15.61 21.33 15.82 21.24C15.9 21.21 15.98 21.17 16.06 21.13C16.27 21.04 16.48 20.94 16.69 20.83C16.77 20.79 16.84 20.74 16.91 20.7C17.11 20.58 17.31 20.47 17.51 20.34C17.58 20.3 17.64 20.25 17.71 20.2C17.91 20.06 18.1 19.92 18.28 19.77C18.34 19.72 18.39 19.67 18.45 19.63C18.56 19.54 18.67 19.45 18.77 19.36C18.77 19.35 18.77 19.35 18.76 19.34C20.75 17.51 22 14.9 22 12ZM16.94 16.97C14.23 15.15 9.79 15.15 7.06 16.97C6.62 17.26 6.26 17.6 5.96 17.97C4.44 16.43 3.5 14.32 3.5 12C3.5 7.31 7.31 3.5 12 3.5C16.69 3.5 20.5 7.31 20.5 12C20.5 14.32 19.56 16.43 18.04 17.97C17.75 17.6 17.38 17.26 16.94 16.97Z"
-            fill="#12AC75"
-          />
-          <path
-            d="M12 6.92969C9.93 6.92969 8.25 8.60969 8.25 10.6797C8.25 12.7097 9.84 14.3597 11.95 14.4197C11.98 14.4197 12.02 14.4197 12.04 14.4197C12.06 14.4197 12.09 14.4197 12.11 14.4197C12.12 14.4197 12.13 14.4197 12.13 14.4197C14.15 14.3497 15.74 12.7097 15.75 10.6797C15.75 8.60969 14.07 6.92969 12 6.92969Z"
-            fill="#12AC75"
-          />
-        </svg>
-      ),
-    },
+    icon: Icons.profile,
+    children: [
+      { id: "profile", label: "Profile", href: "/profile", allowedMemberTypes: ["STUDENT"], icon: Icons.profile },
+      { id: "profile-settings", label: "Profile Settings", href: "/mentor/profile-settings", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.profile },
+    ],
   },
 ];
+
+// --- Admin Menu Items ---
 
 const adminMenuItems: MenuItem[] = [
   {
@@ -1059,151 +209,147 @@ const adminMenuItems: MenuItem[] = [
     label: "Admin Dashboard",
     href: "/admin",
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems[0].icon,
+    icon: Icons.overview,
   },
   {
-    id: "admin-newsletter",
-    label: "Newsletter",
-    href: "/admin/newsletter",
+    id: "user-management",
+    label: "User Management",
+    href: "#",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+    icon: Icons.studentMatching,
+    children: [
+      {
+        id: "admin-students",
+        label: "Students",
+        href: "/admin/students",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        icon: Icons.studentMatching,
+      },
+      {
+        id: "admin-mentors",
+        label: "Mentors",
+        href: "/admin/mentors",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.studentMatching,
+      },
+      {
+        id: "admin-moderators",
+        label: "Moderators",
+        href: "/admin/moderators",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.profile,
+      },
+    ],
+  },
+  {
+    id: "content-hubs",
+    label: "Content & Hubs",
+    href: "#",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+    icon: Icons.university,
+    children: [
+      {
+        id: "admin-universities",
+        label: "Universities",
+        href: "/admin/content/universities",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        icon: Icons.university,
+      },
+      {
+        id: "admin-courses",
+        label: "Programs",
+        href: "/admin/content/courses",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.overview,
+      },
+      {
+        id: "admin-resources",
+        label: "Resources",
+        href: "/admin/content/resources",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.resources,
+      },
+    ],
+  },
+  {
+    id: "platform-ops",
+    label: "Platform Ops",
+    href: "#",
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: {
       inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#868686"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
           <polyline points="22,6 12,13 2,6"></polyline>
         </svg>
       ),
       active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#12AC75"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
           <polyline points="22,6 12,13 2,6"></polyline>
         </svg>
       ),
     },
+    children: [
+      {
+        id: "admin-newsletter",
+        label: "Newsletter",
+        href: "/admin/newsletter",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.messages,
+      },
+      {
+        id: "admin-chat-monitor",
+        label: "Chat Monitor",
+        href: "/admin/chat-monitor",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.messages,
+      },
+      {
+        id: "admin-advertising",
+        label: "Advertising & Ads",
+        href: "/admin/marketing",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.resources,
+      },
+    ],
   },
   {
-    id: "admin-students",
-    label: "Manage Students",
-    href: "/admin/students",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
-    icon: menuItems.find((i) => i.id === "student-matching")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-mentors",
-    label: "Manage Mentors",
-    href: "/admin/mentors",
+    id: "system-settings",
+    label: "System Settings",
+    href: "#",
     allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "mentorship")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-universities",
-    label: "Universities",
-    href: "/admin/content/universities",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
-    icon: menuItems.find((i) => i.id === "university-hub")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-courses",
-    label: "Programs",
-    href: "/admin/content/courses",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "applications")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-resources",
-    label: "Resources",
-    href: "/admin/content/resources",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "resources")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-users",
-    label: "System Admins",
-    href: "/admin/settings/admins",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-moderators",
-    label: "Moderators",
-    href: "/admin/moderators",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "profile")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-roles",
-    label: "Manage Roles",
-    href: "/admin/settings/roles",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "quality-control")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-audit",
-    label: "Audit Logs",
-    href: "/admin/audit-logs",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "quality-control")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-login-history",
-    label: "Login History",
-    href: "/admin/login-history",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: menuItems.find((i) => i.id === "overview")?.icon || menuItems[0].icon,
-  },
-  {
-    id: "admin-chat-monitor",
-    label: "Chat Monitor",
-    href: "/admin/chat-monitor",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-    icon: {
-      inactive: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#868686"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-        </svg>
-      ),
-      active: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#12AC75"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-        </svg>
-      ),
-    },
+    icon: Icons.quality,
+    children: [
+      {
+        id: "admin-users",
+        label: "Admins",
+        href: "/admin/settings/admins",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.profile,
+      },
+      {
+        id: "admin-roles",
+        label: "Roles",
+        href: "/admin/settings/roles",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.quality,
+      },
+      {
+        id: "admin-audit",
+        label: "Audit Logs",
+        href: "/admin/audit-logs",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.quality,
+      },
+      {
+        id: "admin-login-history",
+        label: "Login History",
+        href: "/admin/login-history",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.overview,
+      },
+    ],
   },
 ];
 

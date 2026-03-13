@@ -9,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/src/components/ui/carousel";
+import Container from "@/src/components/layouts/container";
 
 import whyUsImage1 from "@/public/images/why-us-1.png";
 import whyUsImage2 from "@/public/images/why-us-2.png";
@@ -47,50 +48,46 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="mx-auto max-w-2xl bg-white px-4 sm:max-w-3xl sm:px-6 md:max-w-4xl lg:max-w-6xl lg:px-8">
-      <h2 className="mb-8 text-center text-4xl font-bold text-black">
-        Why choose Us?
-      </h2>
+    <section className="bg-white py-24 md:py-32">
+      <Container className="flex flex-col space-y-16">
+        <div className="flex flex-col items-center space-y-4 text-center">
+          <span className="text-secondary-600 border-secondary-200 bg-secondary-50 rounded-full border px-4 py-1 text-sm font-semibold tracking-wide uppercase">
+            Our Advantage
+          </span>
+          <h2 className="font-slab text-4xl font-bold text-gray-900 md:text-5xl">
+            Why Choose DentiSpark?
+          </h2>
+          <p className="font-sora text-greys-800 max-w-2xl text-lg">
+            We provide specialized support to help you navigate the competitive landscape of dental school admissions.
+          </p>
+        </div>
 
-      <div className="relative">
-        <Carousel className="overflow-visible">
-          <CarouselContent className="gap-0">
-            {features.map((f, idx) => (
-              <CarouselItem
-                key={idx}
-                className="flex-shrink-0 basis-[95%] p-4 md:basis-[50%] lg:basis-[40%] xl:basis-[40%]"
-              >
-                <div className="bg-white-100 border-primary-200 p flex h-full flex-col overflow-hidden rounded-t-3xl rounded-b-2xl border">
-                  <div className="">
-                    <Image
-                      src={f.imageSrc}
-                      alt={f.imageAlt}
-                      width={1000}
-                      height={1000}
-                      className="w-full object-cover"
-                      priority
-                      placeholder="blur"
-                    />
-                  </div>
-                  <div className="px-6 pt-8 pb-12">
-                    <h3 className="text-primary mb-3 text-xl font-semibold">
-                      {f.title}
-                    </h3>
-                    <p className="font-sora text-text-color flex-1 text-sm leading-[160%]">
-                      {f.description}
-                    </p>
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-
-          <div className="mt-12 flex items-center gap-6">
-            <CarouselPrevious className="hover:bg-primary-100" />
-            <CarouselNext className="hover:bg-primary-100" />
-          </div>
-        </Carousel>
-      </div>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
+          {features.map((f, idx) => (
+            <div
+              key={idx}
+              className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-all hover:shadow-2xl"
+            >
+              <div className="relative aspect-[16/9] w-full overflow-hidden">
+                <Image
+                  src={f.imageSrc}
+                  alt={f.imageAlt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="flex flex-col space-y-4 p-10">
+                <h3 className="font-slab text-2xl font-bold text-gray-900">
+                  {f.title}
+                </h3>
+                <p className="font-sora text-greys-800 text-lg leading-relaxed">
+                  {f.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Container>
     </section>
   );
 }

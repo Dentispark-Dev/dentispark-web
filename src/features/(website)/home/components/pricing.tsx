@@ -29,10 +29,10 @@ const plans = [
 
 export function PricingSection() {
   return (
-    <section className="bg-white py-16">
-      <div className="flex flex-col items-center space-y-6 px-4 lg:px-0">
+    <section className="bg-white py-24 md:py-32">
+      <div className="flex flex-col items-center space-y-12 px-4 lg:px-0 text-center">
         <Title>Pricing</Title>
-        <h2 className="w-[70%] max-w-xl text-center text-4xl leading-[150%] font-bold text-black md:w-full md:leading-[120%]">
+        <h2 className="font-slab max-w-2xl text-4xl font-bold text-gray-900 md:text-5xl">
           Unlock more support when you&apos;re ready
         </h2>
 

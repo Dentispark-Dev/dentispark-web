@@ -176,7 +176,7 @@ export function NewsletterForm() {
                         <Button
                             type="submit"
                             disabled={isSubmitting}
-                            className="bg-primary-600 hover:bg-primary-700 text-white px-8 h-11 gap-2"
+                            className="bg-[#12AC75] hover:bg-[#0E8A5D] text-white px-8 h-11 gap-2 rounded-xl"
                         >
                             {isSubmitting ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />

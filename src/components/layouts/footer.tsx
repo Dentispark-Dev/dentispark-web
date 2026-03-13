@@ -62,6 +62,14 @@ export function Footer() {
             </li>
             <li>
               <Link
+                href="/scholarships"
+                className="cursor-pointer transition hover:text-white"
+              >
+                Scholarships & Funding
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/admission-timeline"
                 className="cursor-pointer transition hover:text-white"
               >

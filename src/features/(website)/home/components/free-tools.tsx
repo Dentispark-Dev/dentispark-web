@@ -148,159 +148,91 @@ const cardVariants = {
 
 export function FreeTools() {
   return (
-    <section className="py-16">
-      <Container className="flex flex-col items-center space-y-12">
-        <div className="space-y-6">
-          <h2 className="text-text-heading max-w-3xl text-center text-3xl font-extrabold sm:text-5xl">
-            Begin your Dental journey with{" "}
-            <span className="text-primary">free resources</span>
+    <section className="bg-[#fcfcfc] py-24 md:py-32">
+      <Container className="flex flex-col space-y-16">
+        <div className="flex flex-col items-center space-y-6 text-center">
+          <h2 className="font-slab max-w-4xl text-4xl font-bold text-gray-900 md:text-5xl">
+            Begin your Dental journey with <span className="text-[#12AC75]">free resources</span>
           </h2>
-          <p className="text-text-color font-sora max-w-3xl text-center text-sm leading-[200%] sm:text-base sm:leading-[160%]">
-            Access guides, university data, AI-driven checklists, and financial
-            support tailored to your year and goals.
+          <p className="font-sora text-greys-800 max-w-3xl text-lg leading-relaxed">
+            Access guides, university data, AI-driven checklists, and financial support tailored to your year and goals.
           </p>
         </div>
 
-        {/* Resources Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 md:items-stretch"
-        >
+        {/* Resources Grid - Primary Cards */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {freeResources.map((resource) => (
             <Link
               key={resource.id}
               href={resource.href}
-              className="flex cursor-pointer"
+              className="group relative flex overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-2 hover:shadow-2xl"
             >
-              <motion.div
-                variants={cardVariants}
-                whileHover={{
-                  y: -5,
-                  transition: { duration: 0.2 },
-                }}
-                className={`group flex w-full overflow-hidden rounded-2xl border transition-all duration-300`}
-              >
-                <div className="flex w-[55%] flex-col justify-center px-4 py-8">
-                  <div className="flex w-[90%] flex-col space-y-3">
-                    <h3 className="text-text-heading text-base font-semibold md:w-[70%]">
-                      {resource.title}
-                    </h3>
-                    <p className="text-text-color font-sora text-xs leading-relaxed md:w-[70%]">
-                      {resource.description}
-                    </p>
-
-                    <div className="text-primary group-hover:text-primary-dark mt-4 flex items-center space-x-2 font-medium transition-colors duration-200">
-                      <span className="text-xs">{resource.ctaText}</span>
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        className="transition-transform duration-200 group-hover:translate-x-1"
-                      >
-                        <path
-                          d="M5 12h14m-7-7l7 7-7 7"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
+              <div className="flex flex-1 flex-col justify-center p-8 md:p-12">
+                <div className="space-y-4">
+                  <h3 className="font-slab text-2xl font-bold text-gray-900">
+                    {resource.title}
+                  </h3>
+                  <p className="font-sora text-greys-800 text-lg leading-relaxed">
+                    {resource.description}
+                  </p>
+                  <div className="flex items-center gap-2 font-bold text-[#12AC75]">
+                    <span>{resource.ctaText}</span>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="transition-transform duration-300 group-hover:translate-x-2"
+                    >
+                      <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </div>
                 </div>
+              </div>
 
-                <div
-                  className={cn(
-                    "flex w-[45%] items-center justify-center p-8",
-                    resource.backgroundColor,
-                  )}
-                >
-                  <Image
-                    src={resource.image}
-                    alt={resource.imageAlt}
-                    width={1000}
-                    height={1000}
-                    className="w-[250px] object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-                    quality={85}
-                    priority
-                  />
-                </div>
-              </motion.div>
+              <div className={cn("hidden w-1/3 items-center justify-center p-8 md:flex", resource.backgroundColor)}>
+                <Image
+                  src={resource.image}
+                  alt={resource.imageAlt}
+                  width={200}
+                  height={200}
+                  className="object-contain transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
             </Link>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Additional Resources - 3 Card Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-3"
-        >
+        {/* Additional Resources - Secondary Cards */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {additionalResources.map((resource) => (
             <Link
               key={resource.id}
               href={resource.href}
-              className="flex cursor-pointer"
+              className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-2 hover:shadow-xl"
             >
-              <motion.div
-                variants={cardVariants}
-                whileHover={{
-                  y: -5,
-                  transition: { duration: 0.2 },
-                }}
-                className={`group flex w-full flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:shadow-lg`}
-              >
-                {/* Icon Section */}
-                <div
-                  className={cn(
-                    "flex items-center justify-center",
-                    resource.backgroundColor,
-                  )}
-                >
-                  <div className="transition-transform duration-300 ease-out group-hover:scale-105">
-                    {resource.icon}
-                  </div>
+              <div className={cn("flex aspect-[4/3] items-center justify-center p-12", resource.backgroundColor)}>
+                <div className="transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                  {resource.icon}
                 </div>
-
-                {/* Content Section */}
-                <div className="flex flex-col justify-center px-6 pt-6 pb-10">
-                  <div className="flex flex-col space-y-4">
-                    <h3 className="text-text-heading text-base font-semibold">
-                      {resource.title}
-                    </h3>
-                    <p className="text-text-color font-sora text-xs leading-relaxed">
-                      {resource.description}
-                    </p>
-                    <div className="text-primary group-hover:text-primary-dark flex items-center space-x-2 font-medium transition-colors duration-200">
-                      <span className="text-xs">{resource.ctaText}</span>
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        className="transition-transform duration-200 group-hover:translate-x-1"
-                      >
-                        <path
-                          d="M5 12h14m-7-7l7 7-7 7"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+              </div>
+              <div className="flex flex-col space-y-4 p-8">
+                <h3 className="font-slab text-xl font-bold text-gray-900">
+                  {resource.title}
+                </h3>
+                <p className="font-sora text-greys-800 leading-relaxed">
+                  {resource.description}
+                </p>
+                <div className="flex items-center gap-2 font-bold text-[#12AC75]">
+                  <span className="text-sm">{resource.ctaText}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
-              </motion.div>
+              </div>
             </Link>
           ))}
-        </motion.div>
+        </div>
       </Container>
     </section>
   );

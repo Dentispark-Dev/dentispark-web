@@ -56,12 +56,12 @@ export function AdmissionProbabilityCalculator() {
   };
 
   return (
-    <section className="bg-white py-16">
-      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center justify-center gap-12 bg-white px-4 sm:max-w-3xl sm:px-6 md:max-w-4xl lg:max-w-5xl lg:grid-cols-2 lg:px-8">
+    <section className="bg-[#fcfcfc] py-24 md:py-32">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center justify-center gap-16 px-4 md:px-8 lg:grid-cols-2">
         {/* Left side */}
-        <div className="flex flex-col items-center space-y-6 md:items-start">
+        <div className="flex flex-col items-center space-y-6 text-center md:items-start md:text-left">
           <Title>Admission Probability Calculator</Title>
-          <h2 className="w-[80%] text-center text-3xl leading-[150%] font-bold text-gray-900 sm:text-4xl md:text-left md:leading-[120%]">
+          <h2 className="font-slab text-4xl font-bold leading-tight text-gray-900 md:text-5xl">
             Check Your Dental School Admission Chances!
           </h2>
         </div>

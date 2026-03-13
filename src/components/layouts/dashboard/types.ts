@@ -13,6 +13,7 @@ export interface MenuItem {
     | "PLATFORM_SYSTEM"
     | "MODERATOR"
   )[];
+  children?: MenuItem[];
 }
 
 export interface DashboardLayoutProps {

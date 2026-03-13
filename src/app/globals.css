@@ -282,6 +282,10 @@
     font-family: "Sora", sans-serif;
   }
 
+  .font-slab {
+    font-family: var(--font-roboto-slab), serif;
+  }
+
   /* Line clamp utilities for dashboard */
   .line-clamp-2 {
     display: -webkit-box;

@@ -23,6 +23,8 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navItems = [
     { label: "About Us", href: "/about-us" },
+    { label: "Services", href: "/services" },
+    { label: "Scholarships", href: "/scholarships" },
     { label: "Become a mentor", href: "/become-a-mentor" },
     { label: "Contact Us", href: "/contact-us" },
   ];
