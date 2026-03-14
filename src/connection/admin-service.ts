@@ -22,6 +22,10 @@ import {
     MentorQuery,
     AdminUniversityQuery,
     AdminCourseQuery,
+    AdminScholarshipQuery,
+    AdminScholarshipRecord,
+    AdminScholarshipDetail,
+    CreateScholarshipPayload,
     AdminResourceQuery,
     DashboardSummary,
     GrowthAnalytics,
@@ -134,6 +138,28 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
 
     deleteCourse: (courseId: string) =>
         api.delete<string>(`/admin-content/courses/${encodeURIComponent(courseId)}`),
+
+    // --- Content Management: Scholarships ---
+    getScholarshipRecords: (query: AdminScholarshipQuery) => {
+        const params = new URLSearchParams();
+        if (query.searchKey) params.append("searchKey", query.searchKey);
+        if (query.degreeLevel) params.append("degreeLevel", query.degreeLevel);
+        if (query.page !== undefined) params.append("pageNumber", query.page.toString());
+        if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
+        return api.get<PaginatedResponse<AdminScholarshipRecord>>(`/resource-hub/scholarships?${params.toString()}`);
+    },
+
+    getScholarshipDetail: (scholarshipId: string) =>
+        api.get<AdminScholarshipDetail>(`/resource-hub/scholarships/${encodeURIComponent(scholarshipId)}`),
+
+    createScholarship: (payload: CreateScholarshipPayload) =>
+        api.post<AdminScholarshipDetail>("/resource-hub/scholarships", payload),
+
+    updateScholarship: (scholarshipId: string, payload: Partial<CreateScholarshipPayload>) =>
+        api.patch<AdminScholarshipDetail>(`/resource-hub/scholarships/${encodeURIComponent(scholarshipId)}`, payload),
+
+    deleteScholarship: (scholarshipId: string) =>
+        api.delete<string>(`/resource-hub/scholarships/${encodeURIComponent(scholarshipId)}`),
 
     // --- Dashboard & Analytics ---
     getDashboardSummary: () => api.get<DashboardSummary>("/dashboard/summary"),

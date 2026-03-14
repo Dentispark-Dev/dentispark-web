@@ -795,3 +795,43 @@ export interface CreateGroupConversationRequest {
   title: string;
   participantEmails: string[];
 }
+
+
+// Admin Scholarship Management Types
+export interface AdminScholarshipQuery {
+    searchKey?: string;
+    degreeLevel?: string;
+    page?: number;
+    perPage?: number;
+}
+
+export interface AdminScholarshipRecord {
+    externalId: string;
+    title: string;
+    slug: string;
+    amountValue: number;
+    amountCurrency: string;
+    deadline?: string;
+    targetDegreeLevel?: string;
+    targetLocation?: string;
+    isSponsored: boolean;
+}
+
+export interface AdminScholarshipDetail extends AdminScholarshipRecord {
+    description?: string;
+    eligibilityCriteriaJson?: string;
+    applicationLink?: string;
+}
+
+export interface CreateScholarshipPayload {
+    title: string;
+    description: string;
+    amountValue: number;
+    amountCurrency: string;
+    deadline?: string;
+    eligibilityCriteriaJson?: string;
+    applicationLink?: string;
+    isSponsored?: boolean;
+    targetDegreeLevel?: string;
+    targetLocation?: string;
+}

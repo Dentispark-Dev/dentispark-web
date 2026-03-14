@@ -61,7 +61,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
             <div className="flex-shrink-0">
                <Button size="lg" className="h-14 px-10 rounded-2xl shadow-xl shadow-primary-500/20 text-md font-bold" asChild>
                   <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                    Apply for this award
+                    Apply on University Website
                     <ExternalLink className="h-4 w-4" />
                   </a>
                </Button>
@@ -184,12 +184,12 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
 
             {/* Right Column: Dynamic Sidebar */}
             <div className="space-y-8">
-                <div className="glass-card bg-primary-600 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
+                <div className="glass-card bg-green-600 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
                     <div className="relative z-10">
-                        <LifeBuoy className="w-10 h-10 mb-6 text-primary-200" />
+                        <LifeBuoy className="w-10 h-10 mb-6 text-green-100" />
                         <h3 className="text-2xl font-black tracking-tight mb-4">Need help with your application?</h3>
-                        <p className="text-primary-100 font-medium mb-8 leading-relaxed">Our mentors can help you polish your personal statement to maximize your scholarship chances.</p>
-                        <Button variant="secondary" className="w-full h-14 rounded-2xl font-black text-primary-600 bg-white hover:bg-primary-50 border-none transition-all shadow-lg" asChild>
+                        <p className="text-green-50 font-medium mb-8 leading-relaxed">Our mentors can help you polish your personal statement to maximize your scholarship chances.</p>
+                        <Button variant="secondary" className="w-full h-14 rounded-2xl font-black text-green-700 bg-white hover:bg-green-50 border-none transition-all shadow-lg" asChild>
                             <Link href="/services">Book a Mentor</Link>
                         </Button>
                     </div>
@@ -229,7 +229,7 @@ function getMockScholarship(slug: string) {
             amountCurrency: "$",
             deadline: "2025-10-31",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/education-future-international-scholarship",
+            applicationLink: "https://www.le.ac.uk/scholarships/sanctuary",
             isSponsored: true,
             targetDegreeLevel: "BDS / MBBS",
             targetLocation: "Global"
@@ -243,7 +243,7 @@ function getMockScholarship(slug: string) {
             amountCurrency: "£",
             deadline: "2025-12-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/commonwealth-distance-learning-scholarships",
+            applicationLink: "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-distance-learning-scholarships/",
             isSponsored: false,
             targetDegreeLevel: "Masters",
             targetLocation: "United Kingdom"
@@ -257,7 +257,7 @@ function getMockScholarship(slug: string) {
             amountCurrency: "£",
             deadline: "2026-03-01",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/leverhulme-trade-charities-trust-bursary-at-queen-mary-university-of-london",
+            applicationLink: "https://www.leverhulme-trade.org.uk/undergraduate-bursaries",
             isSponsored: false,
             targetDegreeLevel: "BDS / MBBS",
             targetLocation: "United Kingdom"
@@ -271,7 +271,7 @@ function getMockScholarship(slug: string) {
             amountCurrency: "$",
             deadline: "2026-03-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/narotam-sekhsaria-pg-scholarship",
+            applicationLink: "https://pg.nsfoundation.co.in/",
             isSponsored: true,
             targetDegreeLevel: "Masters / PhD",
             targetLocation: "Global"
@@ -285,7 +285,7 @@ function getMockScholarship(slug: string) {
             amountCurrency: "$",
             deadline: "2026-04-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/qalaa-holdings-scholarship",
+            applicationLink: "http://qalaascholarships.org/",
             isSponsored: false,
             targetDegreeLevel: "PhD",
             targetLocation: "Global"
@@ -299,7 +299,7 @@ function getMockScholarship(slug: string) {
             amountCurrency: "£",
             deadline: "2025-11-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://example.com",
+            applicationLink: "https://www.dundee.ac.uk/scholarships/global-excellence-scholarship-january-2026",
             isSponsored: true,
             targetDegreeLevel: "BDS",
             targetLocation: "United Kingdom"

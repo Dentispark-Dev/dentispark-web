@@ -162,7 +162,7 @@ function getMockScholarships(): Scholarship[] {
             amountCurrency: "$",
             deadline: "2025-10-31",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/education-future-international-scholarship",
+            applicationLink: "https://www.le.ac.uk/scholarships/sanctuary",
             isSponsored: true,
             targetDegreeLevel: "BDS",
             targetLocation: "Global"
@@ -176,7 +176,7 @@ function getMockScholarships(): Scholarship[] {
             amountCurrency: "£",
             deadline: "2025-12-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/commonwealth-distance-learning-scholarships",
+            applicationLink: "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-distance-learning-scholarships/",
             isSponsored: false,
             targetDegreeLevel: "Masters",
             targetLocation: "United Kingdom"
@@ -190,7 +190,7 @@ function getMockScholarships(): Scholarship[] {
             amountCurrency: "£",
             deadline: "2026-03-01",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/leverhulme-trade-charities-trust-bursary-at-queen-mary-university-of-london",
+            applicationLink: "https://www.leverhulme-trade.org.uk/undergraduate-bursaries",
             isSponsored: false,
             targetDegreeLevel: "BDS",
             targetLocation: "United Kingdom"
@@ -204,7 +204,7 @@ function getMockScholarships(): Scholarship[] {
             amountCurrency: "$",
             deadline: "2026-03-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/narotam-sekhsaria-pg-scholarship",
+            applicationLink: "https://pg.nsfoundation.co.in/",
             isSponsored: true,
             targetDegreeLevel: "Masters",
             targetLocation: "Global"
@@ -218,7 +218,7 @@ function getMockScholarships(): Scholarship[] {
             amountCurrency: "$",
             deadline: "2026-04-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://www.wemakescholars.com/scholarship/qalaa-holdings-scholarship",
+            applicationLink: "http://qalaascholarships.org/",
             isSponsored: false,
             targetDegreeLevel: "PhD",
             targetLocation: "Global"
@@ -232,7 +232,7 @@ function getMockScholarships(): Scholarship[] {
             amountCurrency: "£",
             deadline: "2025-11-15",
             eligibilityCriteriaJson: "{}",
-            applicationLink: "https://example.com",
+            applicationLink: "https://www.dundee.ac.uk/scholarships/global-excellence-scholarship-january-2026",
             isSponsored: true,
             targetDegreeLevel: "BDS",
             targetLocation: "United Kingdom"
