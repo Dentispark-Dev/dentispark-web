@@ -64,10 +64,11 @@ export default function RootLayout({
           </I18nProvider>
         </ReactQueryProvider>
         <ModalProvider />
-        <DentiBuddy />
+        {/* Components hidden at user request - can be toggled on later */}
+        {/* <DentiBuddy /> */}
         <Toaster richColors />
-        <GDPRBanner />
-        <NotificationPrompt />
+        {/* <GDPRBanner /> */}
+        {/* <NotificationPrompt /> */}
       </body>
     </html>
   );
