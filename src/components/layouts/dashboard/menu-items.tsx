@@ -123,6 +123,18 @@ const Icons = {
       </svg>
     ),
   },
+  scholarship: {
+    inactive: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#868686" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" /><path d="M16 21h1a2 2 0 0 0 2-2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" /><path d="M12 12V7" /><path d="M12 12v5" /><path d="M9 12h6" />
+      </svg>
+    ),
+    active: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#12AC75" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" /><path d="M16 21h1a2 2 0 0 0 2-2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" /><path d="M12 12V7" /><path d="M12 12v5" /><path d="M9 12h6" />
+      </svg>
+    ),
+  },
 };
 
 // --- Main Menu Items ---
@@ -268,6 +280,13 @@ const adminMenuItems: MenuItem[] = [
         href: "/admin/content/resources",
         allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
         icon: Icons.resources,
+      },
+      {
+        id: "admin-scholarships",
+        label: "Scholarships",
+        href: "/admin/content/scholarships",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        icon: Icons.scholarship,
       },
     ],
   },
