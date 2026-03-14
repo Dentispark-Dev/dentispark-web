@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Clock, CheckCircle, ShieldCheck, Star } from "lucide-react";
 import Link from "next/link";
-import Header from "@/src/components/layouts/header";
-import { Footer } from "@/src/components/layouts/footer";
 import { marketplaceApi, ServicePackage } from "@/src/features/marketplace/services/marketplace.api";
 
 
@@ -71,7 +69,6 @@ export default function ServiceDetailsPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
-      <Header />
       
       <main className="flex-1 py-12 px-4 md:px-8 mt-24">
         <div className="max-w-6xl mx-auto">
@@ -178,7 +175,6 @@ export default function ServiceDetailsPage() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }

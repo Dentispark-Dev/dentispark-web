@@ -1,8 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { CheckCircle, Search, Star, Clock } from "lucide-react";
-import Header from "@/src/components/layouts/header";
-import { Footer } from "@/src/components/layouts/footer";
 import AdBanner from "@/src/components/marketing/AdBanner";
 
 const mockServices = [
@@ -61,7 +59,6 @@ export const metadata = {
 export default function ServicesMarketplacePage() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
-      <Header />
       
       {/* Hero Section */}
       <section className="bg-primary pt-32 pb-20 px-4 md:px-8 text-white relative overflow-hidden">
@@ -142,7 +139,6 @@ export default function ServicesMarketplacePage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }
