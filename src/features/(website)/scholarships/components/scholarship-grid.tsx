@@ -154,7 +154,77 @@ export function ScholarshipGrid() {
 function getMockScholarships(): Scholarship[] {
     return [
         {
-            externalId: "mock1",
+            externalId: "ext1",
+            title: "Education Future International Scholarship 2025",
+            slug: "education-future-international-scholarship-2025",
+            description: "A global scholarship program aimed at supporting high-potential international students. Open to all disciplines including medicine and dentistry for studies in the USA and non-USA countries.",
+            amountValue: 15000,
+            amountCurrency: "$",
+            deadline: "2025-10-31",
+            eligibilityCriteriaJson: "{}",
+            applicationLink: "https://www.wemakescholars.com/scholarship/education-future-international-scholarship",
+            isSponsored: true,
+            targetDegreeLevel: "BDS",
+            targetLocation: "Global"
+        },
+        {
+            externalId: "ext2",
+            title: "Commonwealth Distance Learning Scholarships 2026",
+            slug: "commonwealth-distance-learning-scholarships-2026",
+            description: "Targeted at students from developing Commonwealth countries to study for a UK Master's degree while living in their home country. Ideal for healthcare professionals seeking advanced qualifications.",
+            amountValue: 12000,
+            amountCurrency: "£",
+            deadline: "2025-12-15",
+            eligibilityCriteriaJson: "{}",
+            applicationLink: "https://www.wemakescholars.com/scholarship/commonwealth-distance-learning-scholarships",
+            isSponsored: false,
+            targetDegreeLevel: "Masters",
+            targetLocation: "United Kingdom"
+        },
+        {
+            externalId: "ext3",
+            title: "Leverhulme Trade Charities Trust Bursary 2026",
+            slug: "leverhulme-trade-charities-trust-bursary-2026",
+            description: "Support for undergraduate students in financial need who are children or spouses of commercial travellers, pharmacists, or grocers. Includes support for medical and dental degrees.",
+            amountValue: 3000,
+            amountCurrency: "£",
+            deadline: "2026-03-01",
+            eligibilityCriteriaJson: "{}",
+            applicationLink: "https://www.wemakescholars.com/scholarship/leverhulme-trade-charities-trust-bursary-at-queen-mary-university-of-london",
+            isSponsored: false,
+            targetDegreeLevel: "BDS",
+            targetLocation: "United Kingdom"
+        },
+        {
+            externalId: "ext4",
+            title: "Narotam Sekhsaria PG Scholarship 2026-27",
+            slug: "narotam-sekhsaria-pg-scholarship-2026-27",
+            description: "Interest-free loan scholarships for Indian students with consistently high academic records who wish to pursue postgraduate studies at top-ranked universities globally.",
+            amountValue: 20000,
+            amountCurrency: "$",
+            deadline: "2026-03-15",
+            eligibilityCriteriaJson: "{}",
+            applicationLink: "https://www.wemakescholars.com/scholarship/narotam-sekhsaria-pg-scholarship",
+            isSponsored: true,
+            targetDegreeLevel: "Masters",
+            targetLocation: "Global"
+        },
+        {
+            externalId: "ext5",
+            title: "Qalaa Holdings Scholarships 2026",
+            slug: "qalaa-holdings-scholarships-2026",
+            description: "Scholarships for talented Egyptian students to pursue Master's and PhD degrees at leading international universities in various fields including clinical medicine.",
+            amountValue: 30000,
+            amountCurrency: "$",
+            deadline: "2026-04-15",
+            eligibilityCriteriaJson: "{}",
+            applicationLink: "https://www.wemakescholars.com/scholarship/qalaa-holdings-scholarship",
+            isSponsored: false,
+            targetDegreeLevel: "PhD",
+            targetLocation: "Global"
+        },
+        {
+            externalId: "ext6",
             title: "Global Excellence Dental Scholarship 2026",
             slug: "global-excellence-dental-scholarship-2026",
             description: "A highly competitive scholarship awarded to outstanding international students pursuing a BDS degree. Covers full tuition and living expenses for the first year.",
@@ -168,7 +238,7 @@ function getMockScholarships(): Scholarship[] {
             targetLocation: "United Kingdom"
         },
         {
-            externalId: "mock2",
+            externalId: "ext7",
             title: "Future Leaders in Orthodontics Grant",
             slug: "future-leaders-orthodontics-grant",
             description: "Designed for postgraduate students demonstrating exceptional promise in the field of Orthodontics. Open to candidates enrolling in accredited Masters programs.",
@@ -180,34 +250,6 @@ function getMockScholarships(): Scholarship[] {
             isSponsored: false,
             targetDegreeLevel: "Masters",
             targetLocation: "USA"
-        },
-        {
-            externalId: "mock3",
-            title: "Access to Dentistry Foundation Award",
-            slug: "access-to-dentistry-foundation-award",
-            description: "Financial assistance aimed at supporting students from underrepresented backgrounds entering their first year of dental school.",
-            amountValue: 5000,
-            amountCurrency: "£",
-            deadline: "2025-08-30",
-            eligibilityCriteriaJson: "{}",
-            applicationLink: "https://example.com",
-            isSponsored: false,
-            targetDegreeLevel: "BDS",
-            targetLocation: "United Kingdom"
-        },
-         {
-            externalId: "mock4",
-            title: "International Maxillofacial Research Fellowship",
-            slug: "international-maxillofacial-research-fellowship",
-            description: "Fully funded PhD fellowship for advanced research in oral and maxillofacial surgery techniques. Requires prior clinical experience.",
-            amountValue: 45000,
-            amountCurrency: "€",
-            deadline: "2025-12-01",
-            eligibilityCriteriaJson: "{}",
-            applicationLink: "https://example.com",
-            isSponsored: true,
-            targetDegreeLevel: "PhD",
-            targetLocation: "Europe"
         }
     ]
 }
