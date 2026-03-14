@@ -30,7 +30,7 @@ export default function AdBanner({ zone }: { zone: string }) {
             advertiserName: "UCAT Masters",
             imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
             targetUrl: "https://example.com/ucat-masters",
-            adZone: zone as any,
+            adZone: zone as 'HEADER_BANNER' | 'SIDEBAR_RECTANGLE' | 'IN_FEED_SPONSORED' | 'FOOTER_BANNER',
             isActive: true,
             impressionsCount: 0,
             clicksCount: 0

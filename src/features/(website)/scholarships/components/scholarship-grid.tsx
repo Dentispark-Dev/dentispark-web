@@ -25,7 +25,7 @@ export function ScholarshipGrid() {
   const fetchScholarships = async () => {
     setLoading(true);
     try {
-      const params: any = { pageNumber: 0, pageSize: 20 };
+      const params: Record<string, unknown> = { pageNumber: 0, pageSize: 20 };
       if (degreeFilter !== "all") {
         params.degreeLevel = degreeFilter;
       }

@@ -6,7 +6,8 @@ import { ArrowLeft, Clock, MapPin, GraduationCap, CheckCircle } from "lucide-rea
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   // Try to fetch for real metadata (handling mock fallback if backend offline)
   return {
     title: `Scholarship Details | DentiSpark`,
@@ -14,17 +15,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function ScholarshipDetailsPage({ params }: { params: { slug: string } }) {
+export default async function ScholarshipDetailsPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const slug = params.slug;
   // In a real Server Component, we'd fetch directly. Use mock fallback for now.
   let scholarship = null;
   
   try {
      const api = new ResourceHubApi();
-     scholarship = await api.getScholarshipBySlug(params.slug);
+     scholarship = await api.getScholarshipBySlug(slug);
   } catch (e) {
-      console.log("Using fallback data for", params.slug);
+      console.log("Using fallback data for", slug);
       // Fallback mock data matching the grid
-      scholarship = getMockScholarship(params.slug);
+      scholarship = getMockScholarship(slug);
   }
 
   if (!scholarship) {
@@ -92,7 +95,7 @@ export default async function ScholarshipDetailsPage({ params }: { params: { slu
                     <Button size="lg" className="w-full mt-8 shadow-sm text-lg" asChild>
                          <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer">Apply Now</a>
                     </Button>
-                    <p className="text-xs text-center text-gray-400 mt-4">You will be redirected to the official provider's website to complete your application.</p>
+                    <p className="text-xs text-center text-gray-400 mt-4">You will be redirected to the official provider&apos;s website to complete your application.</p>
                 </div>
             </div>
         </div>
