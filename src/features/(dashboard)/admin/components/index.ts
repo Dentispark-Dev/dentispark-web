@@ -18,6 +18,8 @@ export const ScholarshipTable = dynamic(() => import("./scholarship-table").then
 export const OrderTable = dynamic(() => import("./order-table").then(mod => mod.OrderTable), { ssr: false });
 export const ServicePackageTable = dynamic(() => import("./service-package-table").then(mod => mod.ServicePackageTable), { ssr: false });
 export const InitiateOrderModal = dynamic(() => import("./initiate-order-modal").then(mod => mod.InitiateOrderModal), { ssr: false });
+export const CreateServicePackageModal = dynamic(() => import("./create-service-modal").then(mod => mod.CreateServicePackageModal), { ssr: false });
+export const StandaloneInitiateOrderModal = dynamic(() => import("./standalone-initiate-order-modal").then(mod => mod.StandaloneInitiateOrderModal), { ssr: false });
 
 // Heavy components / Modals
 export const AdminDashboardAnalytics = dynamic(() => import("./admin-analytics").then(mod => mod.AdminDashboardAnalytics), { ssr: false });

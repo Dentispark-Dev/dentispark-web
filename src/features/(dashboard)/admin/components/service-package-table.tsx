@@ -35,7 +35,7 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
         );
     }
 
-    const packages = response?.data || [];
+    const packages = response?.content || [];
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

@@ -2,16 +2,20 @@
 
 import { 
     ServicePackageTable, 
-    InitiateOrderModal 
+    InitiateOrderModal,
+    CreateServicePackageModal,
+    StandaloneInitiateOrderModal
 } from "@/src/features/(dashboard)/admin/components";
 import { useState } from "react";
-import { Plus, LayoutGrid, Search, Filter } from "lucide-react";
+import { Plus, LayoutGrid, Search, Filter, ShoppingCart } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 
 export default function AdminServicesPage() {
     const [selectedPackage, setSelectedPackage] = useState<any>(null);
     const [isInitiateModalOpen, setIsInitiateModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isStandaloneOrderOpen, setIsStandaloneOrderOpen] = useState(false);
 
     const handleInitiateOrder = (pkg: any) => {
         setSelectedPackage(pkg);
@@ -29,7 +33,18 @@ export default function AdminServicesPage() {
                     <p className="text-gray-500 font-medium">Manage mentor service packages and initiate student orders.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold h-12 px-6 shadow-lg shadow-green-100 flex items-center gap-2">
+                    <Button 
+                        variant="outline"
+                        onClick={() => setIsStandaloneOrderOpen(true)}
+                        className="rounded-xl font-bold h-12 px-6 border-gray-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100 flex items-center gap-2"
+                    >
+                        <ShoppingCart className="h-5 w-5" />
+                        Direct Order
+                    </Button>
+                    <Button 
+                        onClick={() => setIsCreateModalOpen(true)}
+                        className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold h-12 px-6 shadow-lg shadow-green-100 flex items-center gap-2"
+                    >
                         <Plus className="h-5 w-5" />
                         Add New Service
                     </Button>
@@ -51,7 +66,7 @@ export default function AdminServicesPage() {
                     </Button>
                     <div className="h-8 w-[1px] bg-gray-200 mx-2 hidden md:block" />
                     <p className="text-xs font-black text-gray-400 uppercase tracking-widest hidden md:block">
-                        Total Services: 12
+                        Platform Marketplace Hub
                     </p>
                 </div>
             </div>
@@ -62,6 +77,16 @@ export default function AdminServicesPage() {
                 package={selectedPackage}
                 isOpen={isInitiateModalOpen}
                 onClose={() => setIsInitiateModalOpen(false)}
+            />
+
+            <CreateServicePackageModal 
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
+            />
+
+            <StandaloneInitiateOrderModal 
+                isOpen={isStandaloneOrderOpen}
+                onClose={() => setIsStandaloneOrderOpen(false)}
             />
         </div>
     );
