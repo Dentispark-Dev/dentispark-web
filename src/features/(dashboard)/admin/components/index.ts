@@ -20,6 +20,7 @@ export const ServicePackageTable = dynamic(() => import("./service-package-table
 export const InitiateOrderModal = dynamic(() => import("./initiate-order-modal").then(mod => mod.InitiateOrderModal), { ssr: false });
 export const CreateServicePackageModal = dynamic(() => import("./create-service-modal").then(mod => mod.CreateServicePackageModal), { ssr: false });
 export const StandaloneInitiateOrderModal = dynamic(() => import("./standalone-initiate-order-modal").then(mod => mod.StandaloneInitiateOrderModal), { ssr: false });
+export const CreateCustomOrderModal = dynamic(() => import("./create-custom-order-modal").then(mod => mod.CreateCustomOrderModal), { ssr: false });
 
 // Heavy components / Modals
 export const AdminDashboardAnalytics = dynamic(() => import("./admin-analytics").then(mod => mod.AdminDashboardAnalytics), { ssr: false });
