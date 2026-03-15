@@ -26,6 +26,8 @@ import {
     AdminScholarshipRecord,
     AdminScholarshipDetail,
     CreateScholarshipPayload,
+    AdminOrderQuery,
+    AdminOrderRecord,
     AdminResourceQuery,
     DashboardSummary,
     GrowthAnalytics,
@@ -160,6 +162,14 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
 
     deleteScholarship: (scholarshipId: string) =>
         api.delete<string>(`/resource-hub/scholarships/${encodeURIComponent(scholarshipId)}`),
+
+    // --- Marketplace: Admin Order Management ---
+    getOrderRecords: (query: AdminOrderQuery) => {
+        const params = new URLSearchParams();
+        if (query.page !== undefined) params.append("pageNumber", query.page.toString());
+        if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
+        return api.get<PaginatedResponse<AdminOrderRecord>>(`/admin/marketplace/orders?${params.toString()}`);
+    },
 
     // --- Dashboard & Analytics ---
     getDashboardSummary: () => api.get<DashboardSummary>("/dashboard/summary"),

@@ -208,6 +208,7 @@ export const menuItems: MenuItem[] = [
     icon: Icons.profile,
     children: [
       { id: "profile", label: "Profile", href: "/profile", allowedMemberTypes: ["STUDENT"], icon: Icons.profile },
+      { id: "student-purchases", label: "My Purchases", href: "/dashboard/purchases", allowedMemberTypes: ["STUDENT"], icon: Icons.schedule },
       { id: "profile-settings", label: "Profile Settings", href: "/mentor/profile-settings", allowedMemberTypes: ["ACADEMIC_MENTOR"], icon: Icons.profile },
     ],
   },
@@ -287,6 +288,22 @@ const adminMenuItems: MenuItem[] = [
         href: "/admin/content/scholarships",
         allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
         icon: Icons.scholarship,
+      },
+    ],
+  },
+  {
+    id: "sales-management",
+    label: "Sales & Payments",
+    href: "#",
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+    icon: Icons.resources,
+    children: [
+      {
+        id: "admin-orders",
+        label: "Platform Orders",
+        href: "/admin/sales/orders",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
+        icon: Icons.schedule,
       },
     ],
   },

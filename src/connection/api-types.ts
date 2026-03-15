@@ -851,3 +851,25 @@ export interface CreateScholarshipPayload {
     nationality?: string;
     studyMode?: string;
 }
+// Admin Marketplace Management Types
+export interface AdminOrderQuery {
+    page?: number;
+    perPage?: number;
+}
+
+export interface AdminOrderRecord {
+    externalId: string;
+    studentUsername: string;
+    mentorUsername: string;
+    servicePackage: {
+        title: string;
+        price: number;
+        currency: string;
+    };
+    totalAmount: number;
+    currency: string;
+    status: string;
+    studentNotes: string;
+    createdAt: string;
+    completedAt?: string;
+}
