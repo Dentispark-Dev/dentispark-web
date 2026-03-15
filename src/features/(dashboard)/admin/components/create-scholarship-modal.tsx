@@ -27,7 +27,15 @@ export function CreateScholarshipModal({ isOpen, onClose }: CreateScholarshipMod
         applicationLink: "",
         isSponsored: false,
         targetDegreeLevel: "",
-        targetLocation: ""
+        targetLocation: "",
+        fundingType: "",
+        numberOfAwards: "",
+        selectionBasis: "",
+        coversJson: "",
+        intakeYear: "",
+        gender: "",
+        nationality: "",
+        studyMode: ""
     });
 
     const createMutation = useMutation({
@@ -46,7 +54,15 @@ export function CreateScholarshipModal({ isOpen, onClose }: CreateScholarshipMod
                 applicationLink: "", 
                 isSponsored: false, 
                 targetDegreeLevel: "", 
-                targetLocation: "" 
+                targetLocation: "",
+                fundingType: "",
+                numberOfAwards: "",
+                selectionBasis: "",
+                coversJson: "",
+                intakeYear: "",
+                gender: "",
+                nationality: "",
+                studyMode: ""
             });
         },
         onError: () => {
@@ -129,14 +145,106 @@ export function CreateScholarshipModal({ isOpen, onClose }: CreateScholarshipMod
                         </div>
                     </div>
 
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="deadline">Application Deadline</Label>
+                            <Input
+                                id="deadline"
+                                type="date"
+                                className="mt-1"
+                                value={formData.deadline}
+                                onChange={(e) => setFormData(prev => ({ ...prev, deadline: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="intakeYear">Intake Year</Label>
+                            <Input
+                                id="intakeYear"
+                                className="mt-1"
+                                placeholder="e.g. Sept 2026"
+                                value={formData.intakeYear}
+                                onChange={(e) => setFormData(prev => ({ ...prev, intakeYear: e.target.value }))}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="fundingType">Funding Type</Label>
+                            <Input
+                                id="fundingType"
+                                className="mt-1"
+                                placeholder="e.g. Fee waiver"
+                                value={formData.fundingType}
+                                onChange={(e) => setFormData(prev => ({ ...prev, fundingType: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="numberOfAwards">Number of Awards</Label>
+                            <Input
+                                id="numberOfAwards"
+                                className="mt-1"
+                                placeholder="e.g. 4 per year"
+                                value={formData.numberOfAwards}
+                                onChange={(e) => setFormData(prev => ({ ...prev, numberOfAwards: e.target.value }))}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="studyMode">Study Mode</Label>
+                            <Input
+                                id="studyMode"
+                                className="mt-1"
+                                placeholder="e.g. Full Time"
+                                value={formData.studyMode}
+                                onChange={(e) => setFormData(prev => ({ ...prev, studyMode: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="gender">Gender</Label>
+                            <Input
+                                id="gender"
+                                className="mt-1"
+                                placeholder="e.g. All Genders"
+                                value={formData.gender}
+                                onChange={(e) => setFormData(prev => ({ ...prev, gender: e.target.value }))}
+                            />
+                        </div>
+                    </div>
+
                     <div>
-                        <Label htmlFor="deadline">Application Deadline</Label>
+                        <Label htmlFor="nationality">Nationality Scope</Label>
                         <Input
-                            id="deadline"
-                            type="date"
+                            id="nationality"
                             className="mt-1"
-                            value={formData.deadline}
-                            onChange={(e) => setFormData(prev => ({ ...prev, deadline: e.target.value }))}
+                            placeholder="e.g. All International"
+                            value={formData.nationality}
+                            onChange={(e) => setFormData(prev => ({ ...prev, nationality: e.target.value }))}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="selectionBasis">Selection Basis</Label>
+                        <Input
+                            id="selectionBasis"
+                            className="mt-1"
+                            placeholder="e.g. Academic excellence, Asylum status"
+                            value={formData.selectionBasis}
+                            onChange={(e) => setFormData(prev => ({ ...prev, selectionBasis: e.target.value }))}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="coversJson">Items Covered (JSON array or Comma separated)</Label>
+                        <textarea
+                            id="coversJson"
+                            rows={2}
+                            className="w-full mt-1 px-3 py-2 rounded-md border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+                            placeholder='e.g. ["Tuition fees", "Living expenses"]'
+                            value={formData.coversJson}
+                            onChange={(e) => setFormData(prev => ({ ...prev, coversJson: e.target.value }))}
                         />
                     </div>
 

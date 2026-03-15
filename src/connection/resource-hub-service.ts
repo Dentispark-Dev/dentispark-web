@@ -13,6 +13,14 @@ export interface Scholarship {
   isSponsored: boolean;
   targetDegreeLevel: string;
   targetLocation: string;
+  fundingType?: string;
+  numberOfAwards?: string;
+  selectionBasis?: string;
+  coversJson?: string;
+  intakeYear?: string;
+  gender?: string;
+  nationality?: string;
+  studyMode?: string;
 }
 
 export interface AcademicProgram {

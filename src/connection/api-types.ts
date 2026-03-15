@@ -815,12 +815,20 @@ export interface AdminScholarshipRecord {
     targetDegreeLevel?: string;
     targetLocation?: string;
     isSponsored: boolean;
+    fundingType?: string;
+    numberOfAwards?: string;
 }
 
 export interface AdminScholarshipDetail extends AdminScholarshipRecord {
     description?: string;
     eligibilityCriteriaJson?: string;
     applicationLink?: string;
+    selectionBasis?: string;
+    coversJson?: string;
+    intakeYear?: string;
+    gender?: string;
+    nationality?: string;
+    studyMode?: string;
 }
 
 export interface CreateScholarshipPayload {
@@ -834,4 +842,12 @@ export interface CreateScholarshipPayload {
     isSponsored?: boolean;
     targetDegreeLevel?: string;
     targetLocation?: string;
+    fundingType?: string;
+    numberOfAwards?: string;
+    selectionBasis?: string;
+    coversJson?: string;
+    intakeYear?: string;
+    gender?: string;
+    nationality?: string;
+    studyMode?: string;
 }

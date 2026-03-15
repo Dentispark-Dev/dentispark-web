@@ -113,6 +113,8 @@ export function ScholarshipTable() {
                                 <tr className="bg-gray-50/50 border-b border-gray-100">
                                     <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Scholarship</th>
                                     <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Funding Type</th>
+                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Awards</th>
                                     <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Target Level</th>
                                     <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Deadline</th>
                                     <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
@@ -153,6 +155,12 @@ export function ScholarshipTable() {
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
                                                 {scholarship.amountCurrency} {scholarship.amountValue?.toLocaleString() || "Varies"}
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-600 italic">
+                                                {scholarship.fundingType || "N/A"}
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-600">
+                                                {scholarship.numberOfAwards || "N/A"}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <Badge className="bg-blue-50 text-blue-600 hover:bg-blue-100 border-none font-normal">
