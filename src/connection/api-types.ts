@@ -873,3 +873,39 @@ export interface AdminOrderRecord {
     createdAt: string;
     completedAt?: string;
 }
+export interface AdminServicePackageQuery {
+    page?: number;
+    perPage?: number;
+}
+
+export interface AdminServicePackageRecord {
+    externalId: string;
+    mentorUsername: string;
+    title: string;
+    slug: string;
+    description: string;
+    price: number;
+    currency: string;
+    durationMinutes: number;
+    featuresJson: string;
+    serviceType: string;
+    isActive: boolean;
+}
+
+export interface AdminCreatePackagePayload {
+    title: string;
+    description: string;
+    price: number;
+    currency: string;
+    durationMinutes: number;
+    featuresJson: string;
+    serviceType: string;
+    isActive: boolean;
+}
+
+export interface AdminInitiateOrderPayload {
+    studentEmail: string;
+    mentorEmail: string;
+    packageSlug: string;
+    notes?: string;
+}

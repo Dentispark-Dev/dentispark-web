@@ -283,6 +283,13 @@ const adminMenuItems: MenuItem[] = [
         icon: Icons.resources,
       },
       {
+        id: "admin-services",
+        label: "Services",
+        href: "/admin/content/services",
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        icon: Icons.resources,
+      },
+      {
         id: "admin-scholarships",
         label: "Scholarships",
         href: "/admin/content/scholarships",

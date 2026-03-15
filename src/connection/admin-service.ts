@@ -28,6 +28,10 @@ import {
     CreateScholarshipPayload,
     AdminOrderQuery,
     AdminOrderRecord,
+    AdminServicePackageQuery,
+    AdminServicePackageRecord,
+    AdminCreatePackagePayload,
+    AdminInitiateOrderPayload,
     AdminResourceQuery,
     DashboardSummary,
     GrowthAnalytics,
@@ -169,6 +173,28 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
         if (query.page !== undefined) params.append("pageNumber", query.page.toString());
         if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
         return api.get<PaginatedResponse<AdminOrderRecord>>(`/admin/marketplace/orders?${params.toString()}`);
+    },
+
+    getServicePackageRecords: (query: AdminServicePackageQuery) => {
+        const params = new URLSearchParams();
+        if (query.page !== undefined) params.append("pageNumber", query.page.toString());
+        if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());
+        return api.get<PaginatedResponse<AdminServicePackageRecord>>(`/admin/marketplace/packages?${params.toString()}`);
+    },
+
+    createServicePackageAdmin: (mentorEmail: string, payload: AdminCreatePackagePayload) =>
+        api.post<AdminServicePackageRecord>(`/admin/marketplace/packages/${encodeURIComponent(mentorEmail)}`, payload),
+
+    updateServicePackageAdmin: (slug: string, payload: AdminCreatePackagePayload) =>
+        api.put<AdminServicePackageRecord>(`/admin/marketplace/packages/${encodeURIComponent(slug)}`, payload),
+
+    initiateOrderAdmin: (payload: AdminInitiateOrderPayload) => {
+        const params = new URLSearchParams();
+        params.append("studentEmail", payload.studentEmail);
+        params.append("mentorEmail", payload.mentorEmail);
+        params.append("packageSlug", payload.packageSlug);
+        if (payload.notes) params.append("notes", payload.notes);
+        return api.post<AdminOrderRecord>(`/admin/marketplace/orders/initiate?${params.toString()}`, {});
     },
 
     // --- Dashboard & Analytics ---
