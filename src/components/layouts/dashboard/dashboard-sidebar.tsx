@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "../../common/language-switcher";
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { FieldSwitcher } from "@/src/components/ui/field-switcher";
 
 export default function DashboardSidebar({
   isOpen,
@@ -39,12 +40,17 @@ export default function DashboardSidebar({
       )}
     >
       <div className="flex h-full flex-col">
-        {/* ... (keep profile and progress sections) */}
         <div className="border-greys-300 flex items-center justify-between p-4 lg:hidden">
-          {/* ... */}
+          {/* Mobile close button space */}
         </div>
+        
+        {/* Field Switcher */}
+        <div className="px-4 pt-4 pb-2">
+           <FieldSwitcher />
+        </div>
+
         {/* Navigation */}
-        <nav className="font-sora mt-4 flex-1 space-y-1 px-4 py-6 text-sm md:mt-0 overflow-y-auto">
+        <nav className="font-sora mt-2 flex-1 space-y-1 px-4 py-2 text-sm overflow-y-auto">
           {menuItems.map((item) => {
             const hasChildren = item.children && item.children.length > 0;
             const isExpanded = expandedGroups.includes(item.id);

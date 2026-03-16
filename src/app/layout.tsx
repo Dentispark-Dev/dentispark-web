@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import genralSans from "@/src/lib/font";
 import { ModalProvider } from "@/src/components/ui/modal-provider";
 import { AuthProvider } from "@/src/providers/auth-provider";
+import { FieldProvider } from "@/src/providers/field-provider";
 import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
 import { GDPRBanner } from "@/src/components/common/gdpr-banner";
 import { NotificationPrompt } from "@/src/features/automation/components/notification-prompt";

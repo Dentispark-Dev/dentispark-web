@@ -1,3 +1,5 @@
+import { PlatformField } from "../types/fields";
+
 // Common API response interfaces
 export interface BaseApiResponse<T = unknown> {
   responseCode: string;
@@ -107,6 +109,8 @@ export interface User {
   profileImage?: string;
   role: "student" | "mentor" | "admin";
   status: "active" | "inactive" | "suspended";
+  primaryField: PlatformField;
+  additionalFields?: PlatformField[];
   academicProfile?: AcademicProfile;
   createdAt: string;
   updatedAt: string;
@@ -204,6 +208,7 @@ export interface University {
   description?: string;
   ranking?: number;
   courses: Course[];
+  supportedFields: PlatformField[];
   created_at: string;
   updated_at: string;
 }
@@ -220,6 +225,7 @@ export interface Course {
   fees_domestic?: number;
   fees_international?: number;
   application_deadline?: string;
+  field: PlatformField;
   created_at: string;
   updated_at: string;
 }
@@ -271,6 +277,7 @@ export interface Resource {
   thumbnail_url?: string;
   author_id?: string;
   is_premium: boolean;
+  supportedFields?: PlatformField[];
   view_count: number;
   download_count: number;
   created_at: string;
