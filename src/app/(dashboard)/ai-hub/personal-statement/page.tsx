@@ -21,7 +21,12 @@ import { cn } from "@/src/lib/utils";
 import { ScoreGauge } from "@/src/features/ai-hub/components/score-gauge";
 import { FeedbackCard } from "@/src/features/ai-hub/components/feedback-card";
 
+import { useField } from "@/src/providers/field-provider";
+import { useAuth } from "@/src/providers/auth-provider";
+
 export default function PersonalStatementReviewer() {
+  const { activeField, activeFieldLabel } = useField();
+  const { user } = useAuth();
   const [inputMode, setInputMode] = useState<"text" | "upload">("text");
   const [text, setText] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -32,24 +37,22 @@ export default function PersonalStatementReviewer() {
     if (inputMode === "text" && text.length < 100) return;
     
     setIsAnalyzing(true);
-    // Simulate complex AI analysis
-    await new Promise(resolve => setTimeout(resolve, 3500));
-    
-    setResults({
-      score: 82,
-      metrics: [
-        { name: "Academic Tone", score: 90, feedback: "Excellent use of professional terminology related to dental sciences." },
-        { name: "Structure & Flow", score: 75, feedback: "Good, but the transition between your work experience and your motivation needs to be smoother." },
-        { name: "Impact", score: 85, feedback: "Strong opening statement that immediately captures attention." },
-        { name: "UCAS Compliance", score: 95, feedback: "Well within character limits and follows standard formatting." }
-      ],
-      suggestions: [
-        "Include more specific examples of manual dexterity (e.g., musical instruments or fine art).",
-        "Elaborate more on your understanding of the NHS Core Values.",
-        "Correct a minor grammatical slip in the second paragraph."
-      ]
-    });
-    setIsAnalyzing(false);
+    try {
+      const response = await fetch("/api/ai/personal-statement", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, field: activeField }),
+      });
+
+      if (!response.ok) throw new Error("Analysis failed");
+
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   return (
@@ -61,8 +64,8 @@ export default function PersonalStatementReviewer() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black-800">AI Personal Statement Reviewer</h1>
-            <p className="text-black-500 text-sm">Professional feedback in seconds.</p>
+            <h1 className="text-2xl font-bold text-black-800">AI {activeFieldLabel} Statement Reviewer</h1>
+            <p className="text-black-500 text-sm">Professional feedback for your {activeFieldLabel} application journey.</p>
           </div>
         </div>
         <div className="px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-xs font-bold border border-primary-200">
@@ -227,13 +230,24 @@ export default function PersonalStatementReviewer() {
                 </Button>
                 <div className="flex gap-4 w-full sm:w-auto">
                     <Button 
-                        variant="secondary"
-                        className="flex-1 sm:flex-none gap-2 px-6 rounded-xl transform active:scale-95 transition-transform"
+                        onClick={async () => {
+                            try {
+                                await fetch("/api/ai/sync", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                        userId: user?.guid,
+                                        toolId: "personal-statement",
+                                        accomplishment: `Achieved 1PS Score of ${results?.score}% in ${activeFieldLabel}`,
+                                        metadata: results
+                                    })
+                                });
+                                alert("Intelligence Synced!");
+                            } catch (e) { console.error(e); }
+                        }}
+                        className="flex-1 sm:flex-none gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 rounded-xl shadow-lg shadow-primary-200 transform active:scale-95 transition-transform"
                     >
-                        <Download className="w-4 h-4" /> Export PDF
-                    </Button>
-                    <Button className="flex-1 sm:flex-none gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 rounded-xl shadow-lg shadow-primary-200 transform active:scale-95 transition-transform">
-                        Share with Mentor <ChevronRight className="w-4 h-4" />
+                        Sync to Profile <ChevronRight className="w-4 h-4" />
                     </Button>
                 </div>
             </div>

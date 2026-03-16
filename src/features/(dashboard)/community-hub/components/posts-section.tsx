@@ -1,22 +1,55 @@
 "use client";
 
 import { useState } from "react";
+import { Sparkles, Loader2 } from "lucide-react";
 import { Post } from "../types";
 import { PostItem } from "./post-item";
 import { Textarea } from "@/src/components/ui/textarea";
+import { Button } from "@/src/components/ui/button";
+import { useField } from "@/src/providers/field-provider";
 
 interface PostsSectionProps {
   posts: Post[];
 }
 
 export function PostsSection({ posts }: PostsSectionProps) {
+  const { activeField } = useField();
   const [newPost, setNewPost] = useState("");
+  const [isSuggesting, setIsSuggesting] = useState(false);
+
+  const handleSuggestTopic = async () => {
+    setIsSuggesting(true);
+    try {
+      const response = await fetch("/api/ai/community-starter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ field: activeField }),
+      });
+      const data = await response.json();
+      setNewPost(data.suggestedQuestion);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSuggesting(false);
+    }
+  };
 
   return (
     <div className="rounded-xl bg-white py-2">
-      <h1 className="mb-8 text-2xl font-semibold text-gray-900">
-        Community Hub
-      </h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-semibold text-gray-900">
+            Community Hub
+        </h1>
+        <Button 
+            onClick={handleSuggestTopic}
+            disabled={isSuggesting}
+            variant="outline"
+            className="rounded-full border-primary-200 bg-primary-50 text-primary-700 hover:bg-primary-100 font-bold text-xs gap-2 transition-all active:scale-95 shadow-sm"
+        >
+            {isSuggesting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+            {isSuggesting ? "Generating Suggestion..." : "✨ Suggest Topic"}
+        </Button>
+      </div>
 
       {/* Posts Section */}
       <div className="space-y-8 md:px-8">

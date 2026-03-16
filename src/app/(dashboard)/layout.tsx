@@ -12,6 +12,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/src/providers/auth-provider";
 import { motion, AnimatePresence } from "framer-motion";
+import { ProactiveNotification } from "@/src/features/automation/components/proactive-notification";
 
 export default function DashboardLayout({
     children,
@@ -35,6 +36,7 @@ export default function DashboardLayout({
     return (
         <ProtectedRoute requiresProfile>
             <CommandBar>
+                <ProactiveNotification />
                 <div className="bg-background-body flex min-h-screen">
                     {/* Mobile Menu Overlay */}
                     <MobileMenuOverlay

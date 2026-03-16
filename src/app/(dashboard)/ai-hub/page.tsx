@@ -9,7 +9,11 @@ import {
   ArrowRight,
   ClipboardCheck,
   Zap,
-  ShieldCheck
+  ShieldCheck,
+  BarChart3,
+  Clock,
+  ChevronRight,
+  Target
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -47,6 +51,22 @@ export default function AIHubPage() {
       status: "Ready",
       color: "bg-indigo-50",
       href: "/ai-hub/transcript-parser"
+    },
+    {
+      title: "Admission Alpha Matchmaker",
+      description: "Analyze your academic profile and extracurriculars to determine your statistical school-specific likelihood of acceptance.",
+      icon: <BarChart3 className="w-8 h-8 text-emerald-600" />,
+      status: "Ready",
+      color: "bg-emerald-50",
+      href: "/ai-hub/acceptance-odds"
+    },
+    {
+      title: "90-Day Study Planner",
+      description: "Get a personalized, data-driven study schedule tailored to your exam dates and weak areas.",
+      icon: <Clock className="w-8 h-8 text-orange-600" />,
+      status: "Ready",
+      color: "bg-orange-50",
+      href: "/ai-hub/study-planner"
     }
   ];
 
@@ -66,32 +86,36 @@ export default function AIHubPage() {
         </p>
       </div>
 
-      {/* Hero Glass Card */}
+      {/* Admissions War-Room (Phase 10 Highlight) */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="glass-card rounded-3xl p-8 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 border-primary-100/50"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card rounded-[2.5rem] p-10 relative overflow-hidden flex flex-col md:flex-row items-center gap-10 bg-black-900 text-white shadow-2xl border-t-4 border-primary-500"
       >
-        <div className="flex-1 space-y-4">
-          <h2 className="text-2xl font-bold text-black-700">Need a Personal Statement Review?</h2>
-          <p className="text-black-500">
-            Our specialized LLM has been trained on thousands of successful UK dental and medical school applications. Get detailed feedback in seconds.
-          </p>
-          <Link href="/ai-hub/personal-statement">
-            <button className="flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-700 transition-all shadow-lg shadow-primary-200">
-              Start AI Review <ArrowRight className="w-4 h-4" />
-            </button>
-          </Link>
+        <div className="flex-1 space-y-6">
+            <div className="flex items-center gap-2 px-3 py-1 bg-primary-100 text-primary-700 rounded-full w-fit text-[10px] font-black uppercase tracking-widest">
+                <Zap className="w-3 h-3 fill-primary-600" />
+                New: Command Center
+            </div>
+            <div className="space-y-2">
+                <h2 className="text-4xl font-black tracking-tight">The Admissions War-Room</h2>
+                <p className="text-white/60 font-medium leading-relaxed">
+                    Consolidate your entire application intelligence. View your tactical radar, readiness score, and real-time school-specific probability briefings in one high-impact command center.
+                </p>
+            </div>
+            <Link href="/ai-hub/war-room">
+                <button className="flex items-center gap-3 bg-primary-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-primary-700 transition-all shadow-xl shadow-primary-900/40 text-lg group">
+                    Enter War-Room <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+            </Link>
         </div>
-        <div className="w-full md:w-1/3 flex justify-center">
+        <div className="w-full md:w-1/3 flex justify-center py-4">
             <div className="relative">
-                <BrainCircuit className="w-32 h-32 text-primary-200 animate-pulse" />
-                <Sparkles className="absolute -top-2 -right-2 w-8 h-8 text-primary-500 animate-bounce" />
+                <div className="absolute inset-0 bg-primary-500/20 blur-3xl rounded-full scale-150 animate-pulse" />
+                <Target className="w-40 h-40 text-primary-500 relative" />
+                <div className="absolute -top-4 -right-4 bg-white text-black-900 px-4 py-2 rounded-2xl font-black text-sm shadow-xl">82% Ready</div>
             </div>
         </div>
-        {/* Background blobs */}
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary-200/20 rounded-full blur-3xl -z-10" />
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-200/20 rounded-full blur-3xl -z-10" />
       </motion.div>
 
       {/* Tools Grid */}

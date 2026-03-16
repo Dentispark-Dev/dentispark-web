@@ -1,10 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Globe } from "lucide-react";
+import { 
+  MapPin, 
+  Globe, 
+  Sparkles, 
+  BrainCircuit, 
+  CheckCircle2, 
+  Target, 
+  Loader2, 
+  Zap, 
+  AlertCircle 
+} from "lucide-react";
 import { Breadcrumb } from "@/src/components/ui/breadcrumb";
+import { Button } from "@/src/components/ui/button";
+import { useField } from "@/src/providers/field-provider";
 import { University } from "../types";
 
 interface UniversityProfileProps {
@@ -12,6 +25,29 @@ interface UniversityProfileProps {
 }
 
 export function UniversityProfile({ university }: UniversityProfileProps) {
+  const { activeField, activeFieldLabel } = useField();
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [strategy, setStrategy] = useState<any>(null);
+
+  const handleGenerateStrategy = async () => {
+    setIsAnalyzing(true);
+    try {
+      const response = await fetch("/api/ai/university-insight", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          universityName: university.name, 
+          field: activeField 
+        }),
+      });
+      const data = await response.json();
+      setStrategy(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
   const breadcrumbItems = [
     { label: "University Hub", href: "/university-hub" },
     { label: "University Profile", isActive: true },
@@ -217,6 +253,118 @@ export function UniversityProfile({ university }: UniversityProfileProps) {
             </div>
           </motion.div>
         </div>
+
+        {/* AI Strategy Hub */}
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+            className="mt-12 md:mt-16"
+        >
+            <div className="glass-card p-8 md:p-12 rounded-[3rem] bg-gradient-to-br from-primary-50 to-indigo-50 border-primary-200/50 shadow-sm relative overflow-hidden">
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-full text-xs font-bold uppercase tracking-widest shadow-lg shadow-primary-200">
+                            <Zap className="w-4 h-4 fill-white" />
+                            AI Strategy Hub
+                        </div>
+                        <h2 className="text-3xl font-black text-black-900 tracking-tight">How to get into {university.name}?</h2>
+                        <p className="text-black-600 leading-relaxed font-medium">
+                            Our LLM understands the specific nuances of {university.name}&apos;s {activeFieldLabel} mission. 
+                            Generate a custom application strategy based on their historical preferences.
+                        </p>
+                        {!strategy && (
+                            <Button 
+                                onClick={handleGenerateStrategy}
+                                disabled={isAnalyzing}
+                                className="h-14 px-10 rounded-2xl bg-black-900 text-white font-bold text-lg hover:bg-black-800 transition-all shadow-xl shadow-black-100"
+                            >
+                                {isAnalyzing ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <BrainCircuit className="w-5 h-5 mr-2" />}
+                                {isAnalyzing ? "Analyzing Campus Data..." : "Generate Campus Strategy"}
+                            </Button>
+                        )}
+                    </div>
+
+                    <div className="relative h-64 flex items-center justify-center">
+                        <AnimatePresence mode="wait">
+                            {isAnalyzing ? (
+                                <motion.div 
+                                    key="analyzing"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="flex flex-col items-center gap-4"
+                                >
+                                    <div className="w-20 h-20 rounded-full border-4 border-primary-200 border-t-primary-600 animate-spin" />
+                                    <span className="text-sm font-bold text-primary-700 animate-pulse">Scanning Admissions Policy...</span>
+                                </motion.div>
+                            ) : strategy ? (
+                                <motion.div 
+                                    key="results"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="space-y-4 w-full"
+                                >
+                                    <div className="bg-white/80 backdrop-blur-sm p-5 rounded-2xl border border-primary-100 space-y-2 shadow-sm">
+                                        <div className="flex items-center gap-2 text-primary-600 font-bold text-xs uppercase tracking-widest">
+                                            <Target className="w-4 h-4" /> Mission Alignment
+                                        </div>
+                                        <p className="text-xs text-black-600 leading-relaxed font-medium">{strategy.missionAlignment}</p>
+                                    </div>
+                                    <div className="bg-white/80 backdrop-blur-sm p-5 rounded-2xl border border-primary-100 space-y-2 shadow-sm">
+                                        <div className="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-widest">
+                                            <BrainCircuit className="w-4 h-4" /> Interview Approach
+                                        </div>
+                                        <p className="text-xs text-black-600 leading-relaxed font-medium">{strategy.interviewStrategy}</p>
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                <div className="opacity-10 grayscale group-hover:grayscale-0 transition-all">
+                                    <BrainCircuit className="w-56 h-56 text-primary-900" />
+                                </div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </div>
+
+                {/* Animated BG gradients */}
+                <div className="absolute top-0 right-0 -z-0">
+                    <div className="w-96 h-96 bg-primary-200/20 blur-[100px] rounded-full" />
+                </div>
+            </div>
+
+            {strategy && (
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"
+                >
+                    <div className="bg-white p-6 rounded-3xl border border-primary-100 space-y-3">
+                        <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 font-bold">
+                            1
+                        </div>
+                        <h4 className="font-bold text-black-800">Culture Fit</h4>
+                        <p className="text-xs text-black-500 leading-relaxed">{strategy.cultureFit}</p>
+                    </div>
+                    <div className="bg-green-50/50 p-6 rounded-3xl border border-green-100 space-y-3">
+                        <div className="flex items-center gap-2 text-green-700 font-bold text-xs uppercase tracking-widest">
+                            <CheckCircle2 className="w-4 h-4" /> Key Strengths
+                        </div>
+                        <ul className="space-y-1">
+                            {strategy.pros.map((p: string, i: number) => (
+                                <li key={i} className="text-xs text-green-800">• {p}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="bg-black-900 p-6 rounded-3xl text-white space-y-3 shadow-xl">
+                        <div className="flex items-center gap-2 text-primary-400 font-bold text-xs uppercase tracking-widest">
+                            <Sparkles className="w-4 h-4" /> Winning Tip
+                        </div>
+                        <p className="text-xs text-greys-100 leading-relaxed italic">&quot;{strategy.successTip}&quot;</p>
+                    </div>
+                </motion.div>
+            )}
+        </motion.div>
 
         {/* Social Media Links */}
         <div className="mt-6 md:mt-8">

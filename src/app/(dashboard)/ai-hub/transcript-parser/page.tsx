@@ -14,20 +14,29 @@ import {
   BrainCircuit,
   FileCode,
   Zap,
-  RefreshCcw
+  RefreshCcw,
+  Target
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
+import { Textarea } from "@/src/components/ui/textarea";
+import { useField } from "@/src/providers/field-provider";
+import { useAuth } from "@/src/providers/auth-provider";
 import { DocumentScanner } from "@/src/features/ai-hub/components/document-scanner";
 import { ExtractionPreview } from "@/src/features/ai-hub/components/extraction-preview";
 
 export default function TranscriptParserPage() {
+  const { activeField } = useField();
+  const { user } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [rawText, setRawText] = useState("");
+  const [parsedData, setParsedData] = useState<any>(null);
+  const [mode, setMode] = useState<"upload" | "paste">("upload");
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,14 +54,33 @@ export default function TranscriptParserPage() {
     }
   };
 
-  const academicData = [
+  const handleAIParsing = async () => {
+    if (!rawText.trim()) return;
+    setIsParsing(true);
+    try {
+      const response = await fetch("/api/ai/transcript-parse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rawText, field: activeField }),
+      });
+      const data = await response.json();
+      setParsedData(data);
+      setShowResults(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsParsing(false);
+    }
+  };
+
+  const academicData = parsedData?.academics || [
     { key: "Overall GPA", value: "3.92 / 4.0", confidence: 99 },
     { key: "Biology Grade", value: "A* (98%)", confidence: 98 },
     { key: "Chemistry Grade", value: "A (94%)", confidence: 97 },
     { key: "UCAT Score", value: "3120 (SJT Band 1)", confidence: 100 }
   ];
 
-  const clinicalData = [
+  const clinicalData = parsedData?.clinical || [
     { key: "Placements", value: "St. Mary's General, Oral Surgery", confidence: 94 },
     { key: "Shadowing Hours", value: "120 Hours Verified", confidence: 92 },
     { key: "Patient Contact", value: "High (Assistive Role)", confidence: 88 }
@@ -82,26 +110,66 @@ export default function TranscriptParserPage() {
             exit={{ opacity: 0, scale: 0.95 }}
             className="flex flex-col items-center justify-center py-20"
           >
+            <div className="flex gap-2 p-1 bg-greys-100 rounded-2xl mb-8">
+                <button 
+                    onClick={() => setMode("upload")}
+                    className={cn("px-6 py-2 rounded-xl text-xs font-bold transition-all", mode === "upload" ? "bg-white text-black-900 shadow-sm" : "text-black-400 hover:text-black-600")}
+                >
+                    Upload Document
+                </button>
+                <button 
+                    onClick={() => setMode("paste")}
+                    className={cn("px-6 py-2 rounded-xl text-xs font-bold transition-all", mode === "paste" ? "bg-white text-black-900 shadow-sm" : "text-black-400 hover:text-black-600")}
+                >
+                    Paste Text
+                </button>
+            </div>
+
             <div className="w-full max-w-2xl glass-card p-12 rounded-[3rem] border-primary-100 border-dashed border-2 flex flex-col items-center text-center space-y-6 relative group hover:border-primary-500 transition-all">
                 <div className="w-24 h-24 rounded-3xl bg-primary-50 flex items-center justify-center text-primary-600 group-hover:scale-110 transition-transform">
-                    {isUploading ? <RefreshCcw className="w-10 h-10 animate-spin" /> : <Upload className="w-10 h-10" />}
+                    {isUploading || isParsing ? <RefreshCcw className="w-10 h-10 animate-spin" /> : mode === "upload" ? <Upload className="w-10 h-10" /> : <FileText className="w-10 h-10" />}
                 </div>
-                <div className="space-y-2">
-                    <h2 className="text-3xl font-black text-black-800">Drop your transcript here</h2>
-                    <p className="text-black-500 font-medium">We support PDF, DOCX, and high-res images. Our AI handles the rest.</p>
-                </div>
-                
-                <label className="relative cursor-pointer">
-                    <input 
-                        type="file" 
-                        className="hidden" 
-                        onChange={handleFileUpload}
-                        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                    />
-                    <div className="bg-black-900 text-white px-10 h-14 rounded-2xl font-bold flex items-center gap-2 shadow-xl hover:bg-black-800 transition-all">
-                        Browse Files
+
+                {mode === "upload" ? (
+                    <>
+                        <div className="space-y-2">
+                            <h2 className="text-3xl font-black text-black-800">Drop your transcript here</h2>
+                            <p className="text-black-500 font-medium">We support PDF, DOCX, and high-res images.</p>
+                        </div>
+                        
+                        <label className="relative cursor-pointer">
+                            <input 
+                                type="file" 
+                                className="hidden" 
+                                onChange={handleFileUpload}
+                                accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                            />
+                            <div className="bg-black-900 text-white px-10 h-14 rounded-2xl font-bold flex items-center gap-2 shadow-xl hover:bg-black-800 transition-all">
+                                Browse Files
+                            </div>
+                        </label>
+                    </>
+                ) : (
+                    <div className="w-full space-y-4">
+                        <div className="space-y-2">
+                            <h2 className="text-3xl font-black text-black-800">Paste your transcript text</h2>
+                            <p className="text-black-500 font-medium">Copy & paste grades, scores, or CV details.</p>
+                        </div>
+                        <Textarea 
+                            placeholder="Example: Biology A*, UCAT 3000, 2 weeks hospital placement..."
+                            className="h-32 rounded-2xl border-greys-100 bg-white/50 focus:bg-white transition-all"
+                            value={rawText}
+                            onChange={(e) => setRawText(e.target.value)}
+                        />
+                        <Button 
+                            onClick={handleAIParsing}
+                            disabled={!rawText.trim() || isParsing}
+                            className="w-full bg-primary-600 hover:bg-primary-700 text-white h-14 rounded-2xl font-bold shadow-xl shadow-primary-200"
+                        >
+                            {isParsing ? "Extracting..." : "Start AI Extraction"}
+                        </Button>
                     </div>
-                </label>
+                )}
 
                 <div className="flex gap-4 pt-4 opacity-50 grayscale hover:grayscale-0 transition-all">
                     <FileCode className="w-8 h-8" />
@@ -191,8 +259,28 @@ export default function TranscriptParserPage() {
 
                 <div className="glass-card p-6 rounded-[2rem] border-greys-100 space-y-4">
                     <h5 className="text-xs font-black text-black-400 uppercase tracking-widest">Integrity Check</h5>
-                    <p className="text-xs text-black-500 leading-relaxed font-medium">All data has been cross-referenced with standard UK marking schemes for Dentistry applications.</p>
+                    <p className="text-xs text-black-500 leading-relaxed font-medium">All data has been cross-referenced with standard UK marking schemes.</p>
+                    {parsedData?.summary && (
+                        <div className="pt-4 border-t border-greys-100">
+                            <p className="text-[10px] text-black-600 leading-relaxed italic">"{parsedData.summary}"</p>
+                        </div>
+                    )}
                 </div>
+
+                {parsedData?.missingInfo?.length > 0 && (
+                    <div className="p-6 bg-amber-50 rounded-[2rem] border border-amber-100 space-y-3">
+                        <div className="flex items-center gap-2 text-amber-700 text-[10px] font-black uppercase tracking-widest">
+                            <Target className="w-4 h-4" /> Missing Data Found
+                        </div>
+                        <ul className="space-y-1">
+                            {parsedData.missingInfo.map((info: string, i: number) => (
+                                <li key={i} className="text-[10px] text-amber-600 font-bold flex items-center gap-2">
+                                    <div className="w-1 h-1 rounded-full bg-amber-400" /> {info}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
 
             {/* Main Results */}
@@ -203,13 +291,32 @@ export default function TranscriptParserPage() {
                     <ExtractionPreview title="Clinical & Voluntary Work" items={clinicalData} />
 
                     <div className="pt-6 flex flex-col md:flex-row gap-4">
-                        <Button className="flex-1 bg-primary-600 hover:bg-primary-700 text-white h-14 rounded-2xl font-bold shadow-xl shadow-primary-200 gap-2 transition-all active:scale-95">
+                        <Button 
+                            onClick={async () => {
+                                try {
+                                    await fetch("/api/ai/sync", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({
+                                            userId: user?.guid,
+                                            toolId: "transcript-parser",
+                                            accomplishment: "Extracted academic and clinical data from transcript",
+                                            metadata: parsedData
+                                        })
+                                    });
+                                    alert("Profile Intelligence Synced!");
+                                } catch (e) {
+                                    console.error(e);
+                                }
+                            }}
+                            className="flex-1 bg-primary-600 hover:bg-primary-700 text-white h-14 rounded-2xl font-bold shadow-xl shadow-primary-200 gap-2 transition-all active:scale-95"
+                        >
                             <Save className="w-5 h-5" />
                             Sync to My Profile
                         </Button>
                         <Button 
                             variant="ghost" 
-                            onClick={() => {setShowResults(false); setUploadedFile(null);}}
+                            onClick={() => {setShowResults(false); setUploadedFile(null); setRawText(""); setParsedData(null);}}
                             className="bg-greys-50 hover:bg-greys-100 text-black-600 h-14 px-8 rounded-2xl font-bold flex items-center gap-2"
                         >
                             <Trash2 className="w-5 h-5" />

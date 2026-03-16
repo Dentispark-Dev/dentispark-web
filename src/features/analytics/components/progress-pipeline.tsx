@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Circle, ArrowRight } from "lucide-react";
 import { cn } from "@/src/lib/utils";
@@ -14,6 +14,19 @@ const pipelineSteps = [
 ];
 
 export function ProgressPipeline() {
+  const [steps, setSteps] = useState(pipelineSteps);
+
+  useEffect(() => {
+    // Simulate fetching user activity state
+    const hasFinishedEssay = true; // In real app, fetch from AI Hub state
+    const updatedSteps = pipelineSteps.map(step => {
+        if (step.id === 2 && hasFinishedEssay) return { ...step, status: "completed" };
+        if (step.id === 3 && hasFinishedEssay) return { ...step, status: "current" };
+        return step;
+    });
+    setSteps(updatedSteps);
+  }, []);
+
   return (
     <div className="glass-card p-10 rounded-[3rem] border-primary-50 bg-white/50 relative overflow-hidden">
       <div className="relative z-10 space-y-10">
@@ -23,7 +36,7 @@ export function ProgressPipeline() {
                 <h3 className="text-3xl font-black text-black-900 leading-tight">Your Progress Pipeline</h3>
             </div>
             <div className="flex gap-2 text-xs font-bold text-black-500 bg-greys-50 px-4 py-2 rounded-full border border-greys-100">
-                Next Step: Submit UCAS
+                Next Step: {steps.find(s => s.status === "current")?.description || "Continue"}
                 <ArrowRight className="w-4 h-4" />
             </div>
         </div>
@@ -33,12 +46,12 @@ export function ProgressPipeline() {
             <div className="absolute top-6 left-0 right-0 h-0.5 bg-greys-100 -z-10 mx-6" />
             <motion.div 
                 initial={{ width: 0 }}
-                animate={{ width: "25%" }}
+                animate={{ width: steps.filter(s => s.status === "completed").length * 25 + "%" }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="absolute top-6 left-0 h-0.5 bg-primary-500 -z-10 mx-6" 
             />
 
-            {pipelineSteps.map((step, i) => (
+            {steps.map((step, i) => (
                 <div key={step.id} className="flex flex-col items-center gap-4 text-center max-w-[140px] group">
                     <motion.div 
                         initial={{ scale: 0.8, opacity: 0 }}
@@ -61,13 +74,13 @@ export function ProgressPipeline() {
                                 <Circle className="w-6 h-6 fill-primary-600" />
                             </motion.div>
                         ) : (
-                            <span className="font-bold">{step.id}</span>
+                            <span className="font-bold text-xs">{step.id}</span>
                         )}
                     </motion.div>
                     
                     <div className="space-y-1">
                         <p className={cn(
-                            "text-xs font-black uppercase tracking-tight",
+                            "text-[10px] font-black uppercase tracking-tight",
                             step.status === "upcoming" ? "text-black-300" : "text-black-800"
                         )}>{step.title}</p>
                         <p className="text-[10px] text-black-400 font-medium leading-tight">{step.description}</p>

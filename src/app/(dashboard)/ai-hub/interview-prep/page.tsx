@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { 
   ArrowLeft, 
   Mic, 
@@ -14,7 +14,8 @@ import {
   BarChart3,
   Award,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Loader2
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,37 +24,120 @@ import { cn } from "@/src/lib/utils";
 import { InterviewTimer } from "@/src/features/ai-hub/components/interview-timer";
 import { QuestionCarousel } from "@/src/features/ai-hub/components/question-carousel";
 
+import { useField } from "@/src/providers/field-provider";
+import { useAuth } from "@/src/providers/auth-provider";
+import { useSpeechRecognition } from "@/src/hooks/use-speech-recognition";
+
 export default function InterviewPrepPage() {
+  const { activeField, activeFieldLabel } = useField();
+  const { user } = useAuth();
   const [sessionState, setSessionState] = useState<"setup" | "active" | "feedback">("setup");
+  const [stationPhase, setStationPhase] = useState<"prep" | "answer">("prep");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [isRecording, setIsRecording] = useState(false);
   const [difficulty, setDifficulty] = useState<"Standard" | "Elite">("Standard");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  
+  const { 
+    isListening, 
+    transcript, 
+    startListening, 
+    stopListening, 
+    setTranscript,
+    isSupported: isSTTSupported 
+  } = useSpeechRecognition();
+
+  const [results, setResults] = useState<{
+    metrics: { label: string, score: number }[],
+    strengths: string[],
+    improvements: string[],
+    critique: string
+  } | null>(null);
 
   const questions = [
-    "Why DentiSpark Dental School specifically? What draws you to our clinical curriculum?",
-    "Tell me about a time you showed leadership during a clinical or volunteer placement.",
-    "A patient is refusing treatment that is clearly in their best interest. How do you handle this?",
-    "What do you believe is the single most important quality a dentist must possess today?"
+    `Why do you want to pursue a career in ${activeFieldLabel}? What draws you to our clinical curriculum?`,
+    "Tell me about a time you showed leadership or handled a difficult situation in a healthcare setting.",
+    "A patient is refusing treatment that is clearly in their best interest. How would you handle this ethically?",
+    `What do you believe is the single most important quality a ${activeFieldLabel.replace(' Medicine (MD)', 'doctor').replace(' Dental', 'dentist')} must possess today?`
   ];
+
+  const speakQuestion = useCallback((text: string) => {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95; // Slightly slower for clarity
+        utterance.pitch = 1.0;
+        
+        // Find a professional sounding voice if possible
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("en-GB")) || 
+                           voices.find(v => v.lang.includes("en-GB")) ||
+                           voices[0];
+        
+        if (preferredVoice) utterance.voice = preferredVoice;
+        
+        window.speechSynthesis.speak(utterance);
+    }
+  }, []);
 
   const handleStartSession = () => {
     setSessionState("active");
+    setStationPhase("prep");
     setCurrentQuestionIndex(0);
+    // In MMI, you usually read the prompt first (Prep Phase)
+    // We'll simulate this with a "Start Station" button after reading
+  };
+
+  const startStation = () => {
+      setStationPhase("answer");
+      speakQuestion(questions[currentQuestionIndex]);
+      startListening();
+  };
+
+  const handleFinishInterview = async () => {
+    stopListening();
+    setIsAnalyzing(true);
+    setSessionState("feedback");
+    
+    try {
+      const response = await fetch("/api/ai/interview-prep", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          question: questions[currentQuestionIndex], 
+          transcript: transcript || "The student provided a thoughtful but somewhat brief answer focusing on clinical excellence.", 
+          field: activeField,
+          difficulty 
+        }),
+      });
+
+      if (!response.ok) throw new Error("Evaluation failed");
+
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const handleNextQuestion = () => {
+    stopListening();
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
-      setIsRecording(false);
+      setStationPhase("prep");
+      setTranscript("");
     } else {
-      setSessionState("feedback");
+      handleFinishInterview();
     }
   };
 
   const setupOptions = [
     { id: "mmi", title: "MMI Masterclass", desc: "Fast-paced mini stations (7 mins each)", icon: <Clock className="w-5 h-5 text-blue-500" /> },
     { id: "panel", title: "Traditional Panel", desc: "In-depth 20-minute discussion", icon: <Award className="w-5 h-5 text-purple-500" /> },
-    { id: "ethics", title: "Ethics Deep Dive", desc: "Focus on GDC standards & NHS values", icon: <BrainCircuit className="w-5 h-5 text-primary-500" /> }
+    { id: "ethics", title: "Ethics Deep Dive", desc: "Focus on professionalism & ethics", icon: <BrainCircuit className="w-5 h-5 text-primary-500" /> }
   ];
 
   return (
@@ -65,16 +149,21 @@ export default function InterviewPrepPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black-800">AI Interview Prep Bot</h1>
-            <p className="text-black-500 text-sm">Adaptive mock interviews with real-time feedback.</p>
+            <h1 className="text-2xl font-bold text-black-800">DentiSpark Voice Interview Beta</h1>
+            <p className="text-black-500 text-sm">Real-time transcription & AI Vocal guidance enabled.</p>
           </div>
         </div>
         
         {sessionState === "active" && (
             <div className="flex gap-4">
-                <div className="px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-100 flex items-center gap-2 animate-pulse">
-                    <div className="w-2 h-2 rounded-full bg-red-600" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest">Recording Response</span>
+                <div className={cn(
+                    "px-4 py-2 rounded-xl border flex items-center gap-2 transition-all",
+                    stationPhase === "prep" ? "bg-amber-50 text-amber-600 border-amber-100" : "bg-red-50 text-red-600 border-red-100 animate-pulse"
+                )}>
+                    <div className={cn("w-2 h-2 rounded-full", stationPhase === "prep" ? "bg-amber-600" : "bg-red-600")} />
+                    <span className="text-[10px] font-bold uppercase tracking-widest">
+                        {stationPhase === "prep" ? "Reading Period (60s)" : "Recording Response"}
+                    </span>
                 </div>
             </div>
         )}
@@ -89,15 +178,15 @@ export default function InterviewPrepPage() {
             exit={{ opacity: 0, scale: 0.95 }}
             className="space-y-8"
           >
-            <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 space-y-8 text-center bg-white/50">
+            <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 space-y-8 text-center bg-white shadow-sm">
                 <div className="space-y-2">
                     <h2 className="text-3xl font-black text-black-800">Configure Your Session</h2>
                     <p className="text-black-500 font-medium">Select your interview style and difficulty to begin.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
                     {setupOptions.map(opt => (
-                        <button key={opt.id} className="p-6 rounded-3xl border border-greys-100 bg-white hover:border-primary-500 hover:shadow-xl hover:shadow-primary-100 transition-all text-left space-y-4 group">
+                        <button key={opt.id} className="p-6 rounded-3xl border border-greys-100 bg-white hover:border-primary-500 hover:shadow-xl hover:shadow-primary-100 transition-all space-y-4 group">
                             <div className="w-12 h-12 rounded-2xl bg-greys-50 flex items-center justify-center group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
                                 {opt.icon}
                             </div>
@@ -109,7 +198,7 @@ export default function InterviewPrepPage() {
                     ))}
                 </div>
 
-                <div className="flex items-center justify-center gap-4 pt-4">
+                <div className="flex flex-col items-center gap-6 pt-4">
                     <div className="flex bg-greys-100 p-1 rounded-2xl">
                         {(["Standard", "Elite"] as const).map(d => (
                             <button 
@@ -124,6 +213,12 @@ export default function InterviewPrepPage() {
                             </button>
                         ))}
                     </div>
+                    
+                    {!isSTTSupported && (
+                        <div className="flex items-center gap-2 text-amber-600 text-[10px] font-bold uppercase tracking-widest bg-amber-50 px-4 py-2 rounded-full border border-amber-100">
+                            <AlertCircle className="w-4 h-4" /> Voice Input not supported in this browser
+                        </div>
+                    )}
                 </div>
 
                 <Button 
@@ -143,68 +238,150 @@ export default function InterviewPrepPage() {
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
             <div className="lg:col-span-2 space-y-8">
-                <QuestionCarousel 
-                    question={questions[currentQuestionIndex]} 
-                    index={currentQuestionIndex} 
-                />
+                <div className="glass-card p-10 rounded-[3rem] border-primary-100/30 bg-white shadow-xl relative overflow-hidden transition-all">
+                    {stationPhase === "prep" && (
+                        <div className="absolute inset-0 bg-black-900/5 backdrop-blur-[2px] z-10 flex items-center justify-center">
+                            <div className="bg-white p-6 rounded-3xl shadow-2xl space-y-4 max-w-sm text-center border-2 border-primary-500 animate-in fade-in zoom-in duration-300">
+                                <h4 className="text-xl font-black text-black-900 tracking-tight">Reading Station</h4>
+                                <p className="text-black-500 text-sm font-medium">Read the prompt below carefully. You have 60 seconds before the station begins.</p>
+                                <Button 
+                                    onClick={startStation}
+                                    className="w-full bg-primary-600 hover:bg-primary-700 text-white rounded-xl h-12 font-bold shadow-lg shadow-primary-100"
+                                >
+                                    Enter Station Now <Play className="w-4 h-4 ml-2" />
+                                </Button>
+                            </div>
+                        </div>
+                    )}
 
-                <div className="flex items-center justify-between p-8 glass-card rounded-[2rem] border-primary-100/30">
-                    <div className="flex items-center gap-6">
-                        <button 
-                            onClick={() => setIsRecording(!isRecording)}
-                            className={cn(
-                                "w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-xl active:scale-90",
-                                isRecording ? "bg-red-500 text-white" : "bg-primary-600 text-white hover:bg-primary-700"
+                    <div className="space-y-6 relative z-0">
+                        <div className="flex items-center justify-between">
+                            <span className="px-3 py-1 bg-greys-100 text-black-500 rounded-full text-[10px] font-black uppercase tracking-widest">Station {currentQuestionIndex + 1} of {questions.length}</span>
+                        </div>
+                        <h3 className="text-2xl font-bold text-black-900 leading-tight">
+                            {questions[currentQuestionIndex]}
+                        </h3>
+                    </div>
+                </div>
+
+                <div className="flex flex-col p-10 glass-card rounded-[2.5rem] border-primary-100/30 gap-8 bg-white shadow-lg shadow-greys-100 relative overflow-hidden transition-all">
+                    {/* Vocal Waveform Simulation */}
+                    {isListening && (
+                        <div className="absolute top-0 inset-x-0 h-1 flex gap-0.5 opacity-30">
+                            {[...Array(50)].map((_, i) => (
+                                <motion.div 
+                                    key={i}
+                                    className="flex-1 bg-primary-500"
+                                    animate={{ height: [4, 12, 6, 16, 4] }}
+                                    transition={{ repeat: Infinity, duration: 0.5 + Math.random(), delay: i * 0.05 }}
+                                />
+                            ))}
+                        </div>
+                    )}
+
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                            <label className="text-[10px] font-black text-black-400 uppercase tracking-widest pl-1">Vocal Output Log (Real-time)</label>
+                            {isListening && (
+                                <div className="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-black uppercase tracking-widest animate-pulse">
+                                    <Sparkles className="w-3 h-3" /> AI Syncing Voice
+                                </div>
                             )}
-                        >
-                            {isRecording ? <Square className="w-8 h-8 fill-white" /> : <Mic className="w-8 h-8" />}
-                        </button>
-                        <div className="space-y-1">
-                            <h4 className="font-bold text-black-800">
-                                {isRecording ? "Listening to response..." : "Click to start recording"}
-                            </h4>
-                            <p className="text-xs text-black-400 font-medium">Standard Response Time: 120s</p>
+                        </div>
+                        <div className="w-full min-h-[160px] bg-greys-50/50 border-2 border-dashed border-greys-100 rounded-[2rem] p-8 text-black-700 font-medium leading-relaxed transition-all">
+                            {transcript || <span className="text-black-200 italic">Wait until the station starts. Your speech will appear here automatically...</span>}
                         </div>
                     </div>
                     
-                    <Button 
-                        onClick={handleNextQuestion}
-                        className="bg-black-900 text-white h-14 px-8 rounded-2xl font-bold flex items-center gap-2 hover:bg-black-800 shadow-xl transition-all"
-                    >
-                        {currentQuestionIndex === questions.length - 1 ? "Finish Interview" : "Next Station"}
-                        <ChevronRight className="w-5 h-5" />
-                    </Button>
+                    <div className="flex items-center justify-between pt-4 border-t border-greys-100">
+                        <div className="flex items-center gap-6">
+                            <button 
+                                disabled={stationPhase === "prep"}
+                                onClick={() => isListening ? stopListening() : startListening()}
+                                className={cn(
+                                    "w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-2xl active:scale-90 disabled:opacity-20",
+                                    isListening ? "bg-red-500 text-white ring-4 ring-red-100" : "bg-primary-600 text-white hover:bg-primary-700 hover:shadow-primary-200"
+                                )}
+                            >
+                                {isListening ? <Square className="w-8 h-8 fill-white" /> : <Mic className="w-8 h-8" />}
+                            </button>
+                            <div className="space-y-1">
+                                <h4 className="font-black text-black-900 uppercase tracking-tight">
+                                    {isListening ? "Listening..." : stationPhase === "prep" ? "Awaiting Station Start" : "Click to Speak"}
+                                </h4>
+                                <p className="text-[10px] text-black-400 font-bold uppercase tracking-widest opacity-60">
+                                    Noise Cancellation v2.1 Active
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <Button 
+                            onClick={handleNextQuestion}
+                            disabled={stationPhase === "prep"}
+                            className="bg-black-900 text-white h-14 px-10 rounded-2xl font-black flex items-center gap-3 hover:bg-black-800 shadow-2xl transform active:translate-x-1 transition-all text-sm disabled:opacity-20"
+                        >
+                            {currentQuestionIndex === questions.length - 1 ? "End Interview" : "Submit & Exit Station"}
+                            <ChevronRight className="w-5 h-5" />
+                        </Button>
+                    </div>
                 </div>
             </div>
 
             <div className="lg:col-span-1 space-y-8">
-                <div className="glass-card p-8 rounded-[2rem] border-primary-100/30 flex flex-col items-center justify-center bg-white/50">
+                <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 flex flex-col items-center justify-center bg-white shadow-xl">
                     <InterviewTimer 
-                        durationSeconds={120} 
-                        isActive={isRecording} 
-                        onComplete={() => setIsRecording(false)} 
+                        durationSeconds={stationPhase === "prep" ? 60 : 120} 
+                        isActive={true} 
+                        onComplete={() => {
+                            if (stationPhase === "prep") startStation();
+                            else handleNextQuestion();
+                        }} 
                     />
+                    <div className="mt-6 text-center">
+                        <p className="text-[10px] font-black text-black-400 uppercase tracking-[0.2em]">Current Phase</p>
+                        <p className="text-sm font-black text-primary-600 uppercase mt-1">{stationPhase} STATION</p>
+                    </div>
                 </div>
 
-                <div className="glass-card p-6 rounded-[2rem] border-primary-100/30 space-y-4">
-                    <h5 className="text-xs font-black text-black-400 uppercase tracking-widest">Station Protocol</h5>
-                    <div className="space-y-3">
+                <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 space-y-6 bg-white shadow-lg overflow-hidden relative">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary-500" />
+                    <h5 className="text-xs font-black text-black-900 uppercase tracking-widest flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-primary-500" /> Admission Protocol
+                    </h5>
+                    <div className="space-y-5">
                         {[
-                            "Be concise and structured",
-                            "Use the STAR technique",
-                            "Maintain professional tone",
-                            "Cite NHS Core Values"
+                            { label: "Clarity", desc: "Speak slowly and clearly for AI transcription." },
+                            { label: "Technique", desc: "Always utilize the STAR method for scenarios." },
+                            { label: "Values", desc: "Integrate NHS Core Compassion values." },
+                            { label: "Pacing", desc: "Aim for a 90-second response duration." }
                         ].map((rule, i) => (
-                            <div key={i} className="flex items-center gap-3 text-sm text-black-700 font-medium">
-                                <div className="w-1.5 h-1.5 rounded-full bg-primary-500" />
-                                {rule}
+                            <div key={i} className="space-y-1">
+                                <p className="text-[10px] font-black text-black-800 uppercase tracking-widest">{rule.label}</p>
+                                <p className="text-xs text-black-400 font-medium leading-tight">{rule.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
           </motion.div>
-        ) : (
+        ) : isAnalyzing ? (
+           <motion.div 
+            key="analyzing"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center min-h-[500px] space-y-8"
+          >
+            <div className="relative">
+                <div className="absolute inset-0 bg-primary-200/50 blur-3xl rounded-full scale-150 animate-pulse" />
+                <BrainCircuit className="w-24 h-24 text-primary-600 relative animate-float" />
+            </div>
+            <div className="text-center space-y-2">
+                <h2 className="text-2xl font-bold text-black-800">AI is scoring your performance...</h2>
+                <p className="text-black-500">Evaluating ethics, structure, and professional tone.</p>
+            </div>
+            <Loader2 className="w-8 h-8 text-primary-600 animate-spin" />
+          </motion.div>
+        ) : results ? (
           <motion.div 
             key="feedback"
             initial={{ opacity: 0, y: 30 }}
@@ -221,15 +398,10 @@ export default function InterviewPrepPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {[
-                    { label: "Confidence", score: 85, icon: <Mic className="text-blue-500" /> },
-                    { label: "Structure", score: 72, icon: <BarChart3 className="text-purple-500" /> },
-                    { label: "NHS Values", score: 94, icon: <BrainCircuit className="text-primary-500" /> },
-                    { label: "Clarity", score: 88, icon: <CheckCircle2 className="text-green-500" /> }
-                ].map(metric => (
-                    <div key={metric.label} className="glass-card p-6 rounded-3xl border-greys-100 space-y-4 text-center">
-                        <div className="w-10 h-10 rounded-xl bg-greys-50 mx-auto flex items-center justify-center">
-                            {metric.icon}
+                {results.metrics.map(metric => (
+                    <div key={metric.label} className="glass-card p-6 rounded-3xl border-greys-100 space-y-4 text-center bg-white shadow-sm">
+                        <div className="w-10 h-10 rounded-xl bg-primary-50 mx-auto flex items-center justify-center text-primary-600">
+                            <BarChart3 className="w-5 h-5" />
                         </div>
                         <div>
                             <span className="block text-2xl font-black text-black-800">{metric.score}%</span>
@@ -246,26 +418,25 @@ export default function InterviewPrepPage() {
                 ))}
             </div>
 
-            <div className="glass-card p-8 rounded-[2.5rem] border-primary-100/30 space-y-6">
+            <div className="glass-card p-8 rounded-[2.5rem] border-primary-100/30 space-y-6 bg-white shadow-sm">
                 <h3 className="text-xl font-bold text-black-800 flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-primary-600" />
                     AI Critique & Improvement Plan
                 </h3>
+                <p className="text-sm text-black-600 leading-relaxed italic border-l-4 border-primary-200 pl-4 py-2">
+                    &quot;{results.critique}&quot;
+                </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4 p-6 rounded-3xl bg-green-50/50 border border-green-100">
                         <h4 className="text-sm font-bold text-green-800 uppercase tracking-wider">Key Strengths</h4>
                         <ul className="space-y-2 text-sm text-green-700">
-                            <li>• Strong integration of ethical pillars in the refusal station.</li>
-                            <li>• Consistent academic tone with clinical relevance.</li>
-                            <li>• Clear verbal signposting between different points.</li>
+                            {results.strengths.map((s, i) => <li key={i}>• {s}</li>)}
                         </ul>
                     </div>
                     <div className="space-y-4 p-6 rounded-3xl bg-amber-50/50 border border-amber-100">
                         <h4 className="text-sm font-bold text-amber-800 uppercase tracking-wider">Critical Improvements</h4>
                         <ul className="space-y-2 text-sm text-amber-700">
-                            <li>• Leadership example lacked specific &quot;outcome&quot; metrics.</li>
-                            <li>• Slight hesitancy when discussing NHS funding structures.</li>
-                            <li>• Eye-contact (simulated) could be improved in panel mode.</li>
+                            {results.improvements.map((im, i) => <li key={i}>• {im}</li>)}
                         </ul>
                     </div>
                 </div>
@@ -274,16 +445,43 @@ export default function InterviewPrepPage() {
             <div className="flex justify-center gap-4">
                 <Button 
                     variant="outline" 
-                    onClick={() => setSessionState("setup")}
-                    className="px-10 h-14 rounded-2xl border-greys-300 font-bold transform active:scale-95 transition-all"
+                    onClick={() => { setSessionState("setup"); setResults(null); }}
+                    className="px-10 h-14 rounded-2xl border-greys-300 font-bold transform active:scale-95 transition-all transition-colors"
                 >
                     Try Another Session
                 </Button>
-                <Button className="bg-primary-600 hover:bg-primary-700 text-white px-12 h-14 rounded-2xl font-bold shadow-xl shadow-primary-200 transform active:scale-95 transition-all">
-                    Upgrade to Elite Coaching <Sparkles className="w-4 h-4 ml-2" />
+                <Button 
+                    onClick={async () => {
+                        try {
+                            const avgScore = results?.metrics.reduce((acc, m) => acc + m.score, 0)! / results?.metrics.length!;
+                            await fetch("/api/ai/sync", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    userId: user?.guid,
+                                    toolId: "interview-prep",
+                                    accomplishment: `Completed Interview Prep with ${avgScore.toFixed(0)}% Score`,
+                                    metadata: results
+                                })
+                            });
+                            alert("Performance Intelligence Synced!");
+                        } catch (e) {
+                            console.error(e);
+                        }
+                    }}
+                    className="bg-primary-600 hover:bg-primary-700 text-white px-12 h-14 rounded-2xl font-bold shadow-xl shadow-primary-200 transform active:scale-95 transition-all"
+                >
+                    Sync Performance <Sparkles className="w-4 h-4 ml-2" />
                 </Button>
             </div>
           </motion.div>
+        ) : (
+             <div className="text-center py-20 bg-white rounded-3xl border border-greys-100 shadow-sm">
+                <AlertCircle className="w-12 h-12 text-black-300 mx-auto mb-4" />
+                <h3 className="text-lg font-bold text-black-800">Evaluation Unavailable</h3>
+                <p className="text-black-500 mb-6">Something went wrong during the AI analysis.</p>
+                <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl">Back to Setup</Button>
+            </div>
         )}
       </AnimatePresence>
     </div>

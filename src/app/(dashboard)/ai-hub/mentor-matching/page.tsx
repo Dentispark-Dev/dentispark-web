@@ -16,22 +16,41 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 import { MatchingWizard } from "@/src/features/ai-hub/components/matching-wizard";
+import { useField } from "@/src/providers/field-provider";
 import { MentorMatchCard } from "@/src/features/ai-hub/components/mentor-match-card";
 
 export default function MentorMatchingPage() {
+  const { activeField } = useField();
   const [isMatching, setIsMatching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [selectedUnis, setSelectedUnis] = useState<string[]>([]);
   const [selectedFocus, setSelectedFocus] = useState<string[]>([]);
+  const [matchingInsights, setMatchingInsights] = useState<any>(null);
 
   const universities = ["King's College London", "UCL", "University of Manchester", "Queen Mary", "Bristol Dental School", "Glasgow Dental School"];
   const focusAreas = ["Personal Statement", "Manual Dexterity", "UCAT Prep", "MMI Interview", "Mock Interview", "NHS Values"];
 
   const handleComplete = async () => {
     setIsMatching(true);
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    setIsMatching(false);
-    setShowResults(true);
+    try {
+      const response = await fetch("/api/ai/mentor-match", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          targetUniversities: selectedUnis, 
+          focusAreas: selectedFocus,
+          field: activeField 
+        }),
+      });
+      const data = await response.json();
+      setMatchingInsights(data);
+      setShowResults(true);
+    } catch (error) {
+      console.error(error);
+      setShowResults(true); // Fallback to mocks on error
+    } finally {
+      setIsMatching(false);
+    }
   };
 
   const steps = [
@@ -195,6 +214,53 @@ export default function MentorMatchingPage() {
                 <h2 className="text-4xl font-black text-black-900 tracking-tight">Your Custom Mentor Shortlist</h2>
                 <p className="text-black-500 max-w-xl mx-auto">Our AI has analyzed 100+ data points to match you with mentors who specifically excel in your target areas.</p>
             </div>
+
+            {matchingInsights && (
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+                >
+                    <div className="glass-card p-10 rounded-[2.5rem] bg-gradient-to-br from-primary-50 to-white border-primary-100 flex flex-col gap-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-2xl bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-200">
+                                <BrainCircuit className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-black-800">Matching Intelligence</h3>
+                                <p className="text-xs text-black-500 uppercase tracking-widest font-black">Strategic Logic</p>
+                            </div>
+                        </div>
+                        <p className="text-sm font-medium text-black-600 leading-relaxed italic border-l-4 border-primary-500 pl-4">
+                            "{matchingInsights.matchingLogic}"
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {matchingInsights.idealMentorDNA.map((dna: string, i: number) => (
+                                <span key={i} className="px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-[10px] font-black uppercase tracking-tighter">
+                                    {dna}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="bg-black-900 p-8 rounded-[2rem] text-white space-y-4 shadow-xl">
+                            <div className="flex items-center gap-2 text-primary-400 font-bold text-xs uppercase tracking-widest">
+                                <Sparkles className="w-4 h-4" /> Consultation Strategy
+                            </div>
+                            <p className="text-sm text-greys-100 leading-relaxed font-medium">{matchingInsights.consultationFocus}</p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {matchingInsights.strategicTips.map((tip: string, i: number) => (
+                                <div key={i} className="p-4 bg-white border border-greys-100 rounded-2xl flex flex-col items-center text-center gap-2">
+                                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                    <span className="text-[10px] font-bold text-black-600 leading-tight">{tip}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+            )}
 
             {/* Match Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

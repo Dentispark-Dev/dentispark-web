@@ -83,9 +83,7 @@ export function LatestBookingsSection({
   };
 
   const handleViewProfile = (studentId: string) => {
-    console.log("View profile for student:", studentId);
     router.push(`/mentor/student-matching/${studentId}`);
-    // TODO: Implement view profile logic
   };
 
   return (

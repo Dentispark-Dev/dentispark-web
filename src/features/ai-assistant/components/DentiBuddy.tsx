@@ -4,16 +4,27 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, Send, Bot, Loader2, Zap, MessageSquare } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
-import { aiService, AIMessage } from "../services/ai-service";
+import { useChat } from "ai/react";
+import { useField } from "@/src/providers/field-provider";
 
 export function DentiBuddy() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<AIMessage[]>([
-    { role: 'assistant', content: "Hi! I'm Denti-Buddy, your AI Admission Assistant. How can I help you supercharge your dental application today?" }
-  ]);
-  const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  
+  // Get the active field from our global multi-field provider
+  const { activeField, activeFieldLabel, activeFieldIcon } = useField();
+
+  const { messages, input, handleInputChange, handleSubmit, isLoading, append } = useChat({
+    api: "/api/chat",
+    body: { field: activeField },
+    initialMessages: [
+      {
+        id: "welcome",
+        role: "assistant",
+        content: `Hi! I'm your AI Admission Assistant. How can I help you supercharge your ${activeFieldLabel} application today?`,
+      },
+    ],
+  });
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -21,29 +32,10 @@ export function DentiBuddy() {
     }
   }, [messages]);
 
-  const handleSend = async (text: string) => {
-    if (!text.trim() || isLoading) return;
-
-    const userMsg: AIMessage = { role: 'user', content: text };
-    const newChat = [...messages, userMsg];
-    setMessages(newChat);
-    setInputValue("");
-    setIsLoading(true);
-
-    try {
-      const response = await aiService.sendMessage(newChat);
-      setMessages([...newChat, { role: 'assistant', content: response.content }]);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const quickActions = [
     { label: "MMI Tips", icon: Zap },
-    { label: "UCAT Strategy", icon: Sparkles },
-    { label: "PS Review", icon: MessageSquare }
+    { label: "Personal Statement Review", icon: MessageSquare },
+    { label: "Application Strategy", icon: Sparkles },
   ];
 
   return (
@@ -57,9 +49,9 @@ export function DentiBuddy() {
       >
         {isOpen ? <X className="h-8 w-8" /> : <Bot className="h-8 w-8" />}
         <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="absolute -top-1 -right-1 h-4 w-4 bg-emerald-400 rounded-full border-2 border-white"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute -top-1 -right-1 h-4 w-4 bg-emerald-400 rounded-full border-2 border-white"
         />
       </motion.button>
 
@@ -74,36 +66,38 @@ export function DentiBuddy() {
           >
             {/* Header */}
             <div className="p-6 bg-gradient-to-r from-indigo-600/10 to-primary-600/10 border-b border-white/40 flex items-center gap-4">
-              <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-primary-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-200">
-                <Bot className="h-6 w-6" />
+              <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-primary-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-200 text-xl">
+                {activeFieldIcon}
               </div>
               <div>
-                <h3 className="text-gray-900 font-bold tracking-tight">Denti-Buddy AI</h3>
+                <h3 className="text-gray-900 font-bold tracking-tight">AI {activeFieldLabel} Hub</h3>
                 <div className="flex items-center gap-1.5">
                   <div className="h-2 w-2 bg-emerald-500 rounded-full animate-pulse" />
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Always Online</span>
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Powered by Groq</span>
                 </div>
               </div>
             </div>
 
             {/* Messages */}
-            <div 
+            <div
               ref={scrollRef}
               className="flex-1 overflow-y-auto p-6 space-y-4 scroll-smooth"
             >
               {messages.map((msg, idx) => (
                 <motion.div
-                  initial={{ opacity: 0, x: msg.role === 'user' ? 20 : -20 }}
+                  initial={{ opacity: 0, x: msg.role === "user" ? 20 : -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  key={idx}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  key={msg.id || idx}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`max-w-[85%] p-4 rounded-2xl ${
-                    msg.role === 'user' 
-                      ? 'bg-primary-600 text-white shadow-lg shadow-primary-100 rounded-tr-none' 
-                      : 'bg-white text-gray-700 shadow-sm border border-gray-100 rounded-tl-none'
-                  }`}>
-                    <p className="text-sm leading-relaxed">{msg.content}</p>
+                  <div
+                    className={`max-w-[85%] p-4 rounded-2xl ${
+                      msg.role === "user"
+                        ? "bg-primary-600 text-white shadow-lg shadow-primary-100 rounded-tr-none"
+                        : "bg-white text-gray-700 shadow-sm border border-gray-100 rounded-tl-none"
+                    }`}
+                  >
+                    <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
                   </div>
                 </motion.div>
               ))}
@@ -111,7 +105,7 @@ export function DentiBuddy() {
                 <div className="flex justify-start">
                   <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 rounded-tl-none flex items-center gap-2">
                     <Loader2 className="h-4 w-4 text-primary-500 animate-spin" />
-                    <span className="text-xs font-medium text-gray-400">Denti-Buddy is thinking...</span>
+                    <span className="text-xs font-medium text-gray-400">Thinking...</span>
                   </div>
                 </div>
               )}
@@ -122,7 +116,7 @@ export function DentiBuddy() {
               {quickActions.map((action, i) => (
                 <button
                   key={i}
-                  onClick={() => handleSend(action.label)}
+                  onClick={() => append({ role: "user", content: `Can you help me with: ${action.label}` })}
                   className="flex items-center gap-2 px-4 py-2 bg-white/60 hover:bg-white border border-gray-100 rounded-full text-xs font-bold text-gray-600 transition-all hover:shadow-md hover:text-primary-600 shrink-0"
                 >
                   <action.icon className="h-3 w-3" />
@@ -132,20 +126,17 @@ export function DentiBuddy() {
             </div>
 
             {/* Input Footer */}
-            <form 
-              onSubmit={(e) => { e.preventDefault(); handleSend(inputValue); }}
-              className="p-6 pt-2"
-            >
+            <form onSubmit={handleSubmit} className="p-6 pt-2">
               <div className="relative flex items-center">
                 <Input
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  value={input}
+                  onChange={handleInputChange}
                   placeholder="Ask anything about admissions..."
                   className="bg-white border-gray-100 h-14 pl-5 pr-14 rounded-2xl shadow-inner border-0 ring-1 ring-gray-100 focus-visible:ring-primary-400 transition-all placeholder:text-gray-300 font-medium"
                 />
                 <button
                   type="submit"
-                  disabled={!inputValue.trim() || isLoading}
+                  disabled={!input.trim() || isLoading}
                   className="absolute right-2 h-10 w-10 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white rounded-xl flex items-center justify-center transition-all shadow-lg shadow-primary-100"
                 >
                   <Send className="h-4 w-4" />
@@ -158,3 +149,4 @@ export function DentiBuddy() {
     </>
   );
 }
+
