@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, Send, Bot, Loader2, Zap, MessageSquare } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
 import { useField } from "@/src/providers/field-provider";
 
 export function DentiBuddy() {
@@ -14,7 +14,8 @@ export function DentiBuddy() {
   // Get the active field from our global multi-field provider
   const { activeField, activeFieldLabel, activeFieldIcon } = useField();
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, append } = useChat({
+  const [input, setInput] = useState("");
+  const { messages, sendMessage, status, clearError } = useChat({
     api: "/api/chat",
     body: { field: activeField },
     initialMessages: [
@@ -25,6 +26,26 @@ export function DentiBuddy() {
       },
     ],
   });
+
+  const isLoading = status === "submitted" || status === "streaming";
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input;
+    setInput("");
+    
+    try {
+      await sendMessage({ text: userMessage });
+    } catch (err) {
+      console.error("Failed to send message:", err);
+    }
+  };
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -97,7 +118,9 @@ export function DentiBuddy() {
                         : "bg-white text-gray-700 shadow-sm border border-gray-100 rounded-tl-none"
                     }`}
                   >
-                    <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
+                    <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {msg.parts.map((part, i) => part.type === "text" ? part.text : null)}
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -116,7 +139,7 @@ export function DentiBuddy() {
               {quickActions.map((action, i) => (
                 <button
                   key={i}
-                  onClick={() => append({ role: "user", content: `Can you help me with: ${action.label}` })}
+                  onClick={() => sendMessage({ text: `Can you help me with: ${action.label}` })}
                   className="flex items-center gap-2 px-4 py-2 bg-white/60 hover:bg-white border border-gray-100 rounded-full text-xs font-bold text-gray-600 transition-all hover:shadow-md hover:text-primary-600 shrink-0"
                 >
                   <action.icon className="h-3 w-3" />

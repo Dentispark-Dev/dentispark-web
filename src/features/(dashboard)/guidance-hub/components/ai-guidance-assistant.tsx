@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useChat, Message } from "ai/react";
+import { useChat } from "@ai-sdk/react";
+import { Message } from "ai";
 import { 
   Sparkles, 
   Send, 
@@ -23,7 +24,8 @@ export function AIGuidanceAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+  const [input, setInput] = useState("");
+  const { messages, sendMessage, status, clearError } = useChat({
     api: "/api/ai/guide-assistance",
     body: { field: activeField },
     initialMessages: [
@@ -34,6 +36,26 @@ export function AIGuidanceAssistant() {
       }
     ]
   });
+
+  const isLoading = status === "submitted" || status === "streaming";
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input;
+    setInput("");
+    
+    try {
+      await sendMessage({ text: userMessage });
+    } catch (err) {
+      console.error("Failed to send message:", err);
+    }
+  };
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -117,7 +139,7 @@ export function AIGuidanceAssistant() {
                                 ? "bg-black-800 text-white rounded-tr-none" 
                                 : "bg-white text-black-700 border border-primary-50 rounded-tl-none"
                         )}>
-                            {m.content}
+                            {m.parts.map((part, i) => part.type === "text" ? part.text : null)}
                         </div>
                     </motion.div>
                 ))}
