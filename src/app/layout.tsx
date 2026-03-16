@@ -61,7 +61,11 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <ReactQueryProvider>
           <I18nProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <FieldProvider>
+                {children}
+              </FieldProvider>
+            </AuthProvider>
           </I18nProvider>
         </ReactQueryProvider>
         <ModalProvider />
