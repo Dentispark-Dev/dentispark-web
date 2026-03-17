@@ -24,15 +24,22 @@ import { cn } from "@/src/lib/utils";
 export default function WarRoomPage() {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
         const res = await fetch("/api/ai/war-room");
+        if (!res.ok) {
+          throw new Error(res.statusText || "Failed to fetch war-room data");
+        }
         const json = await res.json();
         setData(json);
-      } catch (e) {
+      } catch (e: any) {
         console.error(e);
+        setError(e.message || "Failed to aggregate war-room intelligence. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -52,6 +59,26 @@ export default function WarRoomPage() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-6 max-w-md mx-auto text-center">
+        <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-red-600 mb-4">
+            <AlertCircle className="w-10 h-10" />
+        </div>
+        <h2 className="text-2xl font-black text-black-900">Command Center Offline</h2>
+        <p className="text-black-500 font-medium">{error}</p>
+        <Button 
+            onClick={() => window.location.reload()}
+            className="bg-primary-600 hover:bg-primary-700 text-white px-8 h-12 rounded-xl font-bold shadow-lg"
+        >
+            Retry Connection
+        </Button>
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
   return (
     <div className="max-w-7xl mx-auto space-y-10 pb-20">
       {/* War-Room Header */}
@@ -68,7 +95,7 @@ export default function WarRoomPage() {
         <div className="flex items-center gap-4 bg-white p-2 rounded-3xl border border-greys-100 shadow-sm">
             <div className="px-6 py-4 rounded-2xl bg-black-900 text-white text-center">
                 <span className="block text-[8px] font-black uppercase tracking-[0.3em] opacity-50 mb-1">Combat Readiness</span>
-                <span className="text-3xl font-black">{data.readinessScore}%</span>
+                <span className="text-3xl font-black">{data?.readinessScore}%</span>
             </div>
             <div className="pr-6">
                 <span className="block text-[8px] font-black uppercase tracking-[0.3em] text-black-400 mb-1">Status</span>
@@ -96,7 +123,7 @@ export default function WarRoomPage() {
                             <p className="text-sm text-black-500 font-medium">Visualization of your application balance across critical axes.</p>
                         </div>
                         <div className="space-y-4">
-                            {data.radarData.map((item: any) => (
+                            {data?.radarData?.map((item: any) => (
                                 <div key={item.subject} className="space-y-1.5">
                                     <div className="flex justify-between text-[10px] font-black uppercase tracking-widest px-1">
                                         <span className="text-black-400">{item.subject}</span>
@@ -114,7 +141,7 @@ export default function WarRoomPage() {
                         </div>
                     </div>
                     <div className="flex-1 min-h-[300px] flex items-center justify-center bg-greys-50/50 rounded-[2.5rem] border border-greys-100/50">
-                        <ApplicationRadar data={data.radarData} />
+                        <ApplicationRadar data={data?.radarData || []} />
                     </div>
                 </div>
             </div>
@@ -161,7 +188,7 @@ export default function WarRoomPage() {
                     Strategic Directives
                 </h3>
                 <div className="space-y-4">
-                    {data.topDirectives.map((directive: string, i: number) => (
+                    {data?.topDirectives?.map((directive: string, i: number) => (
                         <div key={i} className="p-4 rounded-2xl bg-greys-50 border border-greys-100 flex gap-4 items-start group hover:bg-white hover:shadow-lg transition-all">
                             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-[10px] font-black text-primary-600 shadow-sm shrink-0 mt-1">
                                 0{i+1}
@@ -174,10 +201,9 @@ export default function WarRoomPage() {
                 </div>
             </div>
 
-            {/* School Probability Cards */}
             <div className="space-y-4">
                 <h3 className="text-xs font-black text-black-400 uppercase tracking-widest pl-2">Admissions Radar</h3>
-                {data.schoolBriefings.map((brief: any, i: number) => (
+                {data?.schoolBriefings?.map((brief: any, i: number) => (
                     <div key={i} className="glass-card p-6 rounded-[2rem] bg-white border border-greys-100 hover:border-primary-300 transition-all flex items-center justify-between group shadow-sm">
                         <div className="space-y-0.5">
                             <h5 className="font-black text-black-800 text-sm">{brief.name}</h5>

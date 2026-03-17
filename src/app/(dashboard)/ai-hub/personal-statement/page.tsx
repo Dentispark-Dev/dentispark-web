@@ -30,13 +30,15 @@ export default function PersonalStatementReviewer() {
   const [inputMode, setInputMode] = useState<"text" | "upload">("text");
   const [text, setText] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [results, setResults] = useState<{ score: number, metrics: {name: string, score: number, feedback: string}[], suggestions: string[] } | null>(null);
+   const [results, setResults] = useState<{ score: number, metrics: {name: string, score: number, feedback: string}[], suggestions: string[] } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleStartAnalysis = async () => {
     if (inputMode === "text" && text.length < 100) return;
     
     setIsAnalyzing(true);
+    setError(null);
     try {
       const response = await fetch("/api/ai/personal-statement", {
         method: "POST",
@@ -44,12 +46,15 @@ export default function PersonalStatementReviewer() {
         body: JSON.stringify({ text, field: activeField }),
       });
 
-      if (!response.ok) throw new Error("Analysis failed");
+      if (!response.ok) {
+        throw new Error(response.statusText || "Analysis failed");
+      }
 
       const data = await response.json();
       setResults(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setError(error.message || "Failed to analyze personal statement. Please try again.");
     } finally {
       setIsAnalyzing(false);
     }
@@ -143,6 +148,13 @@ export default function PersonalStatementReviewer() {
                     Analyze Application
                 </Button>
             </div>
+
+            {error && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-600">
+                    <AlertCircle className="w-5 h-5 shrink-0" />
+                    <p className="text-sm font-medium">{error}</p>
+                </div>
+            )}
           </motion.div>
         ) : isAnalyzing ? (
           <motion.div 
@@ -184,12 +196,12 @@ export default function PersonalStatementReviewer() {
           >
             {/* Score Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <ScoreGauge score={results!.score} />
+                {results && <ScoreGauge score={results.score} />}
 
                 <div className="md:col-span-2 space-y-4">
                     <h3 className="text-lg font-bold text-black-800">Category Breakdown</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {results!.metrics.map((m: { name: string, score: number, feedback: string }) => (
+                        {results?.metrics.map((m: { name: string, score: number, feedback: string }) => (
                             <FeedbackCard 
                                 key={m.name} 
                                 name={m.name} 
@@ -208,7 +220,7 @@ export default function PersonalStatementReviewer() {
                     Key AI Suggestions
                 </h3>
                 <div className="space-y-4">
-                    {results!.suggestions.map((s: string, i: number) => (
+                    {results?.suggestions.map((s: string, i: number) => (
                         <div key={i} className="flex gap-4 p-4 rounded-xl bg-primary-50 border border-primary-100 items-start">
                             <div className="h-6 w-6 rounded-full bg-primary-200 text-primary-700 flex items-center justify-center shrink-0 font-bold text-xs">
                                 {i + 1}

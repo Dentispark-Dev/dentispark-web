@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronLeft, Sparkles } from "lucide-react";
+import { ChevronRight, ChevronLeft, Sparkles, Command } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 
 interface Step {
@@ -14,14 +14,14 @@ interface Step {
 interface MatchingWizardProps {
   steps: Step[];
   onComplete: () => void;
+  currentStep: number;
+  onStepChange: (step: number) => void;
 }
 
-export function MatchingWizard({ steps, onComplete }: MatchingWizardProps) {
-  const [currentStep, setCurrentStep] = useState(0);
-
+export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }: MatchingWizardProps) {
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+      onStepChange(currentStep + 1);
     } else {
       onComplete();
     }
@@ -29,73 +29,93 @@ export function MatchingWizard({ steps, onComplete }: MatchingWizardProps) {
 
   const handleBack = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+      onStepChange(currentStep - 1);
     }
   };
 
+  // Keyboard support for "Enter" to continue
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        handleNext();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentStep]);
+
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
-      {/* Progress Indicator */}
-      <div className="flex gap-2 justify-center">
-        {steps.map((_, i) => (
-          <div 
-            key={i} 
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              i === currentStep ? "w-12 bg-primary-500" : 
-              i < currentStep ? "w-6 bg-primary-200" : "w-6 bg-greys-100"
-            }`}
-          />
-        ))}
+    <div className="space-y-12">
+      {/* Step Indicator */}
+      <div className="flex items-center gap-4">
+        <span className="text-primary-500 font-black text-xl italic tracking-tighter flex items-center gap-2">
+            {currentStep + 1} <ChevronRight className="w-4 h-4 opacity-50" />
+        </span>
+        <div className="flex gap-1.5 flex-1 max-w-[200px]">
+            {steps.map((_, i) => (
+                <motion.div 
+                    key={i}
+                    animate={{ 
+                        backgroundColor: i <= currentStep ? "rgba(20, 184, 166, 1)" : "rgba(255, 255, 255, 0.1)",
+                        width: i === currentStep ? "40px" : "12px"
+                    }}
+                    className="h-1 rounded-full"
+                />
+            ))}
+        </div>
       </div>
 
-      {/* Content Area */}
-      <div className="glass-card p-10 rounded-[2.5rem] border-primary-100 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Sparkles className="w-32 h-32 text-primary-600" />
+      <AnimatePresence mode="wait">
+        <motion.div
+           key={currentStep}
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           exit={{ opacity: 0, y: -20 }}
+           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+           className="space-y-8"
+        >
+          <div className="space-y-4">
+            <h2 className="text-5xl lg:text-6xl font-black text-white tracking-tight leading-none">
+              {steps[currentStep].title}
+            </h2>
+            <p className="text-xl text-white/50 leading-relaxed font-medium max-w-lg">
+              {steps[currentStep].description}
+            </p>
+          </div>
+
+          <div className="py-2">
+            {steps[currentStep].component}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Navigation & Shortcuts */}
+      <div className="flex flex-col gap-6 pt-4 border-t border-white/5">
+        <div className="flex items-center gap-4">
+            <Button 
+                onClick={handleNext}
+                className="bg-primary-600 hover:bg-primary-500 text-white px-12 h-16 rounded-2xl font-black text-xl shadow-[0_0_30px_rgba(20,184,166,0.2)] transform active:scale-95 transition-all group"
+            >
+                {currentStep === steps.length - 1 ? "Start Analysis" : "OK"} 
+                <ChevronRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            
+            <div className="hidden md:flex items-center gap-2 text-white/30 text-[10px] font-bold uppercase tracking-widest">
+                press <span className="px-1.5 py-0.5 border border-white/20 rounded-md flex items-center gap-1"><Command className="w-2 h-2" /> ENTER</span>
+            </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6 relative z-10"
-          >
-            <div className="space-y-2">
-              <h2 className="text-3xl font-black text-black-800 tracking-tight">
-                {steps[currentStep].title}
-              </h2>
-              <p className="text-black-500 leading-relaxed font-medium">
-                {steps[currentStep].description}
-              </p>
-            </div>
-
-            <div className="pt-4">
-              {steps[currentStep].component}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation */}
-      <div className="flex items-center justify-between px-4">
-        <Button 
-          variant="ghost" 
-          onClick={handleBack}
-          disabled={currentStep === 0}
-          className="text-black-400 hover:text-black-800 flex items-center gap-2"
-        >
-          <ChevronLeft className="w-4 h-4" /> Back
-        </Button>
-
-        <Button 
-          onClick={handleNext}
-          className="bg-black-900 border-2 border-black-900 text-white hover:bg-black-800 px-8 h-12 rounded-2xl font-bold flex items-center gap-2 shadow-xl hover:translate-y-[-2px] transition-all"
-        >
-          {currentStep === steps.length - 1 ? "Find My Mentor" : "Continue"}
-          <ChevronRight className="w-4 h-4" />
-        </Button>
+        <div className="flex items-center gap-6">
+            <button 
+                onClick={handleBack}
+                disabled={currentStep === 0}
+                className="text-white/40 hover:text-white font-bold text-sm disabled:opacity-0 transition-all flex items-center gap-2"
+            >
+                <ChevronLeft className="w-4 h-4" /> Back
+            </button>
+            <span className="w-1 h-1 bg-white/10 rounded-full" />
+            <p className="text-[10px] text-white/20 font-medium uppercase tracking-[0.3em]">Phase {currentStep + 1} of {steps.length}</p>
+        </div>
       </div>
     </div>
   );

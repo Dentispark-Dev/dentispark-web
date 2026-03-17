@@ -10,7 +10,8 @@ import {
   BookOpen, 
   Target,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,19 +28,27 @@ export default function StudyPlannerPage() {
     targetScore: ""
   });
   const [plan, setPlan] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
     setIsGenerating(true);
+    setError(null);
     try {
       const response = await fetch("/api/ai/study-planner", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, field: activeField }),
       });
+
+      if (!response.ok) {
+        throw new Error(response.statusText || "Plan generation failed");
+      }
+
       const data = await response.json();
       setPlan(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setError(error.message || "Failed to generate study plan. Please try again.");
     } finally {
       setIsGenerating(false);
     }
@@ -109,6 +118,13 @@ export default function StudyPlannerPage() {
             >
                 Generate 90-Day Plan <ChevronRight className="ml-2 w-5 h-5" />
             </Button>
+
+            {error && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-600">
+                    <AlertCircle className="w-5 h-5 shrink-0" />
+                    <p className="text-sm font-medium">{error}</p>
+                </div>
+            )}
           </motion.div>
         ) : isGenerating ? (
           <motion.div 
@@ -139,7 +155,7 @@ export default function StudyPlannerPage() {
           >
             {/* Timeline Phases */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {plan.phases.map((phase: any, i: number) => (
+                {plan?.phases?.map((phase: any, i: number) => (
                     <div key={i} className="glass-card p-6 rounded-3xl bg-white border-primary-100/20 shadow-sm relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                             <span className="text-6xl font-black">{i + 1}</span>
@@ -163,7 +179,7 @@ export default function StudyPlannerPage() {
                 <div className="lg:col-span-2 glass-card p-8 rounded-[2.5rem] bg-white border border-greys-100 shadow-sm space-y-6">
                     <h3 className="text-xl font-bold text-black-800">Representative Weekly Flow</h3>
                     <div className="space-y-3">
-                        {plan.weeklySchedule.map((day: any, i: number) => (
+                        {plan?.weeklySchedule?.map((day: any, i: number) => (
                             <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-greys-50 transition-colors border border-transparent hover:border-greys-100 group">
                                 <div className="w-12 text-xs font-black text-black-300 uppercase group-hover:text-primary-600 transition-colors">{day.day}</div>
                                 <div className="flex-1">
@@ -181,7 +197,7 @@ export default function StudyPlannerPage() {
                             <BookOpen className="w-4 h-4" /> Essential Materials
                         </h4>
                         <ul className="space-y-2 opacity-90">
-                            {plan.materials.map((m: string, i: number) => (
+                            {plan?.materials?.map((m: string, i: number) => (
                                 <li key={i} className="text-xs font-medium border-l-2 border-white/20 pl-3 py-1">{m}</li>
                             ))}
                         </ul>
@@ -192,7 +208,7 @@ export default function StudyPlannerPage() {
                             <Sparkles className="w-4 h-4 text-primary-600" /> Pro Tips
                         </h4>
                         <div className="space-y-3">
-                            {plan.tips.map((tip: string, i: number) => (
+                            {plan?.tips?.map((tip: string, i: number) => (
                                 <p key={i} className="text-[10px] text-black-500 font-medium leading-relaxed italic border-l-2 border-primary-200 pl-3">
                                     &quot;{tip}&quot;
                                 </p>

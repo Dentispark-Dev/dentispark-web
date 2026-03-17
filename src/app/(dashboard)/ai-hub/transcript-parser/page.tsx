@@ -37,6 +37,7 @@ export default function TranscriptParserPage() {
   const [rawText, setRawText] = useState("");
   const [parsedData, setParsedData] = useState<any>(null);
   const [mode, setMode] = useState<"upload" | "paste">("upload");
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -57,17 +58,24 @@ export default function TranscriptParserPage() {
   const handleAIParsing = async () => {
     if (!rawText.trim()) return;
     setIsParsing(true);
+    setError(null);
     try {
       const response = await fetch("/api/ai/transcript-parse", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rawText, field: activeField }),
       });
+
+      if (!response.ok) {
+        throw new Error(response.statusText || "Parsing failed");
+      }
+
       const data = await response.json();
       setParsedData(data);
       setShowResults(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setError(error.message || "Failed to parse transcript. Please try again.");
     } finally {
       setIsParsing(false);
     }
@@ -168,6 +176,13 @@ export default function TranscriptParserPage() {
                         >
                             {isParsing ? "Extracting..." : "Start AI Extraction"}
                         </Button>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-600 mt-4 w-full">
+                        <AlertCircle className="w-5 h-5 shrink-0" />
+                        <p className="text-sm font-medium">{error}</p>
                     </div>
                 )}
 

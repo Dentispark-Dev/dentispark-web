@@ -30,19 +30,27 @@ export default function AcceptanceOddsPage() {
     volunteering: ""
   });
   const [results, setResults] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCalculate = async () => {
     setIsCalculating(true);
+    setError(null);
     try {
       const response = await fetch("/api/ai/matchmaker", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ profile, field: activeField }),
       });
+      
+      if (!response.ok) {
+        throw new Error(response.statusText || "Matchmaking failed");
+      }
+
       const data = await response.json();
       setResults(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setError(error.message || "Failed to generate university matching data. Please try again.");
     } finally {
       setIsCalculating(false);
     }
@@ -121,13 +129,19 @@ export default function AcceptanceOddsPage() {
                     />
                 </div>
             </div>
-
             <Button 
                 onClick={handleCalculate}
                 className="w-full bg-primary-600 hover:bg-primary-700 text-white h-16 rounded-[2rem] font-black shadow-xl shadow-primary-200 transition-all text-xl gap-3 group"
             >
                 Start Matching <TrendingUp className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </Button>
+
+            {error && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex items-center gap-3 text-red-600">
+                    <AlertCircle className="w-5 h-5 shrink-0" />
+                    <p className="text-sm font-medium">{error}</p>
+                </div>
+            )}
           </motion.div>
         ) : isCalculating ? (
           <motion.div 
@@ -167,7 +181,7 @@ export default function AcceptanceOddsPage() {
                     <div className="space-y-4 text-center md:text-left">
                         <h3 className="text-2xl font-black tracking-tight">Strategic Match Directives</h3>
                         <p className="text-white/70 leading-relaxed font-medium">
-                            {results.overallStrategy}
+                            {results?.overallStrategy}
                         </p>
                     </div>
                 </div>
@@ -181,7 +195,7 @@ export default function AcceptanceOddsPage() {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {results.universityPredictions.map((univ: any, i: number) => (
+                    {results?.universityPredictions?.map((univ: any, i: number) => (
                         <div key={i} className="glass-card p-8 rounded-[2.5rem] bg-white border border-greys-100 hover:border-primary-300 transition-all group overflow-hidden relative shadow-sm">
                             <div className={cn(
                                 "absolute top-0 right-0 px-6 py-2 rounded-bl-3xl text-[10px] font-black uppercase tracking-widest",

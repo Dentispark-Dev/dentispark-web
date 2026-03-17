@@ -36,6 +36,7 @@ export default function InterviewPrepPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [difficulty, setDifficulty] = useState<"Standard" | "Elite">("Standard");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   const { 
     isListening, 
@@ -98,6 +99,7 @@ export default function InterviewPrepPage() {
   const handleFinishInterview = async () => {
     stopListening();
     setIsAnalyzing(true);
+    setError(null);
     setSessionState("feedback");
     
     try {
@@ -112,12 +114,15 @@ export default function InterviewPrepPage() {
         }),
       });
 
-      if (!response.ok) throw new Error("Evaluation failed");
+      if (!response.ok) {
+        throw new Error(response.statusText || "Evaluation failed");
+      }
 
       const data = await response.json();
       setResults(data);
-    } catch (error) {
-      console.error(error);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Failed to analyze interview response. Please try again.");
     } finally {
       setIsAnalyzing(false);
     }
@@ -398,7 +403,7 @@ export default function InterviewPrepPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {results.metrics.map(metric => (
+                {results?.metrics.map(metric => (
                     <div key={metric.label} className="glass-card p-6 rounded-3xl border-greys-100 space-y-4 text-center bg-white shadow-sm">
                         <div className="w-10 h-10 rounded-xl bg-primary-50 mx-auto flex items-center justify-center text-primary-600">
                             <BarChart3 className="w-5 h-5" />
@@ -424,19 +429,19 @@ export default function InterviewPrepPage() {
                     AI Critique & Improvement Plan
                 </h3>
                 <p className="text-sm text-black-600 leading-relaxed italic border-l-4 border-primary-200 pl-4 py-2">
-                    &quot;{results.critique}&quot;
+                    &quot;{results?.critique}&quot;
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4 p-6 rounded-3xl bg-green-50/50 border border-green-100">
                         <h4 className="text-sm font-bold text-green-800 uppercase tracking-wider">Key Strengths</h4>
                         <ul className="space-y-2 text-sm text-green-700">
-                            {results.strengths.map((s, i) => <li key={i}>• {s}</li>)}
+                            {results?.strengths.map((s, i) => <li key={i}>• {s}</li>)}
                         </ul>
                     </div>
                     <div className="space-y-4 p-6 rounded-3xl bg-amber-50/50 border border-amber-100">
                         <h4 className="text-sm font-bold text-amber-800 uppercase tracking-wider">Critical Improvements</h4>
                         <ul className="space-y-2 text-sm text-amber-700">
-                            {results.improvements.map((im, i) => <li key={i}>• {im}</li>)}
+                            {results?.improvements.map((im, i) => <li key={i}>• {im}</li>)}
                         </ul>
                     </div>
                 </div>
@@ -475,11 +480,18 @@ export default function InterviewPrepPage() {
                 </Button>
             </div>
           </motion.div>
+        ) : error ? (
+             <div className="text-center py-20 bg-white rounded-3xl border border-red-100 shadow-sm space-y-4">
+                <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
+                <h3 className="text-2xl font-black text-black-900">Evaluation Failed</h3>
+                <p className="text-black-500 max-w-md mx-auto">{error}</p>
+                <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl border-greys-200">Restart Session</Button>
+            </div>
         ) : (
-             <div className="text-center py-20 bg-white rounded-3xl border border-greys-100 shadow-sm">
-                <AlertCircle className="w-12 h-12 text-black-300 mx-auto mb-4" />
+             <div className="text-center py-20 bg-white rounded-3xl border border-greys-100 shadow-sm space-y-4">
+                <AlertCircle className="w-12 h-12 text-black-300 mx-auto" />
                 <h3 className="text-lg font-bold text-black-800">Evaluation Unavailable</h3>
-                <p className="text-black-500 mb-6">Something went wrong during the AI analysis.</p>
+                <p className="text-black-500">Something went wrong during the AI analysis.</p>
                 <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl">Back to Setup</Button>
             </div>
         )}
