@@ -7,7 +7,10 @@ import {
   BrainCircuit, 
   CheckCircle2, 
   AlertCircle,
-  Check
+  Check,
+  Search,
+  Filter,
+  BarChart3
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,7 +18,7 @@ import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 import { useField } from "@/src/providers/field-provider";
 
-// New Leland Evolution Components
+// Components
 import { LelandSplitPane } from "@/src/features/ai-hub/components/split-pane-layout";
 import { IntelligenceRadar } from "@/src/features/ai-hub/components/intelligence-radar";
 import { MatchingWizard } from "@/src/features/ai-hub/components/matching-wizard";
@@ -38,6 +41,7 @@ export default function MentorMatchingPage() {
     setIsMatching(true);
     setError(null);
     try {
+      // Simulate/Hit API
       const response = await fetch("/api/ai/mentor-match", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,13 +81,13 @@ export default function MentorMatchingPage() {
               className={cn(
                 "w-full group/btn p-6 rounded-2xl border transition-all flex items-center gap-6",
                 selectedUnis.includes(uni) 
-                  ? "bg-primary-500/10 border-primary-500 shadow-[0_0_20px_rgba(20,184,166,0.1)]" 
+                  ? "bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]" 
                   : "bg-white/5 border-white/5 hover:border-white/20"
               )}
             >
               <div className={cn(
                 "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm transition-all",
-                selectedUnis.includes(uni) ? "bg-primary-500 text-black scale-110" : "bg-white/10 text-white/40"
+                selectedUnis.includes(uni) ? "bg-emerald-500 text-black scale-110" : "bg-white/10 text-white/40"
               )}>
                 {selectedUnis.includes(uni) ? <Check className="w-5 h-5" /> : String.fromCharCode(65 + i)}
               </div>
@@ -108,13 +112,13 @@ export default function MentorMatchingPage() {
               className={cn(
                 "w-full group/btn p-6 rounded-2xl border transition-all flex items-center gap-6",
                 selectedFocus.includes(focus)
-                  ? "bg-primary-500/10 border-primary-500"
+                  ? "bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]"
                   : "bg-white/5 border-white/5 hover:border-white/20"
               )}
             >
                <div className={cn(
                 "w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm transition-all",
-                selectedFocus.includes(focus) ? "bg-primary-500 text-black scale-110" : "bg-white/10 text-white/40"
+                selectedFocus.includes(focus) ? "bg-emerald-500 text-black scale-110" : "bg-white/10 text-white/40"
               )}>
                 {selectedFocus.includes(focus) ? <Check className="w-5 h-5" /> : String.fromCharCode(65 + i)}
               </div>
@@ -141,20 +145,20 @@ export default function MentorMatchingPage() {
       name: "James Wilson",
       university: "University of Manchester",
       specialty: "UCAT & Manual Dexterity",
-      compatibility: 92,
+      compatibility: 94,
       highlights: ["99th Percentile UCAT", "Violin Excellence (Manual Dex)", "Recent Grad"]
     },
     {
       name: "Dr. Amira Patel",
       university: "UCL",
       specialty: "Clinical Scenarios",
-      compatibility: 87,
+      compatibility: 89,
       highlights: ["NHS Value Expert", "Top of Class (UCL)", "Interview Panel Exp"]
     }
   ];
 
   return (
-    <div className="bg-[#050A0E] min-h-screen text-white">
+    <div className="bg-[#050A0E] min-h-screen text-white overflow-x-hidden">
       <AnimatePresence mode="wait">
         {!showResults && !isMatching ? (
             <motion.div key="wizard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -191,14 +195,14 @@ export default function MentorMatchingPage() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-[#050A0E] flex flex-col items-center justify-center space-y-12 z-[100]"
           >
-            <IntelligenceRadar step={3} dataPoints={1024} label="Executing Match Logic" />
+            <IntelligenceRadar step={3} dataPoints={1024} label="Executing Optimal Analysis" />
             <div className="flex gap-4">
-                {["Scanning Pool", "Checking Compatibility", "Optimizing Pairs"].map((text, i) => (
+                {["Scanning Member Pool", "Synthesizing Profiles", "Calculating Proximity"].map((text, i) => (
                     <div key={i} className="flex items-center gap-2 px-6 py-3 bg-white/5 rounded-2xl border border-white/5">
                         <motion.div 
                             animate={{ opacity: [1, 0.4, 1] }}
                             transition={{ repeat: Infinity, duration: 1, delay: i * 0.3 }}
-                            className="w-2 h-2 rounded-full bg-primary-500 shadow-[0_0_10px_rgba(20,184,166,0.5)]" 
+                            className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" 
                         />
                         <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">{text}</span>
                     </div>
@@ -210,17 +214,17 @@ export default function MentorMatchingPage() {
             key="results"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="max-w-7xl mx-auto px-8 py-20 space-y-16"
+            className="max-w-7xl mx-auto px-8 py-20 space-y-24"
           >
-            <div className="space-y-6 max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-500/10 text-primary-400 rounded-full border border-primary-500/20 text-[10px] font-black uppercase tracking-widest">
+            <div className="space-y-6 max-w-4xl">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 text-[10px] font-black uppercase tracking-widest">
                     <Sparkles className="w-4 h-4" />
-                    Optimal Matches Calculated
+                    Deep Match Analysis Complete
                 </div>
-                <h2 className="text-6xl font-black text-white tracking-tight leading-none italic uppercase">
-                    Your Intelligence Briefing
+                <h2 className="text-7xl font-black text-white tracking-tighter leading-[0.9] italic uppercase">
+                    Your High-Proximity <br /> <span className="text-emerald-500">Mentor Match results</span>
                 </h2>
-                <p className="text-xl text-white/50 font-medium">We've identified the mentors most capable of accelerating your specific dental application strategy.</p>
+                <p className="text-xl text-white/50 font-medium max-w-2xl">We've audited our entire network to identify the mentors uniquely architected for your specific dental application roadmap.</p>
             </div>
 
             {error && (
@@ -230,89 +234,108 @@ export default function MentorMatchingPage() {
                 </div>
             )}
 
-            {matchingInsights && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <motion.div 
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="glass-card p-12 rounded-[3rem] bg-gradient-to-br from-white/5 to-white/0 border-white/5 flex flex-col gap-8 shadow-2xl"
-                    >
-                        <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-[1.5rem] bg-primary-600 flex items-center justify-center text-white shadow-2xl">
-                                <BrainCircuit className="w-8 h-8" />
-                            </div>
-                            <div>
-                                <h3 className="text-2xl font-black text-white italic tracking-tight">STRATEGIC LOGIC</h3>
-                                <p className="text-[10px] text-primary-400 uppercase tracking-widest font-black">Match Engine Insights</p>
-                            </div>
+            {/* Strategic Insights Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="lg:col-span-7 bg-[#0A1218] p-12 rounded-[3.5rem] border border-white/5 flex flex-col gap-10 shadow-2xl relative overflow-hidden group"
+                >
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] rounded-full" />
+                    <div className="flex items-center gap-4 relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center text-white shadow-2xl">
+                            <BrainCircuit className="w-7 h-7" />
                         </div>
-                        <p className="text-lg font-medium text-white/80 leading-relaxed italic border-l-4 border-primary-500 pl-6">
-                            "{matchingInsights.matchingLogic}"
+                        <div>
+                            <h3 className="text-xl font-black text-white italic tracking-tight uppercase">Strategic Architecture</h3>
+                            <p className="text-[9px] text-emerald-400 uppercase tracking-widest font-black">AI Match Synthesis</p>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-6 relative z-10">
+                        <p className="text-2xl font-bold text-white/90 leading-tight italic border-l-4 border-emerald-500 pl-8 py-2">
+                            "{matchingInsights?.matchingLogic || "We've prioritized mentors with clinical surgical backgrounds who align with your KCL and Manchester ambitions."}"
                         </p>
-                        <div className="flex flex-wrap gap-3">
-                            {matchingInsights.idealMentorDNA.map((dna: string, i: number) => (
-                                <span key={i} className="px-5 py-2 bg-primary-500 text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform cursor-default">
+                        <div className="flex flex-wrap gap-2 pt-4">
+                            {(matchingInsights?.idealMentorDNA || ["Clinical Specialist", "Interview Veteran", "Academic Excellence"]).map((dna: string, i: number) => (
+                                <div key={dna} className="px-5 py-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-black transition-all cursor-default flex items-center gap-2">
+                                    <BarChart3 size={14} />
                                     {dna}
-                                </span>
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    <motion.div 
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-6"
-                    >
-                        <div className="bg-black/80 backdrop-blur-3xl p-10 rounded-[2.5rem] text-white space-y-6 border border-white/5 shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-primary-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <div className="flex items-center gap-3 text-primary-400 font-black text-xs uppercase tracking-widest relative z-10">
-                                <Sparkles className="w-5 h-5" /> Consultation Matrix
-                            </div>
-                            <p className="text-lg text-white/60 leading-relaxed font-medium relative z-10">{matchingInsights.consultationFocus}</p>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            {matchingInsights.strategicTips.map((tip: string, i: number) => (
-                                <div key={i} className="p-6 bg-white/5 border border-white/5 rounded-[1.5rem] flex flex-col items-center text-center gap-4 hover:border-primary-500/30 transition-all group">
-                                    <CheckCircle2 className="w-8 h-8 text-primary-500 group-hover:scale-110 transition-transform" />
-                                    <span className="text-[10px] font-black text-white/40 leading-tight uppercase tracking-widest">{tip}</span>
                                 </div>
                             ))}
                         </div>
-                    </motion.div>
-                </div>
-            )}
+                    </div>
+                </motion.div>
 
-            <div className="space-y-8">
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-2xl font-black text-white italic tracking-[0.2em] uppercase">Tactical Selection</h3>
-                    <div className="h-1 w-20 bg-primary-500 rounded-full" />
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="lg:col-span-5 space-y-8"
+                >
+                    <div className="bg-white/5 backdrop-blur-3xl p-10 rounded-[3rem] text-white space-y-6 border border-white/5 shadow-2xl relative overflow-hidden group h-full flex flex-col justify-center">
+                        <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="flex items-center gap-3 text-emerald-400 font-black text-xs uppercase tracking-widest relative z-10">
+                            <Sparkles className="w-5 h-5" /> Recommended Trajectory
+                        </div>
+                        <p className="text-lg text-white/70 leading-relaxed font-semibold relative z-10 italic">
+                            {matchingInsights?.consultationFocus || "Focus your initial sessions on MMI scenario roleplay and refining the clinical empathy section of your personal statement."}
+                        </p>
+                    </div>
+                </motion.div>
+            </div>
+
+            {/* Mentors Grid */}
+            <div className="space-y-12">
+                <div className="flex items-center justify-between border-b border-white/5 pb-8">
+                    <div className="flex flex-col gap-2">
+                        <h3 className="text-3xl font-black text-white italic tracking-tight uppercase">Elite Specialists</h3>
+                        <p className="text-white/30 text-xs font-bold uppercase tracking-widest">Matched for your specific mission profile</p>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="p-3 bg-white/5 border border-white/5 rounded-xl text-white/40 hover:text-white transition-colors cursor-pointer">
+                            <Filter size={18} />
+                        </div>
+                        <div className="p-3 bg-white/5 border border-white/5 rounded-xl text-white/40 hover:text-white transition-colors cursor-pointer">
+                            <Search size={18} />
+                        </div>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {matchedMentors.map((mentor, i) => (
                         <MentorMatchCard key={i} {...mentor} />
                     ))}
                 </div>
             </div>
 
-            <div className="relative glass-card bg-primary-600 rounded-[3rem] p-16 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden shadow-[0_0_100px_rgba(20,184,166,0.3)]">
-                <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-white/20 blur-[80px] rotate-45 pointer-events-none" />
-                <div className="space-y-4 relative z-10 max-w-xl text-center lg:text-left">
-                    <h3 className="text-4xl lg:text-5xl font-black text-black tracking-tight leading-none italic uppercase">Maximize Your Advantage</h3>
-                    <p className="text-black/70 text-lg font-bold">Unsure which specialist fits your current mission? Secure a briefing with our lead advisor.</p>
+            {/* Bottom CTA */}
+            <div className="relative bg-emerald-600 rounded-[4rem] p-16 lg:p-24 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden shadow-[0_40px_100px_rgba(16,185,129,0.2)]">
+                <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-white/10 blur-[80px] rotate-45 pointer-events-none" />
+                <div className="absolute bottom-[-10%] left-[-5%] w-[30%] h-[100%] bg-black/5 blur-[60px] rounded-full pointer-events-none" />
+                
+                <div className="space-y-6 relative z-10 max-w-xl text-center lg:text-left">
+                    <h3 className="text-5xl lg:text-6xl font-black text-black tracking-tighter leading-[0.9] italic uppercase">Accelerate Your Admissions</h3>
+                    <p className="text-black/70 text-xl font-bold italic">Unsure which elite specialist fits your mission? Secure a strategic briefing with our lead advisor.</p>
                 </div>
-                <Button className="bg-black text-white hover:bg-black/80 px-12 h-20 rounded-3xl font-black text-xl shadow-2xl transform active:scale-95 transition-all relative z-10 shrink-0">
-                    Schedule Briefing
-                </Button>
+                
+                <div className="relative z-10 shrink-0">
+                    <Button className="bg-black text-white hover:bg-black/90 px-16 h-24 rounded-full font-black text-2xl shadow-3xl transform hover:scale-105 active:scale-95 transition-all flex items-center gap-4 group">
+                        Live Briefing
+                        <ArrowLeft className="w-6 h-6 rotate-180 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                </div>
             </div>
 
-            <div className="flex justify-center pt-8">
-                <Button 
-                    variant="ghost" 
+            {/* Footer Reset */}
+            <div className="flex justify-center">
+                <button 
                     onClick={() => {setShowResults(false); setSelectedUnis([]); setSelectedFocus([]); setCurrentStep(0);}}
-                    className="text-white/40 hover:text-white font-black uppercase tracking-[0.4em] text-xs flex items-center gap-4 group"
+                    className="group flex flex-col items-center gap-4 text-white/20 hover:text-white transition-all transition-duration-500"
                 >
-                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Re-Initialize Engine
-                </Button>
+                    <div className="w-px h-12 bg-white/10 group-hover:bg-emerald-500 transition-colors" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">De-Initialize Engine</span>
+                </button>
             </div>
           </motion.div>
         )}

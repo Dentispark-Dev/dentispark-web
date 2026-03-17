@@ -35,13 +35,27 @@ export function AdminDashboardAnalytics() {
         queryFn: () => adminService.getTrafficAnalytics(selectedDevice, selectedLocation),
     });
 
-    if (isSummaryLoading) {
+    const { isAdmin, isLoading: isAuthLoading } = useAuth();
+
+    if (isAuthLoading || isSummaryLoading) {
         return (
             <div className="flex h-96 items-center justify-center">
                 <div className="relative">
                     <div className="h-16 w-16 rounded-full border-t-2 border-b-2 border-primary-600 animate-spin" />
                     <Zap className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-primary-600" />
                 </div>
+            </div>
+        );
+    }
+
+    if (!isAdmin) {
+        return (
+            <div className="flex h-96 items-center justify-center flex-col gap-4">
+                <div className="p-4 bg-red-50 text-red-600 rounded-2xl border border-red-100 font-bold flex items-center gap-2">
+                    <XCircle className="w-5 h-5" />
+                    Access Restricted: Administrative Personnel Only
+                </div>
+                <p className="text-gray-400 text-sm">Please return to your designated dashboard area.</p>
             </div>
         );
     }

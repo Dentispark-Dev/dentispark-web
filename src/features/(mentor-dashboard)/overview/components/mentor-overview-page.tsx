@@ -40,42 +40,30 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
       <div className="font-sora grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
         <StatsCard
           icon={
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                opacity="0.4"
-                d="M38.5999 15.84V26.14C38.5999 32.3 35.0799 34.9399 29.7999 34.9399H12.2199C11.3199 34.9399 10.4599 34.8601 9.65991 34.6801C9.15991 34.6001 8.67993 34.46 8.23993 34.3C5.23993 33.18 3.41992 30.58 3.41992 26.14V15.84C3.41992 9.67997 6.93991 7.04004 12.2199 7.04004H29.7999C34.2799 7.04004 37.4999 8.94003 38.3599 13.28C38.4999 14.08 38.5999 14.9 38.5999 15.84Z"
-                fill="#2A50FA"
-              />
-              <path
-                d="M44.6002 21.8402V32.1403C44.6002 38.3003 41.0802 40.9402 35.8002 40.9402H18.2202C16.7402 40.9402 15.4002 40.7403 14.2402 40.3003C11.8602 39.4203 10.2402 37.6003 9.66016 34.6803C10.4602 34.8603 11.3202 34.9402 12.2202 34.9402H29.8002C35.0802 34.9402 38.6002 32.3003 38.6002 26.1403V15.8402C38.6002 14.9002 38.5202 14.0603 38.3602 13.2803C42.1602 14.0803 44.6002 16.7602 44.6002 21.8402Z"
-                fill="#2A50FA"
-              />
-              <path
-                d="M20.9998 26.2798C23.9158 26.2798 26.2798 23.9158 26.2798 20.9998C26.2798 18.0837 23.9158 15.7197 20.9998 15.7197C18.0837 15.7197 15.7197 18.0837 15.7197 20.9998C15.7197 23.9158 18.0837 26.2798 20.9998 26.2798Z"
-                fill="#2A50FA"
-              />
-              <path
-                d="M9.56006 16.5C8.74006 16.5 8.06006 17.18 8.06006 18V24C8.06006 24.82 8.74006 25.5 9.56006 25.5C10.3801 25.5 11.0601 24.82 11.0601 24V18C11.0601 17.18 10.4001 16.5 9.56006 16.5Z"
-                fill="#2A50FA"
-              />
-              <path
-                d="M32.4199 16.5C31.5999 16.5 30.9199 17.18 30.9199 18V24C30.9199 24.82 31.5999 25.5 32.4199 25.5C33.2399 25.5 33.9199 24.82 33.9199 24V18C33.9199 17.18 33.2599 16.5 32.4199 16.5Z"
-                fill="#2A50FA"
-              />
-            </svg>
+            <div className="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-600">
+               <TrendingUp className="w-6 h-6" />
+            </div>
           }
-          title="earnings"
+          title="Earnings"
           titleColor="text-secondary-500"
           value={`${stats.currency}${stats.totalEarnings}`}
-          subtitle="Total earnings"
-          className="bg-secondary-50"
-          borderColor="border-secondary-200"
+          subtitle="Total platform revenue"
+          className="bg-white border-white/50 shadow-sm"
+          borderColor="border-secondary-100"
+        />
+
+        <StatsCard
+          icon={
+            <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-600">
+               <BrainCircuit className="w-6 h-6" />
+            </div>
+          }
+          title="Guided"
+          titleColor="text-orange-500"
+          value="14"
+          subtitle="Mentored Students"
+          className="bg-white border-white/50 shadow-sm"
+          borderColor="border-orange-100"
         />
 
         <StatsCard
@@ -90,20 +78,20 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
               <path
                 opacity="0.4"
                 d="M11.8137 32C12.0337 31.02 11.6337 29.62 10.9337 28.92L6.0737 24.06C4.5537 22.54 3.9537 20.92 4.3937 19.52C4.8537 18.12 6.2737 17.16 8.3937 16.8L14.6337 15.76C15.5337 15.6 16.6337 14.8 17.0537 13.98L20.4937 7.08C21.4937 5.1 22.8537 4 24.3337 4C25.8137 4 27.1737 5.1 28.1737 7.08L31.6137 13.98C31.8737 14.5 32.4137 15 32.9937 15.34L11.4537 36.88C11.1737 37.16 10.6937 36.9 10.7737 36.5L11.8137 32Z"
-                fill="#D32F2F"
+                fill="#12ac75"
               />
               <path
                 d="M37.7336 28.9198C37.0136 29.6398 36.6136 31.0198 36.8536 31.9998L38.2336 38.0198C38.8136 40.5198 38.4536 42.3998 37.2136 43.2998C36.7136 43.6598 36.1136 43.8398 35.4136 43.8398C34.3936 43.8398 33.1936 43.4598 31.8736 42.6798L26.0136 39.1998C25.0936 38.6598 23.5736 38.6598 22.6536 39.1998L16.7936 42.6798C14.5736 43.9798 12.6736 44.1998 11.4536 43.2998C10.9936 42.9598 10.6536 42.4998 10.4336 41.8998L34.7536 17.5798C35.6736 16.6598 36.9736 16.2398 38.2336 16.4598L40.2536 16.7998C42.3736 17.1598 43.7936 18.1198 44.2536 19.5198C44.6936 20.9198 44.0936 22.5398 42.5736 24.0598L37.7336 28.9198Z"
-                fill="#D32F2F"
+                fill="#12ac75"
               />
             </svg>
           }
-          title="rating"
-          titleColor="text-error-500"
+          title="Rating"
+          titleColor="text-primary-500"
           value={stats.averageRating}
-          subtitle="Average rating"
-          className="bg-error-50"
-          borderColor="border-error-200"
+          subtitle="Session feedback score"
+          className="bg-white border-white/50 shadow-sm"
+          borderColor="border-primary-100"
         />
 
         <StatsCard

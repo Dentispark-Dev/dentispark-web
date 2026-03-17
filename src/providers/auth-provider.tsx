@@ -219,11 +219,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
             redirectTo = "/profile-setup";
           } else if (isAdminUser) {
             redirectTo = "/admin";
-          } else if (isOnMentorRoute || isMentor) {
-            // If on mentor route or user is a mentor, go to mentor dashboard
+          } else if (isMentor || isOnMentorRoute) {
             redirectTo = "/mentor/overview";
           } else {
-            // Default to student dashboard
             redirectTo = "/overview";
           }
 
