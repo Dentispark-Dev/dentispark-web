@@ -32,7 +32,7 @@ export function AIGuidanceAssistant() {
       {
         id: "welcome",
         role: "assistant",
-        content: `Hi! I'm your DentiSpark Guidance Assistant. I can help you with UCAS deadlines, prerequisite checks, or explaining any of our expert guides. What's on your mind?`
+        parts: [{ type: "text", text: `Hi! I'm your DentiSpark Guidance Assistant. I can help you with UCAS deadlines, prerequisite checks, or explaining any of our expert guides. What's on your mind?` }]
       }
     ]
   });
@@ -139,7 +139,7 @@ export function AIGuidanceAssistant() {
                                 ? "bg-black-800 text-white rounded-tr-none" 
                                 : "bg-white text-black-700 border border-primary-50 rounded-tl-none"
                         )}>
-                            {m.parts.map((part, i) => part.type === "text" ? part.text : null)}
+                            {m.parts ? m.parts.map((part, i) => part.type === "text" ? part.text : null) : (m as any).content}
                         </div>
                     </motion.div>
                 ))}

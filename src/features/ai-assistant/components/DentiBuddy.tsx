@@ -22,7 +22,7 @@ export function DentiBuddy() {
       {
         id: "welcome",
         role: "assistant",
-        content: `Hi! I'm your AI Admission Assistant. How can I help you supercharge your ${activeFieldLabel} application today?`,
+        parts: [{ type: "text", text: `Hi! I'm your AI Admission Assistant. How can I help you supercharge your ${activeFieldLabel} application today?` }],
       },
     ],
   });
@@ -119,7 +119,7 @@ export function DentiBuddy() {
                     }`}
                   >
                     <div className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {msg.parts.map((part, i) => part.type === "text" ? part.text : null)}
+                      {msg.parts ? msg.parts.map((part, i) => part.type === "text" ? part.text : null) : (msg as any).content}
                     </div>
                   </div>
                 </motion.div>
