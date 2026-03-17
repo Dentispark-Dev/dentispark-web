@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TrafficAnalytics } from "../../../../connection/api-types";
 import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
+import { useAuth } from "@/src/providers/auth-provider";
 
 export function AdminDashboardAnalytics() {
     const [selectedDevice, setSelectedDevice] = useState<string | undefined>(undefined);
