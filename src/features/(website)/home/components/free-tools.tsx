@@ -148,91 +148,108 @@ const cardVariants = {
 
 export function FreeTools() {
   return (
-    <section className="bg-[#fcfcfc] py-24 md:py-32">
-      <Container className="flex flex-col space-y-16">
-        <div className="flex flex-col items-center space-y-6 text-center">
-          <h2 className="font-slab max-w-4xl text-4xl font-bold text-gray-900 md:text-5xl">
-            Begin your Dental journey with <span className="text-[#12AC75]">free resources</span>
-          </h2>
-          <p className="font-sora text-greys-800 max-w-3xl text-lg leading-relaxed">
-            Access guides, university data, AI-driven checklists, and financial support tailored to your year and goals.
-          </p>
-        </div>
+    <section className="bg-white py-24 md:py-32 overflow-hidden">
+      <Container>
+        <motion.div 
+          className="flex flex-col space-y-16"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <div className="flex flex-col items-center space-y-6 text-center">
+            <motion.div variants={cardVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
+              Resource Hub
+            </motion.div>
+            <motion.h2 variants={cardVariants} className="font-sora max-w-4xl text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+              Begin your Dental journey with <span className="text-emerald-600">free resources</span>
+            </motion.h2>
+            <motion.p variants={cardVariants} className="font-sora text-slate-500 max-w-3xl text-lg md:text-xl leading-relaxed">
+              Access curated guides, university datasets, and AI-driven checklists tailored to your specific application goals.
+            </motion.p>
+          </div>
 
-        {/* Resources Grid - Primary Cards */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {freeResources.map((resource) => (
-            <Link
-              key={resource.id}
-              href={resource.href}
-              className="group relative flex overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-2 hover:shadow-2xl"
-            >
-              <div className="flex flex-1 flex-col justify-center p-8 md:p-12">
-                <div className="space-y-4">
-                  <h3 className="font-slab text-2xl font-bold text-gray-900">
-                    {resource.title}
-                  </h3>
-                  <p className="font-sora text-greys-800 text-lg leading-relaxed">
-                    {resource.description}
-                  </p>
-                  <div className="flex items-center gap-2 font-bold text-[#12AC75]">
-                    <span>{resource.ctaText}</span>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="transition-transform duration-300 group-hover:translate-x-2"
-                    >
-                      <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+          {/* Resources Grid - Primary Cards */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+            {freeResources.map((resource) => (
+              <motion.div key={resource.id} variants={cardVariants}>
+                <Link
+                  href={resource.href}
+                  className="group relative flex h-full overflow-hidden rounded-[3rem] bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(16,185,129,0.1)] hover:border-emerald-200"
+                >
+                  <div className="flex flex-1 flex-col justify-center p-10 md:p-14">
+                    <div className="space-y-6">
+                      <h3 className="font-sora text-3xl font-extrabold text-slate-900 leading-tight">
+                        {resource.title}
+                      </h3>
+                      <p className="font-sora text-slate-500 text-lg leading-relaxed">
+                        {resource.description}
+                      </p>
+                      <div className="flex items-center gap-3 font-bold text-emerald-600 group-hover:text-emerald-500 transition-colors">
+                        <span className="text-sm uppercase tracking-widest">{resource.ctaText}</span>
+                        <div className="p-2 rounded-full bg-emerald-50 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            className="transition-transform duration-300 group-hover:translate-x-1"
+                          >
+                            <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className={cn("hidden w-1/3 items-center justify-center p-8 md:flex", resource.backgroundColor)}>
-                <Image
-                  src={resource.image}
-                  alt={resource.imageAlt}
-                  width={200}
-                  height={200}
-                  className="object-contain transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-            </Link>
-          ))}
-        </div>
+                  <div className={cn("hidden w-2/5 items-center justify-center p-10 md:flex relative", resource.backgroundColor)}>
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
+                    <Image
+                      src={resource.image}
+                      alt={resource.imageAlt}
+                      width={250}
+                      height={250}
+                      className="relative z-10 object-contain transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
+                    />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
 
-        {/* Additional Resources - Secondary Cards */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {additionalResources.map((resource) => (
-            <Link
-              key={resource.id}
-              href={resource.href}
-              className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-2 hover:shadow-xl"
-            >
-              <div className={cn("flex aspect-[4/3] items-center justify-center p-12", resource.backgroundColor)}>
-                <div className="transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                  {resource.icon}
-                </div>
-              </div>
-              <div className="flex flex-col space-y-4 p-8">
-                <h3 className="font-slab text-xl font-bold text-gray-900">
-                  {resource.title}
-                </h3>
-                <p className="font-sora text-greys-800 leading-relaxed">
-                  {resource.description}
-                </p>
-                <div className="flex items-center gap-2 font-bold text-[#12AC75]">
-                  <span className="text-sm">{resource.ctaText}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+          {/* Additional Resources - Secondary Cards */}
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {additionalResources.map((resource) => (
+              <motion.div key={resource.id} variants={cardVariants}>
+                <Link
+                  href={resource.href}
+                  className="group flex flex-col h-full overflow-hidden rounded-[3rem] bg-white border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(16,185,129,0.08)] hover:border-emerald-200"
+                >
+                  <div className={cn("flex aspect-[1.2] items-center justify-center p-12 relative overflow-hidden", resource.backgroundColor)}>
+                    <div className="absolute inset-0 bg-white/20 backdrop-blur-[1px]" />
+                    <div className="relative z-10 transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 drop-shadow-xl">
+                      {resource.icon}
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-5 p-10">
+                    <h3 className="font-sora text-2xl font-extrabold text-slate-900 leading-tight">
+                      {resource.title}
+                    </h3>
+                    <p className="font-sora text-slate-500 leading-relaxed text-sm">
+                      {resource.description}
+                    </p>
+                    <div className="flex items-center gap-2 font-bold text-emerald-600 pt-2">
+                      <span className="text-xs uppercase tracking-widest">{resource.ctaText}</span>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="group-hover:translate-x-1 transition-transform">
+                        <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
     </section>
   );

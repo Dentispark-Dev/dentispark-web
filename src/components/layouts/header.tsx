@@ -107,20 +107,16 @@ export default function Header() {
   return (
     <motion.header
       className={cn(
-        "border-greys-300 sticky top-0 z-50 bg-white/70 backdrop-blur-md transition-all duration-300",
-        isScrolled ? "border-b" : "",
+        "sticky top-0 z-50 bg-white/60 backdrop-blur-xl transition-all duration-500",
+        isScrolled ? "border-b border-emerald-500/20 shadow-[0_4px_30px_rgba(16,185,129,0.05)]" : "border-b border-transparent",
       )}
       variants={headerVariants}
       initial="hidden"
       animate="visible"
-      transition={{
-        duration: 0.3,
-        ease: "easeInOut",
-      }}
     >
-      <Container className="flex items-center justify-between py-4">
+      <Container className="flex items-center justify-between py-5">
         <motion.div
-          className="flex items-center space-x-4 md:space-x-16"
+          className="flex items-center space-x-4 md:space-x-12"
           variants={itemVariants}
         >
           {/* Hamburger for mobile */}
@@ -128,29 +124,28 @@ export default function Header() {
             className="block cursor-pointer p-2 md:hidden"
             aria-label="Open menu"
             onClick={() => setMobileMenuOpen(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
-            {/* Hamburger icon */}
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
-              <rect y="5" width="24" height="2" rx="1" fill="#222" />
-              <rect y="11" width="24" height="2" rx="1" fill="#222" />
-              <rect y="17" width="24" height="2" rx="1" fill="#222" />
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <rect y="6" width="24" height="1.5" rx="0.75" fill="currentColor" />
+              <rect y="11" width="18" height="1.5" rx="0.75" fill="currentColor" />
+              <rect y="16" width="24" height="1.5" rx="0.75" fill="currentColor" />
             </svg>
           </motion.button>
+          
           <motion.div
             whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <Link href="/" className="cursor-pointer group">
-              <Logo className="h-[35px] w-[150px] transition-opacity group-hover:opacity-90" />
+            <Link href="/" className="cursor-pointer group flex items-center">
+              <Logo className="h-[32px] w-[auto] transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]" />
             </Link>
           </motion.div>
 
           {/* Desktop nav */}
           <motion.nav
-            className="hidden space-x-8 md:flex"
+            className="hidden space-x-6 md:flex"
             variants={itemVariants}
           >
             {navItems.map((item, index) => (
@@ -158,33 +153,31 @@ export default function Header() {
                 key={item.href}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
+                transition={{ delay: index * 0.05 + 0.2 }}
               >
                 <Link
                   href={item.href}
                   className={cn(
-                    "text-black-600 hover:text-primary relative cursor-pointer text-xs font-medium transition-colors duration-300",
-                    pathname === item.href ? "text-primary" : "",
+                    "relative px-2 py-1 text-[13px] font-semibold tracking-wide transition-all duration-300",
+                    pathname === item.href 
+                      ? "text-emerald-600" 
+                      : "text-gray-500 hover:text-emerald-500",
                   )}
                 >
-                  <motion.span
-                    className="block"
-                    whileHover={{
-                      y: -2,
-                      transition: { duration: 0.2 },
-                    }}
-                  >
-                    {item.label}
-                  </motion.span>
+                  <span className="relative z-10 font-sora">{item.label}</span>
                   {pathname === item.href && (
                     <motion.div
-                      className="bg-primary absolute -bottom-1 left-0 h-0.5"
-                      layoutId="activeTab"
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 -z-10 bg-emerald-50/50 blur-[2px] rounded-full"
+                      layoutId="activeNavBg"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
+                  <motion.div
+                    className="absolute -bottom-1 left-0 h-[2px] bg-emerald-500 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: pathname === item.href ? "100%" : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </Link>
               </motion.div>
             ))}
@@ -193,7 +186,7 @@ export default function Header() {
 
         {/* Desktop Action buttons / Logged-in user */}
         <motion.div
-          className="hidden items-center space-x-4 md:flex"
+          className="hidden items-center space-x-5 md:flex"
           variants={itemVariants}
         >
           {isAuthenticated && user ? (

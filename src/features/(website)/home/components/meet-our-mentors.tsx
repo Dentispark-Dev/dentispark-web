@@ -16,6 +16,7 @@ import mentor2 from "@/public/images/mentor-2.png";
 
 import UKFlag from "@/src/components/icons/UkFlag";
 import Stanford from "@/src/components/icons/Standford";
+import Container from "@/src/components/layouts/container";
 
 type Mentor = {
   name: string;
@@ -104,95 +105,155 @@ const mentors: Mentor[] = [
   },
 ];
 
+import { motion, Variants } from "framer-motion";
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
 export function MeetOurMentors() {
   return (
-    <section className="py-16">
-      <div className="mx-auto max-w-2xl px-4 sm:max-w-3xl sm:px-6 md:max-w-4xl lg:max-w-6xl lg:px-8">
-        {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-gray-900 sm:text-3xl">
-            Meet our Mentors
-          </h2>
-          <Link
-            href=""
-            className="font-sora text-primary-800 flex items-center gap-1 text-sm font-medium hover:underline"
-          >
-            See all <ArrowRight size={18} />
-          </Link>
-        </div>
+    <section className="py-24 bg-white overflow-hidden">
+      <Container>
+        <motion.div 
+          className="flex flex-col space-y-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-emerald-50 pb-8">
+            <div className="space-y-2">
+              <motion.div variants={itemVariants} className="text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
+                Expert Guidance
+              </motion.div>
+              <motion.h2 variants={itemVariants} className="font-sora text-3xl font-extrabold text-slate-900 md:text-5xl tracking-tight">
+                Meet our <span className="text-emerald-600">Mentors</span>
+              </motion.h2>
+            </div>
+            <motion.div variants={itemVariants}>
+              <Link
+                href="/mentor"
+                className="group font-sora inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold transition-all duration-300 hover:bg-emerald-500 hover:text-white"
+              >
+                See all Mentors <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
+          </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <Carousel className="overflow-visible">
-            <CarouselContent className="">
-              {mentors.map((m) => (
-                <CarouselItem
-                  key={m.name}
-                  className="flex-shrink-0 basis-[95%] md:basis-[50%] lg:basis-[35%] xl:basis-[30%] 2xl:basis-[30%]"
-                >
-                  <div className="bg-white-100 flex h-full flex-col rounded-2xl border border-[#DFDFDF] px-6 py-10">
-                    <div className="flex items-center space-x-4">
-                      <div className="size-16 overflow-hidden rounded-full">
-                        <Image
-                          src={m.avatar}
-                          alt={m.name}
-                          width={100}
-                          height={100}
-                          className="rounded-full object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1">
-                          <span className="text-base font-medium text-gray-900">
-                            {m.name}
-                          </span>
-                          <span className="text-lg">{m.flag}</span>
+          {/* Carousel */}
+          <motion.div variants={itemVariants} className="relative">
+            <Carousel className="overflow-visible" opts={{ align: "start", loop: true }}>
+              <CarouselContent className="-ml-6">
+                {mentors.map((m) => (
+                  <CarouselItem
+                    key={m.name}
+                    className="pl-6 basis-[90%] md:basis-[50%] lg:basis-[33.333%]"
+                  >
+                    <div className="group h-full bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-[0_20px_40px_rgba(0,0,0,0.02)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(16,185,129,0.12)] hover:border-emerald-100 flex flex-col">
+                      <div className="flex items-start justify-between mb-8">
+                        <div className="relative">
+                          <div className="absolute -inset-1 bg-emerald-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="relative size-20 overflow-hidden rounded-2xl border-2 border-white shadow-lg">
+                            <Image
+                              src={m.avatar}
+                              alt={m.name}
+                              width={120}
+                              height={120}
+                              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          </div>
+                          <div className="absolute -bottom-2 -right-2 bg-white rounded-full p-1 shadow-md">
+                            {m.flag}
+                          </div>
                         </div>
-                        <p className="text-black-400 font-sora w-[60%] text-xs">
+                        {m.highlight && (
+                          <div className="bg-emerald-50 text-emerald-600 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest border border-emerald-100">
+                            {m.highlight.includes("50+") ? "Expert" : "Top Rated"}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-2 mb-6">
+                        <h3 className="font-sora text-xl font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">
+                          {m.name}
+                        </h3>
+                        <p className="font-sora text-slate-500 text-sm leading-relaxed">
                           {m.title}
                         </p>
                       </div>
-                    </div>
 
-                    <div className="mx-auto my-6 block h-px w-full bg-gray-200" />
-
-                    <div className="flex-1 space-y-3">
-                      {m.institutions.map((inst, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center space-x-3 rounded-lg border border-[#F5F5F5] p-2 transition hover:bg-gray-50"
-                        >
-                          <div className="size-6 flex-shrink-0">
-                            <Stanford className="h-full w-full" />
+                      <div className="space-y-3 flex-1">
+                        {m.institutions.slice(0, 2).map((inst, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center space-x-3 rounded-2xl bg-slate-50/50 p-3 transition-colors group-hover:bg-emerald-50/30"
+                          >
+                            <div className="size-8 flex-shrink-0 bg-white rounded-lg p-1.5 shadow-sm">
+                              <Stanford className="h-full w-full" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-sora text-[11px] font-bold text-slate-900 truncate uppercase tracking-tight">{inst.name}</p>
+                              <p className="font-sora text-[10px] text-slate-400 font-medium truncate">
+                                {inst.role}
+                              </p>
+                            </div>
                           </div>
-                          <div className="flex-1 space-y-0.5 text-left">
-                            <p className="text-sm font-medium">{inst.name}</p>
-                            <p className="text-text-color font-sora text-xs">
-                              {inst.role}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    {m.highlight && (
-                      <div className="mt-6">
-                        <span className="bg-primary-100 text-primary font-sora inline-block rounded-full px-3 py-1 text-xs">
-                          {m.highlight}
-                        </span>
+                        ))}
                       </div>
-                    )}
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
 
-            <div className="mt-16 flex items-center gap-8">
-              <CarouselPrevious />
-              <CarouselNext />
-            </div>
-          </Carousel>
-        </div>
-      </div>
+                      <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
+                        <Link 
+                          href={`/mentor/${m.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                          className="font-sora text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors uppercase tracking-widest flex items-center gap-1.5"
+                        >
+                          View Profile <ArrowRight className="w-3 h-3" />
+                        </Link>
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <div key={s} className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+
+              <div className="mt-12 flex items-center justify-center gap-6">
+                <CarouselPrevious className="static translate-y-0 rounded-2xl border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 transition-all" />
+                <div className="h-px w-24 bg-slate-100 relative overflow-hidden">
+                  <motion.div 
+                    animate={{ x: [-100, 100] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400 to-transparent w-full"
+                  />
+                </div>
+                <CarouselNext className="static translate-y-0 rounded-2xl border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 transition-all" />
+              </div>
+            </Carousel>
+          </motion.div>
+        </motion.div>
+      </Container>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, forwardRef } from "react";
 import { Plus, Minus } from "lucide-react";
 import { cn } from "@/src/lib/utils";
@@ -11,44 +12,45 @@ interface FAQItemProps {
   onToggle: () => void;
 }
 
-const FAQItem = forwardRef<HTMLDivElement, FAQItemProps>(
-  ({ question, answer, isOpen, onToggle }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className="border-b-[.5px] border-gray-200 last:border-b-0"
+const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
+  return (
+    <div className="border-b border-slate-100 last:border-b-0 overflow-hidden">
+      <button
+        onClick={onToggle}
+        className="flex w-full cursor-pointer items-center justify-between py-8 text-left transition-all duration-300 group"
       >
-        <button
-          onClick={onToggle}
-          className="flex w-full cursor-pointer items-center justify-between py-6 text-left transition-colors hover:bg-gray-50"
-        >
-          <h3 className="font-sora pr-4 text-lg font-medium text-gray-900">
-            {question}
-          </h3>
-          {isOpen ? (
-            <Minus className="h-5 w-5 flex-shrink-0 text-gray-500 transition-all duration-200" />
-          ) : (
-            <Plus className="h-5 w-5 flex-shrink-0 text-gray-500 transition-all duration-200" />
-          )}
-        </button>
-        <div
-          className={cn(
-            "overflow-hidden transition-all duration-300 ease-in-out",
-            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
-          )}
-        >
-          <div className="pr-8 pb-6">
-            <p className="leading-relaxed font-normal text-gray-600">
-              {answer}
-            </p>
-          </div>
+        <h3 className={cn(
+          "font-sora pr-8 text-lg font-extrabold transition-all duration-300",
+          isOpen ? "text-emerald-600" : "text-slate-900 group-hover:text-emerald-500"
+        )}>
+          {question}
+        </h3>
+        <div className={cn(
+          "size-10 rounded-full flex items-center justify-center transition-all duration-500",
+          isOpen ? "bg-emerald-500 text-white rotate-180" : "bg-slate-50 text-slate-400 group-hover:bg-emerald-50 group-hover:text-emerald-500"
+        )}>
+          {isOpen ? <Minus size={18} /> : <Plus size={18} />}
         </div>
-      </div>
-    );
-  },
-);
-
-FAQItem.displayName = "FAQItem";
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="pb-8 pr-12">
+              <p className="font-sora text-slate-500 leading-relaxed text-base">
+                {answer}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 const faqData = [
   {
@@ -105,26 +107,25 @@ export function FAQ() {
   };
 
   return (
-    <section className="mt-16 py-16">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-12">
-          <h2 className="mb-4 text-5xl leading-[160%] font-bold text-gray-900">
-            Frequently asked questions
+    <section className="bg-white rounded-[3rem] p-10 md:p-16 border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.02)]">
+      <div className="w-full">
+        <div className="mb-12 space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase w-fit"
+          >
+            FAQ
+          </motion.div>
+          <h2 className="font-sora text-4xl font-extrabold text-slate-900 tracking-tight">
+            Common <span className="text-emerald-600 italic">Questions.</span>
           </h2>
-          <p className="font-sora text-sm text-gray-600">
-            Find answers to your questions right here, and don&apos;t hesitate
-            to{" "}
-            <a
-              href="mailto:contact@dentispark.co.uk"
-              className="text-primary cursor-pointer underline"
-            >
-              contact us
-            </a>{" "}
-            if you couldn&apos;t find what you&apos;re looking for.
+          <p className="font-sora text-slate-500 max-w-xl leading-relaxed">
+            Find answers to common inquiries or <a href="mailto:contact@dentispark.co.uk" className="text-emerald-600 font-bold hover:underline">get in touch</a> for personalized assistance.
           </p>
         </div>
 
-        <div className="bg-white">
+        <div className="divide-y divide-slate-50">
           {faqData.map((item) => (
             <FAQItem
               key={item.id}

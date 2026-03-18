@@ -8,84 +8,97 @@ import Container from "@/src/components/layouts/container";
 
 import waitlistImage from "@/public/images/waitlist.png";
 
+import { Variants } from "framer-motion";
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
 export function WaitlistSection() {
   return (
-    <section className="bg-primary-100 relative mb-12 overflow-hidden py-8 md:p-0">
+    <section className="relative py-24 md:py-32 overflow-hidden bg-slate-950">
+      {/* Background Cinematic Effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(16,185,129,0.1),transparent_50%)]" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
+      
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <motion.div 
+          className="grid grid-cols-1 items-center gap-20 lg:grid-cols-2"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {/* Image Section */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            variants={itemVariants}
             className="relative"
           >
-            {/* Waitlist Image Container */}
-            <div className="relative mx-auto flex items-center justify-center md:size-[400px]">
-              <motion.div
-                className="rounded-lg"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.4,
-                  type: "spring",
-                  stiffness: 200,
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  zIndex: 10,
-                  transition: { duration: 0.2 },
-                }}
-              >
+            <div className="relative group/waitlist mx-auto flex items-center justify-center">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-[3rem] blur opacity-20 group-hover/waitlist:opacity-40 transition-opacity duration-700" />
+              <div className="relative size-[350px] md:size-[450px] overflow-hidden rounded-[3rem] border border-white/10 shadow-2xl transition-transform duration-1000 group-hover/waitlist:scale-[1.02]">
                 <Image
                   src={waitlistImage}
                   alt="Your Mentees are waiting for you"
-                  className="h-full w-full rounded-lg object-cover"
-                  width={1000}
-                  height={1000}
-                  quality={85}
+                  className="h-full w-full object-cover transition-transform duration-1000 group-hover/waitlist:scale-110"
+                  fill
                   priority
-                  placeholder="blur"
                 />
-              </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
+                
+                {/* Floating Stat */}
+                <div className="absolute top-10 right-10 p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-2xl">
+                  <p className="font-sora text-white text-xs font-bold">1k+ Pending Applications</p>
+                </div>
+              </div>
             </div>
           </motion.div>
 
           {/* Content Section */}
-          <div className="order-1 space-y-6 lg:order-2">
-            {/* Main Heading */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-5xl leading-[150%] font-bold text-black sm:text-4xl md:text-5xl md:leading-[120%]">
-                Your Mentees are waiting for you.
+          <div className="space-y-10">
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-[0.3em] uppercase w-fit">
+                Impact Tomorrow
+              </div>
+              <h2 className="font-sora text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-[1.1]">
+                Your Mentees are <span className="text-emerald-400 font-extrabold italic">waiting</span> for you.
               </h2>
+              <p className="font-sora text-slate-400 text-lg md:text-xl leading-relaxed">
+                Step into a world of elite mentorship. Share your wisdom with driven individuals and shape the future of medicine.
+              </p>
             </motion.div>
 
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Link href="/mentor/onboarding" className="cursor-pointer">
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary-700 font-sora rounded-md px-6 py-6 text-base font-light text-white"
+            <motion.div variants={itemVariants}>
+              <Link href="/mentor/onboarding" className="relative group/cta inline-block">
+                <div className="absolute -inset-1 bg-emerald-500 rounded-2xl blur opacity-30 group-hover/cta:opacity-60 transition duration-500" />
+                <Button 
+                  size="lg" 
+                  className="relative h-16 px-12 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.02]"
                 >
-                  Become a Mentor
+                  Join the Waitlist
                 </Button>
               </Link>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

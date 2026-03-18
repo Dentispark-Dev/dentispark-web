@@ -8,44 +8,78 @@ import School4 from "@/src/components/icons/Sch4";
 import Partner1 from "@/src/components/icons/Partner1";
 import Partner2 from "@/src/components/icons/Partner2";
 
+import { motion, Variants } from "framer-motion";
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
 export default function UniversityPartner() {
   return (
-    <div className="bg-white-100 mt-24 flex w-full max-w-6xl flex-col divide-gray-200 rounded-[18px] p-8 shadow-[0px_1px_20px_5px_rgba(65,189,145,0.10)] md:flex-row">
+    <motion.div 
+      className="bg-white/40 backdrop-blur-xl mt-24 flex w-full max-w-6xl flex-col divide-slate-100 rounded-[2.5rem] p-12 shadow-[0_30px_60px_rgba(16,185,129,0.08)] border border-emerald-100/30 md:flex-row mx-auto"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+    >
       {/* Left column */}
-      <div className="flex flex-1 flex-col items-start py-6 text-left md:pl-8">
-        <p className="mb-6 font-medium text-[#9F9F9F]">
+      <motion.div variants={itemVariants} className="flex flex-1 flex-col items-start py-6 text-left md:pl-8">
+        <p className="mb-8 font-sora text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">
+          The Authority
+        </p>
+        <h3 className="mb-8 font-sora text-lg font-extrabold text-slate-900 leading-relaxed">
           The #1 Platform for underprivileged students
           <br />
           applying to dental school.
-        </p>
-        <div className="flex flex-wrap gap-6 md:justify-start">
-          <School1 className="h-24 w-16" />
-          <School2 className="h-24 w-18" />
-          <School3 className="h-24 w-16" />
-          <School4 className="h-24 w-16" />
+        </h3>
+        <div className="flex flex-wrap gap-10 items-center">
+          <School1 className="h-16 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
+          <School2 className="h-16 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
+          <School3 className="h-16 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
+          <School4 className="h-16 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
         </div>
-      </div>
+      </motion.div>
 
-      {/* Mobile horizontal divider */}
-      <div className="mx-auto my-6 block h-px w-24 bg-gray-200 md:hidden" />
-
-      {/* Custom short divider */}
-      <div className="hidden items-center px-4 md:flex">
-        <div className="h-24 w-px bg-gray-200" />
-      </div>
+      {/* Custom Divider */}
+      <motion.div variants={itemVariants} className="hidden md:flex items-center px-10">
+        <div className="h-32 w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent" />
+      </motion.div>
+      <div className="mx-auto my-10 block h-px w-24 bg-slate-100 md:hidden" />
 
       {/* Right column */}
-      <div className="flex flex-col py-6 text-left md:w-[50%] md:items-start md:pl-28">
-        <p className="mb-6 font-medium text-[#9F9F9F]">
+      <motion.div variants={itemVariants} className="flex flex-col py-6 text-left md:w-[45%] md:items-start md:pl-10">
+        <p className="mb-8 font-sora text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">
+          Alliances
+        </p>
+        <h3 className="mb-8 font-sora text-lg font-extrabold text-slate-900 leading-relaxed">
           Partnered with leading nonprofits to support
           <br />
           underprivileged students.
-        </p>
-        <div className="flex flex-wrap gap-8 md:justify-start">
-          <Partner1 className="h-10 w-40 md:w-44" />
-          <Partner2 className="h-10 w-40 md:w-44" />
+        </h3>
+        <div className="flex flex-wrap gap-12 items-center">
+          <Partner1 className="h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
+          <Partner2 className="h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

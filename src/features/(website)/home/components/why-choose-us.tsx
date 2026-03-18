@@ -1,14 +1,7 @@
 "use client";
 
-import * as React from "react";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/src/components/ui/carousel";
 import Container from "@/src/components/layouts/container";
 
 import whyUsImage1 from "@/public/images/why-us-1.png";
@@ -46,47 +39,85 @@ const features = [
   },
 ];
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
 export default function WhyChooseUs() {
   return (
-    <section className="bg-white py-24 md:py-32">
-      <Container className="flex flex-col space-y-16">
-        <div className="flex flex-col items-center space-y-4 text-center">
-          <span className="text-secondary-600 border-secondary-200 bg-secondary-50 rounded-full border px-4 py-1 text-sm font-semibold tracking-wide uppercase">
-            Our Advantage
-          </span>
-          <h2 className="font-slab text-4xl font-bold text-gray-900 md:text-5xl">
-            Why Choose DentiSpark?
-          </h2>
-          <p className="font-sora text-greys-800 max-w-2xl text-lg">
-            We provide specialized support to help you navigate the competitive landscape of dental school admissions.
-          </p>
-        </div>
+    <section className="bg-slate-50/50 py-24 md:py-32 overflow-hidden">
+      <Container>
+        <motion.div 
+          className="flex flex-col space-y-20"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <div className="flex flex-col items-center space-y-6 text-center">
+            <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
+              The Advantage
+            </motion.div>
+            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+              Why Choose <span className="text-emerald-600">DentiSpark?</span>
+            </motion.h2>
+            <motion.p variants={itemVariants} className="font-sora text-slate-500 max-w-2xl text-lg md:text-xl leading-relaxed">
+              We provide the elite infrastructure and support needed to dominate the competitive landscape of dental admissions.
+            </motion.p>
+          </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
-          {features.map((f, idx) => (
-            <div
-              key={idx}
-              className="group flex flex-col overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-all hover:shadow-2xl"
-            >
-              <div className="relative aspect-[16/9] w-full overflow-hidden">
-                <Image
-                  src={f.imageSrc}
-                  alt={f.imageAlt}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-              <div className="flex flex-col space-y-4 p-10">
-                <h3 className="font-slab text-2xl font-bold text-gray-900">
-                  {f.title}
-                </h3>
-                <p className="font-sora text-greys-800 text-lg leading-relaxed">
-                  {f.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+            {features.map((f, idx) => (
+              <motion.div
+                key={idx}
+                variants={itemVariants}
+                className="group relative flex flex-col overflow-hidden rounded-[3rem] bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(16,185,129,0.1)] hover:border-emerald-200"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <Image
+                    src={f.imageSrc}
+                    alt={f.imageAlt}
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-emerald-900/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                <div className="flex flex-col space-y-5 p-12">
+                  <h3 className="font-sora text-2xl font-extrabold text-slate-900 leading-tight">
+                    {f.title}
+                  </h3>
+                  <p className="font-sora text-slate-500 text-lg leading-relaxed">
+                    {f.description}
+                  </p>
+                  <div className="pt-4 flex items-center gap-2 text-emerald-600 font-bold text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                    Learn more 
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
     </section>
   );
