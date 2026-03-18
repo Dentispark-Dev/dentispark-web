@@ -97,10 +97,10 @@ export default async function MentorPage({ params }: MentorPageProps) {
                 src={mentor.image}
                 alt={`${mentor.name} Banner`}
                 fill
-                className="object-cover opacity-80 mix-blend-multiply"
+                className="object-cover opacity-50 mix-blend-multiply"
                 priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-gray-900/40 to-gray-900/20" />
             
             <Link 
                 href="/become-a-mentor"
@@ -131,10 +131,10 @@ export default async function MentorPage({ params }: MentorPageProps) {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
                             <div className="flex items-center gap-2">
-                                <h1 className="text-3xl md:text-4xl font-sora font-bold text-gray-900 tracking-tight">{mentor.name}</h1>
+                                <h1 className="text-3xl md:text-4xl font-sora font-extrabold text-gray-900 tracking-tight">{mentor.name}</h1>
                                 <CheckCircle2 className="h-6 w-6 text-emerald-500 fill-emerald-50" />
                             </div>
-                            <p className="text-lg font-medium text-gray-600 mt-1">{mentor.title}</p>
+                            <p className="text-xl font-semibold text-gray-700 mt-1">{mentor.title}</p>
                             <div className="flex items-center gap-4 mt-3">
                                 <div className="flex items-center gap-1">
                                     <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
@@ -172,7 +172,7 @@ export default async function MentorPage({ params }: MentorPageProps) {
                             </div>
                             <div>
                                 <p className="text-2xl font-sora font-bold text-gray-900">{mentor.stats.sessions.toLocaleString()}</p>
-                                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Sessions Hosted</p>
+                                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Sessions Hosted</p>
                             </div>
                         </div>
                         <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-3">
@@ -181,7 +181,7 @@ export default async function MentorPage({ params }: MentorPageProps) {
                             </div>
                             <div>
                                 <p className="text-2xl font-sora font-bold text-gray-900">{mentor.stats.mentees.toLocaleString()}</p>
-                                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Mentees Helped</p>
+                                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Mentees Helped</p>
                             </div>
                         </div>
                         <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-3">
@@ -190,7 +190,7 @@ export default async function MentorPage({ params }: MentorPageProps) {
                             </div>
                             <div>
                                 <p className="text-2xl font-sora font-bold text-gray-900">45 min</p>
-                                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Avg. Session</p>
+                                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Avg. Session</p>
                             </div>
                         </div>
                     </div>
@@ -198,7 +198,7 @@ export default async function MentorPage({ params }: MentorPageProps) {
                     {/* About Section */}
                     <section className="space-y-4">
                         <h2 className="text-2xl font-sora font-bold text-gray-900 tracking-tight">About {mentor.name.split(" ")[1]}</h2>
-                        <p className="text-base text-gray-600 leading-relaxed">
+                        <p className="text-lg text-gray-700 leading-relaxed font-medium">
                             {mentor.bio}
                         </p>
                     </section>
