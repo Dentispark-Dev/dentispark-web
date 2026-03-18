@@ -59,9 +59,9 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen bg-white overflow-hidden">
       {/* --- Left Pane: Form --- */}
-      <div className="w-full lg:w-[42%] flex flex-col p-8 md:p-12 lg:p-20 relative z-10 bg-white">
+      <div className="w-full lg:w-[42%] flex flex-col p-6 lg:p-12 relative z-10 bg-white">
         {/* Header Navigation */}
-        <div className="flex items-center justify-between mb-20">
+        <div className="flex items-center justify-between mb-8">
           <Link href="/">
             <Logo className="h-8 md:h-10 text-emerald-900" />
           </Link>
@@ -75,13 +75,13 @@ export default function LoginPage() {
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full space-y-10"
+          className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full space-y-6 mt-4"
         >
-          <div className="space-y-3">
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight leading-tight italic uppercase">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-black text-gray-900 tracking-tight leading-tight italic uppercase">
               Welcome Back
             </h1>
-            <p className="text-gray-500 font-medium text-lg">
+            <p className="text-gray-500 font-medium text-base">
               Your journey starts here. Log in to access your dashboard.
             </p>
           </div>
