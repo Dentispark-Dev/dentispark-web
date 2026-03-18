@@ -135,25 +135,31 @@ export default function MentorMatchingPage() {
 
   const matchedMentors = [
     {
+      name: "Dt. Marcus Thorne",
+      university: "Univ of Pennsylvania",
+      specialty: "Orthodontic Prep",
+      compatibility: 98,
+      highlights: ["Elite Orthodontics", "12+ Years Experience"],
+      slug: "dt-marcus-thorne",
+      image: "/images/premium/mentor-banner.png"
+    },
+    {
+      name: "Dr. Elena Rostova",
+      university: "Harvard School of Dental Medicine",
+      specialty: "Surgical Residency",
+      compatibility: 94,
+      highlights: ["Chief of Surgery", "Admissions Committee"],
+      slug: "dr-elena-rostova",
+      image: "/images/premium/auth-landscape.png"
+    },
+    {
       name: "Dr. Sarah Chen",
       university: "King's College London",
-      specialty: "MMI & Personal Statement",
-      compatibility: 98,
-      highlights: ["Current KCL Student", "Oral Surgery Specialist", "50+ Successful Students"]
-    },
-    {
-      name: "James Wilson",
-      university: "University of Manchester",
-      specialty: "UCAT & Manual Dexterity",
-      compatibility: 94,
-      highlights: ["99th Percentile UCAT", "Violin Excellence (Manual Dex)", "Recent Grad"]
-    },
-    {
-      name: "Dr. Amira Patel",
-      university: "UCL",
-      specialty: "Clinical Scenarios",
+      specialty: "UCAT Strategy",
       compatibility: 89,
-      highlights: ["NHS Value Expert", "Top of Class (UCL)", "Interview Panel Exp"]
+      highlights: ["NHS Consultant", "UCAT Specialist"],
+      slug: "dr-sarah-chen",
+      image: "/images/premium/mentor-banner.png"
     }
   ];
 

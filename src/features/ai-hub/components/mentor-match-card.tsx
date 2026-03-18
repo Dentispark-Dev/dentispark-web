@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Star, GraduationCap, ArrowUpRight, CheckCircle2, Award, Zap, ShieldCheck } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 interface MentorMatchCardProps {
   name: string;
@@ -13,6 +14,7 @@ interface MentorMatchCardProps {
   compatibility: number;
   image?: string;
   highlights: string[];
+  slug: string;
 }
 
 export function MentorMatchCard({ 
@@ -21,7 +23,8 @@ export function MentorMatchCard({
   specialty, 
   compatibility, 
   highlights,
-  image
+  image,
+  slug
 }: MentorMatchCardProps) {
   return (
     <motion.div 
@@ -93,11 +96,13 @@ export function MentorMatchCard({
 
             <div className="pt-2 flex gap-3">
                 <div className="flex-1">
-                    <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 shadow-lg shadow-emerald-900/40 relative overflow-hidden group/btn">
-                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                        Secure Partnership
-                        <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    </Button>
+                    <Link href={`/mentorship/${slug}`} className="block w-full">
+                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 flex items-center justify-center gap-3 active:scale-95 shadow-lg shadow-emerald-900/40 relative overflow-hidden group/btn">
+                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                            Secure Partnership
+                            <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        </Button>
+                    </Link>
                 </div>
                 <button className="p-4 bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl text-white/40 hover:text-white transition-all">
                     <ShieldCheck className="w-5 h-5" />

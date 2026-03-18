@@ -16,49 +16,65 @@ interface MentorPageProps {
 
 // Mock Data structure for the cinematic layout
 const MOCK_MENTORS: Record<string, any> = {
-    "dt-andy-j-pierce": {
-        slug: "dt-andy-j-pierce",
-        name: "Dt. Andy J. Pierce",
-        title: "DDS, American Public University System",
-        credentials: "Orthodontist | Graduate Admission Consultant",
-        bio: "With ten years of experience in graduate admissions at Stanford University's School of Engineering and School of Education, I provide valuable insight into the application and review process. Specialized in complex cases and mentoring for dental sciences.",
-        stats: {
-            sessions: 840,
-            mentees: 212,
-            rating: 4.8,
-            reviews: 26
-        },
-        services: [
-            "Graduate Admission Consulting",
-            "Complex Case Review",
-            "Orthodontic Specialization Prep",
-            "Personal Statement Review"
-        ],
-        availability: "Available tomorrow at 19:30 GMT",
-        hourlyRate: 150,
+    "dt-marcus-thorne": {
+        slug: "dt-marcus-thorne",
+        name: "Dt. Marcus Thorne",
+        title: "Orthodontist, Univ of Pennsylvania",
+        credentials: "Elite Orthodontics | 12+ Years Experience",
+        bio: "Specializing in advanced orthodontic procedures and guiding pre-dental students through the rigorous application process for specialized programs.",
+        stats: { sessions: 1530, mentees: 512, rating: 4.9, reviews: 88 },
+        services: ["Orthodontic Specialization Prep", "Personal Statement Review", "Clinical Research Advice"],
+        availability: "Available tomorrow at 10:00 EST",
+        hourlyRate: 175,
         image: "/images/premium/mentor-banner.png"
     },
-    "dr-baird-james": {
-        slug: "dr-baird-james",
-        name: "Dr. Baird James",
-        title: "DMD, Harvard School of Dental Medicine",
-        credentials: "Chief of Oral Surgery | Boston Medical Center",
-        bio: "Building relationships with individuals from outside my typical circle, hearing about their paths and preparing them for careers is inspiring and motivating. My approach focuses on practical guidance combined with emotional support throughout the rigorous oral surgery application process.",
-        stats: {
-            sessions: 1240,
-            mentees: 472,
-            rating: 5.0,
-            reviews: 34
-        },
-        services: [
-            "Surgical Residency Prep",
-            "Clinical Rotations Strategy",
-            "Interview Prep (MMI & Traditional)",
-            "Application Audit"
-        ],
-        availability: "Available today at 14:00 EST",
-        hourlyRate: 200,
-        image: "/images/premium/auth-landscape.png" 
+    "dr-elena-rostova": {
+        slug: "dr-elena-rostova",
+        name: "Dr. Elena Rostova",
+        title: "Oral Surgeon, Harvard School of Dental Medicine",
+        credentials: "Chief of Surgery | Admissions Committee",
+        bio: "I leverage my experience on the Harvard admissions committee to help driven students craft compelling narratives. I focus on surgical specialties and high-stakes interviews.",
+        stats: { sessions: 980, mentees: 340, rating: 5.0, reviews: 62 },
+        services: ["Surgical Residency Prep", "MMI Interview Prep", "Application Strategy"],
+        availability: "Available Thursday at 14:00 GMT",
+        hourlyRate: 210,
+        image: "/images/premium/auth-landscape.png"
+    },
+    "dr-sarah-chen": {
+        slug: "dr-sarah-chen",
+        name: "Dr. Sarah Chen",
+        title: "General Dentist, King's College London",
+        credentials: "NHS Consultant | UCAT Specialist",
+        bio: "Passionate about mentoring the next generation of UK dentists. I specialize in breaking down the UCAT and preparing students for the nuances of NHS-focused interviews.",
+        stats: { sessions: 2100, mentees: 890, rating: 4.8, reviews: 145 },
+        services: ["UCAT Strategy", "NHS Values Interview", "School Selection (UK)"],
+        availability: "Available Today at 18:00 BST",
+        hourlyRate: 120,
+        image: "/images/premium/mentor-banner.png"
+    },
+    "dt-james-wilson": {
+        slug: "dt-james-wilson",
+        name: "Dt. James Wilson",
+        title: "Pediatric Dentist, UCSF",
+        credentials: "Pediatric Specialist | Former UCSF Admissions",
+        bio: "Working with children requires patience and empathy—qualities I look for in future dentists. I help applicants highlight their soft skills and community impact.",
+        stats: { sessions: 640, mentees: 210, rating: 4.9, reviews: 34 },
+        services: ["Pediatric Dentistry Path", "Community Narrative", "Traditional Interview"],
+        availability: "Available next Monday at 09:00 PST",
+        hourlyRate: 160,
+        image: "/images/premium/auth-landscape.png"
+    },
+    "dr-amira-patel": {
+        slug: "dr-amira-patel",
+        name: "Dr. Amira Patel",
+        title: "Periodontist, UCL",
+        credentials: "Top of Class UCL | Research Fellow",
+        bio: "My focus is on helping students with strong academic and research backgrounds translate those achievements into a winning dental school application.",
+        stats: { sessions: 420, mentees: 150, rating: 5.0, reviews: 29 },
+        services: ["Research Portfolio Review", "Academic Strategy", "Personal Statement"],
+        availability: "Available Wednesday at 11:00 BST",
+        hourlyRate: 140,
+        image: "/images/premium/mentor-banner.png"
     }
 };
 

@@ -12,22 +12,20 @@ import mentor2 from "@/public/images/mentor-img-2.png";
 
 const mentors = [
   {
-    id: 1,
-    name: "Dr. Uzomaka Aaron",
-    title: "Mentor & Dental Surgeon",
+    slug: "dt-marcus-thorne",
+    name: "Dt. Marcus Thorne",
+    title: "Mentor & Orthodontist",
     quote:
-      "When I heard about Leland, I felt an immediate calling to get involved. Education, and the opportunities that it affords, is so vital, especially in bridging the gap between the privileged few and the non-quite-as-privileged many. That is why I coach.",
+      "Specializing in advanced orthodontic procedures and guiding pre-dental students through the rigorous application process for specialized programs.",
     image: mentor1,
-    profileLink: "#",
   },
   {
-    id: 2,
-    name: "Dr. Baird James",
-    title: "Mentor & Dental Surgeon",
+    slug: "dr-elena-rostova",
+    name: "Dr. Elena Rostova",
+    title: "Mentor & Oral Surgeon",
     quote:
-      "Building relationships with individuals from outside my typical circle, hearing about their paths and how they're preparing for careers is inspiring and motivating. A little extra money on the side is never a bad perk either. If you're interested and qualified to coach, I'd recommend giving it a try.",
+      "I leverage my experience on the Harvard admissions committee to help driven students craft compelling narratives. I focus on surgical specialties and high-stakes interviews.",
     image: mentor2,
-    profileLink: "#",
   },
 ];
 
@@ -65,7 +63,7 @@ export function MentorSection() {
         >
           {mentors.map((mentor) => (
             <motion.div
-              key={mentor.id}
+              key={mentor.slug}
               variants={cardVariants}
               whileHover={{
                 scale: 1.02,
@@ -105,7 +103,7 @@ export function MentorSection() {
 
                   {/* Profile Button */}
                   <div>
-                    <Link href={`/become-a-mentor/${mentor.id}`}>
+                    <Link href={`/become-a-mentor/${mentor.slug}`}>
                       <Button
                         variant="outline"
                         size="sm"

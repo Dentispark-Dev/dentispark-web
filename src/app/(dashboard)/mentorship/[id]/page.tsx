@@ -15,26 +15,64 @@ import { motion } from "framer-motion";
 // --- Mock Data (matches the mentorship list) ---
 const MOCK_MENTORS = [
     {
-        id: "1",
-        name: "Dr. Priya Sharma",
-        title: "DMD, Harvard School of Dental Medicine",
-        credentials: "Former Admissions Committee Member | 8+ Years Experience",
-        bio: "I help pre-dental students craft compelling applications that stand out. With 8 years of admissions experience and a 94% acceptance rate among my students, I know exactly what dental schools are looking for. My approach combines strategic narrative building with rigorous interview preparation.",
-        stats: {
-            sessions: 1240,
-            mentees: 472,
-            rating: 5.0,
-            reviews: 47
-        },
-        services: [
-            "Personal Statement Review",
-            "Interview Prep (MMI & Traditional)",
-            "School List Strategy",
-            "Application Audit"
-        ],
-        availability: "Available tomorrow",
-        hourlyRate: 180,
-        image: "/images/premium/mentor-banner.png" // Using the cinematic banner as a placeholder for a rich visual
+        id: "dt-marcus-thorne",
+        name: "Dt. Marcus Thorne",
+        title: "Orthodontist, Univ of Pennsylvania",
+        credentials: "Elite Orthodontics | 12+ Years Experience",
+        bio: "Specializing in advanced orthodontic procedures and guiding pre-dental students through the rigorous application process for specialized programs.",
+        stats: { sessions: 1530, mentees: 512, rating: 4.9, reviews: 88 },
+        services: ["Orthodontic Specialization Prep", "Personal Statement Review", "Clinical Research Advice"],
+        availability: "Available tomorrow at 10:00 EST",
+        hourlyRate: 175,
+        image: "/images/premium/mentor-banner.png"
+    },
+    {
+        id: "dr-elena-rostova",
+        name: "Dr. Elena Rostova",
+        title: "Oral Surgeon, Harvard School of Dental Medicine",
+        credentials: "Chief of Surgery | Admissions Committee",
+        bio: "I leverage my experience on the Harvard admissions committee to help driven students craft compelling narratives. I focus on surgical specialties and high-stakes interviews.",
+        stats: { sessions: 980, mentees: 340, rating: 5.0, reviews: 62 },
+        services: ["Surgical Residency Prep", "MMI Interview Prep", "Application Strategy"],
+        availability: "Available Thursday at 14:00 GMT",
+        hourlyRate: 210,
+        image: "/images/premium/auth-landscape.png"
+    },
+    {
+        id: "dr-sarah-chen",
+        name: "Dr. Sarah Chen",
+        title: "General Dentist, King's College London",
+        credentials: "NHS Consultant | UCAT Specialist",
+        bio: "Passionate about mentoring the next generation of UK dentists. I specialize in breaking down the UCAT and preparing students for the nuances of NHS-focused interviews.",
+        stats: { sessions: 2100, mentees: 890, rating: 4.8, reviews: 145 },
+        services: ["UCAT Strategy", "NHS Values Interview", "School Selection (UK)"],
+        availability: "Available Today at 18:00 BST",
+        hourlyRate: 120,
+        image: "/images/premium/mentor-banner.png"
+    },
+    {
+        id: "dt-james-wilson",
+        name: "Dt. James Wilson",
+        title: "Pediatric Dentist, UCSF",
+        credentials: "Pediatric Specialist | Former UCSF Admissions",
+        bio: "Working with children requires patience and empathy—qualities I look for in future dentists. I help applicants highlight their soft skills and community impact.",
+        stats: { sessions: 640, mentees: 210, rating: 4.9, reviews: 34 },
+        services: ["Pediatric Dentistry Path", "Community Narrative", "Traditional Interview"],
+        availability: "Available next Monday at 09:00 PST",
+        hourlyRate: 160,
+        image: "/images/premium/auth-landscape.png"
+    },
+    {
+        id: "dr-amira-patel",
+        name: "Dr. Amira Patel",
+        title: "Periodontist, UCL",
+        credentials: "Top of Class UCL | Research Fellow",
+        bio: "My focus is on helping students with strong academic and research backgrounds translate those achievements into a winning dental school application.",
+        stats: { sessions: 420, mentees: 150, rating: 5.0, reviews: 29 },
+        services: ["Research Portfolio Review", "Academic Strategy", "Personal Statement"],
+        availability: "Available Wednesday at 11:00 BST",
+        hourlyRate: 140,
+        image: "/images/premium/mentor-banner.png"
     }
 ];
 
