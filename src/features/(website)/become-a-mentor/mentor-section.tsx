@@ -103,7 +103,7 @@ export function MentorSection() {
 
                   {/* Profile Button */}
                   <div>
-                    <Link href={`/become-a-mentor/${mentor.slug}`}>
+                    <Link href={`/mentor/${mentor.slug}`}>
                       <Button
                         variant="outline"
                         size="sm"
