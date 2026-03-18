@@ -28,7 +28,7 @@ export function IntelligenceRadar({ step, dataPoints, label }: IntelligenceRadar
               duration: 4 + r,
               ease: "easeInOut" 
             }}
-            className="absolute border border-primary-500/20 rounded-full"
+            className="absolute border border-emerald-500/10 rounded-full"
             style={{ width: `${r * 180}px`, height: `${r * 180}px` }}
           />
         ))}
@@ -39,13 +39,13 @@ export function IntelligenceRadar({ step, dataPoints, label }: IntelligenceRadar
         <motion.div 
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-          className="absolute -inset-8 border border-dashed border-primary-400/30 rounded-full"
+          className="absolute -inset-8 border border-dashed border-emerald-200/50 rounded-full"
         />
         
-        <div className="w-32 h-32 bg-gradient-to-br from-primary-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-[0_0_50px_rgba(20,184,166,0.3)] relative group">
+        <div className="w-32 h-32 bg-emerald-600 rounded-3xl flex items-center justify-center shadow-lg relative group">
           <BrainCircuit className="w-16 h-16 text-white" />
           <motion.div 
-            className="absolute -top-2 -right-2 bg-white text-black font-black text-[10px] px-2 py-0.5 rounded-full shadow-lg"
+            className="absolute -top-2 -right-2 bg-emerald-900 text-white font-bold text-[10px] px-2 py-0.5 rounded-full shadow-sm"
             animate={{ y: [0, -4, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
@@ -60,13 +60,13 @@ export function IntelligenceRadar({ step, dataPoints, label }: IntelligenceRadar
           key={label}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-white font-black text-2xl uppercase tracking-[0.2em]"
+          className="text-gray-900 font-sora font-bold text-2xl uppercase tracking-wider"
         >
           {label || "System Scanning"}
         </motion.p>
-        <div className="flex items-center justify-center gap-4 text-primary-400 font-bold text-xs">
+        <div className="flex items-center justify-center gap-4 text-emerald-600 font-semibold text-xs transition-all">
           <span className="flex items-center gap-1"><Zap className="w-3 h-3" /> AI READY</span>
-          <span className="w-1 h-1 bg-white/20 rounded-full" />
+          <span className="w-1 h-1 bg-gray-300 rounded-full" />
           <span>{dataPoints} DATA POINTS LOADED</span>
         </div>
       </div>
@@ -85,7 +85,7 @@ export function IntelligenceRadar({ step, dataPoints, label }: IntelligenceRadar
                 transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                 style={{ left: '50%', top: '50%' }}
               >
-                  <div className="w-8 h-8 bg-black/40 backdrop-blur-md border border-white/10 rounded-xl flex items-center justify-center text-primary-400">
+                  <div className="w-8 h-8 bg-white border border-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 shadow-sm">
                       <Icon className="w-4 h-4" />
                   </div>
               </motion.div>

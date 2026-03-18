@@ -42,7 +42,7 @@ export function InterviewTimer({ durationSeconds, onComplete, isActive }: Interv
           <circle 
             cx="80" cy="80" r="72" 
             stroke="currentColor" strokeWidth="8" fill="transparent" 
-            className="text-greys-100" 
+            className="text-gray-100" 
           />
           <motion.circle 
             cx="80" cy="80" r="72" 
@@ -52,18 +52,18 @@ export function InterviewTimer({ durationSeconds, onComplete, isActive }: Interv
             transition={{ duration: 1, ease: "linear" }}
             className={cn(
               "transition-colors duration-500",
-              isUrgent ? "text-red-500" : isWarning ? "text-amber-500" : "text-primary-500"
+              isUrgent ? "text-red-500" : isWarning ? "text-amber-500" : "text-emerald-500"
             )}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className={cn(
-                "text-4xl font-black tabular-nums transition-colors duration-500",
-                isUrgent ? "text-red-600 animate-pulse" : "text-black-800"
+                "text-4xl font-sora font-bold tabular-nums transition-colors duration-500",
+                isUrgent ? "text-red-600 animate-pulse" : "text-gray-900"
             )}>
                 {minutes}:{seconds.toString().padStart(2, '0')}
             </span>
-            <span className="text-[10px] font-bold text-black-400 uppercase tracking-widest">Time Left</span>
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Time Left</span>
         </div>
       </div>
     </div>

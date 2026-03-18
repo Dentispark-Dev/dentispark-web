@@ -73,15 +73,15 @@ export default function AIHubPage() {
   return (
     <div className="space-y-8">
       {/* Header Section */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2 px-3 py-1 bg-primary-100 text-primary-700 rounded-full w-fit text-sm font-medium animate-pulse">
-          <Zap className="w-4 h-4 fill-primary-600" />
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full w-fit text-xs font-bold border border-emerald-100">
+          <Zap className="w-3.5 h-3.5 fill-emerald-500 text-emerald-500" />
           AI Beta
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-black-800">
+        <h1 className="text-4xl lg:text-5xl font-sora font-bold tracking-tight text-gray-900">
           AI Application Hub
         </h1>
-        <p className="text-lg text-black-500 max-w-2xl">
+        <p className="text-lg text-gray-600 max-w-2xl font-medium">
           Supercharge your application journey with advanced AI tools designed specifically for international medical and dental students.
         </p>
       </div>
@@ -90,64 +90,69 @@ export default function AIHubPage() {
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-card rounded-[2.5rem] p-10 relative overflow-hidden flex flex-col md:flex-row items-center gap-10 bg-black-900 text-white shadow-2xl border-t-4 border-primary-500"
+        className="rounded-[2.5rem] p-10 relative overflow-hidden flex flex-col md:flex-row items-center gap-10 bg-white shadow-xl border border-gray-100"
       >
-        <div className="flex-1 space-y-6">
-            <div className="flex items-center gap-2 px-3 py-1 bg-primary-100 text-primary-700 rounded-full w-fit text-[10px] font-black uppercase tracking-widest">
-                <Zap className="w-3 h-3 fill-primary-600" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 blur-[100px] rounded-full -mr-20 -mt-20" />
+        
+        <div className="flex-1 space-y-6 relative z-10">
+            <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full w-fit text-[10px] font-bold uppercase tracking-wider">
+                <Zap className="w-3 h-3 fill-emerald-500 text-emerald-500" />
                 New: Command Center
             </div>
             <div className="space-y-2">
-                <h2 className="text-4xl font-black tracking-tight">The Admissions War-Room</h2>
-                <p className="text-white/60 font-medium leading-relaxed">
+                <h2 className="text-4xl font-sora font-bold tracking-tight text-gray-900">The Admissions War-Room</h2>
+                <p className="text-gray-600 font-medium leading-relaxed max-w-lg">
                     Consolidate your entire application intelligence. View your tactical radar, readiness score, and real-time school-specific probability briefings in one high-impact command center.
                 </p>
             </div>
             <Link href="/ai-hub/war-room">
-                <button className="flex items-center gap-3 bg-primary-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-primary-700 transition-all shadow-xl shadow-primary-900/40 text-lg group">
+                <button className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-4 rounded-xl font-sora font-bold hover:bg-emerald-700 transition-all shadow-sm text-lg group">
                     Enter War-Room <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
             </Link>
         </div>
-        <div className="w-full md:w-1/3 flex justify-center py-4">
+        <div className="w-full md:w-1/3 flex justify-center py-4 relative z-10">
             <div className="relative">
-                <div className="absolute inset-0 bg-primary-500/20 blur-3xl rounded-full scale-150 animate-pulse" />
-                <Target className="w-40 h-40 text-primary-500 relative" />
-                <div className="absolute -top-4 -right-4 bg-white text-black-900 px-4 py-2 rounded-2xl font-black text-sm shadow-xl">82% Ready</div>
+                <div className="absolute inset-0 bg-emerald-100/50 blur-3xl rounded-full scale-110" />
+                <div className="w-40 h-40 rounded-3xl bg-emerald-50 flex items-center justify-center border-2 border-white shadow-sm">
+                    <Target className="w-20 h-20 text-emerald-600" />
+                </div>
+                <div className="absolute -top-4 -right-4 bg-emerald-600 text-white px-4 py-2 rounded-xl font-sora font-bold text-sm shadow-md border-2 border-white">82% Ready</div>
             </div>
         </div>
       </motion.div>
 
       {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {tools.map((tool, index) => (
           <motion.div
             key={tool.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="group glass p-6 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all border-transparent hover:border-primary-200"
+            className="group bg-white p-8 rounded-3xl hover:shadow-md transition-all border border-gray-100 hover:border-emerald-100"
           >
-            <div className={`w-14 h-14 ${tool.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+            <div className={`w-14 h-14 ${tool.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
               {tool.icon}
             </div>
-            <div className="flex justify-between items-start mb-2">
-              <h3 className="text-xl font-bold text-black-700">{tool.title}</h3>
-              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${
-                tool.status === "Ready" ? "bg-green-100 text-green-700" : 
-                tool.status === "Beta" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-400"
+            <div className="flex justify-between items-start mb-3">
+              <h3 className="text-xl font-sora font-semibold text-gray-900">{tool.title}</h3>
+              <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${
+                tool.status === "Ready" ? "bg-emerald-50 text-emerald-700" : 
+                tool.status === "Beta" ? "bg-blue-50 text-blue-700" : "bg-gray-50 text-gray-400"
               }`}>
                 {tool.status}
               </span>
             </div>
-            <p className="text-black-500 mb-6 leading-relaxed">
+            <p className="text-gray-500 mb-8 leading-relaxed font-medium text-sm">
               {tool.description}
             </p>
             <Link href={tool.href}>
-              <button disabled={tool.status === "Coming Soon"} className={`w-full py-2.5 rounded-lg border font-medium transition-all ${
-                tool.status === "Coming Soon" ? "border-gray-100 text-gray-300 cursor-not-allowed" : "border-primary-100 text-primary-600 hover:bg-primary-50"
+              <button disabled={tool.status === "Coming Soon"} className={`w-full py-3 rounded-xl border font-sora font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+                tool.status === "Coming Soon" ? "border-gray-100 text-gray-300 cursor-not-allowed" : "border-gray-200 text-gray-700 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700"
               }`}>
                 {tool.status === "Coming Soon" ? "Notify Me" : "Open Tool"}
+                <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
           </motion.div>
@@ -155,13 +160,13 @@ export default function AIHubPage() {
       </div>
 
       {/* Security Info */}
-      <div className="flex items-center justify-center gap-8 py-8 opacity-50">
-        <div className="flex items-center gap-2 text-sm text-black-400">
-            <ShieldCheck className="w-4 h-4" />
+      <div className="flex items-center justify-center gap-12 py-12 opacity-60">
+        <div className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest">
+            <ShieldCheck className="w-4 h-4 text-emerald-500" />
             GDPR Compliant
         </div>
-        <div className="flex items-center gap-2 text-sm text-black-400">
-            <Search className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest">
+            <Search className="w-4 h-4 text-emerald-500" />
             Vetted Content
         </div>
       </div>

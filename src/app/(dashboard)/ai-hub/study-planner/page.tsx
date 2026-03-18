@@ -58,12 +58,12 @@ export default function StudyPlannerPage() {
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Link href="/ai-hub" className="p-2 hover:bg-greys-100 rounded-lg transition-colors text-black-500">
+        <Link href="/ai-hub" className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-black-800">AI 90-Day Study Planner</h1>
-          <p className="text-black-500 text-sm">Personalized strategy for your {activeFieldLabel} entrance exams.</p>
+          <h1 className="text-2xl font-sora font-bold text-gray-900">AI 90-Day Study Planner</h1>
+          <p className="text-gray-500 text-sm font-medium">Personalized strategy for your {activeFieldLabel} entrance exams.</p>
         </div>
       </div>
 
@@ -73,40 +73,40 @@ export default function StudyPlannerPage() {
             key="config"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-10 rounded-[2.5rem] bg-white border-primary-100/30 space-y-8 shadow-sm"
+            className="p-10 rounded-[2.5rem] bg-white border border-gray-100 space-y-8 shadow-sm"
           >
             <div className="text-center space-y-2">
-                <Target className="w-12 h-12 text-primary-600 mx-auto" />
-                <h2 className="text-2xl font-bold text-black-800">Map Your Success</h2>
-                <p className="text-black-500 text-sm">Tell us your targets, and we'll build the road to get there.</p>
+                <Target className="w-12 h-12 text-emerald-600 mx-auto" />
+                <h2 className="text-2xl font-sora font-bold text-gray-900">Map Your Success</h2>
+                <p className="text-gray-500 text-sm font-medium">Tell us your targets, and we'll build the road to get there.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                    <label className="text-xs font-bold text-black-400 uppercase tracking-widest pl-1">Target Exam Date</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">Target Exam Date</label>
                     <Input 
                         type="date"
                         value={formData.examDate}
                         onChange={(e) => setFormData({...formData, examDate: e.target.value})}
-                        className="rounded-xl h-12"
+                        className="rounded-xl h-12 border-gray-100 focus:border-emerald-500 transition-colors"
                     />
                 </div>
                 <div className="space-y-2">
-                    <label className="text-xs font-bold text-black-400 uppercase tracking-widest pl-1">Target Score / Percentile</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">Target Score / Percentile</label>
                     <Input 
                         placeholder="e.g. 95th Percentile"
                         value={formData.targetScore}
                         onChange={(e) => setFormData({...formData, targetScore: e.target.value})}
-                        className="rounded-xl h-12"
+                        className="rounded-xl h-12 border-gray-100 focus:border-emerald-500 transition-colors"
                     />
                 </div>
                 <div className="space-y-2">
-                    <label className="text-xs font-bold text-black-400 uppercase tracking-widest pl-1">Weakest Topics</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">Weakest Topics</label>
                     <Input 
                         placeholder="e.g. Organic Chemistry, VR"
                         value={formData.weakAreas}
                         onChange={(e) => setFormData({...formData, weakAreas: e.target.value})}
-                        className="rounded-xl h-12"
+                        className="rounded-xl h-12 border-gray-100 focus:border-emerald-500 transition-colors"
                     />
                 </div>
             </div>
@@ -114,7 +114,7 @@ export default function StudyPlannerPage() {
             <Button 
                 onClick={handleGenerate}
                 disabled={!formData.examDate}
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white h-14 rounded-2xl font-bold shadow-lg shadow-primary-200 transition-all text-lg"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-14 rounded-2xl font-sora font-bold shadow-sm transition-all text-lg transform active:scale-[0.98]"
             >
                 Generate 90-Day Plan <ChevronRight className="ml-2 w-5 h-5" />
             </Button>
@@ -134,16 +134,16 @@ export default function StudyPlannerPage() {
             className="flex flex-col items-center justify-center py-20 space-y-8"
           >
             <div className="relative">
-                <Calendar className="w-20 h-20 text-primary-200" />
+                <Calendar className="w-20 h-20 text-emerald-100" />
                 <motion.div 
                     animate={{ y: [0, 40, 0] }}
                     transition={{ repeat: Infinity, duration: 2 }}
-                    className="absolute top-0 left-0 right-0 h-1 bg-primary-600 rounded-full"
+                    className="absolute top-0 left-0 right-0 h-1 bg-emerald-600 rounded-full"
                 />
             </div>
             <div className="text-center space-y-2">
-                <h3 className="text-2xl font-bold text-black-800">Synthesizing Your Curriculum...</h3>
-                <p className="text-black-500">Creating a data-driven schedule optimized for your target date.</p>
+                <h3 className="text-2xl font-sora font-bold text-gray-900">Synthesizing Your Curriculum...</h3>
+                <p className="text-gray-500 font-medium">Creating a data-driven schedule optimized for your target date.</p>
             </div>
           </motion.div>
         ) : (
@@ -156,16 +156,16 @@ export default function StudyPlannerPage() {
             {/* Timeline Phases */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {plan?.phases?.map((phase: any, i: number) => (
-                    <div key={i} className="glass-card p-6 rounded-3xl bg-white border-primary-100/20 shadow-sm relative overflow-hidden group">
+                    <div key={i} className="p-6 rounded-3xl bg-white border border-gray-100 shadow-sm relative overflow-hidden group hover:border-emerald-200 transition-all">
                         <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <span className="text-6xl font-black">{i + 1}</span>
+                            <span className="text-6xl font-sora font-bold text-emerald-600">{i + 1}</span>
                         </div>
                         <div className="space-y-4">
                             <div>
-                                <h4 className="font-black text-primary-600 uppercase tracking-widest text-[10px]">{phase.duration}</h4>
-                                <h3 className="text-lg font-bold text-black-800">{phase.name}</h3>
+                                <h4 className="font-bold text-emerald-600 uppercase tracking-widest text-[10px]">{phase.duration}</h4>
+                                <h3 className="text-lg font-sora font-bold text-gray-900">{phase.name}</h3>
                             </div>
-                            <p className="text-xs text-black-500 font-medium leading-relaxed">{phase.focus}</p>
+                            <p className="text-xs text-gray-500 font-medium leading-relaxed">{phase.focus}</p>
                             <div className="pt-2 flex items-center gap-2 text-[10px] font-bold text-emerald-600 uppercase">
                                 <CheckCircle2 className="w-3 h-3" /> {phase.milestone}
                             </div>
@@ -176,40 +176,43 @@ export default function StudyPlannerPage() {
 
             {/* Weekly Breakdown */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 glass-card p-8 rounded-[2.5rem] bg-white border border-greys-100 shadow-sm space-y-6">
-                    <h3 className="text-xl font-bold text-black-800">Representative Weekly Flow</h3>
+                <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-6">
+                    <h3 className="text-xl font-sora font-bold text-gray-900">Representative Weekly Flow</h3>
                     <div className="space-y-3">
                         {plan?.weeklySchedule?.map((day: any, i: number) => (
-                            <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-greys-50 transition-colors border border-transparent hover:border-greys-100 group">
-                                <div className="w-12 text-xs font-black text-black-300 uppercase group-hover:text-primary-600 transition-colors">{day.day}</div>
+                            <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100 group">
+                                <div className="w-12 text-xs font-sora font-bold text-gray-300 uppercase group-hover:text-emerald-600 transition-colors">{day.day}</div>
                                 <div className="flex-1">
-                                    <p className="text-sm font-bold text-black-700">{day.activity}</p>
+                                    <p className="text-sm font-bold text-gray-700">{day.activity}</p>
                                 </div>
-                                <div className="text-[10px] font-bold text-black-400 bg-greys-100 px-3 py-1 rounded-full">{day.duration}</div>
+                                <div className="text-[10px] font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{day.duration}</div>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 <div className="space-y-6">
-                    <div className="glass-card p-6 rounded-3xl bg-primary-600 text-white space-y-4 shadow-xl shadow-primary-100">
-                        <h4 className="font-bold flex items-center gap-2">
-                            <BookOpen className="w-4 h-4" /> Essential Materials
+                    <div className="p-6 rounded-3xl bg-emerald-600 text-white space-y-4 shadow-sm relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-20">
+                            <BookOpen className="w-12 h-12" />
+                        </div>
+                        <h4 className="font-sora font-bold flex items-center gap-2 relative z-10">
+                            Essential Materials
                         </h4>
-                        <ul className="space-y-2 opacity-90">
+                        <ul className="space-y-2 opacity-95 relative z-10">
                             {plan?.materials?.map((m: string, i: number) => (
-                                <li key={i} className="text-xs font-medium border-l-2 border-white/20 pl-3 py-1">{m}</li>
+                                <li key={i} className="text-xs font-medium border-l-2 border-white/30 pl-3 py-1">{m}</li>
                             ))}
                         </ul>
                     </div>
 
-                    <div className="glass-card p-6 rounded-3xl bg-white border border-greys-100 space-y-4 shadow-sm">
-                        <h4 className="font-bold text-black-800 flex items-center gap-2">
-                            <Sparkles className="w-4 h-4 text-primary-600" /> Pro Tips
+                    <div className="p-6 rounded-3xl bg-white border border-gray-100 space-y-4 shadow-sm">
+                        <h4 className="font-sora font-bold text-gray-900 flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 text-emerald-600" /> Pro Tips
                         </h4>
                         <div className="space-y-3">
                             {plan?.tips?.map((tip: string, i: number) => (
-                                <p key={i} className="text-[10px] text-black-500 font-medium leading-relaxed italic border-l-2 border-primary-200 pl-3">
+                                <p key={i} className="text-[10px] text-gray-500 font-medium leading-relaxed italic border-l-2 border-emerald-200 pl-3">
                                     &quot;{tip}&quot;
                                 </p>
                             ))}
@@ -219,7 +222,11 @@ export default function StudyPlannerPage() {
             </div>
 
             <div className="flex justify-center">
-                <Button variant="outline" onClick={() => setPlan(null)} className="rounded-xl px-10">
+                <Button 
+                    variant="outline" 
+                    onClick={() => setPlan(null)} 
+                    className="rounded-xl px-10 h-12 border-gray-200 font-sora font-bold text-gray-600 hover:bg-gray-50 transition-all"
+                >
                     Create New Plan
                 </Button>
             </div>

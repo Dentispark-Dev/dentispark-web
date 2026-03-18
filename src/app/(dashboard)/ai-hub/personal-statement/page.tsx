@@ -65,15 +65,15 @@ export default function PersonalStatementReviewer() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/ai-hub" className="p-2 hover:bg-greys-100 rounded-lg transition-colors text-black-500">
+          <Link href="/ai-hub" className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black-800">AI {activeFieldLabel} Statement Reviewer</h1>
-            <p className="text-black-500 text-sm">Professional feedback for your {activeFieldLabel} application journey.</p>
+            <h1 className="text-2xl font-sora font-bold text-gray-900">AI {activeFieldLabel} Statement Reviewer</h1>
+            <p className="text-gray-500 text-sm font-medium">Professional feedback for your {activeFieldLabel} application journey.</p>
           </div>
         </div>
-        <div className="px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-xs font-bold border border-primary-200">
+        <div className="px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-bold border border-emerald-100 uppercase tracking-widest">
             v2.1 Adaptive LLM
         </div>
       </div>
@@ -88,12 +88,12 @@ export default function PersonalStatementReviewer() {
             className="space-y-6"
           >
             {/* Mode Switcher */}
-            <div className="flex bg-greys-100 p-1 rounded-xl w-fit">
+            <div className="flex bg-gray-100 p-1 rounded-xl w-fit">
               <button 
                 onClick={() => setInputMode("text")}
                 className={cn(
-                  "px-6 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2",
-                  inputMode === "text" ? "bg-white shadow-sm text-primary-600" : "text-black-500 hover:text-black-700"
+                  "px-6 py-2 rounded-lg text-sm font-sora font-semibold transition-all flex items-center gap-2",
+                  inputMode === "text" ? "bg-white shadow-sm text-emerald-600" : "text-gray-500 hover:text-gray-900"
                 )}
               >
                 <FileText className="w-4 h-4" />
@@ -102,8 +102,8 @@ export default function PersonalStatementReviewer() {
               <button 
                 onClick={() => setInputMode("upload")}
                 className={cn(
-                  "px-6 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2",
-                  inputMode === "upload" ? "bg-white shadow-sm text-primary-600" : "text-black-500 hover:text-black-700"
+                  "px-6 py-2 rounded-lg text-sm font-sora font-semibold transition-all flex items-center gap-2",
+                  inputMode === "upload" ? "bg-white shadow-sm text-emerald-600" : "text-gray-500 hover:text-gray-900"
                 )}
               >
                 <Upload className="w-4 h-4" />
@@ -112,10 +112,10 @@ export default function PersonalStatementReviewer() {
             </div>
 
             {/* Input Area */}
-            <div className="glass-card rounded-2xl p-4 border-greys-200 min-h-[400px]">
+            <div className="p-6 rounded-3xl border border-gray-100 min-h-[400px] bg-white shadow-sm">
               {inputMode === "text" ? (
                 <textarea 
-                  className="w-full h-[350px] bg-transparent resize-none focus:outline-none p-4 text-black-700 leading-relaxed placeholder:text-black-300"
+                  className="w-full h-[350px] bg-transparent resize-none focus:outline-none p-4 text-gray-700 font-medium leading-relaxed placeholder:text-gray-300"
                   placeholder="Paste your personal statement here (UCAS character limit is 4,000)..."
                   value={text}
                   onChange={(e) => setText(e.target.value)}
@@ -123,27 +123,27 @@ export default function PersonalStatementReviewer() {
               ) : (
                 <div 
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full h-[350px] flex flex-col items-center justify-center border-2 border-dashed border-primary-100 rounded-xl bg-primary-50/20 hover:bg-primary-50/50 transition-colors cursor-pointer group"
+                  className="w-full h-[350px] flex flex-col items-center justify-center border-2 border-dashed border-emerald-100 rounded-3xl bg-emerald-50/20 hover:bg-emerald-50/50 transition-colors cursor-pointer group"
                 >
                   <input type="file" className="hidden" ref={fileInputRef} accept=".pdf,.doc,.docx" />
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 group-hover:scale-110 transition-transform font-bold">
-                    <Upload className="w-6 h-6 text-primary-600" />
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-110 transition-transform font-bold">
+                    <Upload className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <h3 className="text-black-700 font-semibold text-lg">Upload your statement</h3>
-                  <p className="text-black-400 text-sm mt-1">PDF, Word, or Text files are supported</p>
+                  <h3 className="text-gray-900 font-sora font-bold text-lg">Upload your statement</h3>
+                  <p className="text-gray-500 text-sm mt-1 font-medium">PDF, Word, or Text files are supported</p>
                 </div>
               )}
             </div>
 
             <div className="flex items-center justify-between px-2">
-                <div className="flex items-center gap-2 text-xs text-black-400">
-                    <Zap className="w-3 h-3 text-primary-500" />
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                    <Zap className="w-3 h-3 text-emerald-500" />
                     Estimated analysis time: 5-10 seconds
                 </div>
                 <Button 
                     onClick={handleStartAnalysis}
                     disabled={inputMode === "text" && text.length < 100}
-                    className="bg-primary-600 hover:bg-primary-700 text-white px-10 h-12 rounded-xl font-bold shadow-lg shadow-primary-200"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 h-12 rounded-xl font-sora font-bold shadow-sm transform active:scale-95 transition-all"
                 >
                     Analyze Application
                 </Button>
@@ -165,25 +165,25 @@ export default function PersonalStatementReviewer() {
             className="flex flex-col items-center justify-center min-h-[500px] space-y-8"
           >
             <div className="relative">
-                <div className="absolute inset-0 bg-primary-200/50 blur-3xl rounded-full scale-150 animate-pulse" />
-                <BrainCircuit className="w-24 h-24 text-primary-600 relative animate-float" />
+                <div className="absolute inset-0 bg-emerald-100/50 blur-3xl rounded-full scale-150 animate-pulse" />
+                <BrainCircuit className="w-24 h-24 text-emerald-600 relative animate-float" />
                 <motion.div 
                     animate={{ rotate: 360 }}
                     transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-                    className="absolute -inset-4 border-2 border-dashed border-primary-300 rounded-full"
+                    className="absolute -inset-4 border-2 border-dashed border-emerald-200 rounded-full"
                 />
             </div>
             <div className="text-center space-y-2">
-                <h2 className="text-2xl font-bold text-black-800">AI is reviewing your statement...</h2>
-                <p className="text-black-500">Critiquing structure, tone, and clinical experience markers.</p>
+                <h2 className="text-2xl font-sora font-bold text-gray-900">AI is reviewing your statement...</h2>
+                <p className="text-gray-500 font-medium">Critiquing structure, tone, and clinical experience markers.</p>
             </div>
             
-            <div className="w-full max-w-xs h-1.5 bg-greys-200 rounded-full overflow-hidden">
+            <div className="w-full max-w-xs h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 3.5 }}
-                    className="h-full bg-primary-600"
+                    className="h-full bg-emerald-600"
                 />
             </div>
           </motion.div>
@@ -199,7 +199,7 @@ export default function PersonalStatementReviewer() {
                 {results && <ScoreGauge score={results.score} />}
 
                 <div className="md:col-span-2 space-y-4">
-                    <h3 className="text-lg font-bold text-black-800">Category Breakdown</h3>
+                    <h3 className="text-lg font-sora font-bold text-gray-900 pl-1">Category Breakdown</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {results?.metrics.map((m: { name: string, score: number, feedback: string }) => (
                             <FeedbackCard 
@@ -214,18 +214,18 @@ export default function PersonalStatementReviewer() {
             </div>
 
             {/* Key Suggestions */}
-            <div className="glass-card p-8 rounded-3xl bg-white space-y-6">
-                <h3 className="text-xl font-bold text-black-800 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-primary-600" />
+            <div className="p-8 rounded-3xl bg-white border border-gray-100 shadow-sm space-y-6">
+                <h3 className="text-xl font-sora font-bold text-gray-900 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-emerald-600" />
                     Key AI Suggestions
                 </h3>
                 <div className="space-y-4">
                     {results?.suggestions.map((s: string, i: number) => (
-                        <div key={i} className="flex gap-4 p-4 rounded-xl bg-primary-50 border border-primary-100 items-start">
-                            <div className="h-6 w-6 rounded-full bg-primary-200 text-primary-700 flex items-center justify-center shrink-0 font-bold text-xs">
+                        <div key={i} className="flex gap-4 p-4 rounded-xl bg-emerald-50/50 border border-emerald-100 items-start">
+                            <div className="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 font-sora font-bold text-xs">
                                 {i + 1}
                             </div>
-                            <p className="text-sm text-black-700">{s}</p>
+                            <p className="text-sm text-gray-700 font-medium leading-relaxed">{s}</p>
                         </div>
                     ))}
                 </div>
@@ -236,7 +236,7 @@ export default function PersonalStatementReviewer() {
                 <Button 
                     variant="outline" 
                     onClick={() => {setResults(null); setText("");}}
-                    className="w-full sm:w-auto px-8 rounded-xl border-greys-300 transform active:scale-95 transition-transform"
+                    className="w-full sm:w-auto px-8 h-12 rounded-xl border-gray-200 font-sora font-bold transform active:scale-95 transition-all text-gray-600 hover:bg-gray-50"
                 >
                     Try Another Draft
                 </Button>
@@ -257,7 +257,7 @@ export default function PersonalStatementReviewer() {
                                 alert("Intelligence Synced!");
                             } catch (e) { console.error(e); }
                         }}
-                        className="flex-1 sm:flex-none gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 rounded-xl shadow-lg shadow-primary-200 transform active:scale-95 transition-transform"
+                        className="flex-1 sm:flex-none gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-xl font-sora font-bold shadow-sm transform active:scale-95 transition-all"
                     >
                         Sync to Profile <ChevronRight className="w-4 h-4" />
                     </Button>

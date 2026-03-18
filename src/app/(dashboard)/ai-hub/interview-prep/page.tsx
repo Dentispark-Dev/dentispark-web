@@ -142,7 +142,7 @@ export default function InterviewPrepPage() {
   const setupOptions = [
     { id: "mmi", title: "MMI Masterclass", desc: "Fast-paced mini stations (7 mins each)", icon: <Clock className="w-5 h-5 text-blue-500" /> },
     { id: "panel", title: "Traditional Panel", desc: "In-depth 20-minute discussion", icon: <Award className="w-5 h-5 text-purple-500" /> },
-    { id: "ethics", title: "Ethics Deep Dive", desc: "Focus on professionalism & ethics", icon: <BrainCircuit className="w-5 h-5 text-primary-500" /> }
+    { id: "ethics", title: "Ethics Deep Dive", desc: "Focus on professionalism & ethics", icon: <BrainCircuit className="w-5 h-5 text-emerald-500" /> }
   ];
 
   return (
@@ -150,12 +150,12 @@ export default function InterviewPrepPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/ai-hub" className="p-2 hover:bg-greys-100 rounded-lg transition-colors text-black-500">
+          <Link href="/ai-hub" className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black-800">DentiSpark Voice Interview Beta</h1>
-            <p className="text-black-500 text-sm">Real-time transcription & AI Vocal guidance enabled.</p>
+            <h1 className="text-2xl font-sora font-bold text-gray-900">DentiSpark Voice Interview Beta</h1>
+            <p className="text-gray-500 text-sm font-medium">Real-time transcription & AI Vocal guidance enabled.</p>
           </div>
         </div>
         
@@ -183,35 +183,35 @@ export default function InterviewPrepPage() {
             exit={{ opacity: 0, scale: 0.95 }}
             className="space-y-8"
           >
-            <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 space-y-8 text-center bg-white shadow-sm">
+            <div className="p-10 rounded-3xl border border-gray-100 space-y-8 text-center bg-white shadow-sm">
                 <div className="space-y-2">
-                    <h2 className="text-3xl font-black text-black-800">Configure Your Session</h2>
-                    <p className="text-black-500 font-medium">Select your interview style and difficulty to begin.</p>
+                    <h2 className="text-3xl font-sora font-bold text-gray-900">Configure Your Session</h2>
+                    <p className="text-gray-500 font-medium">Select your interview style and difficulty to begin.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
                     {setupOptions.map(opt => (
-                        <button key={opt.id} className="p-6 rounded-3xl border border-greys-100 bg-white hover:border-primary-500 hover:shadow-xl hover:shadow-primary-100 transition-all space-y-4 group">
-                            <div className="w-12 h-12 rounded-2xl bg-greys-50 flex items-center justify-center group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
+                        <button key={opt.id} className="p-6 rounded-3xl border border-gray-100 bg-white hover:border-emerald-500 hover:shadow-md transition-all space-y-4 group">
+                            <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors">
                                 {opt.icon}
                             </div>
                             <div>
-                                <h4 className="font-bold text-black-800">{opt.title}</h4>
-                                <p className="text-xs text-black-400 leading-tight">{opt.desc}</p>
+                                <h4 className="font-sora font-bold text-gray-900">{opt.title}</h4>
+                                <p className="text-xs text-gray-500 leading-tight font-medium">{opt.desc}</p>
                             </div>
                         </button>
                     ))}
                 </div>
 
                 <div className="flex flex-col items-center gap-6 pt-4">
-                    <div className="flex bg-greys-100 p-1 rounded-2xl">
+                    <div className="flex bg-gray-100 p-1.5 rounded-xl">
                         {(["Standard", "Elite"] as const).map(d => (
                             <button 
                                 key={d}
                                 onClick={() => setDifficulty(d)}
                                 className={cn(
-                                    "px-8 py-2.5 rounded-xl text-sm font-bold transition-all",
-                                    difficulty === d ? "bg-white shadow-lg text-primary-600" : "text-black-400 hover:text-black-600"
+                                    "px-8 py-2.5 rounded-lg text-sm font-sora font-semibold transition-all",
+                                    difficulty === d ? "bg-white shadow-sm text-emerald-600" : "text-gray-500 hover:text-gray-900"
                                 )}
                             >
                                 {d}
@@ -228,7 +228,7 @@ export default function InterviewPrepPage() {
 
                 <Button 
                     onClick={handleStartSession}
-                    className="bg-primary-600 hover:bg-primary-700 text-white px-12 h-14 rounded-2xl font-bold shadow-xl shadow-primary-200 transform active:scale-95 transition-all text-lg"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-14 rounded-xl font-sora font-bold shadow-sm transform active:scale-95 transition-all text-lg"
                 >
                     Initialize AI Mentor
                 </Button>
@@ -243,15 +243,15 @@ export default function InterviewPrepPage() {
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
             <div className="lg:col-span-2 space-y-8">
-                <div className="glass-card p-10 rounded-[3rem] border-primary-100/30 bg-white shadow-xl relative overflow-hidden transition-all">
+                <div className="p-10 rounded-3xl border border-gray-100 bg-white shadow-sm relative overflow-hidden transition-all">
                     {stationPhase === "prep" && (
-                        <div className="absolute inset-0 bg-black-900/5 backdrop-blur-[2px] z-10 flex items-center justify-center">
-                            <div className="bg-white p-6 rounded-3xl shadow-2xl space-y-4 max-w-sm text-center border-2 border-primary-500 animate-in fade-in zoom-in duration-300">
-                                <h4 className="text-xl font-black text-black-900 tracking-tight">Reading Station</h4>
-                                <p className="text-black-500 text-sm font-medium">Read the prompt below carefully. You have 60 seconds before the station begins.</p>
+                        <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center px-6">
+                            <div className="bg-white p-8 rounded-3xl shadow-xl space-y-4 max-w-sm text-center border border-gray-100 animate-in fade-in zoom-in duration-300">
+                                <h4 className="text-xl font-sora font-bold text-gray-900 tracking-tight">Reading Station</h4>
+                                <p className="text-gray-500 text-sm font-medium">Read the prompt below carefully. You have 60 seconds before the station begins.</p>
                                 <Button 
                                     onClick={startStation}
-                                    className="w-full bg-primary-600 hover:bg-primary-700 text-white rounded-xl h-12 font-bold shadow-lg shadow-primary-100"
+                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-sora font-bold shadow-sm"
                                 >
                                     Enter Station Now <Play className="w-4 h-4 ml-2" />
                                 </Button>
@@ -261,22 +261,22 @@ export default function InterviewPrepPage() {
 
                     <div className="space-y-6 relative z-0">
                         <div className="flex items-center justify-between">
-                            <span className="px-3 py-1 bg-greys-100 text-black-500 rounded-full text-[10px] font-black uppercase tracking-widest">Station {currentQuestionIndex + 1} of {questions.length}</span>
+                            <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-[10px] font-bold uppercase tracking-widest">Station {currentQuestionIndex + 1} of {questions.length}</span>
                         </div>
-                        <h3 className="text-2xl font-bold text-black-900 leading-tight">
+                        <h3 className="text-2xl font-sora font-bold text-gray-900 leading-tight">
                             {questions[currentQuestionIndex]}
                         </h3>
                     </div>
                 </div>
 
-                <div className="flex flex-col p-10 glass-card rounded-[2.5rem] border-primary-100/30 gap-8 bg-white shadow-lg shadow-greys-100 relative overflow-hidden transition-all">
+                <div className="flex flex-col p-10 rounded-3xl border border-gray-100 gap-8 bg-white shadow-sm relative overflow-hidden transition-all">
                     {/* Vocal Waveform Simulation */}
                     {isListening && (
                         <div className="absolute top-0 inset-x-0 h-1 flex gap-0.5 opacity-30">
                             {[...Array(50)].map((_, i) => (
                                 <motion.div 
                                     key={i}
-                                    className="flex-1 bg-primary-500"
+                                    className="flex-1 bg-emerald-500"
                                     animate={{ height: [4, 12, 6, 16, 4] }}
                                     transition={{ repeat: Infinity, duration: 0.5 + Math.random(), delay: i * 0.05 }}
                                 />
@@ -286,35 +286,35 @@ export default function InterviewPrepPage() {
 
                     <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-black text-black-400 uppercase tracking-widest pl-1">Vocal Output Log (Real-time)</label>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Vocal Output Log (Real-time)</label>
                             {isListening && (
-                                <div className="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-black uppercase tracking-widest animate-pulse">
+                                <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-bold uppercase tracking-widest animate-pulse">
                                     <Sparkles className="w-3 h-3" /> AI Syncing Voice
                                 </div>
                             )}
                         </div>
-                        <div className="w-full min-h-[160px] bg-greys-50/50 border-2 border-dashed border-greys-100 rounded-[2rem] p-8 text-black-700 font-medium leading-relaxed transition-all">
-                            {transcript || <span className="text-black-200 italic">Wait until the station starts. Your speech will appear here automatically...</span>}
+                        <div className="w-full min-h-[160px] bg-gray-50 border-2 border-dashed border-gray-100 rounded-2xl p-8 text-gray-700 font-medium leading-relaxed transition-all">
+                            {transcript || <span className="text-gray-300 italic">Wait until the station starts. Your speech will appear here automatically...</span>}
                         </div>
                     </div>
                     
-                    <div className="flex items-center justify-between pt-4 border-t border-greys-100">
+                    <div className="flex items-center justify-between pt-6 border-t border-gray-100">
                         <div className="flex items-center gap-6">
                             <button 
                                 disabled={stationPhase === "prep"}
                                 onClick={() => isListening ? stopListening() : startListening()}
                                 className={cn(
-                                    "w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-2xl active:scale-90 disabled:opacity-20",
-                                    isListening ? "bg-red-500 text-white ring-4 ring-red-100" : "bg-primary-600 text-white hover:bg-primary-700 hover:shadow-primary-200"
+                                    "w-16 h-16 rounded-full flex items-center justify-center transition-all shadow-sm active:scale-90 disabled:opacity-20",
+                                    isListening ? "bg-red-500 text-white ring-4 ring-red-50" : "bg-emerald-600 text-white hover:bg-emerald-700"
                                 )}
                             >
-                                {isListening ? <Square className="w-8 h-8 fill-white" /> : <Mic className="w-8 h-8" />}
+                                {isListening ? <Square className="w-6 h-6 fill-white" /> : <Mic className="w-6 h-6" />}
                             </button>
                             <div className="space-y-1">
-                                <h4 className="font-black text-black-900 uppercase tracking-tight">
+                                <h4 className="font-sora font-bold text-gray-900 uppercase text-xs tracking-tight">
                                     {isListening ? "Listening..." : stationPhase === "prep" ? "Awaiting Station Start" : "Click to Speak"}
                                 </h4>
-                                <p className="text-[10px] text-black-400 font-bold uppercase tracking-widest opacity-60">
+                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest opacity-60">
                                     Noise Cancellation v2.1 Active
                                 </p>
                             </div>
@@ -323,17 +323,17 @@ export default function InterviewPrepPage() {
                         <Button 
                             onClick={handleNextQuestion}
                             disabled={stationPhase === "prep"}
-                            className="bg-black-900 text-white h-14 px-10 rounded-2xl font-black flex items-center gap-3 hover:bg-black-800 shadow-2xl transform active:translate-x-1 transition-all text-sm disabled:opacity-20"
+                            className="bg-gray-900 hover:bg-black text-white h-12 px-8 rounded-xl font-sora font-semibold flex items-center gap-2 transform active:translate-x-1 transition-all text-sm disabled:opacity-20 shadow-sm"
                         >
                             {currentQuestionIndex === questions.length - 1 ? "End Interview" : "Submit & Exit Station"}
-                            <ChevronRight className="w-5 h-5" />
+                            <ChevronRight className="w-4 h-4" />
                         </Button>
                     </div>
                 </div>
             </div>
 
             <div className="lg:col-span-1 space-y-8">
-                <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 flex flex-col items-center justify-center bg-white shadow-xl">
+                <div className="p-10 rounded-3xl border border-gray-100 flex flex-col items-center justify-center bg-white shadow-sm">
                     <InterviewTimer 
                         durationSeconds={stationPhase === "prep" ? 60 : 120} 
                         isActive={true} 
@@ -343,15 +343,15 @@ export default function InterviewPrepPage() {
                         }} 
                     />
                     <div className="mt-6 text-center">
-                        <p className="text-[10px] font-black text-black-400 uppercase tracking-[0.2em]">Current Phase</p>
-                        <p className="text-sm font-black text-primary-600 uppercase mt-1">{stationPhase} STATION</p>
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Current Phase</p>
+                        <p className="text-sm font-sora font-bold text-emerald-600 uppercase mt-1">{stationPhase} STATION</p>
                     </div>
                 </div>
 
-                <div className="glass-card p-10 rounded-[2.5rem] border-primary-100/30 space-y-6 bg-white shadow-lg overflow-hidden relative">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-primary-500" />
-                    <h5 className="text-xs font-black text-black-900 uppercase tracking-widest flex items-center gap-2">
-                        <AlertCircle className="w-4 h-4 text-primary-500" /> Admission Protocol
+                <div className="p-10 rounded-3xl border border-gray-100 space-y-6 bg-white shadow-sm overflow-hidden relative">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500" />
+                    <h5 className="text-xs font-sora font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-emerald-500" /> Admission Protocol
                     </h5>
                     <div className="space-y-5">
                         {[
@@ -361,8 +361,8 @@ export default function InterviewPrepPage() {
                             { label: "Pacing", desc: "Aim for a 90-second response duration." }
                         ].map((rule, i) => (
                             <div key={i} className="space-y-1">
-                                <p className="text-[10px] font-black text-black-800 uppercase tracking-widest">{rule.label}</p>
-                                <p className="text-xs text-black-400 font-medium leading-tight">{rule.desc}</p>
+                                <p className="text-[10px] font-bold text-gray-900 uppercase tracking-widest">{rule.label}</p>
+                                <p className="text-xs text-gray-500 font-medium leading-tight">{rule.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -377,14 +377,14 @@ export default function InterviewPrepPage() {
             className="flex flex-col items-center justify-center min-h-[500px] space-y-8"
           >
             <div className="relative">
-                <div className="absolute inset-0 bg-primary-200/50 blur-3xl rounded-full scale-150 animate-pulse" />
-                <BrainCircuit className="w-24 h-24 text-primary-600 relative animate-float" />
+                <div className="absolute inset-0 bg-emerald-100/50 blur-3xl rounded-full scale-150 animate-pulse" />
+                <BrainCircuit className="w-24 h-24 text-emerald-600 relative animate-float" />
             </div>
             <div className="text-center space-y-2">
-                <h2 className="text-2xl font-bold text-black-800">AI is scoring your performance...</h2>
-                <p className="text-black-500">Evaluating ethics, structure, and professional tone.</p>
+                <h2 className="text-2xl font-sora font-bold text-gray-900">AI is scoring your performance...</h2>
+                <p className="text-gray-500 font-medium">Evaluating ethics, structure, and professional tone.</p>
             </div>
-            <Loader2 className="w-8 h-8 text-primary-600 animate-spin" />
+            <Loader2 className="w-8 h-8 text-emerald-600 animate-spin" />
           </motion.div>
         ) : results ? (
           <motion.div 
@@ -395,53 +395,53 @@ export default function InterviewPrepPage() {
           >
             {/* Feedback Header */}
             <div className="text-center space-y-4">
-                <div className="inline-flex items-center gap-2 px-6 py-2 bg-primary-100 text-primary-700 rounded-full border border-primary-200 text-sm font-bold">
+                <div className="inline-flex items-center gap-2 px-6 py-2 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100 text-sm font-bold">
                     <Award className="w-4 h-4" />
                     Interview Successfully Completed
                 </div>
-                <h2 className="text-4xl font-black text-black-900 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-black-900 to-primary-600">Performance Analytics</h2>
+                <h2 className="text-4xl font-sora font-bold text-gray-900 tracking-tight">Performance Analytics</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {results?.metrics.map(metric => (
-                    <div key={metric.label} className="glass-card p-6 rounded-3xl border-greys-100 space-y-4 text-center bg-white shadow-sm">
-                        <div className="w-10 h-10 rounded-xl bg-primary-50 mx-auto flex items-center justify-center text-primary-600">
+                    <div key={metric.label} className="p-6 rounded-3xl border border-gray-100 space-y-4 text-center bg-white shadow-sm">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-50 mx-auto flex items-center justify-center text-emerald-600">
                             <BarChart3 className="w-5 h-5" />
                         </div>
                         <div>
-                            <span className="block text-2xl font-black text-black-800">{metric.score}%</span>
-                            <span className="text-[10px] font-bold text-black-400 uppercase tracking-widest">{metric.label}</span>
+                            <span className="block text-2xl font-sora font-bold text-gray-900">{metric.score}%</span>
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{metric.label}</span>
                         </div>
-                        <div className="h-1 w-full bg-greys-100 rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                             <motion.div 
                                 initial={{ width: 0 }}
                                 animate={{ width: `${metric.score}%` }}
-                                className="h-full bg-primary-500"
+                                className="h-full bg-emerald-500"
                             />
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="glass-card p-8 rounded-[2.5rem] border-primary-100/30 space-y-6 bg-white shadow-sm">
-                <h3 className="text-xl font-bold text-black-800 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-primary-600" />
+            <div className="p-8 rounded-3xl border border-gray-100 space-y-6 bg-white shadow-sm">
+                <h3 className="text-xl font-sora font-bold text-gray-900 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-emerald-600" />
                     AI Critique & Improvement Plan
                 </h3>
-                <p className="text-sm text-black-600 leading-relaxed italic border-l-4 border-primary-200 pl-4 py-2">
+                <p className="text-sm text-gray-600 leading-relaxed italic border-l-4 border-emerald-200 pl-4 py-2 font-medium">
                     &quot;{results?.critique}&quot;
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4 p-6 rounded-3xl bg-green-50/50 border border-green-100">
-                        <h4 className="text-sm font-bold text-green-800 uppercase tracking-wider">Key Strengths</h4>
-                        <ul className="space-y-2 text-sm text-green-700">
-                            {results?.strengths.map((s, i) => <li key={i}>• {s}</li>)}
+                    <div className="space-y-4 p-6 rounded-3xl bg-emerald-50/50 border border-emerald-100">
+                        <h4 className="text-sm font-bold text-emerald-800 uppercase tracking-wider">Key Strengths</h4>
+                        <ul className="space-y-2 text-sm text-emerald-700 font-medium">
+                            {results?.strengths.map((s, i) => <li key={i} className="flex gap-2"><span>•</span> {s}</li>)}
                         </ul>
                     </div>
                     <div className="space-y-4 p-6 rounded-3xl bg-amber-50/50 border border-amber-100">
                         <h4 className="text-sm font-bold text-amber-800 uppercase tracking-wider">Critical Improvements</h4>
-                        <ul className="space-y-2 text-sm text-amber-700">
-                            {results?.improvements.map((im, i) => <li key={i}>• {im}</li>)}
+                        <ul className="space-y-2 text-sm text-amber-700 font-medium">
+                            {results?.improvements.map((im, i) => <li key={i} className="flex gap-2"><span>•</span> {im}</li>)}
                         </ul>
                     </div>
                 </div>
@@ -451,7 +451,7 @@ export default function InterviewPrepPage() {
                 <Button 
                     variant="outline" 
                     onClick={() => { setSessionState("setup"); setResults(null); }}
-                    className="px-10 h-14 rounded-2xl border-greys-300 font-bold transform active:scale-95 transition-all transition-colors"
+                    className="px-10 h-14 rounded-xl border-gray-200 font-sora font-bold transform active:scale-95 transition-all text-gray-600 hover:bg-gray-50"
                 >
                     Try Another Session
                 </Button>
@@ -474,25 +474,25 @@ export default function InterviewPrepPage() {
                             console.error(e);
                         }
                     }}
-                    className="bg-primary-600 hover:bg-primary-700 text-white px-12 h-14 rounded-2xl font-bold shadow-xl shadow-primary-200 transform active:scale-95 transition-all"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-14 rounded-xl font-sora font-bold shadow-sm transform active:scale-95 transition-all"
                 >
                     Sync Performance <Sparkles className="w-4 h-4 ml-2" />
                 </Button>
             </div>
           </motion.div>
         ) : error ? (
-             <div className="text-center py-20 bg-white rounded-3xl border border-red-100 shadow-sm space-y-4">
-                <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
-                <h3 className="text-2xl font-black text-black-900">Evaluation Failed</h3>
-                <p className="text-black-500 max-w-md mx-auto">{error}</p>
-                <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl border-greys-200">Restart Session</Button>
+             <div className="text-center py-20 bg-white rounded-3xl border border-amber-100 shadow-sm space-y-4">
+                <AlertCircle className="w-12 h-12 text-amber-500 mx-auto" />
+                <h3 className="text-2xl font-sora font-bold text-gray-900">Evaluation Failed</h3>
+                <p className="text-gray-500 max-w-md mx-auto font-medium">{error}</p>
+                <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl border-gray-200 font-bold">Restart Session</Button>
             </div>
         ) : (
-             <div className="text-center py-20 bg-white rounded-3xl border border-greys-100 shadow-sm space-y-4">
-                <AlertCircle className="w-12 h-12 text-black-300 mx-auto" />
-                <h3 className="text-lg font-bold text-black-800">Evaluation Unavailable</h3>
-                <p className="text-black-500">Something went wrong during the AI analysis.</p>
-                <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl">Back to Setup</Button>
+             <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm space-y-4">
+                <AlertCircle className="w-12 h-12 text-gray-300 mx-auto" />
+                <h3 className="text-lg font-sora font-bold text-gray-900">Evaluation Unavailable</h3>
+                <p className="text-gray-500 font-medium">Something went wrong during the AI analysis.</p>
+                <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl border-gray-200 font-bold">Back to Setup</Button>
             </div>
         )}
       </AnimatePresence>

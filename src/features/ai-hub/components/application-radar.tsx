@@ -46,7 +46,7 @@ export function ApplicationRadar({ data }: ApplicationRadarProps) {
               const coords = getCoordinates(idx, level * 100);
               return `${coords.x},${coords.y}`;
             }).join(" ")}
-            className="fill-none stroke-greys-100 stroke-[0.5]"
+            className="fill-none stroke-gray-100 stroke-[0.5]"
           />
         ))}
 
@@ -60,7 +60,7 @@ export function ApplicationRadar({ data }: ApplicationRadarProps) {
               y1={center}
               x2={coords.x}
               y2={coords.y}
-              className="stroke-greys-100 stroke-[0.5]"
+              className="stroke-gray-100 stroke-[0.5]"
             />
           );
         })}
@@ -70,7 +70,7 @@ export function ApplicationRadar({ data }: ApplicationRadarProps) {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           points={points}
-          className="fill-primary-500/20 stroke-primary-500 stroke-2"
+          className="fill-emerald-500/10 stroke-emerald-500 stroke-2"
         />
 
         {/* Labels */}
@@ -82,7 +82,7 @@ export function ApplicationRadar({ data }: ApplicationRadarProps) {
               x={coords.x}
               y={coords.y}
               textAnchor="middle"
-              className="text-[10px] font-black uppercase tracking-widest fill-black-400"
+              className="text-[9px] font-sora font-bold uppercase tracking-widest fill-gray-400"
             >
               {d.subject}
             </text>

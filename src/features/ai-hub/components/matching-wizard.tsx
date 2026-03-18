@@ -48,7 +48,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
     <div className="space-y-12">
       {/* Step Indicator */}
       <div className="flex items-center gap-4">
-        <span className="text-primary-500 font-black text-xl italic tracking-tighter flex items-center gap-2">
+        <span className="text-emerald-600 font-sora font-bold text-xl flex items-center gap-2">
             {currentStep + 1} <ChevronRight className="w-4 h-4 opacity-50" />
         </span>
         <div className="flex gap-1.5 flex-1 max-w-[200px]">
@@ -56,7 +56,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
                 <motion.div 
                     key={i}
                     animate={{ 
-                        backgroundColor: i <= currentStep ? "rgba(20, 184, 166, 1)" : "rgba(255, 255, 255, 0.1)",
+                        backgroundColor: i <= currentStep ? "rgba(16, 185, 129, 1)" : "rgba(0, 0, 0, 0.1)",
                         width: i === currentStep ? "40px" : "12px"
                     }}
                     className="h-1 rounded-full"
@@ -75,10 +75,10 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
            className="space-y-8"
         >
           <div className="space-y-4">
-            <h2 className="text-5xl lg:text-6xl font-black text-white tracking-tight leading-none">
+            <h2 className="text-4xl lg:text-5xl font-sora font-bold text-gray-900 tracking-tight leading-tight">
               {steps[currentStep].title}
             </h2>
-            <p className="text-xl text-white/50 leading-relaxed font-medium max-w-lg">
+            <p className="text-lg text-gray-600 leading-relaxed font-medium max-w-lg">
               {steps[currentStep].description}
             </p>
           </div>
@@ -90,18 +90,18 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
       </AnimatePresence>
 
       {/* Navigation & Shortcuts */}
-      <div className="flex flex-col gap-6 pt-4 border-t border-white/5">
+      <div className="flex flex-col gap-6 pt-8 border-t border-gray-100">
         <div className="flex items-center gap-4">
             <Button 
                 onClick={handleNext}
-                className="bg-primary-600 hover:bg-primary-500 text-white px-12 h-16 rounded-2xl font-black text-xl shadow-[0_0_30px_rgba(20,184,166,0.2)] transform active:scale-95 transition-all group"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 h-14 rounded-xl font-sora font-semibold text-lg shadow-sm transform active:scale-95 transition-all group"
             >
-                {currentStep === steps.length - 1 ? "Start Analysis" : "OK"} 
-                <ChevronRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                {currentStep === steps.length - 1 ? "Start Analysis" : "Continue"} 
+                <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             
-            <div className="hidden md:flex items-center gap-2 text-white/30 text-[10px] font-bold uppercase tracking-widest">
-                press <span className="px-1.5 py-0.5 border border-white/20 rounded-md flex items-center gap-1"><Command className="w-2 h-2" /> ENTER</span>
+            <div className="hidden md:flex items-center gap-2 text-gray-400 text-[10px] font-bold uppercase tracking-widest">
+                press <span className="px-1.5 py-0.5 border border-gray-200 rounded-md flex items-center gap-1"><Command className="w-3 h-3" /> ENTER</span>
             </div>
         </div>
 
@@ -109,12 +109,12 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
             <button 
                 onClick={handleBack}
                 disabled={currentStep === 0}
-                className="text-white/40 hover:text-white font-bold text-sm disabled:opacity-0 transition-all flex items-center gap-2"
+                className="text-gray-400 hover:text-gray-900 font-semibold text-sm disabled:opacity-0 transition-all flex items-center gap-2"
             >
                 <ChevronLeft className="w-4 h-4" /> Back
             </button>
-            <span className="w-1 h-1 bg-white/10 rounded-full" />
-            <p className="text-[10px] text-white/20 font-medium uppercase tracking-[0.3em]">Phase {currentStep + 1} of {steps.length}</p>
+            <span className="w-1 h-1 bg-gray-200 rounded-full" />
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Phase {currentStep + 1} of {steps.length}</p>
         </div>
       </div>
     </div>

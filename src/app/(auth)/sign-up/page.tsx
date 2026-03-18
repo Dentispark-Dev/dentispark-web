@@ -115,9 +115,9 @@ export default function SignUpPage() {
           <Link href="/">
             <Logo className="h-8 md:h-10 text-emerald-900" />
           </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-bold text-emerald-900/60 uppercase tracking-widest">
-            <Link href="/about-us" className="hover:text-emerald-900 transition-colors">About</Link>
-            <Link href="/become-a-mentor" className="hover:text-emerald-900 transition-colors">Become a Mentor</Link>
+          <div className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-500">
+            <Link href="/about-us" className="hover:text-emerald-600 transition-colors">About</Link>
+            <Link href="/become-a-mentor" className="hover:text-emerald-600 transition-colors">Become a Mentor</Link>
           </div>
         </div>
 
@@ -127,7 +127,7 @@ export default function SignUpPage() {
           className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full space-y-8"
         >
           <div className="space-y-3">
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight leading-tight italic uppercase">
+            <h1 className="text-4xl font-sora font-bold text-gray-900 tracking-tight leading-tight">
               Join the elite
             </h1>
             <p className="text-gray-500 font-medium text-lg">
@@ -140,7 +140,7 @@ export default function SignUpPage() {
             <Button
               type="button"
               variant="outline"
-              className="w-full h-14 rounded-2xl border-gray-100 bg-white hover:bg-gray-50 flex items-center justify-center gap-3 text-sm font-black uppercase tracking-widest text-gray-700 transition-all shadow-sm"
+              className="w-full h-12 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center gap-3 text-sm font-semibold text-gray-700 transition-all shadow-sm"
               onClick={() => handleSocialLogin("google")}
               disabled={isPending || oauth2SignupMutation.isPending}
             >
@@ -155,10 +155,10 @@ export default function SignUpPage() {
 
             <div className="relative py-2">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-100" />
+                <span className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-4 text-gray-300 uppercase tracking-widest font-black text-[10px]">or</span>
+                <span className="bg-white px-4 text-gray-500 font-medium text-xs">or</span>
               </div>
             </div>
           </div>
@@ -171,11 +171,11 @@ export default function SignUpPage() {
                   name="firstName"
                   render={({ field }) => (
                     <FormItem className="space-y-1.5">
-                      <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">First Name</FormLabel>
+                      <FormLabel className="text-xs font-semibold text-gray-700">First Name</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="John"
-                          className="h-12 rounded-2xl border-gray-100 bg-gray-50/50 px-5 focus:bg-white transition-all border-none shadow-none focus-visible:ring-emerald-500/20"
+                          className="h-12 rounded-xl border-gray-200 bg-white px-4 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-sm"
                           disabled={isPending || signupMutation.isPending}
                           {...field}
                         />
@@ -190,11 +190,11 @@ export default function SignUpPage() {
                   name="lastName"
                   render={({ field }) => (
                     <FormItem className="space-y-1.5">
-                      <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Last Name</FormLabel>
+                      <FormLabel className="text-xs font-semibold text-gray-700">Last Name</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Doe"
-                          className="h-12 rounded-2xl border-gray-100 bg-gray-50/50 px-5 focus:bg-white transition-all border-none shadow-none focus-visible:ring-emerald-500/20"
+                          className="h-12 rounded-xl border-gray-200 bg-white px-4 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-sm"
                           disabled={isPending || signupMutation.isPending}
                           {...field}
                         />
@@ -210,11 +210,11 @@ export default function SignUpPage() {
                 name="emailAddress"
                 render={({ field }) => (
                   <FormItem className="space-y-1.5">
-                    <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Email Address</FormLabel>
+                    <FormLabel className="text-xs font-semibold text-gray-700">Email Address</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="john@example.com"
-                        className="h-12 rounded-2xl border-gray-100 bg-gray-50/50 px-5 focus:bg-white transition-all border-none shadow-none focus-visible:ring-emerald-500/20"
+                        className="h-12 rounded-xl border-gray-200 bg-white px-4 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-sm"
                         disabled={isPending || signupMutation.isPending}
                         {...field}
                       />
@@ -230,13 +230,13 @@ export default function SignUpPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem className="space-y-1.5">
-                      <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Password</FormLabel>
+                      <FormLabel className="text-xs font-semibold text-gray-700">Password</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type={showPassword ? "text" : "password"}
                             placeholder="••••••••"
-                            className="h-12 rounded-2xl border-gray-100 bg-gray-50/50 px-5 focus:bg-white transition-all border-none shadow-none focus-visible:ring-emerald-500/20"
+                            className="h-12 rounded-xl border-gray-200 bg-white px-4 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-sm pr-12"
                             disabled={isPending || signupMutation.isPending}
                             {...field}
                           />
@@ -259,13 +259,13 @@ export default function SignUpPage() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem className="space-y-1.5">
-                      <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Confirm Password</FormLabel>
+                      <FormLabel className="text-xs font-semibold text-gray-700">Confirm Password</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="••••••••"
-                            className="h-12 rounded-2xl border-gray-100 bg-gray-50/50 px-5 focus:bg-white transition-all border-none shadow-none focus-visible:ring-emerald-500/20"
+                            className="h-12 rounded-xl border-gray-200 bg-white px-4 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-sm pr-12"
                             disabled={isPending || signupMutation.isPending}
                             {...field}
                           />
@@ -287,15 +287,15 @@ export default function SignUpPage() {
               <div className="pt-2">
                 <Button
                   type="submit"
-                  className="w-full h-16 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[1.5rem] font-black text-lg transition-all active:scale-95 shadow-lg shadow-emerald-600/20 uppercase tracking-widest italic group"
+                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-sora font-semibold text-base transition-all active:scale-95 shadow-sm group"
                   disabled={isPending || signupMutation.isPending}
                 >
                   {isPending || signupMutation.isPending ? (
-                    <Loader2 className="animate-spin h-6 w-6" />
+                    <Loader2 className="animate-spin h-5 w-5" />
                   ) : (
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center justify-center gap-2">
                       Join community
-                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   )}
                 </Button>
@@ -303,45 +303,40 @@ export default function SignUpPage() {
             </form>
           </Form>
 
-          <p className="text-center text-sm font-bold text-gray-500">
+          <p className="text-center text-sm font-medium text-gray-500">
             Already a Member?{" "}
-            <Link href="/login" className="text-emerald-600 hover:text-emerald-700 underline underline-offset-4">
+            <Link href="/login" className="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline underline-offset-4">
               Login Here
             </Link>
           </p>
         </motion.div>
         
         {/* Footer Links */}
-        <div className="mt-auto pt-10 flex items-center justify-center gap-8 text-[10px] font-black uppercase tracking-widest text-gray-300">
-          <Link href="/terms" className="hover:text-gray-500 transition-colors">Terms</Link>
-          <Link href="/privacy" className="hover:text-gray-500 transition-colors">Privacy</Link>
-          <span className="text-gray-200">© 2024 DentiSpark</span>
+        <div className="mt-auto pt-10 flex items-center justify-center gap-6 text-xs font-medium text-gray-400">
+          <Link href="/terms" className="hover:text-gray-600 transition-colors">Terms Conditions</Link>
+          <Link href="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</Link>
+          <span className="text-gray-300">© 2024 DentiSpark</span>
         </div>
       </div>
 
-      {/* --- Right Pane: Landscape --- */}
-      <div className="hidden lg:block lg:w-[58%] relative overflow-hidden bg-emerald-100">
-        <Image
-          src="/images/premium/auth-landscape.png"
-          alt="Serene Mountains"
-          fill
-          className="object-cover transition-transform duration-[10s] hover:scale-105"
-          priority
-        />
-        {/* Cinematic Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent pointer-events-none" />
-        <div className="absolute bottom-20 left-20 right-20 space-y-4">
+      {/* --- Right Pane: Light Professional Branding --- */}
+      <div className="hidden lg:flex lg:w-[58%] relative overflow-hidden bg-[#F3F7F6] items-center justify-center p-20">
+        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50" />
+        
+        <div className="max-w-xl z-10 space-y-8 relative">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="p-10 bg-white/10 backdrop-blur-3xl rounded-[3rem] border border-white/20 shadow-2xl relative overflow-hidden group"
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-            <h2 className="text-5xl font-black text-white italic tracking-tight leading-none uppercase mb-4">
-              Empowering the next <br /> generation
+            <div className="inline-block px-4 py-1.5 bg-emerald-100/50 border border-emerald-200/50 rounded-full text-emerald-800 text-sm font-semibold mb-2">
+              Join DentiSpark
+            </div>
+            <h2 className="text-5xl font-sora font-bold text-emerald-950 leading-[1.15] tracking-tight">
+              Empowering the next generation
             </h2>
-            <p className="text-xl text-white/80 font-medium leading-relaxed">
+            <p className="text-xl text-emerald-800/70 font-medium leading-relaxed max-w-lg">
               Connect with world-class mentors and accelerate your dental school journey with precision and purpose.
             </p>
           </motion.div>
