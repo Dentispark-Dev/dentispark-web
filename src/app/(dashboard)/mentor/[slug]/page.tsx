@@ -5,13 +5,13 @@ import React, { useState, useEffect } from "react";
 import { MentorProfileView } from "@/src/features/profile/components/mentor-profile-view";
 import { MOCK_MENTORS } from "@/src/features/profile/data/mock-mentors";
 
-interface MentorPageProps {
+interface MentorDashboardPageProps {
   params: Promise<{
     slug: string;
   }>;
 }
 
-export default function MentorPage({ params }: MentorPageProps) {
+export default function MentorDashboardPage({ params }: MentorDashboardPageProps) {
   const router = useRouter();
   const [slug, setSlug] = useState<string>("");
 
@@ -19,9 +19,10 @@ export default function MentorPage({ params }: MentorPageProps) {
     params.then(p => setSlug(p.slug));
   }, [params]);
 
-  const mentor = MOCK_MENTORS[slug || "dt-marcus-thorne"];
+  const mentor = MOCK_MENTORS[slug];
 
   if (!mentor && slug) {
+    // Fallback/Redirect or notFound
     notFound();
   }
 
@@ -30,8 +31,8 @@ export default function MentorPage({ params }: MentorPageProps) {
   return (
     <MentorProfileView 
       mentor={mentor} 
-      isDashboard={false} 
-      onBack={() => router.push("/become-a-mentor")} 
+      isDashboard={true} 
+      onBack={() => router.push("/mentorship")} 
     />
   );
 }

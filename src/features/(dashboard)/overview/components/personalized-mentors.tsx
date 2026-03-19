@@ -15,6 +15,7 @@ import { Button } from "@/src/components/ui/button";
 
 interface Mentor {
   id: string;
+  slug: string;
   name: string;
   title: string;
   rating: number;
@@ -27,76 +28,43 @@ interface Mentor {
 
 const mockMentors: Mentor[] = [
   {
-    id: "1",
-    name: "Andy J. Pierce",
+    id: "dt-marcus-thorne",
+    slug: "dt-marcus-thorne",
+    name: "Dt. Marcus Thorne",
     title: "Orthodontist",
-    rating: 4.5,
-    reviewCount: 26,
+    rating: 4.9,
+    reviewCount: 88,
     description:
-      "I help aspiring dentists navigate the path to dental school and build successful careers in orthodontics.",
-    avatar: "/images/mentor-2.png",
-    country: "UK",
-    flag: "🇬🇧",
-  },
-  {
-    id: "2",
-    name: "Sarah M. Johnson",
-    title: "Dental Surgeon",
-    rating: 4.8,
-    reviewCount: 34,
-    description:
-      "Specializing in oral surgery with 10+ years of experience helping students achieve their dental career goals.",
-    avatar: "/images/mentor-2.png",
+      "Specializing in advanced orthodontic procedures and guiding pre-dental students.",
+    avatar: "/images/premium/mentor-banner.png",
     country: "US",
     flag: "🇺🇸",
   },
   {
-    id: "3",
-    name: "Dr. Michael Chen",
-    title: "Periodontist",
-    rating: 4.7,
-    reviewCount: 42,
+    id: "dr-elena-rostova",
+    slug: "dr-elena-rostova",
+    name: "Dr. Elena Rostova",
+    title: "Oral Surgeon",
+    rating: 5.0,
+    reviewCount: 62,
     description:
-      "Expert in periodontal therapy and implant dentistry, guiding students through advanced dental specializations.",
-    avatar: "/images/mentor-2.png",
-    country: "Canada",
-    flag: "🇨🇦",
+      "Admissions committee experience at Harvard Medical. Expert in MMI and surgery.",
+    avatar: "/images/premium/auth-landscape.png",
+    country: "US",
+    flag: "🇺🇸",
   },
   {
-    id: "4",
-    name: "Dr. Emma Thompson",
-    title: "Pediatric Dentist",
-    rating: 4.9,
-    reviewCount: 38,
-    description:
-      "Passionate about children's oral health and mentoring future pediatric dentists with compassionate care approaches.",
-    avatar: "/images/mentor-2.png",
-    country: "Australia",
-    flag: "🇦🇺",
-  },
-  {
-    id: "5",
-    name: "Dr. James Rodriguez",
-    title: "Oral Maxillofacial Surgeon",
-    rating: 4.6,
-    reviewCount: 29,
-    description:
-      "Leading oral surgeon specializing in complex reconstructive procedures and mentoring surgical residents.",
-    avatar: "/images/mentor-2.png",
-    country: "Spain",
-    flag: "🇪🇸",
-  },
-  {
-    id: "6",
-    name: "Dr. Lisa Park",
-    title: "Endodontist",
+    id: "dr-sarah-chen",
+    slug: "dr-sarah-chen",
+    name: "Dr. Sarah Chen",
+    title: "General Dentist",
     rating: 4.8,
-    reviewCount: 31,
+    reviewCount: 145,
     description:
-      "Root canal specialist with expertise in pain management and advanced endodontic techniques for complex cases.",
-    avatar: "/images/mentor-2.png",
-    country: "South Korea",
-    flag: "🇰🇷",
+      "NHS Consultant and UCAT specialist helping students secure UK dental school offers.",
+    avatar: "/images/premium/mentor-banner.png",
+    country: "UK",
+    flag: "🇬🇧",
   },
 ];
 
@@ -199,12 +167,14 @@ export default function PersonalizedMentors({
                       {mentor.description}
                     </p>
 
-                    <Button
-                      variant={"outline"}
-                      className="font-sora w-full rounded-lg border text-sm font-medium transition-colors"
-                    >
-                      View Profile
-                    </Button>
+                    <Link href={`/mentor/${mentor.slug}`} className="w-full">
+                      <Button
+                        variant={"outline"}
+                        className="font-sora w-full rounded-lg border text-sm font-medium transition-colors"
+                      >
+                        View Profile
+                      </Button>
+                    </Link>
                   </div>
                 </motion.div>
               </CarouselItem>

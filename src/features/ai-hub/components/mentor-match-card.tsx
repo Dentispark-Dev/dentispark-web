@@ -93,7 +93,7 @@ export function MentorMatchCard({
 
             <div className="pt-2 flex gap-3">
                 <div className="flex-1">
-                    <Link href={`/mentorship/${slug}`} className="block w-full">
+                    <Link href={`/mentor/${slug}`} className="block w-full">
                         <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-sora font-semibold transition-all flex items-center justify-center gap-2 shadow-sm group/btn">
                             Secure Partnership
                             <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
