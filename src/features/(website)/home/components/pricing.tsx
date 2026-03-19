@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";

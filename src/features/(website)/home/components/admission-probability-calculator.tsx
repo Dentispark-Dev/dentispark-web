@@ -20,6 +20,7 @@ import {
 } from "@/src/components/ui/select";
 import { Button } from "@/src/components/ui/button";
 import { Title } from "@/src/components/atoms/title";
+import Container from "@/src/components/layouts/container";
 
 const studentTypes = [
   "All applicants",
