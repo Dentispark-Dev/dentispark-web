@@ -167,7 +167,7 @@ export default function PersonalizedMentors({
                       {mentor.description}
                     </p>
 
-                    <Link href={`/mentor/${mentor.slug}`} className="w-full">
+                    <Link href={`/dashboard/mentor/${mentor.slug}`} className="w-full">
                       <Button
                         variant={"outline"}
                         className="font-sora w-full rounded-lg border text-sm font-medium transition-colors"
