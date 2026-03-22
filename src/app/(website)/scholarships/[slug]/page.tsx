@@ -18,11 +18,16 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { REAL_SCHOLARSHIPS } from "@/src/features/(website)/scholarships/data/scholarships";
+
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
+  const slug = params.slug;
+  const scholarship = REAL_SCHOLARSHIPS.find(m => m.slug === slug);
+  
   return {
-    title: `Scholarship Details | DentiSpark`,
-    description: "View full eligibility and application details for this scholarship.",
+    title: `${scholarship?.title || 'Scholarship Details'} | DentiSpark`,
+    description: scholarship?.description || "View full eligibility and application details for this scholarship.",
   };
 }
 
@@ -35,14 +40,18 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
      const api = new ResourceHubApi();
      scholarship = await api.getScholarshipBySlug(slug);
   } catch (e) {
-        scholarship = getMockScholarship(slug);
+     // Fallback to real mock data
+     scholarship = REAL_SCHOLARSHIPS.find(m => m.slug === slug);
   }
 
   if (!scholarship) {
-    notFound();
+    // If still not found, try the fallback again or 404
+    scholarship = REAL_SCHOLARSHIPS.find(m => m.slug === slug);
+    if (!scholarship) notFound();
   }
 
   const covers = scholarship.coversJson ? JSON.parse(scholarship.coversJson) : ["Tuition fees", "Living expenses support"];
+  const providerName = (scholarship as any).provider || "University Provider";
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen font-inter">
@@ -73,14 +82,14 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 {scholarship.title}
               </h1>
               <p className="text-xl text-slate-500 font-medium leading-relaxed">
-                Offered by <span className="text-primary-600 font-bold">University of Leicester</span>
+                Offered by <span className="text-primary-600 font-bold">{providerName}</span>
               </p>
             </div>
             
             <div className="flex flex-col gap-4 min-w-[280px]">
               <Button size="lg" className="h-16 px-10 rounded-2xl shadow-2xl shadow-primary-600/30 text-lg font-black bg-primary-600 hover:bg-primary-700 transition-all hover:scale-[1.02]" asChild>
                 <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
-                  Apply on University Website
+                  Apply on Official Website
                   <ExternalLink className="h-5 w-5" />
                 </a>
               </Button>
@@ -99,8 +108,8 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <Target className="h-5 w-5 text-primary-600" />
                 <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Award Value</span>
               </div>
-              <p className="text-2xl font-black text-slate-900">{scholarship.amountCurrency}{scholarship.amountValue?.toLocaleString() || "Varies"}</p>
-              <p className="text-xs text-slate-500 font-bold mt-1">{scholarship.fundingType || "Contribution to fees"}</p>
+              <p className="text-2xl font-black text-slate-900">{scholarship.amountCurrency}{scholarship.amountValue > 0 ? scholarship.amountValue.toLocaleString() : "Varies"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).fundingType || "Contribution to fees"}</p>
             </div>
             <div className="py-8 px-6">
               <div className="flex items-center gap-3 mb-2">
@@ -108,9 +117,9 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Deadline</span>
               </div>
               <p className="text-2xl font-black text-slate-900">
-                {scholarship.deadline ? new Date(scholarship.deadline).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : 'Rolling'}
+                {scholarship.deadline}
               </p>
-              <p className="text-xs text-slate-500 font-bold mt-1">Intake: {scholarship.intakeYear || "Sept 2026"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">Intake: {(scholarship as any).intakeYear || "2026 Entry"}</p>
             </div>
             <div className="py-8 px-6">
               <div className="flex items-center gap-3 mb-2">
@@ -118,15 +127,15 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Study Level</span>
               </div>
               <p className="text-2xl font-black text-slate-900 truncate">{scholarship.targetDegreeLevel}</p>
-              <p className="text-xs text-slate-500 font-bold mt-1">{scholarship.numberOfAwards || "Multiple awards"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).numberOfAwards || "Multiple awards"}</p>
             </div>
             <div className="py-8 px-6 last:pr-0">
               <div className="flex items-center gap-3 mb-2">
                 <Globe className="h-5 w-5 text-primary-600" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Nationality</span>
+                <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Target Location</span>
               </div>
-              <p className="text-2xl font-black text-slate-900">{scholarship.nationality || "All International"}</p>
-              <p className="text-xs text-slate-500 font-bold mt-1">{scholarship.targetLocation || "United Kingdom"}</p>
+              <p className="text-2xl font-black text-slate-900">{scholarship.targetLocation || "United Kingdom"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).nationality || "All Eligible"}</p>
             </div>
           </div>
         </Container>
@@ -169,7 +178,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                         <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white">
                             <GraduationCap className="h-6 w-6" />
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tight">Entry requirements</h2>
+                        <h2 className="text-3xl font-black text-slate-900 tracking-tight">Eligibility Criteria</h2>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -178,23 +187,17 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                             <p className="text-lg font-bold text-slate-900">{scholarship.targetDegreeLevel}</p>
                         </div>
                         <div className="space-y-2">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Gender</span>
-                            <p className="text-lg font-bold text-slate-900">{scholarship.gender || "All Genders"}</p>
-                        </div>
-                        <div className="space-y-2">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Study Mode</span>
-                            <p className="text-lg font-bold text-slate-900">{scholarship.studyMode || "Full Time"}</p>
-                        </div>
-                        <div className="space-y-2">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Selection Basis</span>
-                            <p className="text-lg font-bold text-slate-900">{scholarship.selectionBasis || "Refugee/asylum status, Academic excellence"}</p>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Location</span>
+                            <p className="text-lg font-bold text-slate-900">{scholarship.targetLocation || "United Kingdom"}</p>
                         </div>
                     </div>
 
                     <div className="mt-10 pt-10 border-t border-gray-100">
-                      <h4 className="text-sm font-black text-slate-900 mb-4">Other eligibility requirements</h4>
+                      <h4 className="text-sm font-black text-slate-900 mb-4">Detailed Requirements</h4>
                       <p className="text-slate-600 font-medium leading-[1.8]">
-                        {scholarship.eligibilityCriteriaJson !== "{}" ? scholarship.eligibilityCriteriaJson : "Candidates must hold an offer of a place to study full-time at the university starting in the respective intake. Recipients are chosen based on a combination of academic merit and their specific refugee or asylum seeking status in the host country."}
+                        {scholarship.eligibilityCriteriaJson && scholarship.eligibilityCriteriaJson !== "{}" 
+                          ? (JSON.parse(scholarship.eligibilityCriteriaJson).notes || "Candidates must meet the specific criteria set by the provider. Please visit the official website for full details.") 
+                          : "Candidates must hold an offer of a place or meet residency requirements as specified by the provider."}
                       </p>
                     </div>
                 </section>
@@ -213,8 +216,8 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                           <div className="space-y-4 ml-2">
                             {[
                               "Complete your academic application for a qualifying course.",
-                              "Receive a conditional or unconditional offer letter.",
-                              "Complete the separate scholarship application form before the deadline."
+                              "Ensure you meet all eligibility and residency requirements.",
+                              "Submit any required forms or evidence before the specified deadline."
                             ].map((step, i) => (
                               <div key={i} className="flex gap-4">
                                 <div className="w-6 h-6 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center text-xs font-black flex-shrink-0">
@@ -259,12 +262,12 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                         <div className="flex items-start gap-4">
                           <MapPin className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-sm font-black text-gray-900">University of Leicester</p>
-                            <p className="text-xs text-gray-500 font-bold">Leicester, United Kingdom</p>
+                            <p className="text-sm font-black text-gray-900">{providerName}</p>
+                            <p className="text-xs text-gray-500 font-bold">{scholarship.targetLocation || "United Kingdom"}</p>
                           </div>
                         </div>
                         <Button variant="outline" className="w-full h-12 rounded-xl border-gray-200 font-bold text-gray-700" asChild>
-                          <Link href="/contact">Inquire about Award</Link>
+                          <Link href="/contact">Inquire via DentiSpark</Link>
                         </Button>
                         <div className="pt-6 border-t border-gray-100">
                           <Link href="/scholarships" className="flex items-center text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">
@@ -278,58 +281,4 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
       </Container>
     </div>
   );
-}
-
-function getMockScholarship(slug: string) {
-    const mocks = [
-        {
-            externalId: "ext-sanctuary",
-            title: "Sanctuary Scholarships",
-            slug: "sanctuary-scholarship",
-            description: "Each Sanctuary Scholarship consists of a tuition fee waiver, and a support package to be confirmed following assessment with our Welfare Service. This award is specifically designed to support individuals in the UK who are fleeing from conflict or persecution and are waiting for their asylum status results.",
-            amountValue: 25000,
-            amountCurrency: "£",
-            deadline: "2026-04-19",
-            fundingType: "Fee waiver/discount",
-            numberOfAwards: "4 per year (avg)",
-            intakeYear: "September 2026",
-            targetDegreeLevel: "Undergraduate, Postgraduate",
-            targetLocation: "United Kingdom",
-            nationality: "All International",
-            gender: "All Genders",
-            studyMode: "Full Time",
-            selectionBasis: "Refugee/asylum status, Academic excellence",
-            applicationLink: "https://www.le.ac.uk/scholarships/sanctuary",
-            coversJson: JSON.stringify(["Tuition fees", "Living expenses support", "Academic resources bursary"]),
-            isSponsored: true,
-            eligibilityCriteriaJson: "Candidates must be in the UK waiting for the outcome of an initial asylum claim or having submitted an appeal. They must hold an offer of a place to study full-time at the University of Leicester."
-        },
-        {
-            externalId: "ext1",
-            title: "Education Future International Scholarship 2025",
-            slug: "education-future-international-scholarship-2025",
-            description: "A global scholarship program aimed at supporting high-potential international students. Open to all disciplines including medicine and dentistry for studies in the USA and non-USA countries.",
-            amountValue: 15000,
-            amountCurrency: "$",
-            deadline: "2025-10-31",
-            applicationLink: "https://www.education-future.org/",
-            isSponsored: true,
-            targetDegreeLevel: "BDS / MBBS",
-            targetLocation: "Global"
-        },
-        {
-            externalId: "ext6",
-            title: "Global Excellence Dental Scholarship 2026",
-            slug: "global-excellence-dental-scholarship-2026",
-            description: "A highly competitive scholarship awarded to outstanding international students pursuing a BDS degree. Covers full tuition and living expenses for the first year.",
-            amountValue: 25000,
-            amountCurrency: "£",
-            deadline: "2025-11-15",
-            applicationLink: "https://www.dundee.ac.uk/scholarships/global-excellence-scholarship-january-2026",
-            isSponsored: true,
-            targetDegreeLevel: "BDS",
-            targetLocation: "United Kingdom"
-        }
-    ];
-    return mocks.find(m => m.slug === slug) || mocks[0];
 }

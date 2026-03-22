@@ -36,6 +36,8 @@ const itemVariants: Variants = {
   },
 };
 
+import { REAL_SCHOLARSHIPS } from "../data/scholarships";
+
 export function ScholarshipGrid() {
   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,14 +58,14 @@ export function ScholarshipGrid() {
       const response = await api.getScholarships(params);
       
       if (!response || !response.data || response.data.length === 0) {
-           setScholarships(getMockScholarships());
+           setScholarships(REAL_SCHOLARSHIPS);
       } else {
            setScholarships(response.data);
       }
       
     } catch (error) {
            console.error("Failed to fetch scholarships", error);
-           setScholarships(getMockScholarships());
+           setScholarships(REAL_SCHOLARSHIPS);
     } finally {
       setLoading(false);
     }
@@ -172,7 +174,7 @@ export function ScholarshipGrid() {
                           {scholarship.targetDegreeLevel}
                         </span>
                         <div className="font-sora text-xl font-extrabold text-emerald-600">
-                          {scholarship.amountCurrency}{scholarship.amountValue?.toLocaleString() || "Varies"}
+                          {scholarship.amountCurrency}{scholarship.amountValue > 0 ? scholarship.amountValue.toLocaleString() : "Varies"}
                         </div>
                       </div>
 
@@ -188,7 +190,7 @@ export function ScholarshipGrid() {
                       <div className="mt-auto flex flex-col gap-4 pt-6 border-t border-slate-50">
                         <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
                             <span className="text-slate-400">Deadline</span>
-                            <span className="text-slate-900 bg-slate-50 px-3 py-1 rounded-full">{scholarship.deadline ? new Date(scholarship.deadline).toLocaleDateString() : 'Rolling'}</span>
+                            <span className="text-slate-900 bg-slate-50 px-3 py-1 rounded-full">{scholarship.deadline}</span>
                         </div>
                         <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
                             <span className="text-slate-400">Location</span>
