@@ -27,7 +27,12 @@ export function CreateCourseModal({ isOpen, onClose, initialUniversityHid }: Cre
         description: "",
         feesDomestic: undefined,
         feesInternational: undefined,
-        applicationDeadline: ""
+        applicationDeadline: "",
+        aLevelRequirements: "",
+        ibRequirements: "",
+        ucatRequirement: "",
+        interviewDetails: "",
+        courseUrl: ""
     });
 
     const { data: universitiesData } = useQuery({
@@ -51,7 +56,12 @@ export function CreateCourseModal({ isOpen, onClose, initialUniversityHid }: Cre
                 description: "", 
                 feesDomestic: undefined, 
                 feesInternational: undefined, 
-                applicationDeadline: "" 
+                applicationDeadline: "",
+                aLevelRequirements: "",
+                ibRequirements: "",
+                ucatRequirement: "",
+                interviewDetails: "",
+                courseUrl: "" 
             });
         },
         onError: () => {
@@ -175,15 +185,73 @@ export function CreateCourseModal({ isOpen, onClose, initialUniversityHid }: Cre
                         </div>
                     </div>
 
-                    <div>
-                        <Label htmlFor="applicationDeadline">Application Deadline</Label>
-                        <Input
-                            id="applicationDeadline"
-                            type="date"
-                            className="mt-1"
-                            value={formData.applicationDeadline}
-                            onChange={(e) => setFormData(prev => ({ ...prev, applicationDeadline: e.target.value }))}
-                        />
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="aLevelRequirements">A-Level Requirements</Label>
+                            <Input
+                                id="aLevelRequirements"
+                                className="mt-1"
+                                placeholder="e.g. AAA including Biology and Chemistry"
+                                value={formData.aLevelRequirements}
+                                onChange={(e) => setFormData(prev => ({ ...prev, aLevelRequirements: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="ibRequirements">IB Requirements</Label>
+                            <Input
+                                id="ibRequirements"
+                                className="mt-1"
+                                placeholder="e.g. 36 points with 666 at HL"
+                                value={formData.ibRequirements}
+                                onChange={(e) => setFormData(prev => ({ ...prev, ibRequirements: e.target.value }))}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="ucatRequirement">UCAT Requirement</Label>
+                            <Input
+                                id="ucatRequirement"
+                                className="mt-1"
+                                placeholder="e.g. Top 30% or 2600+"
+                                value={formData.ucatRequirement}
+                                onChange={(e) => setFormData(prev => ({ ...prev, ucatRequirement: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="interviewDetails">Interview Details</Label>
+                            <Input
+                                id="interviewDetails"
+                                className="mt-1"
+                                placeholder="e.g. MMI Format, typically December-March"
+                                value={formData.interviewDetails}
+                                onChange={(e) => setFormData(prev => ({ ...prev, interviewDetails: e.target.value }))}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="courseUrl">Course URL Link</Label>
+                            <Input
+                                id="courseUrl"
+                                className="mt-1"
+                                placeholder="e.g. https://www.kcl.ac.uk/study/undergraduate/courses/dentistry-bds"
+                                value={formData.courseUrl}
+                                onChange={(e) => setFormData(prev => ({ ...prev, courseUrl: e.target.value }))}
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="applicationDeadline">Application Deadline</Label>
+                            <Input
+                                id="applicationDeadline"
+                                type="date"
+                                className="mt-1"
+                                value={formData.applicationDeadline}
+                                onChange={(e) => setFormData(prev => ({ ...prev, applicationDeadline: e.target.value }))}
+                            />
+                        </div>
                     </div>
                 </div>
 

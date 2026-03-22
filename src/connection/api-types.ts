@@ -225,6 +225,11 @@ export interface Course {
   fees_domestic?: number;
   fees_international?: number;
   application_deadline?: string;
+  a_level_requirements?: string;
+  ib_requirements?: string;
+  ucat_requirement?: string;
+  interview_details?: string;
+  course_url?: string;
   field: PlatformField;
   created_at: string;
   updated_at: string;
@@ -563,6 +568,11 @@ export interface AdminCourseDetail extends AdminCourseRecord {
   feesDomestic?: number;
   feesInternational?: number;
   applicationDeadline?: string;
+  aLevelRequirements?: string;
+  ibRequirements?: string;
+  ucatRequirement?: string;
+  interviewDetails?: string;
+  courseUrl?: string;
 }
 
 export interface CreateCoursePayload {
@@ -575,6 +585,11 @@ export interface CreateCoursePayload {
   feesDomestic?: number;
   feesInternational?: number;
   applicationDeadline?: string;
+  aLevelRequirements?: string;
+  ibRequirements?: string;
+  ucatRequirement?: string;
+  interviewDetails?: string;
+  courseUrl?: string;
 }
 
 export interface AdminResourceQuery {
