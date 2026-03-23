@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/src/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { Title } from "@/src/components/atoms/title";
 import { cn } from "@/src/lib/utils";
+import { BaseAPI } from "@/src/connection/base-api";
+import { useAuth } from "@/src/providers/auth-provider";
 
 const plans = [
   {
@@ -53,7 +57,38 @@ const itemVariants: Variants = {
   },
 };
 
+interface CheckoutSessionData {
+  checkoutUrl: string;
+  transactionReference: string;
+}
+
 export function PricingSection() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [isLoadingCheckout, setIsLoadingCheckout] = useState(false);
+
+  const handleGetStarted = async () => {
+    if (!user) {
+      router.push("/register");
+      return;
+    }
+    setIsLoadingCheckout(true);
+    try {
+      const api = new BaseAPI();
+      const session = await api.post<CheckoutSessionData>("/checkout/initiate", {
+        platformUserEmailAddress: user.emailAddress,
+        action: "MEMBERSHIP_REGISTRATION",
+      });
+      if (session?.checkoutUrl) {
+        window.location.href = session.checkoutUrl;
+      }
+    } catch (err) {
+      console.error("Checkout initiation failed:", err);
+    } finally {
+      setIsLoadingCheckout(false);
+    }
+  };
+
   return (
     <section className="bg-white py-24 md:py-32 overflow-hidden">
       <Container>
@@ -116,6 +151,8 @@ export function PricingSection() {
                   />
 
                   <Button
+                    onClick={plan.highlighted ? handleGetStarted : undefined}
+                    disabled={plan.highlighted && isLoadingCheckout}
                     className={cn(
                       "h-14 rounded-2xl font-sora font-extrabold text-sm uppercase tracking-widest transition-all duration-300",
                       plan.highlighted 
@@ -123,7 +160,11 @@ export function PricingSection() {
                         : "bg-slate-50 hover:bg-slate-100 text-slate-900 border border-slate-200"
                     )}
                   >
-                    Get Started Now
+                    {plan.highlighted && isLoadingCheckout ? (
+                      <><Loader2 className="h-4 w-4 animate-spin mr-2" />Processing...</>
+                    ) : (
+                      "Get Started Now"
+                    )}
                   </Button>
 
                   <div className={cn(
