@@ -33,15 +33,26 @@ export default function OverviewPage() {
             
             try {
                 setIsDataLoading(true);
+                // Resilient fetching: fetch each independently so one failure doesn't block the other
+                const profilePromise = overviewApi.GET_STUDENT_PROFILE().catch(err => {
+                    console.warn("Student profile fetch failed:", err);
+                    return null;
+                });
+                
+                const mentorsPromise = overviewApi.GET_PERSONALIZED_MENTORS().catch(err => {
+                    console.warn("Mentors fetch failed:", err);
+                    return [];
+                });
+
                 const [profile, personalizedMentors] = await Promise.all([
-                    overviewApi.GET_STUDENT_PROFILE(),
-                    overviewApi.GET_PERSONALIZED_MENTORS()
+                    profilePromise,
+                    mentorsPromise
                 ]);
-                setStudentData(profile);
-                setMentors(personalizedMentors);
+
+                if (profile) setStudentData(profile);
+                if (personalizedMentors) setMentors(personalizedMentors);
             } catch (error) {
-                console.error("Failed to fetch dashboard data:", error);
-                toast.error("Failed to load dashboard data");
+                console.error("Critical dashboard load error:", error);
             } finally {
                 setIsDataLoading(false);
             }
