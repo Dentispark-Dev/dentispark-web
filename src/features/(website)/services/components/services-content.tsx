@@ -33,29 +33,29 @@ const itemVariants: Variants = {
 export function ServicesContent({ services }: { services: any[] }) {
   return (
     <div className="flex min-h-screen flex-col bg-slate-50/30">
-      {/* Hero Section - Cinematic Upgrade */}
-      <section className="relative pt-40 pb-32 overflow-hidden bg-slate-950">
+      {/* Hero Section - Compact & Powerful */}
+      <section className="relative pt-20 pb-12 overflow-hidden bg-slate-950">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-transparent to-transparent opacity-50" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
         
         <Container>
           <motion.div 
-            className="relative z-10 text-center space-y-8"
+            className="relative z-10 text-center space-y-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-4">
+            <div className="inline-block px-4 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-0">
               Premium Marketplace
             </div>
-            <h1 className="font-sora text-5xl md:text-8xl font-extrabold text-white tracking-tighter leading-[1.1]">
+            <h1 className="font-sora text-3xl md:text-5xl font-extrabold text-white tracking-tighter leading-[1.1]">
               Expert Help, <span className="text-emerald-400">On Demand.</span>
             </h1>
-            <p className="font-sora text-slate-400 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
+            <p className="font-sora text-slate-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
               Browse our curated marketplace of high-end services offered by top dental professionals and scholars. Get the elite support you deserve.
             </p>
             
-            <div className="max-w-3xl mx-auto mt-12 relative group">
+            <div className="max-w-2xl mx-auto mt-6 relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-500" />
               <div className="relative bg-white/10 backdrop-blur-2xl border border-white/10 p-2 rounded-full flex items-center shadow-2xl">
                 <Search className="h-6 w-6 text-slate-400 ml-6" />
@@ -74,21 +74,21 @@ export function ServicesContent({ services }: { services: any[] }) {
       </section>
 
       {/* Main Content */}
-      <section className="py-24 overflow-hidden">
+      <section className="py-12 overflow-hidden">
         <Container>
           <motion.div 
-            className="flex flex-col space-y-12"
+            className="flex flex-col space-y-8"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-4 border-b border-slate-100 pb-12">
+            <div className="flex flex-col md:flex-row justify-between items-end gap-4 mb-2 border-b border-slate-100 pb-6">
               <div className="space-y-4">
                 <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase w-fit">
                   Curated Catalog
                 </motion.div>
-                <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-5xl tracking-tight">
+                <motion.h2 variants={itemVariants} className="font-sora text-2xl font-extrabold text-slate-900 md:text-3xl tracking-tight">
                   Featured <span className="text-emerald-600">Services.</span>
                 </motion.h2>
               </div>
