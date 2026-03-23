@@ -9,10 +9,13 @@ interface WelcomeSectionProps {
 }
 
 export default function WelcomeSection({
-  userName = "John",
-  userYear = "Year 12",
+  userName,
+  userYear,
 }: WelcomeSectionProps) {
   const { t } = useI18n();
+  
+  const displayUserName = userName || t("welcome_default_name");
+  const displayUserYear = userYear || t("welcome_default_year");
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -31,7 +34,7 @@ export default function WelcomeSection({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-sora text-black-800 mb-1 text-sm font-medium md:text-base">
-            {getGreeting()}, {userName}
+            {getGreeting()}, {displayUserName}
           </h1>
           <p className="text-black-300 font-sora text-xs md:text-sm">
             {t("welcome_subtitle")}
@@ -60,7 +63,7 @@ export default function WelcomeSection({
               strokeLinejoin="round"
             />
           </svg>
-          {userYear}
+          {displayUserYear}
         </div>
       </div>
     </motion.div>

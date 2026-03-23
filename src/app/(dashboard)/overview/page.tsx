@@ -9,24 +9,57 @@ import { ProgressPipeline } from "@/src/features/analytics/components/progress-p
 import { DeadlineCountdown } from "@/src/features/automation/components/deadline-countdown";
 import { MilestoneList } from "@/src/features/automation/components/milestone-list";
 import { useAuth } from "@/src/providers/auth-provider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { overviewApi, type StudentProfile, type PersonalizedMentor } from "@/src/features/(dashboard)/overview/services/overview.api";
+import { toast } from "sonner";
 
 export default function OverviewPage() {
-    const { isMentor, isStudent, isAdmin, isLoading } = useAuth();
+    const { isMentor, isStudent, isAdmin, isLoading: authLoading } = useAuth();
     const router = useRouter();
+    const [studentData, setStudentData] = useState<StudentProfile | null>(null);
+    const [mentors, setMentors] = useState<PersonalizedMentor[]>([]);
+    const [isDataLoading, setIsDataLoading] = useState(true);
 
     useEffect(() => {
-        if (!isLoading && isMentor && !isAdmin) {
+        if (!authLoading && isMentor && !isAdmin) {
             router.replace("/mentor/overview");
         }
-    }, [isMentor, isAdmin, isLoading, router]);
+    }, [isMentor, isAdmin, authLoading, router]);
 
-    if (isLoading || (isMentor && !isAdmin)) return null;
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            if (!isStudent) return;
+            
+            try {
+                setIsDataLoading(true);
+                const [profile, personalizedMentors] = await Promise.all([
+                    overviewApi.GET_STUDENT_PROFILE(),
+                    overviewApi.GET_PERSONALIZED_MENTORS()
+                ]);
+                setStudentData(profile);
+                setMentors(personalizedMentors);
+            } catch (error) {
+                console.error("Failed to fetch dashboard data:", error);
+                toast.error("Failed to load dashboard data");
+            } finally {
+                setIsDataLoading(false);
+            }
+        };
+
+        if (isStudent && !authLoading) {
+            fetchDashboardData();
+        }
+    }, [isStudent, authLoading]);
+
+    if (authLoading || (isMentor && !isAdmin)) return null;
 
     return (
         <div className="space-y-10 pb-12">
-            <WelcomeSection />
+            <WelcomeSection 
+                userName={studentData?.fullName} 
+                userYear={studentData?.yearOfStudy} 
+            />
             <AIToolsGrid />
 
             {/* Premium Analytics Layer */}
@@ -36,7 +69,10 @@ export default function OverviewPage() {
                 <div className="xl:col-span-2 space-y-10">
                     <DeadlineCountdown />
                     <ProgressPipeline />
-                    <PersonalizedMentors />
+                    <PersonalizedMentors 
+                        mentors={mentors} 
+                        isLoading={isDataLoading}
+                    />
                 </div>
 
                 <div className="xl:col-span-1 space-y-10">

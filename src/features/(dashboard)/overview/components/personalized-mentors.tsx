@@ -13,67 +13,18 @@ import {
 import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
 
-interface Mentor {
-  id: string;
-  slug: string;
-  name: string;
-  title: string;
-  rating: number;
-  reviewCount: number;
-  description: string;
-  avatar: string;
-  country: string;
-  flag: string;
-}
-
-const mockMentors: Mentor[] = [
-  {
-    id: "dt-marcus-thorne",
-    slug: "dt-marcus-thorne",
-    name: "Dt. Marcus Thorne",
-    title: "Orthodontist",
-    rating: 4.9,
-    reviewCount: 88,
-    description:
-      "Specializing in advanced orthodontic procedures and guiding pre-dental students.",
-    avatar: "/images/premium/mentor-banner.png",
-    country: "US",
-    flag: "🇺🇸",
-  },
-  {
-    id: "dr-elena-rostova",
-    slug: "dr-elena-rostova",
-    name: "Dr. Elena Rostova",
-    title: "Oral Surgeon",
-    rating: 5.0,
-    reviewCount: 62,
-    description:
-      "Admissions committee experience at Harvard Medical. Expert in MMI and surgery.",
-    avatar: "/images/premium/auth-landscape.png",
-    country: "US",
-    flag: "🇺🇸",
-  },
-  {
-    id: "dr-sarah-chen",
-    slug: "dr-sarah-chen",
-    name: "Dr. Sarah Chen",
-    title: "General Dentist",
-    rating: 4.8,
-    reviewCount: 145,
-    description:
-      "NHS Consultant and UCAT specialist helping students secure UK dental school offers.",
-    avatar: "/images/premium/mentor-banner.png",
-    country: "UK",
-    flag: "🇬🇧",
-  },
-];
+import { PersonalizedMentor } from "../services/overview.api";
 
 interface PersonalizedMentorsProps {
   showViewAll?: boolean;
+  mentors?: PersonalizedMentor[];
+  isLoading?: boolean;
 }
 
 export default function PersonalizedMentors({
   showViewAll = true,
+  mentors = [],
+  isLoading = false,
 }: PersonalizedMentorsProps) {
   return (
     <motion.div
@@ -106,46 +57,57 @@ export default function PersonalizedMentors({
         )}
       </div>
 
-      {/* Mobile & Desktop: Carousel */}
-      <div className="block">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: false,
-            dragFree: false,
-            containScroll: "trimSnaps",
-          }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-4">
-            {mockMentors.map((mentor, index) => (
-              <CarouselItem
-                key={mentor.id}
-                className="basis-[85%] pl-4 sm:basis-[70%] md:basis-1/2 lg:basis-[40%] [@media(min-width:1800px)]:basis-1/4 [@media(min-width:2300px)]:basis-1/5 [@media(min-width:2800px)]:basis-1/6"
-              >
-                <motion.div
-                  className="border-greys-200 flex h-full flex-col rounded-xl border bg-white p-6 transition-shadow hover:shadow-md"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+      {isLoading ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-64 animate-pulse rounded-xl bg-gray-100" />
+          ))}
+        </div>
+      ) : mentors.length === 0 ? (
+        <div className="flex h-40 items-center justify-center rounded-xl bg-gray-50 text-gray-400">
+          No personalized mentors found for your profile.
+        </div>
+      ) : (
+        /* Mobile & Desktop: Carousel */
+        <div className="block">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+              dragFree: false,
+              containScroll: "trimSnaps",
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {mentors.map((mentor, index) => (
+                <CarouselItem
+                  key={mentor.id}
+                  className="basis-[85%] pl-4 sm:basis-[70%] md:basis-1/2 lg:basis-[40%] [@media(min-width:1800px)]:basis-1/4 [@media(min-width:2300px)]:basis-1/5 [@media(min-width:2800px)]:basis-1/6"
                 >
-                  <div className="flex h-full flex-col items-center text-center">
-                    <div className="relative mb-4">
-                      <div className="bg-greys-100 h-20 w-20 overflow-hidden rounded-full md:h-24 md:w-24">
-                        <Image
-                          src={mentor.avatar}
-                          alt={mentor.name}
-                          className="h-full w-full object-cover"
-                          width={120}
-                          height={120}
-                        />
+                  <motion.div
+                    className="border-greys-200 flex h-full flex-col rounded-xl border bg-white p-6 transition-shadow hover:shadow-md"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <div className="flex h-full flex-col items-center text-center">
+                      <div className="relative mb-4">
+                        <div className="bg-greys-100 h-20 w-20 overflow-hidden rounded-full md:h-24 md:w-24">
+                          <Image
+                            src={mentor.avatar || "/images/premium/mentor-banner.png"}
+                            alt={mentor.name}
+                            className="h-full w-full object-cover"
+                            width={120}
+                            height={120}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <h3 className="text-black-800 font-sora mb-1 flex items-center gap-2 text-sm font-normal">
-                      {mentor.name}
-                      <span className="text-lg">{mentor.flag}</span>
-                    </h3>
+                      <h3 className="text-black-800 font-sora mb-1 flex items-center gap-2 text-sm font-normal">
+                        {mentor.name}
+                        <span className="text-lg">{mentor.flag}</span>
+                      </h3>
 
                     <p className="text-text-color font-sora mb-3 text-xs font-medium">
                       {mentor.title}
@@ -179,13 +141,14 @@ export default function PersonalizedMentors({
                 </motion.div>
               </CarouselItem>
             ))}
-          </CarouselContent>
-          <div className="hidden md:block">
-            <CarouselPrevious className="hover:bg-greys-50 border-greys-300 absolute top-1/2 left-0 size-10 -translate-y-1/2 border bg-white shadow-lg" />
-            <CarouselNext className="hover:bg-greys-50 border-greys-300 absolute top-1/2 -right-0 size-10 -translate-y-1/2 border bg-white shadow-lg" />
-          </div>
-        </Carousel>
-      </div>
+            </CarouselContent>
+            <div className="hidden md:block">
+              <CarouselPrevious className="hover:bg-greys-50 border-greys-300 absolute top-1/2 left-0 size-10 -translate-y-1/2 border bg-white shadow-lg" />
+              <CarouselNext className="hover:bg-greys-50 border-greys-300 absolute top-1/2 -right-0 size-10 -translate-y-1/2 border bg-white shadow-lg" />
+            </div>
+          </Carousel>
+        </div>
+      )}
     </motion.div>
   );
 }
