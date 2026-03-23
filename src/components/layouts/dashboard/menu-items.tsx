@@ -141,17 +141,6 @@ const Icons = {
 
 export const menuItems: MenuItem[] = [
   {
-    id: "ai-group",
-    label: "AI Excellence",
-    href: "#",
-    allowedMemberTypes: ["STUDENT"],
-    icon: Icons.aiHub,
-    children: [
-      { id: "ai-hub", label: "AI Application Hub", href: "/ai-hub", allowedMemberTypes: ["STUDENT"], icon: Icons.aiHub },
-      { id: "guidance-hub", label: "Guidance Hub", href: "/guidance-hub", allowedMemberTypes: ["STUDENT"], icon: Icons.aiHub },
-    ],
-  },
-  {
     id: "journey-group",
     label: "My Journey",
     href: "#",

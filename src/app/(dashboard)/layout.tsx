@@ -36,7 +36,6 @@ export default function DashboardLayout({
     return (
         <ProtectedRoute requiresProfile>
             <CommandBar>
-                <ProactiveNotification />
                 <div className="bg-background-body flex min-h-screen">
                     {/* Mobile Menu Overlay */}
                     <MobileMenuOverlay
