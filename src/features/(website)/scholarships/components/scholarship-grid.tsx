@@ -44,15 +44,17 @@ interface ScholarshipGridProps {
 }
 
 export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridProps) {
-  const [scholarships, setScholarships] = useState<Scholarship[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [scholarships, setScholarships] = useState<Scholarship[]>(REAL_SCHOLARSHIPS);
+  const [loading, setLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-    fetchScholarships();
+    fetchScholarships(isInitialLoad);
+    if (isInitialLoad) setIsInitialLoad(false);
   }, [degreeFilter]);
 
-  const fetchScholarships = async () => {
-    setLoading(true);
+  const fetchScholarships = async (showLoading = true) => {
+    if (showLoading) setLoading(true);
     try {
       const params: Record<string, unknown> = { pageNumber: 0, pageSize: 20 };
       if (degreeFilter !== "all") {
@@ -60,15 +62,17 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
       }
       const response = await api.getScholarships(params);
       
-      if (!response || !response.data || response.data.length === 0) {
-           setScholarships(REAL_SCHOLARSHIPS);
-      } else {
+      if (response && response.data && response.data.length > 0) {
            setScholarships(response.data);
+      } else if (!isInitialLoad) {
+           // If we already have local data and API fails/empty, keep local
+           // Only set to local if we have nothing better
+           if (scholarships.length === 0) setScholarships(REAL_SCHOLARSHIPS);
       }
       
     } catch (error) {
            console.error("Failed to fetch scholarships", error);
-           setScholarships(REAL_SCHOLARSHIPS);
+           if (scholarships.length === 0) setScholarships(REAL_SCHOLARSHIPS);
     } finally {
       setLoading(false);
     }
