@@ -1,6 +1,7 @@
 "use client";
 
 import WelcomeSection from "@/src/features/(dashboard)/overview/components/welcome-section";
+import AIToolsGrid from "@/src/features/(dashboard)/overview/components/ai-tools-grid";
 import PersonalizedMentors from "@/src/features/(dashboard)/overview/components/personalized-mentors";
 import PopularResources from "@/src/features/(dashboard)/overview/components/popular-resources";
 import { PerformanceGrid } from "@/src/features/analytics/components/performance-grid";
@@ -26,6 +27,7 @@ export default function OverviewPage() {
     return (
         <div className="space-y-10 pb-12">
             <WelcomeSection />
+            <AIToolsGrid />
 
             {/* Premium Analytics Layer */}
             <PerformanceGrid />
