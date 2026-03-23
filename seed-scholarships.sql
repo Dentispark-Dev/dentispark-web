@@ -11,13 +11,13 @@ INSERT INTO platform_scholarships (
 (
     gen_random_uuid(), 'NHS Bursary Scheme', 'nhs-bursary-scheme', 
     'Financial support for medical and dental students in the later years of their course. Covers tuition fees and provides a means-tested bursary for living costs.', 
-    0.00, '£', 'During course', 'https://www.nhsbsa.nhs.uk/nhs-bursary-students', 
+    0.00, '£', NULL, 'https://www.nhsbsa.nhs.uk/nhs-bursary-students', 
     true, 'BDS', 'United Kingdom', '{"notes": "Means-tested; automatic eligibility for students in later years."}', now(), now()
 ),
 (
     gen_random_uuid(), 'NHS Learning Support Fund', 'nhs-learning-support-fund', 
     'Additional funding for healthcare students, including those in dental therapy and hygiene. Includes a training grant of £5,000 per year.', 
-    5000.00, '£', 'Apply yearly', 'https://www.nhsbsa.nhs.uk/nhs-learning-support-fund-lsf', 
+    5000.00, '£', NULL, 'https://www.nhsbsa.nhs.uk/nhs-learning-support-fund-lsf', 
     true, 'BDS', 'United Kingdom', '{"notes": "Apply yearly after enrolment. For healthcare students incl. dentistry."}', now(), now()
 ),
 (
@@ -29,19 +29,19 @@ INSERT INTO platform_scholarships (
 (
     gen_random_uuid(), 'UCAS Dentistry Application', 'ucas-dentistry-application', 
     'The primary application route for all UK dentistry programs. Essential for entry and consideration for university-specific funding.', 
-    0.00, '£', 'October 15 annually', 'https://www.ucas.com/', 
+    0.00, '£', '2026-10-15', 'https://www.ucas.com/', 
     false, 'BDS', 'United Kingdom', '{"notes": "Early deadline requirement for all aspiring dental students."}', now(), now()
 ),
 (
     gen_random_uuid(), 'Opportunity Scholarship', 'newcastle-opportunity-scholarship', 
     'Awards for Newcastle University students from low-income backgrounds. Automatically assessed via your UCAS application.', 
-    1000.00, '£', 'Automatic', 'https://www.ncl.ac.uk/undergraduate/fees-funding/scholarships-bursaries/opportunity-scholarship/', 
+    1000.00, '£', NULL, 'https://www.ncl.ac.uk/undergraduate/fees-funding/scholarships-bursaries/opportunity-scholarship/', 
     false, 'BDS', 'United Kingdom', '{"notes": "Income-based; no separate application required."}', now(), now()
 ),
 (
     gen_random_uuid(), 'Dental Scholarships', 'newcastle-dental-scholarships', 
     'Various alumni-funded and department-specific scholarships available to enrolled dental students at Newcastle University.', 
-    0.00, '£', 'After enrolment', 'https://www.ncl.ac.uk/dental/study/undergraduate/fees-funding/', 
+    0.00, '£', NULL, 'https://www.ncl.ac.uk/dental/study/undergraduate/fees-funding/', 
     false, 'BDS', 'United Kingdom', '{"notes": "Course-specific funds for dental students."}', now(), now()
 ),
 (

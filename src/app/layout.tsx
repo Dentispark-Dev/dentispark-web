@@ -10,7 +10,7 @@ import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
 import { GDPRBanner } from "@/src/components/common/gdpr-banner";
 import { NotificationPrompt } from "@/src/features/automation/components/notification-prompt";
 import { I18nProvider } from "@/src/providers/i18n-provider";
-import { robotoSlab } from "@/src/lib/font";
+import { robotoSlab, bricolage, jakarta } from "@/src/lib/font";
 import { cn } from "@/src/lib/utils";
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={cn(genralSans.className, robotoSlab.variable)}>
+    <html lang="en" className={cn(genralSans.className, robotoSlab.variable, bricolage.variable, jakarta.variable)}>
       <head>
         <script
           src="https://accounts.google.com/gsi/client"

@@ -5,7 +5,7 @@ export interface Scholarship {
   description: string;
   amountValue: number;
   amountCurrency: string;
-  deadline: string;
+  deadline: string | null;
   eligibilityCriteriaJson: string;
   applicationLink: string;
   isSponsored: boolean;
@@ -24,7 +24,7 @@ export const REAL_SCHOLARSHIPS: Scholarship[] = [
     description: "Financial support for medical and dental students in the later years of their course. Covers tuition fees and provides a means-tested bursary for living costs.",
     amountValue: 0, // Varies
     amountCurrency: "£",
-    deadline: "During course",
+    deadline: null,
     eligibilityCriteriaJson: JSON.stringify({ notes: "Means-tested; automatic eligibility for students in later years." }),
     applicationLink: "https://www.nhsbsa.nhs.uk/nhs-bursary-students",
     isSponsored: true,
@@ -39,7 +39,7 @@ export const REAL_SCHOLARSHIPS: Scholarship[] = [
     description: "Additional funding for healthcare students, including those in dental therapy and hygiene. Includes a training grant of £5,000 per year.",
     amountValue: 5000,
     amountCurrency: "£",
-    deadline: "Apply yearly",
+    deadline: null,
     eligibilityCriteriaJson: JSON.stringify({ notes: "Apply yearly after enrolment. For healthcare students incl. dentistry." }),
     applicationLink: "https://www.nhsbsa.nhs.uk/nhs-learning-support-fund-lsf",
     isSponsored: true,
@@ -69,7 +69,7 @@ export const REAL_SCHOLARSHIPS: Scholarship[] = [
     description: "The primary application route for all UK dentistry programs. Essential for entry and consideration for university-specific funding.",
     amountValue: 0,
     amountCurrency: "£",
-    deadline: "October 15 annually",
+    deadline: "2026-10-15",
     eligibilityCriteriaJson: JSON.stringify({ notes: "Early deadline requirement for all aspiring dental students." }),
     applicationLink: "https://www.ucas.com/",
     isSponsored: false,
@@ -84,7 +84,7 @@ export const REAL_SCHOLARSHIPS: Scholarship[] = [
     description: "Awards for Newcastle University students from low-income backgrounds. Automatically assessed via your UCAS application.",
     amountValue: 1000,
     amountCurrency: "£",
-    deadline: "Automatic",
+    deadline: null,
     eligibilityCriteriaJson: JSON.stringify({ notes: "Income-based; no separate application required." }),
     applicationLink: "https://www.ncl.ac.uk/undergraduate/fees-funding/scholarships-bursaries/opportunity-scholarship/",
     isSponsored: false,
@@ -99,7 +99,7 @@ export const REAL_SCHOLARSHIPS: Scholarship[] = [
     description: "Various alumni-funded and department-specific scholarships available to enrolled dental students at Newcastle University.",
     amountValue: 0, // Varies
     amountCurrency: "£",
-    deadline: "After enrolment",
+    deadline: null,
     eligibilityCriteriaJson: JSON.stringify({ notes: "Course-specific funds for dental students." }),
     applicationLink: "https://www.ncl.ac.uk/dental/study/undergraduate/fees-funding/",
     isSponsored: false,

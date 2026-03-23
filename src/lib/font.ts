@@ -1,10 +1,22 @@
 import localFont from "next/font/local";
-import { Roboto_Slab } from "next/font/google";
+import { Roboto_Slab, Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
 
 export const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-roboto-slab",
+});
+
+export const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-bricolage",
+});
+
+export const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jakarta",
 });
 
 const genralSans = localFont({

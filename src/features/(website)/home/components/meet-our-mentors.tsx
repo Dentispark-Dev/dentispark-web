@@ -27,78 +27,80 @@ type Mentor = {
   highlight?: string;
 };
 
-const mentors: Mentor[] = [
+const mentors = [
   {
-    name: "Dr. Sarah B.",
-    title: "Orthodontist",
+    slug: "dr-sarah-chen",
+    name: "Dr. Sarah Chen",
+    title: "General Dentist, King's College London",
     flag: <UKFlag className="size-5" />,
     avatar: mentor1,
     institutions: [
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "King's College London",
+        role: "NHS Consultant",
         logo: "/images/logos/stanford.png",
       },
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "UCAT Specialist",
+        role: "Lead Mentor",
         logo: "/images/logos/stanford.png",
       },
     ],
     highlight: "Helped 50+ students get accepted",
   },
   {
-    name: "Murray H.",
-    title: "Dental School and UCAT Coach",
+    slug: "dt-marcus-thorne",
+    name: "Dt. Marcus Thorne",
+    title: "Orthodontist, Univ of Pennsylvania",
     flag: <UKFlag className="size-5" />,
     avatar: mentor2,
     institutions: [
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "University of Pennsylvania",
+        role: "Elite Orthodontics",
         logo: "/images/logos/stanford.png",
       },
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "Application Expert",
+        role: "12+ Years Experience",
         logo: "/images/logos/stanford.png",
       },
     ],
   },
-
   {
-    name: "Murray Z.",
-    title: "Dental School and UCAT Coach",
+    slug: "dr-elena-rostova",
+    name: "Dr. Elena Rostova",
+    title: "Oral Surgeon, Harvard School",
     flag: <UKFlag className="size-5" />,
     avatar: mentor2,
     institutions: [
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "Harvard School of Dental Medicine",
+        role: "Chief of Surgery",
         logo: "/images/logos/stanford.png",
       },
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "Admissions Committee",
+        role: "Expert Advisor",
         logo: "/images/logos/stanford.png",
       },
     ],
   },
-
   {
-    name: "Murray W.",
-    title: "Dental School and UCAT Coach",
+    slug: "dt-james-wilson",
+    name: "Dt. James Wilson",
+    title: "Pediatric Dentist, UCSF",
     flag: <UKFlag className="size-5" />,
     avatar: mentor2,
     institutions: [
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "UCSF Dental School",
+        role: "Pediatric Specialist",
         logo: "/images/logos/stanford.png",
       },
       {
-        name: "Stanford University",
-        role: "Associate Professor",
+        name: "Soft Skills Mentor",
+        role: "Community Impact Expert",
         logo: "/images/logos/stanford.png",
       },
     ],
@@ -223,7 +225,7 @@ export function MeetOurMentors() {
 
                       <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
                         <Link 
-                          href={`/mentor/${m.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                          href={`/mentor/${m.slug}`}
                           className="font-sora text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors uppercase tracking-widest flex items-center gap-1.5"
                         >
                           View Profile <ArrowRight className="w-3 h-3" />
