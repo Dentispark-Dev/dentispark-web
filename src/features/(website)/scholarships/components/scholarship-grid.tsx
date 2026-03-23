@@ -38,11 +38,14 @@ const itemVariants: Variants = {
 
 import { REAL_SCHOLARSHIPS } from "../data/scholarships";
 
-export function ScholarshipGrid() {
+interface ScholarshipGridProps {
+  searchQuery: string;
+  degreeFilter: string;
+}
+
+export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridProps) {
   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
   const [loading, setLoading] = useState(true);
-  const [degreeFilter, setDegreeFilter] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchScholarships();
@@ -77,65 +80,16 @@ export function ScholarshipGrid() {
   );
 
   return (
-    <section className="bg-slate-50/30 py-24 md:py-32 overflow-hidden">
+    <section id="scholarships-list" className="bg-slate-50/30 py-16 md:py-24 overflow-hidden">
       <Container>
         <motion.div 
-          className="flex flex-col space-y-16"
+          className="flex flex-col space-y-12"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {/* Header */}
-          <div className="flex flex-col items-center text-center space-y-6">
-            <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
-              Opportunity Hub
-            </motion.div>
-            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
-              Find Your <span className="text-emerald-600">Scholarship.</span>
-            </motion.h2>
-            <motion.p variants={itemVariants} className="font-sora text-slate-500 text-lg max-w-2xl leading-relaxed">
-              Browse our comprehensive database of verified grants and financial aid specifically curated for dental and medical excellence.
-            </motion.p>
-          </div>
-
-          {/* Filters and Search - Premium UI */}
-          <motion.div 
-            variants={itemVariants}
-            className="group relative"
-          >
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-[2.5rem] blur-xl opacity-50 transition-opacity duration-500 group-hover:opacity-100" />
-            <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between rounded-[2rem] bg-white p-8 shadow-[0_10px_30px_rgba(0,0,0,0.02)] border border-slate-100 transition-all duration-500 hover:border-emerald-100">
-              <div className="flex w-full flex-col gap-6 md:w-[70%] md:flex-row">
-                <div className="w-full relative group/search">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4 group-focus-within/search:text-emerald-500 transition-colors" />
-                  <Input 
-                    placeholder="Search by name, university, or location..." 
-                    className="w-full h-14 bg-slate-50/50 pl-12 rounded-2xl border-slate-100 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-sora text-sm"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <Select value={degreeFilter} onValueChange={setDegreeFilter}>
-                  <SelectTrigger className="h-14 w-full md:w-[240px] bg-slate-50/50 rounded-2xl border-slate-100 focus:border-emerald-500/30 font-sora text-sm font-bold">
-                    <SelectValue placeholder="Degree Level" />
-                  </SelectTrigger>
-                  <SelectContent className="rounded-2xl border-slate-100 font-sora">
-                    <SelectItem value="all">All Degrees</SelectItem>
-                    <SelectItem value="BDS">BDS / DDS</SelectItem>
-                    <SelectItem value="Masters">Masters</SelectItem>
-                    <SelectItem value="PhD">PhD / Research</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button 
-                onClick={fetchScholarships} 
-                className="h-14 w-full md:w-auto px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:scale-[1.02]"
-              >
-                Apply Filters
-              </Button>
-            </div>
-          </motion.div>
+          {/* Results Grid - Header removed for better UX above fold */}
 
           {/* Results Grid */}
           {loading ? (
@@ -190,7 +144,7 @@ export function ScholarshipGrid() {
                       <div className="mt-auto flex flex-col gap-4 pt-6 border-t border-slate-50">
                         <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
                             <span className="text-slate-400">Deadline</span>
-                            <span className="text-slate-900 bg-slate-50 px-3 py-1 rounded-full">{scholarship.deadline}</span>
+                            <span className="text-slate-900 bg-slate-50 px-3 py-1 rounded-full">{scholarship.deadline || "TBC"}</span>
                         </div>
                         <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
                             <span className="text-slate-400">Location</span>

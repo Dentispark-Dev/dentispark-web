@@ -7,7 +7,7 @@ export interface Scholarship {
   description: string;
   amountValue: number;
   amountCurrency: string;
-  deadline: string;
+  deadline: string | null;
   eligibilityCriteriaJson: string;
   applicationLink: string;
   isSponsored: boolean;
