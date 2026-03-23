@@ -80,10 +80,10 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
   );
 
   return (
-    <section id="scholarships-list" className="bg-slate-50/30 py-16 md:py-24 overflow-hidden">
+    <section id="scholarships-list" className="bg-slate-50/30 py-8 md:py-12 overflow-hidden">
       <Container>
         <motion.div 
-          className="flex flex-col space-y-12"
+          className="flex flex-col space-y-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
