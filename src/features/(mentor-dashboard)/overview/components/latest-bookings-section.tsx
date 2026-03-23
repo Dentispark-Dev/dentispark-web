@@ -78,8 +78,7 @@ export function LatestBookingsSection({
   });
 
   const handleProceed = (studentId: string) => {
-    console.log("Proceed with student:", studentId);
-    // TODO: Implement proceed logic
+    router.push(`/mentor/student-matching/${studentId}`);
   };
 
   const handleViewProfile = (studentId: string) => {

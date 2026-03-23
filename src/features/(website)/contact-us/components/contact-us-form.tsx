@@ -7,6 +7,7 @@ import * as z from "zod";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, Mail } from "lucide-react";
 import { BaseAPI } from "@/src/connection/base-api";
+import { toast } from "sonner";
 
 import { Button } from "@/src/components/ui/button";
 import { Checkbox } from "@/src/components/ui/checkbox";
@@ -71,13 +72,10 @@ export function ContactUsForm() {
       // Reset form on success
       form.reset();
       setMessageLength(0);
-
-      // TODO: Show success message/toast
-      alert("Thank you for your message! We'll get back to you soon.");
+      toast.success("Message sent!", { description: "We'll get back to you soon." });
     } catch (error) {
       console.error("Error submitting form:", error);
-      // TODO: Show error message/toast
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong", { description: "Please try again shortly." });
     } finally {
       setIsSubmitting(false);
     }

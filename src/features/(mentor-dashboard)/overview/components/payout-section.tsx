@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 import { useModal } from "@/src/hooks/use-modal";
+import { toast } from "sonner";
 import { PayoutInfo } from "../types";
 import { BankInformationForm } from "./bank-information-form";
 
@@ -39,8 +40,8 @@ export function PayoutSection({
     sortCode: string;
     accountNumber: string;
   }) => {
-    console.log("Bank information submitted:", data);
-    // TODO: Implement bank information submission
+    // TODO: Wire to bank account registration endpoint when backend is available
+    toast.success("Bank account saved!", { description: `Account ending in ...${data.accountNumber.slice(-4)} has been linked.` });
     hideModal();
     onConnectBankAccountAction();
   };

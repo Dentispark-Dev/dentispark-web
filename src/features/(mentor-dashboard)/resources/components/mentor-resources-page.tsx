@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ResourcesSection } from "./resources-section";
 import {
@@ -11,24 +12,22 @@ import {
 import { ResourcesPageProps } from "../types";
 
 export function MentorResourcesPage({ className }: ResourcesPageProps) {
+  const router = useRouter();
+
   const handleSeeAllResources = () => {
-    // TODO: Implement navigation to all resources page
-    console.log("Navigate to all resources");
+    router.push("/mentor/resources/all");
   };
 
   const handleSeeAllDentalResources = () => {
-    // TODO: Implement navigation to all dental science resources page
-    console.log("Navigate to all dental science resources");
+    router.push("/mentor/resources/dental-science");
   };
 
   const handleSeeAllDentalHygieneResources = () => {
-    // TODO: Implement navigation to all dental hygiene/therapy resources page
-    console.log("Navigate to all dental hygiene/therapy resources");
+    router.push("/mentor/resources/dental-hygiene");
   };
 
   const handleSeeAllDentalNursingResources = () => {
-    // TODO: Implement navigation to all dental nursing resources page
-    console.log("Navigate to all dental nursing resources");
+    router.push("/mentor/resources/dental-nursing");
   };
 
   return (
