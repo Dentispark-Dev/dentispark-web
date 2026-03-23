@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit, Loader2, Mail, User } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/src/lib/utils";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -28,6 +29,7 @@ interface ProfileSettingsProps {
 
 export function ProfileSettings({ initialData }: ProfileSettingsProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const { user, isPremium } = useAuth();
   const isMentor = user?.memberType === "ACADEMIC_MENTOR";
@@ -38,6 +40,8 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
     fullName: user?.fullName || "",
     emailAddress: user?.emailAddress || "",
     phoneNumber: user?.mobileNumber || "",
+    country: user?.country || "",
+    education: user?.education || "",
     biography: user?.biography || "",
     linkedinUrl: user?.linkedinUrl || "",
     whyDentistry: user?.whyDentistry || "",
@@ -54,12 +58,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
   // Keep form values in sync with latest user data
   useEffect(() => {
     form.reset({
-      fullName: user?.fullName || "",
-      emailAddress: user?.emailAddress || "",
-      phoneNumber: user?.mobileNumber || "",
-      biography: user?.biography || "",
-      linkedinUrl: user?.linkedinUrl || "",
-      whyDentistry: user?.whyDentistry || "",
+      ...defaultProfileData,
       ...initialData,
     });
   }, [
@@ -67,6 +66,8 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
     user?.fullName,
     user?.emailAddress,
     user?.mobileNumber,
+    user?.country,
+    user?.education,
     user?.biography,
     user?.linkedinUrl,
     user?.whyDentistry,
@@ -80,12 +81,12 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
       await updateProfileMutation.mutateAsync({
         fullName: data.fullName,
         mobileNumber: data.phoneNumber,
+        country: data.country,
+        education: data.education,
         biography: data.biography,
         linkedinUrl: data.linkedinUrl,
         whyDentistry: data.whyDentistry,
-        // Optional fields when you wire them up in the UI
-        // profilePicture: undefined,
-        // linkedinProfileUrl: undefined,
+        profilePicture: previewImage || undefined,
       });
       setIsEditing(false);
     } catch (error) {
@@ -109,10 +110,39 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
         <div className="shadow-[0_1px_20px_5px_rgba(65,189,145,0.05);] mb-8 flex flex-col items-center gap-6 rounded-2xl border border-[#F5F5F5] bg-[#FAFAFA] p-6 md:flex-row md:items-start md:justify-between md:p-10">
           <div className="flex flex-col items-center gap-4 md:flex-row">
             <div className="relative">
-              <div className="bg-primary-100 border-primary-200 flex size-20 items-center justify-center rounded-full border md:size-28">
-                <User className="text-primary size-10 md:size-14" />
+              <div className="bg-primary-100 border-primary-200 flex size-20 items-center justify-center rounded-full border md:size-28 overflow-hidden">
+                {previewImage || user?.profilePicture ? (
+                  <img 
+                    src={previewImage || user?.profilePicture} 
+                    alt={user?.fullName || "Profile"} 
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <User className="text-primary size-10 md:size-14" />
+                )}
               </div>
-              <button className="border-greys-300 absolute -right-1 -bottom-1 flex size-8 items-center justify-center rounded-full border bg-white md:size-10">
+              <input
+                type="file"
+                id="profile-picture-upload"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      setPreviewImage(reader.result as string);
+                    };
+                    reader.readAsDataURL(file);
+                    if (!isEditing) setIsEditing(true);
+                  }
+                }}
+              />
+              <button 
+                type="button"
+                onClick={() => document.getElementById('profile-picture-upload')?.click()}
+                className="border-greys-300 absolute -right-1 -bottom-1 flex size-8 items-center justify-center rounded-full border bg-white md:size-10 hover:bg-gray-50 transition-colors"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -165,12 +195,11 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
 
           <Button
             onClick={() => setIsEditing(!isEditing)}
-            className="flex items-center gap-2"
+            className={cn("flex items-center gap-2", isEditing && "bg-greys-100 text-black border-none pointer-events-none opacity-50")}
             size={"lg"}
-            disabled={isEditing}
           >
             <Edit className="h-4 w-4" />
-            Edit Profile
+            {isEditing ? "Editing Mode Active" : "Edit Profile"}
           </Button>
         </div>
 
@@ -190,7 +219,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
                     </FormLabel>
                     <div className="w-full">
                       <FormControl>
-                        <Input {...field} disabled={true} className="h-12" />
+                        <Input {...field} disabled={!isEditing} className="h-12" />
                       </FormControl>
                       <FormMessage />
                     </div>
@@ -270,6 +299,52 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
                             className="h-12 rounded-l-none pl-3"
                           />
                         </div>
+                      </FormControl>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col md:flex-row md:items-center">
+                    <FormLabel className="mb-2 text-sm font-medium text-gray-700 md:mb-0 md:basis-2/4">
+                      Country
+                    </FormLabel>
+                    <div className="w-full">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="e.g. United Kingdom"
+                          disabled={!isEditing}
+                          className="h-12"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="education"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col md:flex-row md:items-center">
+                    <FormLabel className="mb-2 text-sm font-medium text-gray-700 md:mb-0 md:basis-2/4">
+                      Current Education
+                    </FormLabel>
+                    <div className="w-full">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="e.g. King's College London"
+                          disabled={!isEditing}
+                          className="h-12"
+                        />
                       </FormControl>
                       <FormMessage />
                     </div>

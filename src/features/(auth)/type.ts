@@ -41,6 +41,8 @@ export interface LoginResponseData {
   roles: string[];
   linkedinUrl: string;
   mobileNumber: string;
+  country?: string;
+  education?: string;
   biography: string;
   whyDentistry?: string;
   memberType:

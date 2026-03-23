@@ -4,6 +4,8 @@ import type { AcademicProfile } from "@/src/connection/api-types";
 export interface UpdateStudentProfileRequest {
   fullName?: string;
   mobileNumber?: string;
+  country?: string;
+  education?: string;
   profilePicture?: string;
   linkedinUrl?: string;
   biography?: string;

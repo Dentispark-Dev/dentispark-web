@@ -5,6 +5,8 @@ export const profileSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   emailAddress: z.string().email("Please enter a valid email address"),
   phoneNumber: z.string().optional(),
+  country: z.string().optional(),
+  education: z.string().optional(),
   linkedinUrl: z.string().optional(),
   biography: z.string().optional(),
   whyDentistry: z.string().optional(),
@@ -36,6 +38,8 @@ export interface ProfileData {
   fullName: string;
   email: string;
   phoneNumber?: string;
+  country?: string;
+  education?: string;
   linkedinUrl?: string;
   biography?: string;
   whyDentistry?: string;
