@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, Mail } from "lucide-react";
+import { BaseAPI } from "@/src/connection/base-api";
 
 import { Button } from "@/src/components/ui/button";
 import { Checkbox } from "@/src/components/ui/checkbox";
@@ -55,11 +56,17 @@ export function ContactUsForm() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // TODO: Implement API call to submit contact form
-      console.log("Form data:", data);
+      const payload = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        emailAddress: data.email,
+        phoneNumber: data.phone,
+        country: "UNKNOWN", // Default value
+        message: data.message,
+      };
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const api = new BaseAPI();
+      await api.post("/generic/get-in-touch", payload);
 
       // Reset form on success
       form.reset();
