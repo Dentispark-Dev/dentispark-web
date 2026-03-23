@@ -112,18 +112,45 @@ export default function PersonalStatementReviewer() {
             </div>
 
             {/* Input Area */}
-            <div className="p-6 rounded-3xl border border-gray-100 min-h-[400px] bg-white shadow-sm">
+            <div className="relative p-6 rounded-3xl border border-gray-100 min-h-[400px] bg-white shadow-sm flex flex-col">
               {inputMode === "text" ? (
-                <textarea 
-                  className="w-full h-[350px] bg-transparent resize-none focus:outline-none p-4 text-gray-700 font-medium leading-relaxed placeholder:text-gray-300"
-                  placeholder="Paste your personal statement here (UCAS character limit is 4,000)..."
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                />
+                <>
+                  <textarea 
+                    className="w-full flex-1 bg-transparent resize-none focus:outline-none p-4 text-gray-700 font-medium leading-relaxed placeholder:text-gray-300"
+                    placeholder="Paste your personal statement here (UCAS character limit is 4,000)..."
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                  />
+                  <div className="flex items-center justify-between px-4 py-2 border-t border-gray-50 bg-gray-50/30 rounded-b-2xl">
+                    <div className="flex gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Characters</span>
+                        <span className={cn(
+                          "text-sm font-sora font-extrabold",
+                          text.length > 4000 ? "text-red-500" : "text-gray-700"
+                        )}>
+                          {text.length.toLocaleString()} <span className="text-gray-300 font-medium">/ 4,000</span>
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Words</span>
+                        <span className="text-sm font-sora font-extrabold text-gray-700">
+                          {text.trim() === "" ? 0 : text.trim().split(/\s+/).length}
+                        </span>
+                      </div>
+                    </div>
+                    {text.length > 4000 && (
+                      <div className="flex items-center gap-1.5 text-red-500 text-[10px] font-bold uppercase tracking-widest animate-pulse">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        Limit Exceeded
+                      </div>
+                    )}
+                  </div>
+                </>
               ) : (
                 <div 
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full h-[350px] flex flex-col items-center justify-center border-2 border-dashed border-emerald-100 rounded-3xl bg-emerald-50/20 hover:bg-emerald-50/50 transition-colors cursor-pointer group"
+                  className="w-full flex-1 flex flex-col items-center justify-center border-2 border-dashed border-emerald-100 rounded-2xl bg-emerald-50/20 hover:bg-emerald-50/50 transition-colors cursor-pointer group"
                 >
                   <input type="file" className="hidden" ref={fileInputRef} accept=".pdf,.doc,.docx" />
                   <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-110 transition-transform font-bold">
@@ -136,9 +163,9 @@ export default function PersonalStatementReviewer() {
             </div>
 
             <div className="flex items-center justify-between px-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
-                    <Zap className="w-3 h-3 text-emerald-500" />
-                    Estimated analysis time: 5-10 seconds
+                <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    <Zap className="w-3.5 h-3.5 text-emerald-500" />
+                    Estimated analysis: 5-10 seconds
                 </div>
                 <Button 
                     onClick={handleStartAnalysis}
