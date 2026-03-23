@@ -7,10 +7,18 @@ import { UniversityCard } from "./university-card";
 import { CompareSchoolsButton } from "./compare-schools-button";
 import { UK_DENTAL_SCHOOLS } from "../constants/universities";
 import { University } from "../types";
+import { useModalStore } from "@/src/store/modal-store";
+import { ComparisonModal } from "./comparison-modal";
 
 export function UniversityHubPage() {
   const router = useRouter();
-  const [selectedUniversities] = useState<string[]>([]);
+  const [selectedUniversities, setSelectedUniversities] = useState<string[]>([]);
+
+  const handleToggleSelection = useCallback((id: string) => {
+    setSelectedUniversities((prev) =>
+      prev.includes(id) ? prev.filter((uId) => uId !== id) : [...prev, id],
+    );
+  }, []);
 
   const handleViewProfile = useCallback(
     (university: University) => {
@@ -19,10 +27,29 @@ export function UniversityHubPage() {
     [router],
   );
 
+  const { openModal, closeModal } = useModalStore();
+
   const handleCompareSchools = useCallback(() => {
-    // TODO: Open comparison modal or navigate to comparison page
-    console.log("Compare schools:", selectedUniversities);
-  }, [selectedUniversities]);
+    const selectedUnis = UK_DENTAL_SCHOOLS.filter((uni) =>
+      selectedUniversities.includes(uni.id),
+    );
+
+    openModal({
+      modalTitle: "Compare Schools",
+      modalTitleClassName: "font-sora text-xl font-semibold",
+      bodyContent: (
+        <ComparisonModal 
+          universities={selectedUnis} 
+          onClose={closeModal} 
+        />
+      ),
+      action: () => {},
+      actionTitle: "",
+      type: "compare-schools",
+      size: "xl",
+      isCustomContent: true,
+    });
+  }, [selectedUniversities, openModal, closeModal]);
 
   return (
     <div className="min-h-screen">
@@ -68,6 +95,8 @@ export function UniversityHubPage() {
               <UniversityCard
                 university={university}
                 onViewProfile={handleViewProfile}
+                isSelected={selectedUniversities.includes(university.id)}
+                onToggleSelection={handleToggleSelection}
               />
             </motion.div>
           ))}

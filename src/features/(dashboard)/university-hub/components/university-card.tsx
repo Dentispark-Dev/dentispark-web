@@ -8,6 +8,8 @@ import { UniversityCardProps } from "../types";
 export function UniversityCard({
   university,
   onViewProfile,
+  isSelected,
+  onToggleSelection,
 }: UniversityCardProps) {
   const isAdmissionOpen = university.admissionStatus === "open";
 
@@ -121,14 +123,27 @@ export function UniversityCard({
           </span>
         </div>
 
-        {/* View Profile Button */}
-        <Button
-          variant="outline"
-          onClick={() => onViewProfile(university)}
-          className="border-text-color text-text-color w-[50%] transition duration-700"
-        >
-          View Profile
-        </Button>
+        {/* Actions */}
+        <div className="flex items-center gap-3 mt-auto">
+          <Button
+            variant="outline"
+            onClick={() => onViewProfile(university)}
+            className="border-text-color text-text-color flex-1 transition duration-700"
+          >
+            View Profile
+          </Button>
+          <Button
+            onClick={() => onToggleSelection?.(university.id)}
+            className={cn(
+              "flex-1 transition-all duration-300",
+              isSelected 
+                ? "bg-secondary-500 hover:bg-secondary-600 text-white" 
+                : "bg-primary hover:bg-primary/90 text-white"
+            )}
+          >
+            {isSelected ? "Selected" : "Select"}
+          </Button>
+        </div>
       </div>
     </div>
   );
