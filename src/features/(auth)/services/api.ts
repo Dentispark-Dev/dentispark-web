@@ -10,6 +10,8 @@ import type {
   ResetPasswordRequest,
   VerifyEmailRequest,
   ResendCodeRequest,
+  MentorRegistrationRequest,
+  MentorVerificationRequest,
 } from "../type";
 
 export const authApi = {
@@ -41,44 +43,26 @@ export const authApi = {
   LOGIN: async (
     data: LoginRequest,
   ): Promise<ApiResponse<LoginResponseData>> => {
-    // Dummy mentor user for testing
-    if (
-      data.emailAddress === "tobi@gmail.com" &&
-      data.password === "mentor5.0@@@"
-    ) {
-      const tokenExpiredAt = new Date();
-      tokenExpiredAt.setDate(tokenExpiredAt.getDate() + 7); // Token expires in 7 days
-
-      return Promise.resolve({
-        responseCode: "00",
-        responseMessage: "Login successful",
-        errors: [],
-        responseData: {
-          profilePicture: "",
-          fullName: "Tobi Mentor",
-          guid: "dummy-mentor-guid-123",
-          emailAddress: "tobi@gmail.com",
-          roles: ["MENTOR"],
-          linkedinUrl: "",
-          mobileNumber: "",
-          biography:
-            "Experienced dental mentor ready to help students succeed.",
-          memberType: "ACADEMIC_MENTOR",
-          memberStatus: "ACTIVE",
-          profileStatus: "COMPLETED",
-          profileSetupStep: "STEP3",
-          auth: {
-            accessToken: "dummy-mentor-token-123",
-            type: "Bearer",
-            tokenIssuedAt: new Date().toISOString(),
-            tokenExpiredAt: tokenExpiredAt.toISOString(),
-          },
-        },
-      });
-    }
-
     return apiClient.postFullResponse<LoginResponseData>(
       "/auth/platform-member/login",
+      data,
+    );
+  },
+
+  MENTOR_REGISTRATION: async (
+    data: MentorRegistrationRequest,
+  ): Promise<ApiResponse<string>> => {
+    return apiClient.postFullResponse<string>(
+      "/mentor-profile/mentor-account-registration",
+      data,
+    );
+  },
+
+  MENTOR_VERIFICATION: async (
+    data: MentorVerificationRequest,
+  ): Promise<ApiResponse<string>> => {
+    return apiClient.postFullResponse<string>(
+      "/mentor-profile/mentor-account-verification",
       data,
     );
   },

@@ -19,7 +19,8 @@ export default function MentorServicesPage() {
     const [features, setFeatures] = useState("");
     const [serviceType, setServiceType] = useState("Tutoring");
 
-    // In a real scenario, this fetches actual data; for demo we pre-fill a mock package
+    // TODO: Connect to live endpoint [BACKEND INTEGRATION]
+    // In a real scenario, this fetches actual data from the Spring Boot backend; for demo we pre-fill a mock package
     useEffect(() => {
         if (user) {
             // Mocking initial load for the demo

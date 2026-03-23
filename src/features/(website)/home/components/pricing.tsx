@@ -15,6 +15,7 @@ const plans = [
   },
   {
     name: "Premium Plan",
+    // TODO: Confirm final live pricing or connect to Stripe/Chargebee API before launch
     priceHtml: '$24<span class="text-sm font-normal">/month</span>',
     description: "Need More? Upgrade for 1:1 Mentorship and More",
     features: [

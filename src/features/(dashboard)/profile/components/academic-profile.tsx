@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
+import { useAuth } from "@/src/providers/auth-provider";
 
 import { type AcademicFormData } from "../types";
 import { defaultAcademicData } from "../constants";
@@ -29,6 +30,8 @@ type AcademicProfileData = AcademicFormData & {
 
 export function AcademicProfile({ initialData }: AcademicProfileProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
+  const isMentor = user?.memberType === "ACADEMIC_MENTOR";
 
   // Fetch academic profile data
   const {
@@ -80,6 +83,22 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
   const handleSubmit = () => {
     setIsModalOpen(false);
   };
+
+  if (isMentor) {
+    return (
+      <div className="mx-auto max-w-4xl bg-white pb-16">
+        <div className="flex items-center justify-between px-6">
+          <h2 className="text-lg font-semibold text-gray-900">Academic Profile</h2>
+        </div>
+        <div className="p-6">
+          <div className="rounded-md bg-gray-50 border border-gray-100 p-8 text-center">
+            <h3 className="text-gray-500 font-medium">Not applicable for Academic Mentors</h3>
+            <p className="text-sm text-gray-400 mt-1">This section is for students to track their academic progress.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Show loading state
   if (isLoading) {

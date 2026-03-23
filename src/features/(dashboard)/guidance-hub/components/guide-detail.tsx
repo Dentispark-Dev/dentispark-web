@@ -39,13 +39,13 @@ export default function GuideDetail({ className }: GuideDetailProps) {
 
   const tableOfContents = useMemo(
     () => [
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
+      "Understanding the BDS Degree",
+      "The UCAT & BMAT: Scoring High",
+      "Crafting a Standout Personal Statement",
+      "Acing the Multiple Mini Interviews (MMIs)",
+      "Work Experience & Shadowing",
+      "Choosing the Right University",
+      "Final Application Checklist",
     ],
     [],
   );
@@ -211,29 +211,16 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                           : "text-black-700",
                       )}
                     >
-                      M7 MBA Programs – What They Are & How to Get In
+                      Dental School Admissions: The Ultimate Journey
                     </h2>
                     <p className="font-sora text-sm leading-relaxed text-black">
-                      So, you&apos;re interested in pursuing a medical degree!
-                      That&apos;s an exciting journey ahead of you. Whether
-                      you&apos;re drawn to the fast-paced environment of
-                      emergency medicine, where every second counts and quick
-                      decision-making is crucial, the intricacies of surgical
-                      procedures that require precision and skill, the
-                      continuous care provided in family practice that builds
-                      long-term relationships with patients, or perhaps the
-                      fascinating world of research that drives medical
-                      advancements, the medical field encompasses a diverse
-                      spectrum of roles. Each specialty offers unique challenges
-                      and rewards, aligning with many different passions and
-                      skill sets. You might find yourself captivated by
-                      pediatrics, where you can make a difference in the lives
-                      of children, or by psychiatry, where understanding the
-                      human mind can lead to profound changes in people&apos;s
-                      lives. Whatever your interests may be, rest assured that
-                      there is a fulfilling career in medicine waiting for you,
-                      one that not only allows you to grow professionally but
-                      also enables you to contribute meaningfully to society.
+                      So, you&apos;re interested in pursuing a career in dentistry!
+                      That&apos;s an exciting and rewarding journey ahead of you. 
+                      Whether you&apos;re drawn to the clinical precision of restorative work, 
+                      the impact of public health initiatives, or the intricate science of orthodontics, 
+                      the dental field offers a diverse spectrum of roles. 
+                      Dental school is competitive, but with the right preparation and guidance, 
+                      you can navigate the admissions process successfully.
                     </p>
                   </div>
 
@@ -261,29 +248,15 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                           : "text-black-700",
                       )}
                     >
-                      Introduction: Careers in Medicine
+                      Introduction: Why Dentistry?
                     </h2>
                     <p className="font-sora text-sm leading-relaxed text-black">
-                      So, you&apos;re interested in pursuing a medical degree!
-                      That&apos;s an exciting journey ahead of you. Whether
-                      you&apos;re drawn to the fast-paced environment of
-                      emergency medicine, where every second counts and quick
-                      decision-making is crucial, the intricacies of surgical
-                      procedures that require precision and skill, the
-                      continuous care provided in family practice that builds
-                      long-term relationships with patients, or perhaps the
-                      fascinating world of research that drives medical
-                      advancements, the medical field encompasses a diverse
-                      spectrum of roles. Each specialty offers unique challenges
-                      and rewards, aligning with many different passions and
-                      skill sets. You might find yourself captivated by
-                      pediatrics, where you can make a difference in the lives
-                      of children, or by psychiatry, where understanding the
-                      human mind can lead to profound changes in people&apos;s
-                      lives. Whatever your interests may be, rest assured that
-                      there is a fulfilling career in medicine waiting for you,
-                      one that not only allows you to grow professionally but
-                      also enables you to contribute meaningfully to society.
+                      Choosing dentistry means committing to a life of service, 
+                      precision, and lifelong learning. Applicants are expected 
+                      to demonstrate not only academic excellence but also high 
+                      levels of manual dexterity, empathy, and communication skills. 
+                      This guide will walk you through each stage of the application, 
+                      from picking your four dental schools to acing the final MMI interviews.
                     </p>
                   </div>
                 </div>
@@ -304,15 +277,9 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                           {item}
                         </h2>
                         <p className="font-sora text-sm leading-relaxed text-black">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
+                          Detailed guidance for this section is available to DentiSpark 
+                          Premium members. This covers specific university requirements, 
+                          past interview questions, and expert tips to maximize your score.
                         </p>
                       </div>
                     </div>

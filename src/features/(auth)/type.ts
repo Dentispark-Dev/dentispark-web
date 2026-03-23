@@ -101,3 +101,22 @@ export interface ResendCodeRequest {
 }
 
 export type ResendCodeResponse = ApiResponse<string>;
+
+export interface MentorRegistrationRequest {
+  firstName: string;
+  lastName: string;
+  password: string;
+  emailAddress: string;
+  phoneNumber: string;
+  yearOfDentistry: string;
+  areaOfSpecialization: string;
+}
+
+export interface MentorVerificationRequest {
+  emailAddress: string;
+  documentUploadLinks: string[];
+  expertiseDetailsList: string[]; // Maps to MentorModelData.ExpertiseAreas
+  dentalSchoolExperience: string;
+  interviewDate: string; // ISO date
+  interviewTime: string; // HH:mm
+}

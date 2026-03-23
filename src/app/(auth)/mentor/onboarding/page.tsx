@@ -1,6 +1,6 @@
 "use client";
 
-import { MentorOnboardingFlow } from "@/src/features/(mentor-auth)/onborading/components/mentor-onboarding-flow";
+import { MentorOnboardingFlow } from "@/src/features/(mentor-auth)/onboarding/components/mentor-onboarding-flow";
 import Link from "next/link";
 import Logo from "@/src/components/icons/Logo";
 import { motion } from "framer-motion";

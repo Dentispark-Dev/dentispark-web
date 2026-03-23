@@ -30,6 +30,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { user, isPremium } = useAuth();
+  const isMentor = user?.memberType === "ACADEMIC_MENTOR";
 
   console.log("user", user);
 
@@ -299,28 +300,30 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="whyDentistry"
-              render={({ field }) => (
-                <FormItem className="flex flex-col md:flex-row md:items-start">
-                  <FormLabel className="mb-2 text-sm font-medium text-gray-700 md:mb-0 md:basis-2/4">
-                    Motivation Statement
-                  </FormLabel>
-                  <div className="w-full">
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        placeholder="Why do you want to study dentistry?"
-                        disabled={!isEditing}
-                        className="min-h-[150px] resize-none"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
+            {!isMentor && (
+              <FormField
+                control={form.control}
+                name="whyDentistry"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col md:flex-row md:items-start">
+                    <FormLabel className="mb-2 text-sm font-medium text-gray-700 md:mb-0 md:basis-2/4">
+                      Motivation Statement
+                    </FormLabel>
+                    <div className="w-full">
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          placeholder="Why do you want to study dentistry?"
+                          disabled={!isEditing}
+                          className="min-h-[150px] resize-none"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            )}
           </form>
         </Form>
       </div>

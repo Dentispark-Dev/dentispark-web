@@ -7,7 +7,7 @@ export const mockPosts: Post[] = [
     avatar: "/images/community-avatar.png",
     time: "02:22 AM",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Just got my UCAT results back... 2850! I'm so relieved. Does anyone know if this is competitive enough for KCL's dental program?",
     totalComments: 64,
     comments: [
       {
@@ -16,7 +16,7 @@ export const mockPosts: Post[] = [
         avatar: "/images/community-avatar.png",
         time: "02:22 AM",
         content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          "That's an incredible score, congratulations! With a 2850 you're in a very strong position for King's, just make sure your personal statement highlights your manual dexterity.",
       },
       {
         id: "1-2",
@@ -24,7 +24,7 @@ export const mockPosts: Post[] = [
         avatar: "/images/community-avatar.png",
         time: "02:22 AM",
         content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          "I got an offer from KCL last year with a 2790. You should be absolutely fine! Focus on preparing for your actual interviews now.",
         isMentor: true,
         badge: "SL",
       },
@@ -95,17 +95,17 @@ export const mockSuccessStories: SuccessStory[] = [
   },
   {
     id: "2",
-    title: "DentiSpark's free UCAT guide helped me score 2700!",
-    author: "Emma Johnson",
-    location: "CTO, Tech Innovators",
+    title: "DentiSpark's mock MMIs helped me secure 3 offers!",
+    author: "Sarah Jenkins",
+    location: "BDS Student, QMUL",
     avatar: "/images/community-avatar.png",
     bgColor: "bg-[#FDF0E6]",
   },
   {
     id: "3",
-    title: "DentiSpark's free UCAT guide helped me score 2700!",
-    author: "Emma Johnson",
-    location: "CTO, Tech Innovators",
+    title: "From 2400 to 2900 UCAT: My Journey",
+    author: "David Chen",
+    location: "First Year, King's College London",
     avatar: "/images/community-avatar.png",
     bgColor: "bg-[#E9F9EF]",
   },

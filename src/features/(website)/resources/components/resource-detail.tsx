@@ -27,13 +27,13 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
 
   const tableOfContents = useMemo(
     () => [
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
-      "Lorem Ipsum dolor sit amet consectetur.",
+      "Introduction: The Dental Admissions Journey",
+      "Understanding the UCAT & BMAT",
+      "Crafting a Flawless Personal Statement",
+      "Acquiring Dental Work Experience",
+      "Preparing for Multiple Mini Interviews (MMI)",
+      "Choosing Your Top 4 Dental Schools",
+      "Conclusion: Next Steps",
     ],
     [],
   );
@@ -234,29 +234,19 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                         : "text-black-700",
                     )}
                   >
-                    Introduction: Careers in Medicine
+                    Introduction: The Dental Admissions Journey
                   </h2>
                   <p className="font-sora text-sm leading-relaxed text-black">
-                    So, you&apos;re interested in pursuing a medical degree!
-                    That&apos;s an exciting journey ahead of you. Whether
-                    you&apos;re drawn to the fast-paced environment of emergency
-                    medicine, where every second counts and quick
-                    decision-making is crucial, the intricacies of surgical
-                    procedures that require precision and skill, the continuous
-                    care provided in family practice that builds long-term
-                    relationships with patients, or perhaps the fascinating
-                    world of research that drives medical advancements, the
-                    medical field encompasses a diverse spectrum of roles. Each
-                    specialty offers unique challenges and rewards, aligning
-                    with many different passions and skill sets. You might find
-                    yourself captivated by pediatrics, where you can make a
-                    difference in the lives of children, or by psychiatry, where
-                    understanding the human mind can lead to profound changes in
-                    people&apos;s lives. Whatever your interests may be, rest
-                    assured that there is a fulfilling career in medicine
-                    waiting for you, one that not only allows you to grow
-                    professionally but also enables you to contribute
-                    meaningfully to society.
+                    So, you're interested in pursuing a degree in Dentistry!
+                    That's an exciting journey ahead of you. Whether you're drawn to the 
+                    intricacies of aesthetic procedures, the continuous care provided in 
+                    general practice that builds long-term relationships with patients, 
+                    or the fascinating world of maxillofacial surgery, the dental field 
+                    encompasses a diverse spectrum of roles. Admissions into UK dental 
+                    schools are notoriously competitive, requiring not just top grades in 
+                    Biology and Chemistry, but also a demonstrable passion for the 
+                    profession, strong manual dexterity, and a high UCAT score. 
+                    This guide breaks down every step of the process.
                   </p>
                 </div>
 
@@ -284,29 +274,17 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                         : "text-black-700",
                     )}
                   >
-                    Lorem Ipsum dolor sit amet consectetur.
+                    Understanding the UCAT
                   </h2>
                   <p className="font-sora text-sm leading-relaxed text-black">
-                    So, you&apos;re interested in pursuing a medical degree!
-                    That&apos;s an exciting journey ahead of you. Whether
-                    you&apos;re drawn to the fast-paced environment of emergency
-                    medicine, where every second counts and quick
-                    decision-making is crucial, the intricacies of surgical
-                    procedures that require precision and skill, the continuous
-                    care provided in family practice that builds long-term
-                    relationships with patients, or perhaps the fascinating
-                    world of research that drives medical advancements, the
-                    medical field encompasses a diverse spectrum of roles. Each
-                    specialty offers unique challenges and rewards, aligning
-                    with many different passions and skill sets. You might find
-                    yourself captivated by pediatrics, where you can make a
-                    difference in the lives of children, or by psychiatry, where
-                    understanding the human mind can lead to profound changes in
-                    people&apos;s lives. Whatever your interests may be, rest
-                    assured that there is a fulfilling career in medicine
-                    waiting for you, one that not only allows you to grow
-                    professionally but also enables you to contribute
-                    meaningfully to society.
+                    The University Clinical Aptitude Test (UCAT) is a critical hurdle 
+                    for almost all UK dental schools. Scored out of 3600, a competitive 
+                    score typically hovers around 2700-2800+ for Dentistry. The test 
+                    consists of five subtests: Verbal Reasoning, Decision Making, 
+                    Quantitative Reasoning, Abstract Reasoning, and Situational Judgement. 
+                    We highly recommend starting your preparation at least six weeks in 
+                    advance, focusing heavily on timed mock exams to get used to the 
+                    intense time pressure.
                   </p>
                 </div>
               </div>
@@ -327,15 +305,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                         {item}
                       </h2>
                       <p className="font-sora text-sm leading-relaxed text-black">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        This section provides crucial information for aspiring dental students. Review your portfolio carefully, ensuring it highlights core competencies like manual dexterity, empathy, communication, and resilience. Whether you are reflecting on your shadowing hours at a local clinic or preparing for MMI ethical scenarios, authenticity is key. Remember that admissions tutors are looking for candidates who demonstrate a realistic understanding of the profession.
                       </p>
                     </div>
                   </div>

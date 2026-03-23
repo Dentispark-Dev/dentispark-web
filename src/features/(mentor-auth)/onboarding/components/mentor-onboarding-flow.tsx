@@ -37,11 +37,12 @@ import {
 } from "@/src/components/ui/form";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { cn } from "@/src/lib/utils";
-import { 
+import {
   SPECIALIZATION_OPTIONS, 
   YEARS_EXPERIENCE_OPTIONS,
   EXPERTISE_AREAS
 } from "../types";
+import { authApi } from "@/src/features/(auth)/services/api";
 
 // Validation Schema for the final step
 const mentorOnboardingSchema = z.object({
@@ -128,28 +129,28 @@ const OptionCard = ({
 const SOCIAL_PROOF = [
   {
     quote: "Joining DentiSpark allowed me to give back to the community while earning on my own schedule.",
-    author: "Dr. Aris T. • Specialist Mentor",
+    author: "Dr. Aris Thorne • Orthodontic Specialist",
     stat: "£50-£150 / hr",
     benefit: "Flexible Earnings",
     statLabel: "Average Mentor Earnings"
   },
   {
     quote: "The platform handles all the admin. I just show up and mentor. It's incredibly efficient.",
-    author: "Dr. Sarah L. • General Dentist",
+    author: "Dr. Sarah Leong • General Dentist",
     stat: "500+ Mentors",
     benefit: "Elite Network",
     statLabel: "Global Mentor Network"
   },
   {
     quote: "Seeing my mentees get into their dream dental schools is the most rewarding part of my career.",
-    author: "James W. • Senior Student Mentor",
+    author: "James Winston • Final Year BDS Student",
     stat: "95% Student Success",
     benefit: "High Impact",
     statLabel: "Tracked Success Rate"
   },
   {
     quote: "The documentation process was straightforward. I felt verified and professional from day one.",
-    author: "Dr. Elena R. • Orthodontist",
+    author: "Dr. Elena Rossi • Specialist Mentor",
     stat: "100% Vetted",
     benefit: "Trust & Quality",
     statLabel: "Mentor Verification Rate"
@@ -201,12 +202,55 @@ export function MentorOnboardingFlow() {
   const onSubmit = async (data: OnboardingFormData) => {
     startTransition(async () => {
       try {
-        // Final submission includes all conversational data + account data
-        console.log("Submitting Mentor Data:", { ...onboardingData, ...data });
-        toast.success("Welcome to the community, Mentor!");
-        // Simulate redirect to success or dashboard
-      } catch (error) {
-        toast.error("Something went wrong. Please try again.");
+        // Step 1: Account Registration
+        const registrationResponse = await authApi.MENTOR_REGISTRATION({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          emailAddress: data.emailAddress,
+          password: data.password,
+          phoneNumber: data.phoneNumber,
+          yearOfDentistry: onboardingData.experience,
+          areaOfSpecialization: onboardingData.specialization,
+        });
+
+        if (registrationResponse.responseCode !== "00") {
+          throw new Error(registrationResponse.responseMessage || "Registration failed");
+        }
+
+        // Step 2: Profile Verification
+        // Mapping expertise areas to backend Enums
+        const expertiseMapping: Record<string, string> = {
+          "ucat": "UCAT",
+          "personal-statements": "PERSONAL_STATEMENT",
+          "mmis": "MMIs",
+          "school-specific-advice": "SCHOOL_SPECIFIC_ADVICE"
+        };
+
+        const mappedExpertise = onboardingData.expertise.map(e => expertiseMapping[e] || e);
+
+        // Parsing interview slot (very basic parsing for demo/starter)
+        // Expected: "Tomorrow at 10:00 AM"
+        const [dayPart, , timePart, ampm] = onboardingData.interviewSlot.split(" ");
+        const today = new Date();
+        const interviewDate = dayPart.toLowerCase() === "tomorrow" 
+          ? new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0]
+          : today.toISOString().split('T')[0];
+        
+        const interviewTime = `${timePart} ${ampm}`;
+
+        await authApi.MENTOR_VERIFICATION({
+          emailAddress: data.emailAddress,
+          documentUploadLinks: ["https://placeholder-link-to-be-replaced-by-s3.com"], // TODO: Actual file upload
+          expertiseDetailsList: mappedExpertise,
+          dentalSchoolExperience: onboardingData.role,
+          interviewDate: interviewDate,
+          interviewTime: interviewTime,
+        });
+
+        toast.success("Welcome to DentiSpark! Your application is being reviewed.");
+        // Redirect or show success state
+      } catch (error: any) {
+        toast.error(error.message || "Something went wrong. Please try again.");
       }
     });
   };
