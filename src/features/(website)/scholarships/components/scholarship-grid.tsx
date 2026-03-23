@@ -86,13 +86,7 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
   return (
     <section id="scholarships-list" className="bg-slate-50/30 py-8 md:py-12 overflow-hidden">
       <Container>
-        <motion.div 
-          className="flex flex-col space-y-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
+        <div className="flex flex-col space-y-8">
           {/* Results Grid - Header removed for better UX above fold */}
 
           {/* Results Grid */}
@@ -107,17 +101,19 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
           ) : (
             <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
               {filteredScholarships.length === 0 ? (
-                  <motion.div variants={itemVariants} className="col-span-full py-20 text-center space-y-4 bg-white/50 rounded-[3rem] border border-dashed border-slate-200">
+                  <div className="col-span-full py-20 text-center space-y-4 bg-white/50 rounded-[3rem] border border-dashed border-slate-200">
                       <div className="size-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
                         <Search size={32} />
                       </div>
                       <p className="font-sora text-lg text-slate-500 font-bold">No scholarships found matching your criteria.</p>
-                  </motion.div>
+                  </div>
               ) : (
                 filteredScholarships.map((scholarship) => (
                 <motion.div 
                   key={scholarship.externalId || scholarship.slug} 
-                  variants={itemVariants}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
                   className={`group relative flex flex-col rounded-[2.5rem] border transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(16,185,129,0.1)] ${scholarship.isSponsored ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-100 bg-white'}`}
                 >
                     {scholarship.isSponsored && (
@@ -165,7 +161,7 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
               )}
             </div>
           )}
-        </motion.div>
+        </div>
       </Container>
     </section>
   );
