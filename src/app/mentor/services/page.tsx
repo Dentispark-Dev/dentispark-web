@@ -19,34 +19,15 @@ export default function MentorServicesPage() {
     const [features, setFeatures] = useState("");
     const [serviceType, setServiceType] = useState("Tutoring");
 
-    // TODO: Connect to live endpoint [BACKEND INTEGRATION]
-    // In a real scenario, this fetches actual data from the Spring Boot backend; for demo we pre-fill a mock package
     useEffect(() => {
         if (user) {
-            // Mocking initial load for the demo
-            setPackages([
-                {
-                    externalId: "mock-1",
-                    mentorUsername: user.emailAddress || "dr_mentor",
-                    title: "1-on-1 Interview Prep",
-                    slug: "1-on-1-interview-prep",
-                    description: "A comprehensive mock interview session tailored to your desired dental school.",
-                    price: 150.0,
-                    currency: "USD",
-                    durationMinutes: 60,
-                    featuresJson: '["Mock Interview", "Detailed Feedback", "Recording Included"]',
-                    serviceType: "Interview Prep",
-                    isActive: true
-                }
-            ]);
-            setLoading(false);
-            
-            /*
             marketplaceApi.GET_MENTOR_PACKAGES(user.emailAddress)
-                .then(setPackages)
+                .then((data) => {
+                    // Extract data in case response wrapper is used, otherwise set directly
+                    setPackages(Array.isArray(data) ? data : (data as any).data || []);
+                })
                 .catch(console.error)
                 .finally(() => setLoading(false));
-            */
         }
     }, [user]);
 
@@ -65,14 +46,7 @@ export default function MentorServicesPage() {
         };
 
         try {
-            // Mock API Creation
-            // const created = await marketplaceApi.CREATE_PACKAGE(newPackage);
-            const created: ServicePackage = {
-                ...newPackage,
-                externalId: Math.random().toString(),
-                mentorUsername: user?.emailAddress || "mentor",
-                slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-            };
+            const created = await marketplaceApi.CREATE_PACKAGE(newPackage);
             
             setPackages([...packages, created]);
             setShowModal(false);
