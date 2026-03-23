@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useI18n } from "@/src/providers/i18n-provider";
+import { useAuth } from "@/src/providers/auth-provider";
 
 interface WelcomeSectionProps {
   userName?: string;
@@ -13,9 +14,9 @@ export default function WelcomeSection({
   userYear,
 }: WelcomeSectionProps) {
   const { t } = useI18n();
+  const { user } = useAuth();
   
-  const displayUserName = userName || t("welcome_default_name");
-  const displayUserYear = userYear || t("welcome_default_year");
+  const displayUserName = userName || user?.fullName || t("welcome_default_name");
 
   const getGreeting = () => {
     const hour = new Date().getHours();

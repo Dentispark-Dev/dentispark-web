@@ -21,6 +21,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     settings: "Account Settings",
     search_placeholder: "Search anything (Cmd+K)...",
     upgrade_now: "Upgrade to Premium",
+    welcome_default_name: "Future Dentist",
+    welcome_default_year: "Year 1",
   },
   fr: {
     dashboard_title: "Centre d'Intelligence Étudiant",
@@ -34,6 +36,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     settings: "Paramètres du Compte",
     search_placeholder: "Rechercher (Cmd+K)...",
     upgrade_now: "Passer au Premium",
+    welcome_default_name: "Futur Dentiste",
+    welcome_default_year: "Année 1",
   },
   ar: {
     dashboard_title: "مركز ذكاء الطلاب",
@@ -47,6 +51,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     settings: "إعدادات الحساب",
     search_placeholder: "بحث (Cmd+K)...",
     upgrade_now: "الترقية إلى بريميوم",
+    welcome_default_name: "طبيب أسنان المستقبل",
+    welcome_default_year: "السنة 1",
   },
 };
 
