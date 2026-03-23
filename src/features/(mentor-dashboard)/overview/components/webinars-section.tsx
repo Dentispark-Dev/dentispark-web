@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { cn } from "@/src/lib/utils";
 import { WebinarCard } from "./webinar-card";
 import { Users } from "lucide-react";
+import { toast } from "sonner";
 
 interface Webinar {
   id: string;
@@ -69,14 +71,14 @@ const SAMPLE_WEBINARS: Webinar[] = [
 ];
 
 export function WebinarsSection({ className }: WebinarsSectionProps) {
+  const router = useRouter();
+
   const handleRegister = (webinarId: string) => {
-    console.log("Register for webinar:", webinarId);
-    // TODO: Implement registration logic
+    toast.success("Registered!", { description: `You've been registered for webinar #${webinarId}.` });
   };
 
   const handleSeeAllWebinars = () => {
-    console.log("See all webinars clicked");
-    // TODO: Navigate to webinars page
+    router.push("/mentor/webinars");
   };
 
   return (

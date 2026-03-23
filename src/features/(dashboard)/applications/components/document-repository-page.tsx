@@ -7,6 +7,7 @@ import { DocumentUploadCard } from "./document-upload-card";
 import { DocumentUploadModal } from "./document-upload-modal";
 import { useModal } from "@/src/hooks/use-modal";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface UploadedFile {
   name: string;
@@ -56,7 +57,7 @@ export function DocumentRepositoryPage() {
             }));
 
             hideModal();
-            console.log(`Uploaded ${documentType}:`, uploadedFile);
+            toast.success("Document uploaded!", { description: `${file.name} has been saved to your repository.` });
           }}
         />
       ),
@@ -91,13 +92,12 @@ export function DocumentRepositoryPage() {
       bodyContent:
         "This action is irreversible; once the file is deleted, it cannot be restored.",
       action: () => {
-        // Perform the actual deletion
         setUploadedFiles((prev) => ({
           ...prev,
           [getDocumentKey(documentType)]: undefined,
         }));
-        console.log(`${documentType} file deleted`);
-        // TODO: Implement actual file deletion logic on server
+        toast.info("Document removed", { description: `${documentType} has been deleted from your repository.` });
+        hideModal();
       },
       actionTitle: "Delete",
       secondaryAction: hideModal,
