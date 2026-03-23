@@ -94,8 +94,7 @@ export function ApplicationsPage() {
   const router = useRouter();
 
   const handleApplicationChecklistClick = () => {
-    // TODO: Navigate to application checklist page or open modal
-    console.log("Navigate to application checklist");
+    router.push("/applications/checklist");
   };
 
   const handleDocumentRepositoryClick = () => {
