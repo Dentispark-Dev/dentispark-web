@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useAuth } from "@/src/providers/auth-provider";
 
 export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
-  const { user } = useAuth();
+  const { user, isAdmin, isMentor } = useAuth();
 
   return (
     <header className="border-greys-300 bg-whites-200 fixed top-0 right-0 left-0 z-50 border-b">
@@ -22,7 +22,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
         </div>
 
         {/* Clickable logo */}
-        <Link href="/admin" className="cursor-pointer transition-opacity hover:opacity-80">
+        <Link href={isAdmin ? "/admin" : isMentor ? "/mentor/overview" : "/overview"} className="cursor-pointer transition-opacity hover:opacity-80">
           <Logo className="h-16 w-32 md:h-20 md:w-48" />
         </Link>
 
