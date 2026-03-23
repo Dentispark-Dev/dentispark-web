@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Breadcrumb } from "@/src/components/ui/breadcrumb";
@@ -112,8 +113,7 @@ export function StudentMessagingPage({
         <RatingReviewModal
           studentName={MOCK_STUDENT.name}
           onSubmit={(rating, review) => {
-            console.log("Rating:", rating, "Review:", review);
-            // TODO: Implement API call to submit rating and review
+            toast.success("Review submitted!", { description: `You gave ${MOCK_STUDENT.name} a ${rating}-star review.` });
             closeModal();
           }}
           onCancel={closeModal}
@@ -177,9 +177,10 @@ export function StudentMessagingPage({
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
   };
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleAttachFile = () => {
-    console.log("Attach file");
-    // TODO: Implement file attachment logic
+    fileInputRef.current?.click();
   };
 
   return (

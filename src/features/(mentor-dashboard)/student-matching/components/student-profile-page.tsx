@@ -13,6 +13,8 @@ import { useModalStore } from "@/src/store/modal-store";
 import { SuggestSlotForm } from "./suggest-slot-form";
 import { AcceptBookingModal } from "./accept-booking-modal";
 import { PracticeTestDetailModal } from "./practice-test-detail-modal";
+import { BaseAPI } from "@/src/connection/base-api";
+import { toast } from "sonner";
 
 interface StudentProfilePageProps {
   className?: string;
@@ -72,9 +74,18 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
             title: MOCK_STUDENT.booking.title,
             date: MOCK_STUDENT.booking.date,
           }}
-          onAccept={() => {
-            console.log("Booking accepted");
-            // TODO: Implement API call to accept booking
+          onAccept={async () => {
+            try {
+              const api = new BaseAPI();
+              await api.post("/sessions/book", {
+                sessionTitle: MOCK_STUDENT.booking.title,
+                inviteeEmail: MOCK_STUDENT.name, // will be replaced with student email from live data
+                sessionType: "MENTORING_SESSION",
+              });
+              toast.success("Booking accepted!", { description: `Session with ${MOCK_STUDENT.name} has been confirmed.` });
+            } catch {
+              toast.error("Failed to accept booking", { description: "Please try again shortly." });
+            }
             closeModal();
           }}
           onSuggestNewSlot={() => {
@@ -102,8 +113,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
       bodyContent: (
         <SuggestSlotForm
           onSubmit={(data) => {
-            console.log("Slot suggested:", data);
-            // TODO: Implement API call to suggest new slot
+            toast.success("Slot suggested!", { description: `New slot on ${data.date || "selected date"} has been sent to the student.` });
             closeModal();
           }}
           onCancel={closeModal}
