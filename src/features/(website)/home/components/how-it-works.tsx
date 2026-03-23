@@ -1,179 +1,179 @@
-// components/HowItWorks.tsx
 "use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
+import Image, { StaticImageData } from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
 import Container from "@/src/components/layouts/container";
-import { ArrowRight } from "lucide-react";
+import { cn } from "@/src/lib/utils";
 
 import DiscoverYourPath from "@/public/icons/discover-your-path.svg";
 import AccessFreeTools from "@/public/icons/access-free-tool.svg";
 import ConnectWithScholars from "@/public/icons/connect-with-mentors.svg";
 import TrackYourJourney from "@/public/icons/track-your-journey.svg";
-import { cn } from "@/src/lib/utils";
-import Image, { StaticImageData } from "next/image";
 
-type Card = {
-  step: number;
+type Step = {
+  id: number;
   title: string;
-  titleColor: string;
   description: string;
   icon: StaticImageData;
-  bgColor: string;
-  hasLink?: boolean;
+  color: string;
+  glow: string;
+  phase: string;
 };
 
-const cards: Card[] = [
+const STEPS: Step[] = [
   {
-    step: 1,
+    id: 1,
     title: "Discover Your Path",
-    titleColor: "text-success-600",
-    description:
-      "Take the quiz to find your category (BDS, Dental Nursing, Dental Hygiene/Therapy).",
+    description: "Take the quiz to find your category (BDS, Nursing, Hygiene).",
     icon: DiscoverYourPath,
-    bgColor: "bg-success-200",
+    color: "text-emerald-500",
+    glow: "bg-emerald-500/20",
+    phase: "Foundation"
   },
   {
-    step: 2,
+    id: 2,
     title: "Access Free Tools",
-    titleColor: "text-warning-600",
     description: "Use guides, checklists, and university data.",
     icon: AccessFreeTools,
-    bgColor: "bg-warning-200",
+    color: "text-orange-500",
+    glow: "bg-orange-500/20",
+    phase: "Empowerment"
   },
   {
-    step: 3,
+    id: 3,
     title: "Connect with Mentors",
-    titleColor: "text-secondary-600",
-    description: "Meet Black dental professionals.",
+    description: "Meet Black dental professionals and scholars.",
     icon: ConnectWithScholars,
-    bgColor: "bg-secondary-200",
+    color: "text-blue-600",
+    glow: "bg-blue-600/20",
+    phase: "Networking"
   },
   {
-    step: 4,
+    id: 4,
     title: "Track Your Journey",
-    titleColor: "text-primary",
-    description: "Follow year-specific milestones.",
+    description: "Follow year-specific milestones and goals.",
     icon: TrackYourJourney,
-    bgColor: "bg-primary-200",
-    hasLink: true,
-  },
+    color: "text-teal-500",
+    glow: "bg-teal-500/20",
+    phase: "Mastery"
+  }
 ];
 
-import { motion, Variants } from "framer-motion";
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { y: 40, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
-
 export function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+
   return (
-    <section className="bg-white py-24 md:py-32 overflow-hidden">
+    <section className="bg-white py-20 overflow-hidden relative">
       <Container>
-        <motion.div 
-          className="flex flex-col space-y-24 md:space-y-40"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="flex flex-col items-center space-y-6 text-center">
-            <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
-              The Protocol
-            </motion.div>
-            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
-              Simple. Supportive. <span className="text-emerald-600">Powerful.</span>
-            </motion.h2>
+        <div className="flex flex-col space-y-16">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-slate-100 pb-12">
+            <div className="space-y-4 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-widest uppercase mb-2">
+                <Sparkles className="w-3 h-3" /> The DentiSpark Protocol
+              </div>
+              <h2 className="font-sora text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Your Journey. <span className="text-emerald-600">Connected.</span>
+              </h2>
+            </div>
+            <Link 
+              href="/sign-up" 
+              className="group flex items-center gap-2 font-sora font-extrabold text-slate-900 hover:text-emerald-600 transition-colors"
+            >
+              Start Your Path <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
-          <div className="flex flex-col space-y-32">
-            {cards.map(({ step, bgColor, icon: Icon, title, titleColor, description, hasLink }, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className={cn(
-                  "flex flex-col items-center justify-between gap-16 md:flex-row",
-                  index % 2 !== 0 && "md:flex-row-reverse"
-                )}
-              >
-                {/* Image/Icon Side */}
-                <div className="relative flex-1 w-full max-w-[500px] group">
+          {/* Interactive Path Container */}
+          <div className="relative">
+            {/* Desktop Path Line */}
+            <div className="hidden lg:block absolute top-[5.5rem] left-[12.5%] right-[12.5%] h-1 bg-slate-50 overflow-hidden rounded-full">
+              <motion.div 
+                className="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              />
+            </div>
+
+            {/* Steps Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+              {STEPS.map((step, idx) => (
+                <motion.div
+                  key={step.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  onMouseEnter={() => setActiveStep(idx)}
+                  className="group relative"
+                >
                   <div className={cn(
-                    "absolute -inset-4 rounded-[3rem] blur-3xl opacity-20 -z-10 transition-opacity duration-500 group-hover:opacity-40",
-                    bgColor.replace('bg-', 'bg-').replace('-200', '-400')
-                  )} />
-                  <div className={cn(
-                    bgColor,
-                    "flex aspect-square w-full items-center justify-center rounded-[3.5rem] p-16 shadow-[0_20px_50px_rgba(0,0,0,0.02)] transition-all duration-700 group-hover:scale-[1.02] group-hover:rotate-1"
+                    "flex flex-col h-full bg-white border border-slate-100 rounded-[2.5rem] p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)]",
+                    activeStep === idx ? "border-emerald-100 shadow-[0_20px_50px_-12px_rgba(16,185,129,0.12)]" : ""
                   )}>
-                    <Image
-                      src={Icon}
-                      alt={title}
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-2"
-                    />
-                  </div>
-                  <div className="absolute -top-6 -right-6 md:-top-10 md:-right-10 size-20 md:size-28 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-slate-50">
-                    <span className={cn("font-sora text-3xl md:text-5xl font-extrabold", titleColor)}>
-                      {step}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Text Side */}
-                <div className="flex flex-1 flex-col space-y-8">
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-3">
-                      <div className={cn("h-1 w-12 rounded-full", titleColor.replace('text-', 'bg-'))} />
-                      <span className={cn(titleColor, "font-sora text-xs font-bold uppercase tracking-[0.2em]")}>
-                        Phase {step}
-                      </span>
+                    {/* Step Icon Node */}
+                    <div className="relative mb-8 flex justify-center lg:justify-start">
+                        <div className={cn(
+                            "relative z-10 w-24 h-24 rounded-3xl p-6 transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3 shadow-lg flex items-center justify-center",
+                            activeStep === idx || activeStep === -1 ? `bg-white shadow-${step.color.split('-')[1]}/10` : "bg-slate-50"
+                        )}>
+                            <div className={cn("absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity", step.glow)} />
+                            <Image 
+                                src={step.icon} 
+                                alt={step.title} 
+                                className={cn(
+                                    "w-full h-full object-contain transition-all duration-500",
+                                    activeStep === idx ? "scale-110" : "grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100"
+                                )}
+                            />
+                        </div>
+                        {/* Phase Indicator Bubble */}
+                        <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center border-4 border-slate-50 z-20">
+                            <span className={cn("font-sora font-extrabold text-sm", step.color)}>
+                                {step.id}
+                            </span>
+                        </div>
                     </div>
-                    <h3 className="font-sora text-3xl font-extrabold text-slate-900 md:text-5xl tracking-tight leading-tight">
-                      {title}
-                    </h3>
-                    <p className="font-sora text-slate-500 max-w-lg text-lg md:text-xl leading-relaxed">
-                      {description}
-                    </p>
+
+                    {/* Step Content */}
+                    <div className="space-y-4 flex-1">
+                        <div className="flex items-center gap-2">
+                            <div className={cn("h-1 w-6 rounded-full", step.color.replace('text-', 'bg-'))} />
+                            <span className={cn("text-[10px] font-bold uppercase tracking-widest", step.color)}>
+                                {step.phase}
+                            </span>
+                        </div>
+                        <h3 className="font-sora text-xl font-extrabold text-slate-900 leading-tight">
+                            {step.title}
+                        </h3>
+                        <p className="font-sora text-slate-500 text-xs font-medium leading-relaxed">
+                            {step.description}
+                        </p>
+                    </div>
+
+                    {/* Desktop Hover Details Overlay (Subtle) */}
+                    <AnimatePresence>
+                        {activeStep === idx && (
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="absolute -bottom-2 -left-2 -right-2 h-1 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                            />
+                        )}
+                    </AnimatePresence>
                   </div>
-                  {hasLink && (
-                    <motion.div 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Link
-                        href="/sign-up"
-                        className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-3xl bg-emerald-500 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/40"
-                      >
-                        Start Your Journey 
-                        <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </motion.div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </div>
       </Container>
     </section>
   );
 }
+
