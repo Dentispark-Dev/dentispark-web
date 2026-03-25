@@ -244,12 +244,12 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
 
             {/* Right Column: Dynamic Sidebar */}
             <div className="lg:col-span-4 space-y-8">
-                <div className="glass-card bg-green-600 p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
+                <div className="bg-emerald-600 p-10 rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
                     <div className="relative z-10">
-                        <LifeBuoy className="w-12 h-12 mb-8 text-green-100" />
+                        <LifeBuoy className="w-12 h-12 mb-8 text-emerald-100" />
                         <h3 className="text-3xl font-black tracking-tight mb-4">Maximize Your Chances</h3>
-                        <p className="text-green-50 font-medium mb-10 text-lg leading-relaxed">Our clinical mentors help you craft a standout <span className="underline decoration-green-400 underline-offset-4">Personal Statement</span> that captures your potential.</p>
-                        <Button variant="secondary" className="w-full h-16 rounded-2xl font-black text-green-700 bg-white hover:bg-green-50 border-none transition-all shadow-xl text-lg hover:scale-[1.02]" asChild>
+                        <p className="text-emerald-50 font-medium mb-10 text-lg leading-relaxed">Our clinical mentors help you craft a standout <span className="underline decoration-emerald-400 underline-offset-4">Personal Statement</span> that captures your potential.</p>
+                        <Button variant="secondary" className="w-full h-16 rounded-2xl font-black text-emerald-700 bg-white hover:bg-emerald-50 border-none transition-all shadow-xl text-lg hover:scale-[1.02]" asChild>
                             <Link href="/services">Book Statement Review</Link>
                         </Button>
                     </div>
