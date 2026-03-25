@@ -16,7 +16,7 @@ export default function MentorOnboardingPage() {
 
       {/* Mini Header for Mentor Onboarding Page */}
       <div className="w-full max-w-7xl flex items-center justify-between mb-8 px-4">
-        <Link href="/">
+        <Link href="/" className="md:hidden">
           <Logo className="h-10 w-auto" />
         </Link>
         <div className="flex items-center gap-6">

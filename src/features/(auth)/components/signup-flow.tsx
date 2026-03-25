@@ -203,7 +203,7 @@ export function SignupFlow() {
               <ArrowLeft size={16} /> Back
             </button>
           ) : (
-            <div className="flex items-center">
+            <div className="flex items-center md:hidden">
               <Logo className="h-8 w-auto" />
             </div>
           )}
