@@ -140,7 +140,7 @@ export default function Header() {
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <Link href="/" className="cursor-pointer group flex items-center">
-              <Logo className="h-[52px] w-auto transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]" />
+              <Logo className="h-[42px] w-auto transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]" />
             </Link>
           </motion.div>
 
