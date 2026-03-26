@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, Variants } from "framer-motion";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Mail, User, Phone, MessageCircle } from "lucide-react";
 import { BaseAPI } from "@/src/connection/base-api";
 import { toast } from "sonner";
 
@@ -117,25 +117,27 @@ export function ContactUsForm() {
       animate="visible"
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* First Name and Last Name */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <motion.div variants={itemVariants}>
               <FormField
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel className="font-sora text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                  <FormItem className="space-y-2">
+                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
                       First Name
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Jane"
-                        aria-invalid={!!form.formState.errors.firstName}
-                        {...field}
-                        className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl focus:border-emerald-500/30 focus:ring-emerald-500/10 font-sora text-sm px-6 transition-all"
-                      />
+                      <div className="relative group">
+                        <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4 group-focus-within:text-emerald-500 transition-colors" />
+                        <Input
+                          placeholder="Jane"
+                          className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl pl-12 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-medium text-sm transition-all shadow-sm"
+                          {...field}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage className="text-[10px] font-bold text-rose-500" />
                   </FormItem>
@@ -147,17 +149,19 @@ export function ContactUsForm() {
                 control={form.control}
                 name="lastName"
                 render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel className="font-sora text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                  <FormItem className="space-y-2">
+                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
                       Last Name
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Doe"
-                        aria-invalid={!!form.formState.errors.lastName}
-                        {...field}
-                        className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl focus:border-emerald-500/30 focus:ring-emerald-500/10 font-sora text-sm px-6 transition-all"
-                      />
+                      <div className="relative group">
+                        <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4 group-focus-within:text-emerald-500 transition-colors" />
+                        <Input
+                          placeholder="Doe"
+                          className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl pl-12 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-medium text-sm transition-all shadow-sm"
+                          {...field}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage className="text-[10px] font-bold text-rose-500" />
                   </FormItem>
@@ -167,24 +171,23 @@ export function ContactUsForm() {
           </div>
 
           {/* Email Address and Phone Number */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <motion.div variants={itemVariants}>
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel className="font-sora text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                  <FormItem className="space-y-2">
+                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
                       Email Address
                     </FormLabel>
                     <FormControl>
-                      <div className="relative group/field">
-                        <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 h-4 w-4 group-focus-within/field:text-emerald-500 transition-colors" />
+                      <div className="relative group">
+                        <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4 group-focus-within:text-emerald-500 transition-colors" />
                         <Input
                           type="email"
                           placeholder="jane@example.com"
-                          className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl pl-14 pr-6 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-sora text-sm transition-all"
-                          aria-invalid={!!form.formState.errors.email}
+                          className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl pl-12 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-medium text-sm transition-all shadow-sm"
                           {...field}
                         />
                       </div>
@@ -199,18 +202,20 @@ export function ContactUsForm() {
                 control={form.control}
                 name="phone"
                 render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel className="font-sora text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                  <FormItem className="space-y-2">
+                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
                       Phone Number
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="tel"
-                        placeholder="+44 7000 000000"
-                        className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl focus:border-emerald-500/30 focus:ring-emerald-500/10 font-sora text-sm px-6 transition-all"
-                        aria-invalid={!!form.formState.errors.phone}
-                        {...field}
-                      />
+                      <div className="relative group">
+                        <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4 group-focus-within:text-emerald-500 transition-colors" />
+                        <Input
+                          type="tel"
+                          placeholder="+44 7000 000000"
+                          className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl pl-12 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-medium text-sm transition-all shadow-sm"
+                          {...field}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage className="text-[10px] font-bold text-rose-500" />
                   </FormItem>
@@ -225,26 +230,28 @@ export function ContactUsForm() {
               control={form.control}
               name="message"
               render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <FormLabel className="font-sora text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400">
-                      Your Message
-                    </FormLabel>
-                    <span className="text-[10px] font-bold text-slate-300 font-sora uppercase tracking-widest">
-                      {messageLength}/500
-                    </span>
-                  </div>
+                <FormItem className="space-y-2">
+                   <div className="flex justify-between items-center ml-1">
+                      <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400">
+                        Your Message
+                      </FormLabel>
+                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                        {messageLength}/500
+                      </span>
+                   </div>
                   <FormControl>
-                    <Textarea
-                      placeholder="Tell us how we can help you..."
-                      aria-invalid={!!form.formState.errors.message}
-                      {...field}
-                      onChange={(e) => {
-                        const value = handleMessageChange(e.target.value);
-                        field.onChange(value);
-                      }}
-                      className="min-h-[160px] bg-slate-50/50 border-slate-100 rounded-3xl focus:border-emerald-500/30 focus:ring-emerald-500/10 font-sora text-sm p-6 resize-none transition-all"
-                    />
+                    <div className="relative group">
+                      <MessageCircle className="absolute left-5 top-6 text-slate-300 w-4 h-4 group-focus-within:text-emerald-500 transition-colors" />
+                      <Textarea
+                        placeholder="Tell us how we can help you succeed..."
+                        {...field}
+                        onChange={(e) => {
+                          const value = handleMessageChange(e.target.value);
+                          field.onChange(value);
+                        }}
+                        className="min-h-[160px] bg-slate-50/50 border-slate-100 rounded-[2rem] pl-12 py-5 focus:border-emerald-500/30 focus:ring-emerald-500/10 font-medium text-sm transition-all shadow-sm resize-none"
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage className="text-[10px] font-bold text-rose-500" />
                 </FormItem>
@@ -258,7 +265,7 @@ export function ContactUsForm() {
               control={form.control}
               name="agreeToPrivacy"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center space-y-0 space-x-3 p-4 rounded-2xl bg-slate-50/30 border border-slate-100 transition-colors hover:bg-emerald-50/20 hover:border-emerald-100">
+                <FormItem className="flex flex-row items-center space-y-0 space-x-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100 transition-all hover:bg-emerald-50/30">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
@@ -267,7 +274,7 @@ export function ContactUsForm() {
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <p className="font-sora text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
                       Agree to{" "}
                       <span className="text-emerald-600 underline cursor-pointer hover:text-emerald-700">
                         Privacy Policy
@@ -282,26 +289,23 @@ export function ContactUsForm() {
 
           {/* Submit Button */}
           <motion.div variants={itemVariants} className="pt-4">
-            <div className="relative group/submit">
-              <div className="absolute -inset-1 bg-emerald-500 rounded-2xl blur opacity-20 group-hover/submit:opacity-40 transition duration-500" />
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="relative w-full h-16 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.01]"
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center space-x-2">
-                    <div className="size-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Sending...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center">
-                    Send Message{" "}
-                    <ArrowRight className="ml-2 size-5 transition-transform group-hover/submit:translate-x-1" />
-                  </div>
-                )}
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full h-16 rounded-[2rem] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.01] flex items-center justify-center gap-2 group"
+            >
+              {isSubmitting ? (
+                <div className="flex items-center space-x-2">
+                  <div className="size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Processing...</span>
+                </div>
+              ) : (
+                <>
+                  Send Message
+                  <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+                </>
+              )}
+            </Button>
           </motion.div>
         </form>
       </Form>
