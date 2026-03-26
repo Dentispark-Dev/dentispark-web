@@ -10,113 +10,13 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import Link from "next/link";
 
+import { MENTOR_CATEGORIES, REAL_MENTORS, Mentor } from "@/src/features/(website)/mentors/data/mentors";
+
 // ─── Category Tabs (Leland-style) ─────────────────────────────
-const CATEGORIES = [
-    { key: "all", label: "All Mentors" },
-    { key: "dental", label: "🦷 Dental School" },
-    { key: "medicine-md", label: "🩺 Medicine — MD" },
-    { key: "medicine-do", label: "🩺 Medicine — DO" },
-    { key: "nursing", label: "🏥 Nursing" },
-    { key: "pa", label: "💊 Physician Assistant" },
-    { key: "test-prep", label: "📚 Test Prep (DAT/MCAT)" },
-    { key: "personal-statement", label: "✍️ Personal Statement" },
-    { key: "interview-prep", label: "🎤 Interview Prep" },
-];
+const CATEGORIES = MENTOR_CATEGORIES;
 
 // ─── Mock mentor data (replace with real API) ─────────────────
-// ─── Mock mentor data (Premium Slugs) ─────────────────
-const MOCK_MENTORS = [
-    {
-        id: "dt-marcus-thorne",
-        slug: "dt-marcus-thorne",
-        name: "Dt. Marcus Thorne",
-        credentials: "Elite Orthodontics | 12+ Years Experience",
-        bio: "Specializing in advanced orthodontic procedures and guiding pre-dental students through the application process.",
-        worksAt: "Univ of Pennsylvania",
-        field: "dental",
-        specialty: "Orthodontics, Program Strategy",
-        hourlyRate: 175,
-        currency: "US$",
-        rating: 4.9,
-        reviewCount: 88,
-        available: "Available tomorrow",
-        verified: true,
-        introCall: true,
-        tags: ["dental", "specialization"],
-    },
-    {
-        id: "dr-elena-rostova",
-        slug: "dr-elena-rostova",
-        name: "Dr. Elena Rostova",
-        credentials: "Chief of Surgery | Admissions Committee Member",
-        bio: "I leverage my experience on the Harvard admissions committee to help driven students craft compelling narratives.",
-        worksAt: "Harvard Medicine",
-        field: "medicine-md",
-        specialty: "Surgery, MMI Prep",
-        hourlyRate: 210,
-        currency: "US$",
-        rating: 5.0,
-        reviewCount: 62,
-        available: "Available Thurs",
-        verified: true,
-        introCall: true,
-        tags: ["medicine-md", "surgery"],
-    },
-    {
-        id: "dr-sarah-chen",
-        slug: "dr-sarah-chen",
-        name: "Dr. Sarah Chen",
-        credentials: "NHS Consultant | UCAT Specialist",
-        bio: "Passionate about mentoring the next generation of UK dentists. I specialize in breaking down the UCAT requirements.",
-        worksAt: "King's College London",
-        field: "dental",
-        specialty: "UCAT, UK Dental Schools",
-        hourlyRate: 120,
-        currency: "US$",
-        rating: 4.8,
-        reviewCount: 145,
-        available: "Available today",
-        verified: true,
-        introCall: true,
-        tags: ["dental", "test-prep"],
-    },
-    {
-        id: "dt-james-wilson",
-        slug: "dt-james-wilson",
-        name: "Dt. James Wilson",
-        credentials: "Pediatric Specialist | Former UCSF Admissions",
-        bio: "I help applicants highlight their soft skills and community impact to stand out in the competitive landscape.",
-        worksAt: "UCSF Pediatric Dentistry",
-        field: "dental",
-        specialty: "Pediatrics, soft-skills",
-        hourlyRate: 160,
-        currency: "US$",
-        rating: 4.9,
-        reviewCount: 34,
-        available: "Available Mon",
-        verified: true,
-        introCall: false,
-        tags: ["dental", "interview-prep"],
-    },
-    {
-        id: "dr-amira-patel",
-        slug: "dr-amira-patel",
-        name: "Dr. Amira Patel",
-        credentials: "Top of Class UCL | Research Fellow",
-        bio: "My focus is on helping students with strong academic and research backgrounds translate those achievements into offers.",
-        worksAt: "UCL / NHS Consultant",
-        field: "nursing",
-        specialty: "Research, Academic Strategy",
-        hourlyRate: 140,
-        currency: "US$",
-        rating: 5.0,
-        reviewCount: 29,
-        available: "Available Wed",
-        verified: true,
-        introCall: true,
-        tags: ["nursing", "research"],
-    },
-];
+const MOCK_MENTORS = REAL_MENTORS;
 
 // ─── Filter Panel ─────────────────────────────────────────────
 interface FilterSection { label: string; open: boolean }

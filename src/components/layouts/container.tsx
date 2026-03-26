@@ -5,11 +5,13 @@ import { cn } from "@/src/lib/utils";
 interface ContainerProps {
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }
 
-export default function Container({ children, className }: ContainerProps) {
+export default function Container({ children, className, id }: ContainerProps) {
   return (
     <div
+      id={id}
       className={cn(
         "mx-auto w-full px-4 sm:px-6 lg:px-8",
         "max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-6xl",

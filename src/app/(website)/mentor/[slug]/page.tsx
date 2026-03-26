@@ -3,7 +3,7 @@
 import { notFound, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { MentorProfileView } from "@/src/features/profile/components/mentor-profile-view";
-import { MOCK_MENTORS } from "@/src/features/profile/data/mock-mentors";
+import { MENTORS_BY_SLUG } from "@/src/features/(website)/mentors/data/mentors";
 
 interface MentorPageProps {
   params: Promise<{
@@ -19,7 +19,7 @@ export default function MentorPage({ params }: MentorPageProps) {
     params.then(p => setSlug(p.slug));
   }, [params]);
 
-  const mentor = MOCK_MENTORS[slug || "dt-marcus-thorne"];
+  const mentor = MENTORS_BY_SLUG[slug || "dt-marcus-thorne"];
 
   if (!mentor && slug) {
     notFound();

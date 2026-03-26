@@ -24,6 +24,7 @@ export default function Header() {
   const navItems = [
     { label: "About Us", href: "/about-us" },
     { label: "Services", href: "/services" },
+    { label: "Mentors", href: "/mentors" },
     { label: "Scholarships", href: "/scholarships" },
     { label: "Become a mentor", href: "/become-a-mentor" },
     { label: "Contact Us", href: "/contact-us" },
