@@ -49,7 +49,7 @@ export function Footer() {
           {/* Brand Info */}
           <div className="lg:col-span-4 space-y-8">
             <Link href="/" className="inline-block transition-opacity hover:opacity-80">
-              <WhiteLogo className="h-16 w-auto drop-shadow-[0_0_12px_rgba(255,255,255,0.15)]" />
+              <WhiteLogo className="h-24 w-auto drop-shadow-[0_0_16px_rgba(255,255,255,0.15)]" />
             </Link>
             <p className="text-gray-500 font-medium leading-relaxed max-w-sm">
               Empowering the next generation of dental and medical professionals through world-class mentorship and innovative test prep tools. 
