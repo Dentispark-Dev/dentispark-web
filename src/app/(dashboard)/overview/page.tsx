@@ -8,6 +8,7 @@ import { PerformanceGrid } from "@/src/features/analytics/components/performance
 import { ProgressPipeline } from "@/src/features/analytics/components/progress-pipeline";
 import { DeadlineCountdown } from "@/src/features/automation/components/deadline-countdown";
 import { MilestoneList } from "@/src/features/automation/components/milestone-list";
+import { AdmissionRoadmap } from "@/src/features/(dashboard)/overview/components/admission-roadmap";
 import { useAuth } from "@/src/providers/auth-provider";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
