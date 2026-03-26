@@ -117,12 +117,12 @@ export default function Header() {
     >
       <Container className="flex items-center justify-between py-5">
         <motion.div
-          className="flex items-center space-x-4 md:space-x-12"
+          className="flex items-center space-x-4 lg:space-x-8 xl:space-x-12"
           variants={itemVariants}
         >
           {/* Hamburger for mobile */}
           <motion.button
-            className="block cursor-pointer p-2 md:hidden"
+            className="block cursor-pointer p-2 lg:hidden"
             aria-label="Open menu"
             onClick={() => setMobileMenuOpen(true)}
             whileHover={{ scale: 1.1 }}
@@ -146,7 +146,7 @@ export default function Header() {
 
           {/* Desktop nav */}
           <motion.nav
-            className="hidden space-x-6 md:flex"
+            className="hidden space-x-1 lg:flex xl:space-x-4"
             variants={itemVariants}
           >
             {navItems.map((item, index) => (
@@ -159,7 +159,7 @@ export default function Header() {
                 <Link
                   href={item.href}
                   className={cn(
-                    "relative px-2 py-1 text-[13px] font-semibold tracking-wide transition-all duration-300",
+                    "relative px-2 py-1 text-[13px] font-semibold tracking-wide transition-all duration-300 whitespace-nowrap",
                     pathname === item.href 
                       ? "text-emerald-600" 
                       : "text-gray-500 hover:text-emerald-500",
@@ -187,7 +187,7 @@ export default function Header() {
 
         {/* Desktop Action buttons / Logged-in user */}
         <motion.div
-          className="hidden items-center space-x-5 md:flex"
+          className="hidden items-center space-x-3 lg:flex xl:space-x-5"
           variants={itemVariants}
         >
           {isAuthenticated && user ? (
@@ -218,7 +218,7 @@ export default function Header() {
 
         {/* Mobile: show avatar if logged in, else Sign Up */}
         <motion.div
-          className="block md:hidden"
+          className="block lg:hidden"
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
