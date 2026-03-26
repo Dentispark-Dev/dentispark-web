@@ -1,174 +1,210 @@
-// components/Footer.tsx
 "use client";
 
 import Link from "next/link";
 import Container from "@/src/components/layouts/container";
-import { Twitter, Instagram, Facebook, Linkedin } from "lucide-react";
+import { 
+    Twitter, Instagram, Facebook, Linkedin, 
+    Mail, Phone, MapPin, ExternalLink,
+    ArrowRight, Sparkles, Send
+} from "lucide-react";
 import WhiteLogo from "@/src/components/icons/WhiteLogo";
+import { Button } from "../ui/button";
+import { motion } from "framer-motion";
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = {
+    welcome: [
+      { label: "Free Tools", href: "/free-tools" },
+      { label: "Scholarships & Funding", href: "/scholarships" },
+      { label: "Admission Timeline", href: "/admission-timeline" },
+      { label: "Success Stories", href: "/success-stories" }
+    ],
+    company: [
+      { label: "About Us", href: "/about-us" },
+      { label: "Contact Us", href: "/contact-us" },
+      { label: "FAQs", href: "/faqs" },
+      { label: "Mentors", href: "/mentors" }
+    ],
+    getInvolved: [
+      { label: "Become a Mentor", href: "/become-a-mentor" },
+      { label: "University Representative", href: "/university-rep" },
+      { label: "Pricing", href: "/pricing" }
+    ],
+    legal: [
+      { label: "Terms of Service", href: "/terms" },
+      { label: "Privacy Policy", href: "/privacy" }
+    ]
+  };
+
   return (
-    <footer className="bg-black-800 py-16 text-gray-300">
-      <Container className="font-sora grid grid-cols-1 gap-8 md:grid-cols-4 lg:grid-cols-5">
-        {/* Logo & contact */}
-        <div className="flex flex-col space-y-6">
-          <Link href="/" className="cursor-pointer transition-opacity hover:opacity-80">
-            <WhiteLogo className="h-8 w-36" />
-          </Link>
-          <div className="flex space-x-6">
-            <Link href="#" aria-label="Twitter" className="cursor-pointer">
-              <Twitter className="h-6 w-6 transition hover:text-white" />
-            </Link>
-            <Link href="#" aria-label="Instagram" className="cursor-pointer">
-              <Instagram className="h-6 w-6 transition hover:text-white" />
-            </Link>
-            <Link href="#" aria-label="Facebook" className="cursor-pointer">
-              <Facebook className="h-6 w-6 transition hover:text-white" />
-            </Link>
-            <Link href="#" aria-label="LinkedIn" className="cursor-pointer">
-              <Linkedin className="h-6 w-6 transition hover:text-white" />
-            </Link>
+    <footer className="relative bg-[#0a0a0a] text-gray-400 overflow-hidden">
+      {/* Top Border Glow */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+      
+      {/* Pre-Footer CTA Section */}
+      <div className="relative pt-20 pb-16 border-b border-white/[0.03]">
+        <Container>
+          <div className="bg-emerald-600 rounded-[3rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden group shadow-2xl shadow-emerald-600/20">
+            <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-[100px]" />
+                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-slate-900 rounded-full blur-[100px]" />
+            </div>
+            
+            <div className="relative z-10 space-y-4 text-center md:text-left">
+              <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight">
+                Ready to start your <br />
+                <span className="text-slate-900">dream career?</span>
+              </h2>
+              <p className="text-emerald-50 text-lg font-medium max-w-md">
+                Join over 10,000 students and start preparing for your dental or medical school offer today.
+              </p>
+            </div>
+            
+            <div className="relative z-10 flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-black text-xl border-none shadow-xl transition-all hover:scale-105" asChild>
+                <Link href="/sign-up">Start for Free</Link>
+              </Button>
+              <Button variant="outline" size="lg" className="h-16 px-10 rounded-2xl border-white/30 text-white hover:bg-white/10 font-black text-xl transition-all" asChild>
+                <Link href="/mentors">Meet Mentors</Link>
+              </Button>
+            </div>
           </div>
-          <address className="not- space-y-1 text-xs font-extralight not-italic">
-            <p>3, Birling Avenue, Rainham,</p>
-            <p>Gillingham, ME8 7HB</p>
-            <p className="my-6">
-              <a
-                href="mailto:contact@dentispark.com"
-                className="hover:text-white"
-              >
-                contact@dentispark.com
-              </a>
+        </Container>
+      </div>
+
+      {/* Main Footer Content */}
+      <Container className="pt-24 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-8">
+          {/* Brand Info */}
+          <div className="lg:col-span-4 space-y-8">
+            <Link href="/" className="inline-block transition-opacity hover:opacity-80">
+              <WhiteLogo className="h-10 w-auto" />
+            </Link>
+            <p className="text-gray-500 font-medium leading-relaxed max-w-sm">
+              Empowering the next generation of dental and medical professionals through world-class mentorship and innovative test prep tools. 
             </p>
-            <p>
-              <a href="tel:+441634238360" className="hover:text-white">
-                +44 1634 238360
-              </a>
-            </p>
-          </address>
-        </div>
+            <div className="flex gap-4">
+              {[
+                { icon: <Twitter className="w-5 h-5" />, label: "Twitter" },
+                { icon: <Instagram className="w-5 h-5" />, label: "Instagram" },
+                { icon: <Facebook className="w-5 h-5" />, label: "Facebook" },
+                { icon: <Linkedin className="w-5 h-5" />, label: "LinkedIn" }
+              ].map((social, i) => (
+                <Link 
+                  key={i} 
+                  href="#" 
+                  aria-label={social.label}
+                  className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-gray-500 hover:text-emerald-500 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all group"
+                >
+                  {social.icon}
+                </Link>
+              ))}
+            </div>
+          </div>
 
-        {/* Column links */}
-        <div className="font-light lg:ml-auto">
-          <h4 className="text-primary mb-5 font-normal">Welcome</h4>
-          <ul className="space-y-3 text-sm">
-            <li>
-              <Link
-                href="/free-tools"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Free Tools
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/scholarships"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Scholarships & Funding
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admission-timeline"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Admission Timeline
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/success-stories"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Success Stories
-              </Link>
-            </li>
-          </ul>
-        </div>
+          {/* Navigation Columns */}
+          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-4 lg:ml-auto">
+            {/* Welcome Column */}
+            <div className="space-y-6">
+              <h4 className="text-white font-black text-sm uppercase tracking-widest">Resources</h4>
+              <ul className="space-y-4">
+                {footerLinks.welcome.map(link => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-gray-500 hover:text-emerald-500 font-medium transition-colors text-sm flex items-center group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-0 group-hover:opacity-100 transition-all -ml-3 group-hover:ml-0" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div className="font-light lg:ml-auto">
-          <h4 className="text-primary mb-5 font-normal">Company</h4>
-          <ul className="space-y-3 text-xs">
-            <li>
-              <Link
-                href="/about-us"
-                className="cursor-pointer transition hover:text-white"
-              >
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact-us"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/faqs"
-                className="cursor-pointer transition hover:text-white"
-              >
-                FAQs
-              </Link>
-            </li>
-          </ul>
-        </div>
+            {/* Company Column */}
+            <div className="space-y-6">
+              <h4 className="text-white font-black text-sm uppercase tracking-widest">Company</h4>
+              <ul className="space-y-4">
+                {footerLinks.company.map(link => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-gray-500 hover:text-emerald-500 font-medium transition-colors text-sm flex items-center group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-0 group-hover:opacity-100 transition-all -ml-3 group-hover:ml-0" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div className="font-light lg:ml-auto">
-          <h4 className="text-primary mb-4 font-normal">Get Involved</h4>
-          <ul className="space-y-3 text-xs">
-            <li>
-              <Link
-                href="/become-a-mentor"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Become a Mentor
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/university-rep"
-                className="cursor-pointer transition hover:text-white"
-              >
-                University Representative
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/pricing"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Pricing
-              </Link>
-            </li>
-          </ul>
-        </div>
+            {/* Support Column */}
+            <div className="space-y-6">
+              <h4 className="text-white font-black text-sm uppercase tracking-widest">Opportunities</h4>
+              <ul className="space-y-4">
+                {footerLinks.getInvolved.map(link => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-gray-500 hover:text-emerald-500 font-medium transition-colors text-sm flex items-center group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-0 group-hover:opacity-100 transition-all -ml-3 group-hover:ml-0" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div className="font-light lg:ml-auto">
-          <h4 className="text-primary mb-4 font-normal">Legal</h4>
-          <ul className="space-y-3 text-xs">
-            <li>
-              <Link
-                href="/terms"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Terms of Service
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/privacy"
-                className="cursor-pointer transition hover:text-white"
-              >
-                Privacy Policy
-              </Link>
-            </li>
-          </ul>
+            {/* Contact Column */}
+            <div className="space-y-6">
+              <h4 className="text-white font-black text-sm uppercase tracking-widest">Contact</h4>
+              <ul className="space-y-5">
+                <li className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+                  <span className="text-sm text-gray-500 font-medium leading-relaxed">
+                    3, Birling Avenue, Rainham,<br />Gillingham, ME8 7HB
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-emerald-500 shrink-0" />
+                  <a href="mailto:contact@dentispark.com" className="text-sm text-gray-500 hover:text-emerald-500 font-medium transition-colors">
+                    contact@dentispark.com
+                  </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-emerald-500 shrink-0" />
+                  <a href="tel:+441634238360" className="text-sm text-gray-500 hover:text-emerald-500 font-medium transition-colors">
+                    +44 1634 238360
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </Container>
+
+      {/* Bottom Legal Bar */}
+      <div className="border-t border-white/[0.03] py-10 bg-black/50">
+        <Container className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-xs font-bold text-gray-600 uppercase tracking-[0.2em]">
+            © {currentYear} DentiSpark Technology. All rights reserved.
+          </p>
+          <div className="flex items-center gap-8">
+            {footerLinks.legal.map(link => (
+              <Link 
+                key={link.href} 
+                href={link.href} 
+                className="text-xs font-black text-gray-600 hover:text-emerald-500 uppercase tracking-widest transition-colors flex items-center gap-1.5"
+              >
+                {link.label}
+                <ExternalLink className="w-3 h-3" />
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </div>
+
+      {/* Particle Effect Overlay (Subtle) */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-20">
+         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/20 rounded-full blur-[120px]" />
+         <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px]" />
+      </div>
     </footer>
   );
 }
