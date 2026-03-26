@@ -71,6 +71,9 @@ export default function OverviewPage() {
                 userName={studentData?.fullName} 
                 userYear={studentData?.yearOfStudy} 
             />
+            
+            <AdmissionRoadmap />
+
             <AIToolsGrid />
 
             {/* Premium Analytics Layer */}
@@ -79,7 +82,7 @@ export default function OverviewPage() {
             <div className="grid grid-cols-1 gap-10 xl:grid-cols-3">
                 <div className="xl:col-span-2 space-y-10">
                     <DeadlineCountdown />
-                    <ProgressPipeline />
+                    {/* <ProgressPipeline /> - Replaced by AdmissionRoadmap */}
                     <PersonalizedMentors 
                         mentors={mentors} 
                         isLoading={isDataLoading}
@@ -88,7 +91,7 @@ export default function OverviewPage() {
 
                 <div className="xl:col-span-1 space-y-10">
                     <PopularResources />
-                    <MilestoneList />
+                    {/* <MilestoneList /> - Redundant with Roadmap tasks */}
                 </div>
             </div>
         </div>
