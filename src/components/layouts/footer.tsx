@@ -43,44 +43,13 @@ export function Footer() {
       {/* Top Border Glow */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
       
-      {/* Pre-Footer CTA Section */}
-      <div className="relative pt-20 pb-16 border-b border-white/[0.03]">
-        <Container>
-          <div className="bg-emerald-600 rounded-[3rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden group shadow-2xl shadow-emerald-600/20">
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-[100px]" />
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-slate-900 rounded-full blur-[100px]" />
-            </div>
-            
-            <div className="relative z-10 space-y-4 text-center md:text-left">
-              <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight">
-                Ready to start your <br />
-                <span className="text-slate-900">dream career?</span>
-              </h2>
-              <p className="text-emerald-50 text-lg font-medium max-w-md">
-                Join over 10,000 students and start preparing for your dental or medical school offer today.
-              </p>
-            </div>
-            
-            <div className="relative z-10 flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-black text-xl border-none shadow-xl transition-all hover:scale-105" asChild>
-                <Link href="/sign-up">Start for Free</Link>
-              </Button>
-              <Button variant="outline" size="lg" className="h-16 px-10 rounded-2xl border-white/30 text-white hover:bg-white/10 font-black text-xl transition-all" asChild>
-                <Link href="/mentors">Meet Mentors</Link>
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </div>
-
       {/* Main Footer Content */}
       <Container className="pt-24 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-8">
           {/* Brand Info */}
           <div className="lg:col-span-4 space-y-8">
             <Link href="/" className="inline-block transition-opacity hover:opacity-80">
-              <WhiteLogo className="h-10 w-auto" />
+              <WhiteLogo className="h-14 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]" />
             </Link>
             <p className="text-gray-500 font-medium leading-relaxed max-w-sm">
               Empowering the next generation of dental and medical professionals through world-class mentorship and innovative test prep tools. 
