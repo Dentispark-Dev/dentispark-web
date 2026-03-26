@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     >
       <div className="min-h-screen bg-white">
         {/* Header */}
-        <header className="border-grey-300 sticky top-0 z-50 hidden border-b bg-white/80 backdrop-blur-md md:block">
+        <header className="border-grey-300 sticky top-0 z-50 border-b bg-white/80 backdrop-blur-md">
           <Container className="flex items-center justify-between py-4">
             {/* Logo */}
             <div>

@@ -60,18 +60,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen bg-white overflow-hidden">
       {/* --- Left Pane: Form --- */}
       <div className="w-full lg:w-[42%] flex flex-col p-6 lg:p-12 relative z-10 bg-white">
-        {/* Header Navigation */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/">
-            <Logo className="h-8 md:h-10 text-emerald-900" />
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-500">
-            <Link href="/about-us" className="hover:text-emerald-600 transition-colors">About</Link>
-            <Link href="/become-a-mentor" className="hover:text-emerald-600 transition-colors">Become a Mentor</Link>
-            <Link href="/faq" className="hover:text-emerald-600 transition-colors">FAQ</Link>
-          </div>
-        </div>
-
+        {/* Form Content */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

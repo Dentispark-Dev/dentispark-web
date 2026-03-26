@@ -14,22 +14,7 @@ export default function SignUpPage() {
         <div className="absolute bottom-[10%] right-[5%] w-[400px] h-[400px] bg-teal-500/5 blur-[100px] rounded-full" />
       </div>
 
-      {/* Mini Header for Signup Page */}
-      <div className="w-full max-w-7xl flex items-center justify-between mb-8 px-4">
-        <Link href="/" className="md:hidden">
-          <Logo className="h-10 w-auto" />
-        </Link>
-        <div className="flex items-center gap-6">
-          <Link href="/login" className="text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors uppercase tracking-widest">
-            Login
-          </Link>
-          <div className="h-4 w-px bg-slate-200" />
-          <Link href="/become-a-mentor" className="hidden md:block text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors uppercase tracking-widest">
-            Become a Mentor
-          </Link>
-        </div>
-      </div>
-
+      {/* Sign-up Flow */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
