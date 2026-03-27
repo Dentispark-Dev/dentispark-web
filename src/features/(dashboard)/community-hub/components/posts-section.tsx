@@ -26,7 +26,9 @@ export function PostsSection({ posts }: PostsSectionProps) {
         body: JSON.stringify({ field: activeField }),
       });
       const data = await response.json();
-      setNewPost(data.suggestedQuestion);
+      if (data.suggestedQuestion) {
+        setNewPost(data.suggestedQuestion);
+      }
     } catch (error) {
       console.error(error);
     } finally {
