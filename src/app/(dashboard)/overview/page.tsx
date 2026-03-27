@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { overviewApi, type StudentProfile, type PersonalizedMentor } from "@/src/features/(dashboard)/overview/services/overview.api";
 import { toast } from "sonner";
+import { Star } from "lucide-react";
 
 export default function OverviewPage() {
     const { isMentor, isStudent, isAdmin, isLoading: authLoading } = useAuth();
