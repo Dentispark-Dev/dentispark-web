@@ -44,9 +44,9 @@ Provide a representative 7-day sample weekly schedule and recommended materials 
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Study Planner Error:", error);
-    return new Response(JSON.stringify({ error: "Failed to generate study plan." }), {
+    return new Response(JSON.stringify({ error: "Failed to generate study plan. Reason: " + (error.message || String(error)) }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
