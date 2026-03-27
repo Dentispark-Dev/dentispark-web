@@ -177,7 +177,7 @@ export default function PopularResources({
       </div>
 
       {/* Mobile & Desktop: Carousel */}
-      <div className="block">
+      <div className="block overflow-hidden rounded-2xl">
         <Carousel
           opts={{
             align: "start",
@@ -191,43 +191,43 @@ export default function PopularResources({
             {mockResources.map((resource, index) => (
               <CarouselItem
                 key={resource.id}
-                className="basis-[85%] pl-4 sm:basis-[70%] md:basis-1/2 lg:basis-[45%] [@media(min-width:1800px)]:basis-1/4 [@media(min-width:2300px)]:basis-1/5 [@media(min-width:2800px)]:basis-1/6"
+                className="basis-full pl-4 sm:basis-[70%] md:basis-1/2 lg:basis-full xl:basis-full"
               >
                 <motion.div
-                  className="flex h-full flex-col"
+                  className="flex h-full flex-col group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <div className="relative">
+                  <div className="relative overflow-hidden rounded-2xl shadow-sm border border-slate-100">
                     <Image
                       src={resource.image}
                       alt={resource.title}
-                      className="h-[200px] w-full rounded-xl object-cover md:h-[250px]"
+                      className="h-[180px] w-full object-cover group-hover:scale-105 transition-transform duration-700"
                       width={1000}
                       height={1000}
                       priority
                       quality={90}
                     />
+                    <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[9px] font-black uppercase tracking-widest text-slate-800">
+                      {resource.category}
+                    </div>
                   </div>
-                  <div className="flex flex-1 flex-col pt-4">
-                    <p className="text-black-500 font-sora mb-2 text-xs">
+                  <div className="flex flex-1 flex-col pt-4 space-y-2">
+                    <p className="text-slate-400 font-black text-[9px] uppercase tracking-widest">
                       {resource.date}
                     </p>
-                    <h3 className="text-black-800 mb-2 line-clamp-2 text-sm font-semibold md:text-base">
+                    <h3 className="text-slate-900 line-clamp-2 text-sm font-black leading-tight group-hover:text-emerald-600 transition-colors">
                       {resource.title}
                     </h3>
-                    <p className="text-black-600 font-sora line-clamp-3 flex-1 text-xs md:text-sm">
-                      {resource.description}
-                    </p>
                   </div>
                 </motion.div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="hidden md:block">
-            <CarouselPrevious className="border-greys-300 hover:bg-greys-50 absolute top-1/2 left-0 size-10 -translate-y-1/2 border bg-white shadow-lg" />
-            <CarouselNext className="border-greys-300 hover:bg-greys-50 absolute top-1/2 -right-0 size-10 -translate-y-1/2 border bg-white shadow-lg" />
+          <div className="hidden lg:flex justify-end gap-2 mt-4">
+            <CarouselPrevious className="static translate-y-0 rounded-xl border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 shadow-sm" />
+            <CarouselNext className="static translate-y-0 rounded-xl border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 shadow-sm" />
           </div>
         </Carousel>
       </div>

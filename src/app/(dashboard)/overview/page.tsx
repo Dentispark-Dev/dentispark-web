@@ -73,22 +73,32 @@ export default function OverviewPage() {
             
             <AdmissionRoadmap />
 
-            {/* The 11-Step Master Roadmap */}
+            {/* Cinematic Mission Control */}
             <MissionControl />
 
-            <div className="grid grid-cols-1 gap-12 xl:grid-cols-3">
-                <div className="xl:col-span-2 space-y-12">
+            <div className="grid grid-cols-1 gap-12 xl:grid-cols-12">
+                {/* Main Content Area (8/12) */}
+                <div className="xl:col-span-8 space-y-16">
                     <AIToolsGrid />
+                    <PopularResources />
+                </div>
+
+                {/* Intelligent Intelligence Sidebar (4/12) */}
+                <div className="xl:col-span-4 space-y-12">
+                    <DeadlineCountdown />
                     <PersonalizedMentors 
                         mentors={mentors} 
                         isLoading={isDataLoading}
                     />
-                </div>
-
-                <div className="xl:col-span-1 space-y-12">
-                    <DeadlineCountdown />
-                    <PopularResources />
-                    <PerformanceGrid />
+                    <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm">
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Application Performance</h3>
+                            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
+                                <Star className="w-4 h-4 fill-emerald-600" />
+                            </div>
+                        </div>
+                        <PerformanceGrid />
+                    </div>
                 </div>
             </div>
         </div>
