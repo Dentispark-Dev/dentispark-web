@@ -1,5 +1,6 @@
-import { Comment } from "../types";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { Zap } from "lucide-react";
 
 interface CommentItemProps {
   comment: Comment;
@@ -7,11 +8,14 @@ interface CommentItemProps {
 
 export function CommentItem({ comment }: CommentItemProps) {
   return (
-    <div className="flex space-x-3">
-      <div className="relative flex-shrink-0">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-800">
-          <span className="text-sm font-medium text-white">
-            {comment.avatar ? (
+    <motion.div 
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="flex gap-4 group/comment"
+    >
+      <div className="flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-100 overflow-hidden shadow-sm">
+          {comment.avatar ? (
               <Image
                 src={comment.avatar}
                 alt={comment.author}
@@ -45,17 +49,14 @@ export function CommentItem({ comment }: CommentItemProps) {
             <p className="font-sora text-xs text-gray-500">{comment.time}</p>
           </div>
           {comment.content && (
-            <p className="font-sora bg-greys-100 rounded-[24px] p-3 text-sm leading-relaxed text-[#585858]">
-              {comment.content}
-            </p>
-          )}
-          {comment.id === "5" && (
-            <div className="mt-3 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-4">
-              <div className="h-20 w-32 rounded-lg bg-black"></div>
+            <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm group-hover/comment:border-emerald-100 transition-all">
+              <p className="font-sora text-sm leading-relaxed text-gray-600 font-medium">
+                {comment.content}
+              </p>
             </div>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

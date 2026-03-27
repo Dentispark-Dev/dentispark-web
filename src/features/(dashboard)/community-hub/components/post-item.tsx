@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Heart, MessageCircle, Share2, MoreHorizontal, Zap } from "lucide-react";
 import { Post } from "../types";
 import { CommentItem } from "./comment-item";
-import Image from "next/image";
+import { Input } from "@/src/components/ui/input";
 
 interface PostItemProps {
   post: Post;
@@ -14,132 +15,151 @@ interface PostItemProps {
 export function PostItem({ post }: PostItemProps) {
   const [showAllComments, setShowAllComments] = useState(false);
   const [newComment, setNewComment] = useState("");
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleSubmitComment = () => {
     if (newComment.trim()) {
-      // Handle comment submission logic here
       setNewComment("");
-
       return {};
     }
   };
 
   const displayedComments = showAllComments
     ? post.comments
-    : post.comments.slice(0, 2); // Show first 2 comments by default
+    : post.comments.slice(0, 2);
 
   return (
-    <div className="space-y-6">
-      {/* Main Post */}
-      <div className="flex space-x-3">
-        <div className="relative flex-shrink-0">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-800">
-            {post.avatar ? (
-              <Image
-                src={post.avatar}
-                alt={post.author}
-                width={1008}
-                height={1008}
-                className="h-[48px] w-[48px] rounded-full object-cover"
-              />
-            ) : (
-              <span className="text-sm font-medium text-white">
-                {post.author
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </span>
-            )}
-          </div>
-          {post.badge && (
-            <div className="absolute -right-1 -bottom-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-green-600">
-              <span className="text-xs font-bold text-white">{post.badge}</span>
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-all group"
+    >
+      <div className="p-6 space-y-4">
+        {/* Post Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-12 h-12 rounded-2xl bg-gray-900 overflow-hidden flex items-center justify-center border-2 border-white shadow-sm transition-transform group-hover:scale-105">
+                {post.avatar ? (
+                  <Image
+                    src={post.avatar}
+                    alt={post.author}
+                    width={100}
+                    height={100}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <span className="text-sm font-bold text-white font-sora">
+                    {post.author.split(" ").map((n) => n[0]).join("")}
+                  </span>
+                )}
+              </div>
+              {post.isMentor && (
+                <div className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-lg p-0.5 border-2 border-white shadow-sm">
+                  <Zap className="w-2.5 h-2.5 text-white fill-white" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="mb-1 flex items-center space-x-2">
-            <p className="font-sora text-base font-semibold text-[#242424]">
-              {post.author}
-            </p>
-            {post.isMentor && (
-              <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
-                Mentor
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-sora font-bold text-gray-900 decoration-emerald-500/30 hover:underline cursor-pointer">
+                  {post.author}
+                </span>
+                {post.isMentor && (
+                  <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider border border-emerald-100">
+                    Expert
+                  </span>
+                )}
+              </div>
+              <span className="text-[11px] font-bold text-gray-400 font-sora uppercase tracking-tight">
+                {post.time} • Admissions Strategy
               </span>
-            )}
-            <p className="font-sora text-xs text-gray-500">{post.time}</p>
+            </div>
           </div>
-          <p className="font-sora bg-greys-100 rounded-[24px] p-3 text-sm leading-relaxed text-[#585858]">
+          <button className="text-gray-400 hover:text-gray-900 p-2 hover:bg-gray-50 rounded-xl transition-all font-bold">
+            <MoreHorizontal className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Post Content */}
+        <div className="space-y-4">
+          <p className="text-gray-600 font-medium leading-relaxed font-sora text-[15px]">
             {post.content}
           </p>
+          
+          <div className="rounded-2xl overflow-hidden border border-gray-50 bg-gray-50/30">
+             {/* Dynamic media placeholder */}
+          </div>
         </div>
-      </div>
 
-      {/* Comments Section */}
-      <div className="ml-[60px] space-y-4">
-        {displayedComments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} />
-        ))}
-
-        {/* Show more comments button */}
-        {post.comments.length > 2 && !showAllComments && (
-          <div className="text-center">
-            <button
-              onClick={() => setShowAllComments(true)}
-              className="font-sora mx-auto my-8 rounded-lg border px-16 py-2 text-sm text-gray-500 hover:text-gray-700"
+        {/* Interaction Bar */}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={() => setIsLiked(!isLiked)}
+              className={`flex items-center gap-2 text-sm font-bold font-sora transition-all active:scale-90 ${isLiked ? 'text-rose-500' : 'text-gray-400 hover:text-gray-600'}`}
             >
-              See all {post.totalComments} comments
+              <Heart className={`w-5 h-5 ${isLiked ? 'fill-rose-500' : ''}`} />
+              <span>{isLiked ? 25 : 24}</span>
+            </button>
+            <button className="flex items-center gap-2 text-sm font-bold font-sora text-gray-400 hover:text-gray-600 transition-all active:scale-90">
+              <MessageCircle className="w-5 h-5" />
+              <span>{post.totalComments}</span>
+            </button>
+            <button className="flex items-center gap-2 text-sm font-bold font-sora text-gray-400 hover:text-gray-600 transition-all active:scale-90">
+              <Share2 className="w-5 h-5" />
             </button>
           </div>
-        )}
-
-        {/* Reply to post input */}
-        <div className="flex space-x-3">
-          <div className="flex-shrink-0">
-            <div className="h-8 w-8 rounded-full bg-gray-800">
-              <Image
-                src={post.avatar}
-                alt={post.author}
-                width={1008}
-                height={1008}
-                className="h-[32px] w-[32px] rounded-full object-cover"
-              />
-              <span className="text-sm font-medium text-white">
-                {post.author
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </span>
-            </div>
-          </div>
-          <div className="flex w-full items-center gap-4">
-            <Input
-              placeholder="Write your comment..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              className="flex-1 rounded-full border-gray-200 bg-white pr-12 text-sm focus:bg-white"
-            />
-            <Button
-              variant={"outline"}
-              onClick={handleSubmitComment}
-              className="size-10 rounded-full hover:bg-white"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.2199 19.6293C11.0399 19.6293 9.36988 18.7993 8.04988 14.8293L7.32988 12.6693L5.16988 11.9493C1.20988 10.6293 0.379883 8.95934 0.379883 7.77934C0.379883 6.60934 1.20988 4.92934 5.16988 3.59934L13.6599 0.769339C15.7799 0.0593387 17.5499 0.269339 18.6399 1.34934C19.7299 2.42934 19.9399 4.20934 19.2299 6.32934L16.3999 14.8193C15.0699 18.7993 13.3999 19.6293 12.2199 19.6293ZM5.63988 5.02934C2.85988 5.95934 1.86988 7.05934 1.86988 7.77934C1.86988 8.49934 2.85988 9.59934 5.63988 10.5193L8.15988 11.3593C8.37988 11.4293 8.55988 11.6093 8.62988 11.8293L9.46988 14.3493C10.3899 17.1293 11.4999 18.1193 12.2199 18.1193C12.9399 18.1193 14.0399 17.1293 14.9699 14.3493L17.7999 5.85934C18.3099 4.31934 18.2199 3.05934 17.5699 2.40934C16.9199 1.75934 15.6599 1.67934 14.1299 2.18934L5.63988 5.02934Z"
-                  fill="#12AC75"
-                />
-              </svg>
-            </Button>
+          
+          <div className="flex -space-x-2">
+            {[1,2,3].map(i => (
+              <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full bg-emerald-100 opacity-50" />
+              </div>
+            ))}
+            <div className="text-[10px] pl-4 font-bold text-gray-400 self-center">+12 others active</div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Internal Comments Feed */}
+      {(post.comments.length > 0) && (
+        <div className="bg-gray-50/50 p-6 space-y-6 border-t border-gray-50">
+          <div className="space-y-4">
+            {displayedComments.map((comment) => (
+              <CommentItem key={comment.id} comment={comment} />
+            ))}
+          </div>
+
+          {post.comments.length > 2 && !showAllComments && (
+            <button
+              onClick={() => setShowAllComments(true)}
+              className="w-full py-3 rounded-2xl bg-white border border-gray-100 text-xs font-bold text-gray-500 hover:text-emerald-600 hover:border-emerald-100 transition-all shadow-sm"
+            >
+              View all {post.totalComments} insights
+            </button>
+          )}
+
+          {/* Quick Reply Input */}
+          <div className="flex items-center gap-3 pt-2">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-white">JD</div>
+            <div className="flex-1 relative">
+              <Input
+                placeholder="Add to the conversation..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                className="w-full rounded-xl border-gray-100 bg-white px-4 py-3 text-sm placeholder:text-gray-400 focus:ring-emerald-500/10 shadow-sm min-h-[44px]"
+              />
+              <button 
+                onClick={handleSubmitComment}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600 hover:text-emerald-700 font-bold text-xs"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </motion.div>
   );
 }
