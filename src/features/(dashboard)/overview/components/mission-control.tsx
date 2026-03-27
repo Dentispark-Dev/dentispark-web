@@ -22,7 +22,8 @@ import {
   Star,
   Target,
   Layout,
-  Compass
+  Compass,
+  ArrowUpRight
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
@@ -189,9 +190,6 @@ const MISSIONS: Mission[] = [
 ];
 
 export function MissionControl() {
-  const [selectedMissionId, setSelectedMissionId] = useState(1);
-  const selectedMission = MISSIONS.find(m => m.id === selectedMissionId) || MISSIONS[0];
-
   const currentMonth = new Date().getMonth();
   const activeMissionId = useMemo(() => {
     if (currentMonth >= 0 && currentMonth <= 2) return 1;
@@ -202,171 +200,172 @@ export function MissionControl() {
     return 11;
   }, [currentMonth]);
 
+  const [selectedId, setSelectedId] = useState(activeMissionId);
+  const activeMission = MISSIONS.find(m => m.id === selectedId) || MISSIONS[0];
+
   return (
-    <section className="relative overflow-hidden rounded-[3.5rem] bg-slate-900 p-1 lg:p-2 border border-slate-800 shadow-2xl">
-      {/* Background Ambience */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] -z-10 rounded-full" />
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 blur-[100px] -z-10 rounded-full" />
+    <div className="space-y-12">
+      {/* Horizontal Mission Timeline */}
+      <div className="relative">
+        <div className="absolute top-1/2 left-0 right-0 h-px bg-slate-100 -translate-y-1/2 -z-10" />
+        <div className="flex items-center justify-between overflow-x-auto pb-4 custom-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 scroll-smooth">
+          {MISSIONS.map((mission, idx) => {
+            const isActive = mission.id === activeMissionId;
+            const isSelected = mission.id === selectedId;
+            const isCompleted = mission.id < activeMissionId;
 
-      <div className="bg-slate-900/40 backdrop-blur-3xl rounded-[3rem] p-8 lg:p-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          {/* Left: Mission Intelligence (Spotlight) */}
-          <div className="lg:col-span-8 flex flex-col h-full space-y-12">
-            <div className="flex flex-col space-y-4">
-               <div className="flex items-center gap-3">
-                  <span className="w-10 h-1 bg-emerald-500 rounded-full" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Elite Admission Command</span>
-               </div>
-               <h2 className="text-4xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-                 The <span className="text-emerald-500">Path</span> to UK Dentistry
-               </h2>
-               <p className="text-slate-400 font-bold max-w-xl text-lg">
-                 Your intelligent roadmap for the 2026/27 cycle, integrated with every DentiSpark tool.
-               </p>
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedMission.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative flex flex-col rounded-[3rem] bg-white/5 border border-white/10 p-10 lg:p-14 overflow-hidden"
+            return (
+              <motion.button
+                key={mission.id}
+                onClick={() => setSelectedId(mission.id)}
+                className={cn(
+                  "flex flex-col items-center gap-3 shrink-0 px-6 py-2 transition-all group",
+                  isSelected ? "scale-105" : "hover:scale-105"
+                )}
               >
-                {/* Visual Accent */}
-                <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
-                    {React.cloneElement(selectedMission.icon as React.ReactElement, { className: "w-32 h-32" })}
+                <div className={cn(
+                    "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 border shadow-sm",
+                    isCompleted ? "bg-emerald-600 border-emerald-600 text-white" : 
+                    isSelected ? "bg-white border-emerald-500 text-emerald-600" :
+                    isActive ? "bg-white border-blue-200 text-blue-500 animate-pulse" :
+                    "bg-white border-slate-100 text-slate-400 group-hover:border-slate-300"
+                )}>
+                    {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : mission.icon}
                 </div>
-
-                <div className="relative z-10 flex flex-col h-full space-y-8">
-                  <div className="flex items-center justify-between">
-                    <div className="px-5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                      MISSION STAGE {selectedMission.id}: {selectedMission.category}
-                    </div>
-                    {selectedMission.id === activeMissionId && (
-                      <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500 rounded-full text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-emerald-500/20">
-                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                        Current Priority
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-4xl lg:text-5xl font-black text-white">{selectedMission.title}</h3>
-                    <p className="text-slate-300 text-xl font-medium leading-relaxed max-w-2xl">{selectedMission.description}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="space-y-6">
-                      <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Actionable Intelligence</h4>
-                      <div className="space-y-4">
-                        {selectedMission.subtasks.map((task, i) => (
-                           <div key={i} className="flex items-center gap-4 group/item">
-                              <div className="w-6 h-6 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover/item:border-emerald-500 transition-colors">
-                                 <CheckCircle2 className="w-3 h-3 text-slate-500 group-hover/item:text-emerald-500 transition-colors" />
-                              </div>
-                              <span className="text-slate-200 font-bold">{task}</span>
-                           </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="p-8 rounded-[2rem] bg-emerald-500/5 border border-emerald-500/10 space-y-4">
-                        <div className="flex items-center gap-3">
-                           <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                           <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Expert Tip</span>
-                        </div>
-                        <p className="text-slate-300 font-medium italic leading-relaxed">"{selectedMission.tip}"</p>
-                    </div>
-                  </div>
-
-                  <div className="pt-8 flex flex-col sm:flex-row gap-4">
-                    <Button 
-                      asChild 
-                      className="h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20 hover:scale-[1.02]"
-                    >
-                      <Link href={selectedMission.actionHref} target={selectedMission.actionHref.startsWith('http') ? '_blank' : '_self'}>
-                        {selectedMission.actionLabel}
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </Link>
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      className="h-16 px-10 rounded-2xl border-white/10 bg-white/5 text-white hover:bg-white/10 font-black text-sm uppercase tracking-widest transition-all"
-                    >
-                      Cycle Overview
-                    </Button>
-                  </div>
+                <div className="text-center">
+                    <p className={cn(
+                        "text-[9px] font-black uppercase tracking-widest",
+                        isSelected ? "text-emerald-600" : "text-slate-400"
+                    )}>STAGE {mission.id}</p>
+                    <p className={cn(
+                        "text-[10px] font-black uppercase tracking-tighter w-24 truncate",
+                        isSelected ? "text-slate-900" : "text-slate-400"
+                    )}>{mission.category}</p>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Right: The Gutter Timeline */}
-          <div className="lg:col-span-4 flex flex-col space-y-8">
-            <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">The Mission Queue</h4>
-            
-            <div className="flex flex-col gap-3 max-h-[700px] overflow-y-auto pr-2 custom-scrollbar">
-              {MISSIONS.map((mission) => {
-                const isActive = mission.id === activeMissionId;
-                const isSelected = mission.id === selectedMissionId;
-                const isCompleted = mission.id < activeMissionId;
-
-                return (
-                  <button
-                    key={mission.id}
-                    onClick={() => setSelectedMissionId(mission.id)}
-                    className={cn(
-                      "group relative flex items-center gap-5 p-6 rounded-[2rem] border transition-all duration-300 text-left",
-                      isSelected 
-                        ? "bg-white/10 border-white/20 shadow-xl" 
-                        : "bg-transparent border-white/5 hover:border-white/10"
-                    )}
-                  >
-                    <div className={cn(
-                        "w-12 h-12 rounded-2xl shrink-0 flex items-center justify-center transition-all duration-500",
-                        isCompleted ? "bg-emerald-500 text-white" : 
-                        isActive ? "bg-white text-slate-900 scale-110 shadow-lg" : 
-                        "bg-white/5 text-slate-500 border border-white/5"
-                    )}>
-                      {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : mission.icon}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className={cn(
-                            "text-[8px] font-black uppercase tracking-widest",
-                            isActive ? "text-emerald-400" : "text-slate-500"
-                        )}>
-                          STEP {mission.id}
-                        </span>
-                        <span className="text-[9px] font-bold text-slate-600 uppercase tracking-tighter">
-                          {mission.timeframe}
-                        </span>
-                      </div>
-                      <h5 className={cn(
-                        "text-sm font-black truncate",
-                        isSelected ? "text-white" : "text-slate-400 group-hover:text-slate-300"
-                      )}>
-                        {mission.title}
-                      </h5>
-                    </div>
-
-                    {isSelected && (
-                        <motion.div 
-                          layoutId="activeGlow"
-                          className="absolute inset-0 rounded-[2rem] border border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.2)] pointer-events-none" 
-                        />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+              </motion.button>
+            );
+          })}
         </div>
       </div>
-    </section>
+
+      {/* Main Integrated Action Center */}
+      <AnimatePresence mode="wait">
+        <motion.div
+           key={activeMission.id}
+           initial={{ opacity: 0, y: 30 }}
+           animate={{ opacity: 1, y: 0 }}
+           exit={{ opacity: 0, y: -30 }}
+           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+           className="relative overflow-hidden rounded-[3rem] bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 p-10 lg:p-16"
+        >
+          {/* Subtle Accent Gradients */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-50/50 blur-[100px] -z-10 rounded-full" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-50/30 blur-[80px] -z-10 rounded-full" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+            <div className="lg:col-span-12 flex flex-col space-y-12">
+              
+              {/* Header Info */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                 <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                        <div className={cn(
+                            "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border",
+                            activeMission.id === activeMissionId 
+                              ? "bg-emerald-50 border-emerald-100 text-emerald-600" 
+                              : "bg-slate-50 border-slate-100 text-slate-400"
+                        )}>
+                            {activeMission.id < activeMissionId ? "Mission Completed" : 
+                             activeMission.id === activeMissionId ? "Current Milestone" : "Upcoming Mission"}
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{activeMission.timeframe} Cycle</span>
+                    </div>
+                    <h2 className="text-4xl lg:text-7xl font-black text-slate-900 tracking-tight leading-none">
+                       {activeMission.title}
+                    </h2>
+                    <p className="text-slate-500 font-bold text-xl max-w-3xl leading-relaxed">
+                       {activeMission.description}
+                    </p>
+                 </div>
+
+                 <div className="flex items-center gap-4 bg-slate-50/50 p-4 rounded-[2rem] border border-slate-100">
+                    <div className="w-16 h-16 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
+                        <Sparkles className="w-8 h-8 text-emerald-500" />
+                    </div>
+                    <div className="pr-6">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Progress</p>
+                        <p className="text-2xl font-black text-slate-900 leading-none">{(selectedId / 11 * 100).toFixed(0)}%</p>
+                    </div>
+                 </div>
+              </div>
+
+              {/* Task Matrix */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                 <div className="space-y-8">
+                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Critical Tasks</h4>
+                    <div className="space-y-5">
+                       {activeMission.subtasks.map((task, i) => (
+                          <motion.div 
+                            key={i} 
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 + (i * 0.1) }}
+                            className="flex items-center gap-5 group cursor-pointer"
+                          >
+                             <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm group-hover:border-emerald-500 group-hover:bg-emerald-50 transition-all">
+                                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-500" />
+                             </div>
+                             <span className="text-lg font-black text-slate-700">{task}</span>
+                          </motion.div>
+                       ))}
+                    </div>
+                 </div>
+
+                 <div className="relative group">
+                    <div className="absolute inset-0 bg-emerald-600 rounded-[3rem] -rotate-1 group-hover:rotate-0 transition-transform duration-500 shadow-xl shadow-emerald-600/10" />
+                    <div className="relative bg-slate-900 rounded-[3rem] p-10 lg:p-12 text-white h-full flex flex-col justify-between space-y-8">
+                       <div className="space-y-4">
+                          <div className="flex items-center gap-3">
+                             <div className="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center">
+                                <Star className="w-4 h-4 text-white fill-white" />
+                             </div>
+                             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Expert Admissions Tip</span>
+                          </div>
+                          <p className="text-xl font-bold leading-relaxed italic">
+                             "{activeMission.tip}"
+                          </p>
+                       </div>
+
+                       <div className="flex items-center gap-3 pt-6 border-t border-white/5 uppercase text-[10px] font-black tracking-widest text-slate-500">
+                          <Globe className="w-4 h-4" /> UK Dental Cycle 2026/27
+                       </div>
+                    </div>
+                 </div>
+              </div>
+
+              {/* Action Triggers */}
+              <div className="pt-10 flex flex-col sm:flex-row items-center gap-6">
+                 <Button 
+                   asChild 
+                   className="h-20 px-12 rounded-[2rem] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg gap-3 transition-all shadow-2xl shadow-emerald-600/20 hover:scale-[1.02]"
+                 >
+                    <Link href={activeMission.actionHref} target={activeMission.actionHref.startsWith('http') ? '_blank' : '_self'}>
+                       {activeMission.actionLabel}
+                       <ArrowUpRight className="w-6 h-6" />
+                    </Link>
+                 </Button>
+                 <Link 
+                   href="/mentorship" 
+                   className="text-slate-400 hover:text-emerald-600 font-black text-sm uppercase tracking-widest transition-colors flex items-center gap-2"
+                 >
+                    Book Mentor Session <ChevronRight className="w-4 h-4" />
+                 </Link>
+              </div>
+
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }
