@@ -15,11 +15,11 @@ export async function POST(req: Request) {
         universityPredictions: z.array(z.object({
           universityId: z.string(),
           universityName: z.string(),
-          probability: z.number().min(0).max(100),
-          riskLevel: z.enum(["Low", "Moderate", "High", "Critical"]),
-          gapAnalysis: z.array(z.string()),
-          successSteps: z.array(z.string()),
-        })),
+          probability: z.number().min(0).max(100).describe("Integer value between 0 and 100, do not include % symbol"),
+          riskLevel: z.string().describe("Must exactly be one of: 'Low', 'Moderate', 'High', 'Critical'"),
+          gapAnalysis: z.array(z.string()).min(1).max(4),
+          successSteps: z.array(z.string()).min(1).max(4),
+        })).min(1).max(6),
         overallStrategy: z.string(),
       }),
       system: `You are the DentiSpark "Admission Alpha" Matchmaker. 
