@@ -1,4 +1,3 @@
-import { Card } from "@/src/components/ui/card";
 import { SuccessStory } from "../types";
 import Image from "next/image";
 import { Quote } from "lucide-react";
@@ -47,7 +46,5 @@ export function SuccessStoryCard({ story }: SuccessStoryCardProps) {
         </div>
       </div>
     </div>
-  );
-}
   );
 }
