@@ -14,38 +14,36 @@ const MOCK_MENTORS = [
 export function MentorSidebar() {
   return (
     <div className="w-full h-full flex flex-col bg-white border-r border-gray-100 font-sora">
-      {/* Header with App Profile & Actions */}
-      <div className="bg-[#f0f2f5] px-4 py-3 flex items-center justify-between">
-        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden border border-gray-200">
-           <User className="w-6 h-6 text-gray-500" />
+      {/* Refined Sidebar Header */}
+      <div className="p-6 space-y-6 pb-2">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-black text-gray-900 tracking-tight">Messages</h2>
+          <div className="flex items-center gap-1">
+            <button className="p-2 hover:bg-gray-50 rounded-xl transition-colors text-gray-400 hover:text-gray-900">
+                <Plus className="w-5 h-5" />
+            </button>
+            <button className="p-2 hover:bg-gray-50 rounded-xl transition-colors text-gray-400 hover:text-gray-900">
+                <MoreHorizontal className="w-5 h-5" />
+            </button>
+          </div>
         </div>
-        <div className="flex items-center gap-1">
-          <button className="p-2 hover:bg-gray-200 rounded-full transition-colors text-[#54656f]">
-            <Plus className="w-5 h-5" />
-          </button>
-          <button className="p-2 hover:bg-gray-200 rounded-full transition-colors text-[#54656f]">
-            <MoreHorizontal className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
 
-      {/* Search & Filter Bar */}
-      <div className="p-2 space-y-2 bg-white">
         <div className="relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#54656f]" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
           <input 
             type="text" 
-            placeholder="Search or start new chat" 
-            className="w-full h-9 pl-12 pr-4 bg-[#f0f2f5] border-none rounded-lg text-sm focus:outline-none transition-all placeholder:text-[#54656f] text-gray-700"
+            placeholder="Search mentors or chats..." 
+            className="w-full h-11 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/10 focus:bg-white transition-all placeholder:text-gray-400 text-gray-700"
           />
         </div>
-        <div className="flex items-center gap-2 px-2 py-1 overflow-x-auto no-scrollbar">
-            {["All", "Unread", "Groups", "Mentors"].map((label, i) => (
+        
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+            {["All", "Unread", "Mentors"].map((label, i) => (
                 <button 
                   key={label}
                   className={cn(
-                    "px-3 py-1 rounded-full text-[12px] font-medium whitespace-nowrap transition-all",
-                    i === 0 ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    "px-4 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all",
+                    i === 0 ? "bg-emerald-600 text-white shadow-sm shadow-emerald-200" : "bg-gray-50 text-gray-400 hover:bg-gray-100"
                   )}
                 >
                     {label}
@@ -55,7 +53,7 @@ export function MentorSidebar() {
       </div>
 
       {/* Chat List */}
-      <div className="flex-1 overflow-y-auto bg-white pt-2">
+      <div className="flex-1 overflow-y-auto bg-white pt-4">
         {MOCK_MENTORS.map((mentor) => (
           <div 
             key={mentor.id}
