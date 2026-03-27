@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Search, MoreHorizontal, User, Plus, Filter, CheckCheck } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
@@ -61,7 +62,9 @@ export function MentorSidebar() {
             
             <div className="flex-1 min-w-0 border-b border-gray-50 pb-3 group-last:border-none">
               <div className="flex justify-between items-start mb-0.5">
-                <p className="text-base font-medium text-gray-900 truncate tracking-tight">{mentor.name}</p>
+                <Link href="/mentor/sarah-chen" className="hover:text-emerald-600 transition-colors">
+                  <p className="text-base font-medium text-gray-900 truncate tracking-tight hover:text-inherit">{mentor.name}</p>
+                </Link>
                 <span className={cn(
                     "text-[11px] font-medium mt-1",
                     mentor.unread > 0 ? "text-emerald-500" : "text-gray-400"
