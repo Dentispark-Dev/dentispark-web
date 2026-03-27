@@ -43,7 +43,8 @@ export default function AcceptanceOddsPage() {
       });
       
       if (!response.ok) {
-        throw new Error(response.statusText || "Matchmaking failed");
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.error || response.statusText || "Matchmaking failed");
       }
 
       const data = await response.json();

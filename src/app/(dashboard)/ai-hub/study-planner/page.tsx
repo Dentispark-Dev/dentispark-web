@@ -41,7 +41,8 @@ export default function StudyPlannerPage() {
       });
 
       if (!response.ok) {
-        throw new Error(response.statusText || "Plan generation failed");
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.error || response.statusText || "Plan generation failed");
       }
 
       const data = await response.json();
