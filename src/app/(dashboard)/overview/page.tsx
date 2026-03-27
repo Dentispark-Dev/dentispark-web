@@ -77,25 +77,29 @@ export default function OverviewPage() {
             {/* Cinematic Mission Control */}
             <MissionControl />
 
-            <div className="grid grid-cols-1 gap-12 xl:grid-cols-12">
-                {/* Main Content Area (8/12) */}
-                <div className="xl:col-span-8 space-y-16">
-                    <AIToolsGrid />
-                    <PopularResources />
-                </div>
-
-                {/* Intelligent Intelligence Sidebar (4/12) */}
-                <div className="xl:col-span-4 space-y-12">
-                    <DeadlineCountdown />
+            <div className="space-y-24">
+                <AIToolsGrid />
+                <PopularResources />
+                
+                {/* Bottom Intelligence Section - Full Width Stacking */}
+                <div className="space-y-16 pt-12 border-t border-slate-100">
+                    <div className="max-w-4xl mx-auto">
+                        <DeadlineCountdown />
+                    </div>
+                    
                     <PersonalizedMentors 
                         mentors={mentors} 
                         isLoading={isDataLoading}
                     />
-                    <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm">
-                        <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Application Performance</h3>
-                            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
-                                <Star className="w-4 h-4 fill-emerald-600" />
+
+                    <div className="bg-white rounded-[3rem] border border-slate-100 p-10 lg:p-16 shadow-2xl shadow-slate-200/50">
+                        <div className="flex items-center justify-between mb-12">
+                            <div className="space-y-1">
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600">Performance Metrics</h3>
+                                <h4 className="text-3xl font-black text-slate-900 tracking-tight">Application Strength</h4>
+                            </div>
+                            <div className="p-3 rounded-2xl bg-emerald-50 text-emerald-600 shadow-sm">
+                                <Star className="w-6 h-6 fill-emerald-600" />
                             </div>
                         </div>
                         <PerformanceGrid />
