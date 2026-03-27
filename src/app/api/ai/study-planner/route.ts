@@ -1,5 +1,5 @@
 import { groq } from "@ai-sdk/groq";
-import { generateObject } from "ai";
+import { generateText } from "ai";
 import { z } from "zod";
 
 export const maxDuration = 60;
@@ -8,23 +8,8 @@ export async function POST(req: Request) {
   try {
     const { examDate, weakAreas, targetScore, field } = await req.json();
 
-    const result = await generateObject({
-      model: groq("llama-3.1-8b-instant"),
-      schema: z.object({
-        phases: z.array(z.object({
-          name: z.string(),
-          duration: z.string(),
-          focus: z.string(),
-          milestone: z.string()
-        })).min(1).max(5),
-        weeklySchedule: z.array(z.object({
-          day: z.string().describe("e.g. Monday, Tuesday..."),
-          activity: z.string(),
-          duration: z.string()
-        })).min(1).max(7),
-        materials: z.array(z.string()).min(1).max(6),
-        tips: z.array(z.string()).min(1).max(5),
-      }),
+    const result = await generateText({
+      model: groq("llama-3.3-70b-versatile"),
       system: `You are an expert ${field} entrance exam strategist. 
 The user needs a 90-day study plan for their upcoming exam on ${examDate}. 
 Their weak areas include: ${weakAreas}. 
@@ -35,12 +20,23 @@ Create a structured study plan divided into exactly 3 phases:
 2. Intensity (Days 31-60)
 3. Precision & Mocks (Days 61-90)
 
-Provide a representative 7-day sample weekly schedule and recommended materials specifically for ${field}. Limit to 3-5 tips and 3-5 materials.`,
+Provide a representative 7-day sample weekly schedule and recommended materials specifically for ${field}. Limit to 3-5 tips and 3-5 materials.
+
+Return ONLY a valid raw JSON object matching this exact structure (no markdown blocks, no text before or after):
+{
+  "phases": [ { "name": "string", "duration": "string", "focus": "string", "milestone": "string" } ],
+  "weeklySchedule": [ { "day": "string", "activity": "string", "duration": "string" } ],
+  "materials": [ "string" ],
+  "tips": [ "string" ]
+}`,
       prompt: `Generate a 90-day strategic study plan for the ${field} exam.`,
-      temperature: 0.6,
+      temperature: 0.2,
     });
 
-    return new Response(JSON.stringify(result.object), {
+    const cleanJson = result.text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const parsedData = JSON.parse(cleanJson);
+
+    return new Response(JSON.stringify(parsedData), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
