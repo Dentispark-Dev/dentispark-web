@@ -73,26 +73,26 @@ export default function MentorMatchingPage() {
       title: "University Targets",
       description: "Select which dental schools you are aiming for to find mentors from those institutions.",
       component: (
-        <div className="space-y-4 mt-8">
+        <div className="space-y-3 mt-4">
           {universities.map((uni, i) => (
             <button
               key={uni}
               onClick={() => setSelectedUnis(prev => prev.includes(uni) ? prev.filter(u => u !== uni) : [...prev, uni])}
               className={cn(
-                "w-full group/btn p-6 rounded-2xl border transition-all flex items-center gap-6",
+                "w-full group/btn p-3 px-5 rounded-[1.25rem] border transition-all flex items-center gap-4",
                 selectedUnis.includes(uni) 
                   ? "bg-emerald-50 border-emerald-200 shadow-sm" 
                   : "bg-white border-gray-200 hover:border-emerald-200 hover:bg-gray-50"
               )}
             >
               <div className={cn(
-                "w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm transition-all",
+                "w-8 h-8 shrink-0 rounded-[0.5rem] flex items-center justify-center font-bold text-xs transition-all",
                 selectedUnis.includes(uni) ? "bg-emerald-600 text-white shadow-sm" : "bg-gray-100 text-gray-400"
               )}>
-                {selectedUnis.includes(uni) ? <Check className="w-5 h-5" /> : String.fromCharCode(65 + i)}
+                {selectedUnis.includes(uni) ? <Check className="w-4 h-4" /> : String.fromCharCode(65 + i)}
               </div>
               <span className={cn(
-                  "text-lg font-sora font-bold transition-colors",
+                  "text-base font-sora font-semibold transition-colors text-left",
                   selectedUnis.includes(uni) ? "text-emerald-900" : "text-gray-600 group-hover/btn:text-gray-900"
               )}>{uni}</span>
             </button>
@@ -104,26 +104,26 @@ export default function MentorMatchingPage() {
       title: "Focus Areas",
       description: "What specific parts of the application journey do you need the most help with?",
       component: (
-        <div className="space-y-4 mt-8">
+        <div className="space-y-3 mt-4">
           {focusAreas.map((focus, i) => (
             <button
               key={focus}
               onClick={() => setSelectedFocus(prev => prev.includes(focus) ? prev.filter(f => f !== focus) : [...prev, focus])}
               className={cn(
-                "w-full group/btn p-6 rounded-2xl border transition-all flex items-center gap-6",
+                "w-full group/btn p-3 px-5 rounded-[1.25rem] border transition-all flex items-center gap-4",
                 selectedFocus.includes(focus)
                   ? "bg-emerald-50 border-emerald-200 shadow-sm"
                   : "bg-white border-gray-200 hover:border-emerald-200 hover:bg-gray-50"
               )}
             >
                <div className={cn(
-                "w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm transition-all",
+                "w-8 h-8 shrink-0 rounded-[0.5rem] flex items-center justify-center font-bold text-xs transition-all",
                 selectedFocus.includes(focus) ? "bg-emerald-600 text-white shadow-sm" : "bg-gray-100 text-gray-400"
               )}>
-                {selectedFocus.includes(focus) ? <Check className="w-5 h-5" /> : String.fromCharCode(65 + i)}
+                {selectedFocus.includes(focus) ? <Check className="w-4 h-4" /> : String.fromCharCode(65 + i)}
               </div>
               <span className={cn(
-                  "text-lg font-sora font-bold transition-colors",
+                  "text-base font-sora font-semibold transition-colors text-left",
                   selectedFocus.includes(focus) ? "text-emerald-900" : "text-gray-600 group-hover/btn:text-gray-900"
               )}>{focus}</span>
             </button>
@@ -171,8 +171,8 @@ export default function MentorMatchingPage() {
                 <LelandSplitPane
                     step={currentStep}
                     leftContent={
-                        <div className="space-y-8">
-                            <Link href="/ai-hub" className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors group mb-8">
+                        <div className="space-y-6">
+                            <Link href="/ai-hub" className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors group mb-6">
                                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                                 <span className="text-xs font-semibold uppercase tracking-wider">Exit to Hub</span>
                             </Link>

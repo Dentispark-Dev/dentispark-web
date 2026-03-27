@@ -45,7 +45,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
   }, [currentStep]);
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-6">
       {/* Step Indicator */}
       <div className="flex items-center gap-4">
         <span className="text-emerald-600 font-sora font-bold text-xl flex items-center gap-2">
@@ -72,32 +72,32 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
            animate={{ opacity: 1, y: 0 }}
            exit={{ opacity: 0, y: -20 }}
            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-           className="space-y-8"
+           className="space-y-6"
         >
-          <div className="space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-sora font-bold text-gray-900 tracking-tight leading-tight">
+          <div className="space-y-2">
+            <h2 className="text-3xl lg:text-4xl font-sora font-bold text-gray-900 tracking-tight leading-tight">
               {steps[currentStep].title}
             </h2>
-            <p className="text-lg text-gray-600 leading-relaxed font-medium max-w-lg">
+            <p className="text-base text-gray-600 leading-relaxed font-medium max-w-lg">
               {steps[currentStep].description}
             </p>
           </div>
 
-          <div className="py-2">
+          <div className="pt-0">
             {steps[currentStep].component}
           </div>
         </motion.div>
       </AnimatePresence>
 
       {/* Navigation & Shortcuts */}
-      <div className="flex flex-col gap-6 pt-8 border-t border-gray-100">
+      <div className="flex flex-col gap-4 pt-4 border-t border-gray-100">
         <div className="flex items-center gap-4">
             <Button 
                 onClick={handleNext}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 h-14 rounded-xl font-sora font-semibold text-lg shadow-sm transform active:scale-95 transition-all group"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-xl font-sora font-semibold text-base shadow-sm transform active:scale-95 transition-all group"
             >
                 {currentStep === steps.length - 1 ? "Start Analysis" : "Continue"} 
-                <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             <div className="hidden md:flex items-center gap-2 text-gray-400 text-[10px] font-bold uppercase tracking-widest">
