@@ -15,7 +15,7 @@ import {
   Sparkles, 
   Trophy,
   ArrowRight,
-  ChevronRight,
+  ChevronDown,
   CheckCircle2,
   Lock,
   Globe,
@@ -200,172 +200,166 @@ export function MissionControl() {
     return 11;
   }, [currentMonth]);
 
-  const [selectedId, setSelectedId] = useState(activeMissionId);
-  const activeMission = MISSIONS.find(m => m.id === selectedId) || MISSIONS[0];
+  const [expandedId, setExpandedId] = useState<number>(activeMissionId);
+
+  const toggleAccordion = (id: number) => {
+    setExpandedId(expandedId === id ? 0 : id);
+  };
 
   return (
-    <div className="space-y-12">
-      {/* Horizontal Mission Timeline */}
-      <div className="relative">
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-slate-100 -translate-y-1/2 -z-10" />
-        <div className="flex items-center justify-between overflow-x-auto pb-4 custom-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 scroll-smooth">
-          {MISSIONS.map((mission, idx) => {
-            const isActive = mission.id === activeMissionId;
-            const isSelected = mission.id === selectedId;
-            const isCompleted = mission.id < activeMissionId;
-
-            return (
-              <motion.button
-                key={mission.id}
-                onClick={() => setSelectedId(mission.id)}
-                className={cn(
-                  "flex flex-col items-center gap-3 shrink-0 px-6 py-2 transition-all group",
-                  isSelected ? "scale-105" : "hover:scale-105"
-                )}
-              >
-                <div className={cn(
-                    "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 border shadow-sm",
-                    isCompleted ? "bg-emerald-600 border-emerald-600 text-white" : 
-                    isSelected ? "bg-white border-emerald-500 text-emerald-600" :
-                    isActive ? "bg-white border-blue-200 text-blue-500 animate-pulse" :
-                    "bg-white border-slate-100 text-slate-400 group-hover:border-slate-300"
-                )}>
-                    {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : mission.icon}
-                </div>
-                <div className="text-center">
-                    <p className={cn(
-                        "text-[9px] font-black uppercase tracking-widest",
-                        isSelected ? "text-emerald-600" : "text-slate-400"
-                    )}>STAGE {mission.id}</p>
-                    <p className={cn(
-                        "text-[10px] font-black uppercase tracking-tighter w-24 truncate",
-                        isSelected ? "text-slate-900" : "text-slate-400"
-                    )}>{mission.category}</p>
-                </div>
-              </motion.button>
-            );
-          })}
-        </div>
+    <div className="w-full max-w-5xl mx-auto space-y-8">
+      {/* Header */}
+      <div className="flex flex-col items-center text-center space-y-4 mb-4">
+        <h2 className="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight">
+          Applicant <span className="text-emerald-600">Roadmap</span>
+        </h2>
+        <p className="text-slate-500 font-medium max-w-2xl text-lg">
+          Your step-by-step intelligence checklist for the UK 2026/27 cycle. Expand a stage to view critical tasks and access DentiSpark tools.
+        </p>
       </div>
 
-      {/* Main Integrated Action Center */}
-      <AnimatePresence mode="wait">
-        <motion.div
-           key={activeMission.id}
-           initial={{ opacity: 0, y: 30 }}
-           animate={{ opacity: 1, y: 0 }}
-           exit={{ opacity: 0, y: -30 }}
-           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-           className="relative overflow-hidden rounded-[3rem] bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 p-10 lg:p-16"
-        >
-          {/* Subtle Accent Gradients */}
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-50/50 blur-[100px] -z-10 rounded-full" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-50/30 blur-[80px] -z-10 rounded-full" />
+      {/* Accordion Timeline */}
+      <div className="bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-sm">
+        {MISSIONS.map((mission, index) => {
+          const isExpanded = expandedId === mission.id;
+          const isCompleted = mission.id < activeMissionId;
+          const isActive = mission.id === activeMissionId;
+          const isLast = index === MISSIONS.length - 1;
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            <div className="lg:col-span-12 flex flex-col space-y-12">
-              
-              {/* Header Info */}
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                 <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                        <div className={cn(
-                            "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border",
-                            activeMission.id === activeMissionId 
-                              ? "bg-emerald-50 border-emerald-100 text-emerald-600" 
-                              : "bg-slate-50 border-slate-100 text-slate-400"
+          return (
+            <div 
+              key={mission.id} 
+              className={cn(
+                "group border-b border-slate-100 last:border-b-0 transition-colors duration-300",
+                isExpanded ? "bg-slate-50/50" : "hover:bg-slate-50/30"
+              )}
+            >
+              <button 
+                onClick={() => toggleAccordion(mission.id)}
+                className="w-full flex items-center justify-between p-6 lg:px-10 lg:py-8 text-left focus:outline-none"
+              >
+                <div className="flex items-center gap-6">
+                  {/* Status Indicator */}
+                  <div className="relative">
+                    <div className={cn(
+                        "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10 relative",
+                        isCompleted ? "bg-emerald-100 text-emerald-600" : 
+                        isActive ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20" : 
+                        "bg-slate-100 text-slate-400"
+                    )}>
+                      {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : mission.icon}
+                    </div>
+                    {/* Vertical Line Connector (unless last item) */}
+                    {!isLast && (
+                      <div className={cn(
+                        "absolute top-12 left-1/2 -ml-px w-0.5 h-full",
+                        isCompleted ? "bg-emerald-200" : "bg-slate-100"
+                      )} style={{ height: 'calc(100% + 40px)' }} />
+                    )}
+                  </div>
+
+                  {/* Title & Phase */}
+                  <div>
+                     <div className="flex items-center gap-3 mb-1">
+                        <span className={cn(
+                           "text-[10px] font-black uppercase tracking-widest",
+                           isActive ? "text-emerald-600" : "text-slate-400"
                         )}>
-                            {activeMission.id < activeMissionId ? "Mission Completed" : 
-                             activeMission.id === activeMissionId ? "Current Milestone" : "Upcoming Mission"}
-                        </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{activeMission.timeframe} Cycle</span>
-                    </div>
-                    <h2 className="text-4xl lg:text-7xl font-black text-slate-900 tracking-tight leading-none">
-                       {activeMission.title}
-                    </h2>
-                    <p className="text-slate-500 font-bold text-xl max-w-3xl leading-relaxed">
-                       {activeMission.description}
-                    </p>
-                 </div>
+                           Stage {mission.id} • {mission.category}
+                        </span>
+                        {isActive && (
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[9px] font-bold uppercase tracking-widest">
+                            Current Focus
+                          </span>
+                        )}
+                     </div>
+                     <h3 className={cn(
+                       "text-xl lg:text-2xl font-black transition-colors duration-300",
+                       isActive ? "text-slate-900" : isCompleted ? "text-slate-700" : "text-slate-500"
+                     )}>
+                       {mission.title}
+                     </h3>
+                  </div>
+                </div>
 
-                 <div className="flex items-center gap-4 bg-slate-50/50 p-4 rounded-[2rem] border border-slate-100">
-                    <div className="w-16 h-16 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
-                        <Sparkles className="w-8 h-8 text-emerald-500" />
-                    </div>
-                    <div className="pr-6">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Progress</p>
-                        <p className="text-2xl font-black text-slate-900 leading-none">{(selectedId / 11 * 100).toFixed(0)}%</p>
-                    </div>
-                 </div>
-              </div>
+                <div className="flex items-center gap-6">
+                  <span className="hidden md:block text-xs font-bold text-slate-400 uppercase tracking-widest bg-white border border-slate-100 px-3 py-1.5 rounded-full">
+                    {mission.timeframe}
+                  </span>
+                  <div className={cn(
+                    "w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300",
+                    isExpanded ? "bg-white border-slate-200 rotate-180" : "bg-transparent border-transparent"
+                  )}>
+                    <ChevronDown className="w-5 h-5 text-slate-400" />
+                  </div>
+                </div>
+              </button>
 
-              {/* Task Matrix */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                 <div className="space-y-8">
-                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Critical Tasks</h4>
-                    <div className="space-y-5">
-                       {activeMission.subtasks.map((task, i) => (
-                          <motion.div 
-                            key={i} 
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.1 + (i * 0.1) }}
-                            className="flex items-center gap-5 group cursor-pointer"
-                          >
-                             <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm group-hover:border-emerald-500 group-hover:bg-emerald-50 transition-all">
-                                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-500" />
-                             </div>
-                             <span className="text-lg font-black text-slate-700">{task}</span>
-                          </motion.div>
-                       ))}
-                    </div>
-                 </div>
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pl-[5.5rem] pr-6 pb-8 lg:pr-10 lg:pb-10 pt-2">
+                       <p className="text-slate-600 font-medium text-lg leading-relaxed mb-8 max-w-3xl">
+                         {mission.description}
+                       </p>
 
-                 <div className="relative group">
-                    <div className="absolute inset-0 bg-emerald-600 rounded-[3rem] -rotate-1 group-hover:rotate-0 transition-transform duration-500 shadow-xl shadow-emerald-600/10" />
-                    <div className="relative bg-slate-900 rounded-[3rem] p-10 lg:p-12 text-white h-full flex flex-col justify-between space-y-8">
-                       <div className="space-y-4">
-                          <div className="flex items-center gap-3">
-                             <div className="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center">
-                                <Star className="w-4 h-4 text-white fill-white" />
-                             </div>
-                             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Expert Admissions Tip</span>
+                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                          {/* Tasks */}
+                          <div className="space-y-4">
+                            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Required Actions</h4>
+                            {mission.subtasks.map((task, i) => (
+                              <div key={i} className="flex items-center gap-3">
+                                <div className="w-5 h-5 rounded border border-slate-200 flex items-center justify-center bg-white shadow-sm shrink-0">
+                                  <div className="w-2 h-2 rounded-[2px] bg-slate-200" />
+                                </div>
+                                <span className="text-slate-700 font-bold">{task}</span>
+                              </div>
+                            ))}
                           </div>
-                          <p className="text-xl font-bold leading-relaxed italic">
-                             "{activeMission.tip}"
-                          </p>
+
+                          {/* Light Tip Box */}
+                          <div className="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-100">
+                             <div className="flex items-center gap-2 mb-3">
+                                <Star className="w-4 h-4 text-emerald-500 fill-emerald-500" />
+                                <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Expert Advice</span>
+                             </div>
+                             <p className="text-emerald-800 font-medium leading-relaxed italic">
+                               "{mission.tip}"
+                             </p>
+                          </div>
                        </div>
 
-                       <div className="flex items-center gap-3 pt-6 border-t border-white/5 uppercase text-[10px] font-black tracking-widest text-slate-500">
-                          <Globe className="w-4 h-4" /> UK Dental Cycle 2026/27
+                       {/* Action Button */}
+                       <div className="flex items-center gap-4">
+                          <Button 
+                            asChild 
+                            className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl h-12 px-6 font-bold tracking-wide shadow-sm"
+                          >
+                            <Link href={mission.actionHref} target={mission.actionHref.startsWith('http') ? '_blank' : '_self'}>
+                              {mission.actionLabel}
+                              <ArrowUpRight className="ml-2 w-4 h-4" />
+                            </Link>
+                          </Button>
+                          {isActive && (
+                            <Link href="/mentorship" className="text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors">
+                              Book Mentor Guidance →
+                            </Link>
+                          )}
                        </div>
                     </div>
-                 </div>
-              </div>
-
-              {/* Action Triggers */}
-              <div className="pt-10 flex flex-col sm:flex-row items-center gap-6">
-                 <Button 
-                   asChild 
-                   className="h-20 px-12 rounded-[2rem] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg gap-3 transition-all shadow-2xl shadow-emerald-600/20 hover:scale-[1.02]"
-                 >
-                    <Link href={activeMission.actionHref} target={activeMission.actionHref.startsWith('http') ? '_blank' : '_self'}>
-                       {activeMission.actionLabel}
-                       <ArrowUpRight className="w-6 h-6" />
-                    </Link>
-                 </Button>
-                 <Link 
-                   href="/mentorship" 
-                   className="text-slate-400 hover:text-emerald-600 font-black text-sm uppercase tracking-widest transition-colors flex items-center gap-2"
-                 >
-                    Book Mentor Session <ChevronRight className="w-4 h-4" />
-                 </Link>
-              </div>
-
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+          );
+        })}
+      </div>
     </div>
   );
 }
