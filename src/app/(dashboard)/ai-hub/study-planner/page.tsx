@@ -17,6 +17,13 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import { useField } from "@/src/providers/field-provider";
 
 export default function StudyPlannerPage() {
@@ -103,12 +110,25 @@ export default function StudyPlannerPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">Weakest Topics</label>
-                <Input
-                  placeholder="e.g. Organic Chemistry, VR"
-                  value={formData.weakAreas}
-                  onChange={(e) => setFormData({ ...formData, weakAreas: e.target.value })}
-                  className="rounded-xl h-12 border-gray-100 focus:border-emerald-500 transition-colors"
-                />
+                <Select onValueChange={(val) => setFormData({ ...formData, weakAreas: val })}>
+                  <SelectTrigger className="rounded-xl h-12 border-gray-100 focus:border-emerald-500 transition-colors bg-white">
+                    <SelectValue placeholder="Select primary weakness" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[
+                      "Biology & Anatomy",
+                      "Organic Chemistry",
+                      "Quantitative Reasoning",
+                      "Verbal Reasoning",
+                      "Abstract Reasoning",
+                      "Situational Judgment",
+                      "Dental Ethics & NHS",
+                      "Manual Dexterity & Spatial"
+                    ].map(topic => (
+                      <SelectItem key={topic} value={topic}>{topic}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 

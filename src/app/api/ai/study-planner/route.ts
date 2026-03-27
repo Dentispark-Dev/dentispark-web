@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     const { examDate, weakAreas, targetScore, field } = await req.json();
 
     const result = await generateObject({
-      model: groq("llama-3.3-70b-versatile"),
+      model: groq("llama3-70b-8192"),
       schema: z.object({
         phases: z.array(z.object({
           name: z.string(),
