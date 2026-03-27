@@ -5,6 +5,7 @@ import AIToolsGrid from "@/src/features/(dashboard)/overview/components/ai-tools
 import PersonalizedMentors from "@/src/features/(dashboard)/overview/components/personalized-mentors";
 import PopularResources from "@/src/features/(dashboard)/overview/components/popular-resources";
 import { PerformanceGrid } from "@/src/features/analytics/components/performance-grid";
+import { DeadlineCountdown } from "@/src/features/automation/components/deadline-countdown";
 import { AdmissionRoadmap } from "@/src/features/(dashboard)/overview/components/admission-roadmap";
 import { MissionControl } from "@/src/features/(dashboard)/overview/components/mission-control";
 import { useAuth } from "@/src/providers/auth-provider";
