@@ -2,9 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { Send, Paperclip, Smile, MoreVertical, Phone, Video, Mic, CheckCheck } from "lucide-react";
-import { useChatSocket } from "../hooks/use-chat-socket";
-import { cn } from "@/src/lib/utils";
 
 export function ChatWindow() {
   const { messages, isTyping, isOnline, sendMessage } = useChatSocket("1");
@@ -36,7 +35,7 @@ export function ChatWindow() {
 
       {/* Header */}
       <div className="bg-white p-4 border-b border-gray-100 flex justify-between items-center relative z-10 shadow-sm">
-        <div className="flex items-center gap-3">
+        <Link href="/mentor/sarah-chen" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-emerald-700 border border-emerald-50">
             SC
           </div>
@@ -46,7 +45,7 @@ export function ChatWindow() {
               <span className="text-[11px] font-medium text-emerald-600 font-bold uppercase tracking-wider">online</span>
             </div>
           </div>
-        </div>
+        </Link>
         
         <div className="flex items-center gap-1">
           <button className="p-2.5 hover:bg-gray-50 rounded-xl transition-all text-gray-400 hover:text-gray-900"><MoreVertical className="w-5 h-5" /></button>
