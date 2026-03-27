@@ -17,7 +17,9 @@ import {
   ArrowRight,
   ExternalLink,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Calendar,
+  Clock
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
