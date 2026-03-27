@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const { profile, field } = await req.json();
 
     const result = await generateObject({
-      model: groq("llama3-70b-8192"),
+      model: groq("llama-3.1-8b-instant"),
       schema: z.object({
         universityPredictions: z.array(z.object({
           universityId: z.string(),
