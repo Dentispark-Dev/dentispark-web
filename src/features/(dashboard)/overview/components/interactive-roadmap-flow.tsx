@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { 
   CheckCircle2, 
   Calendar,
@@ -18,9 +18,7 @@ import {
   MessagesSquare,
   Trophy,
   GraduationCap,
-  LucideIcon,
-  ChevronUp,
-  ChevronDown
+  LucideIcon
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useRouter } from "next/navigation";
@@ -41,229 +39,341 @@ const STAGES = [
   { id: 11, phase: "STAGE 11 • ENROLMENT", title: "Enrollment & Success", date: "MAY - SEPT", icon: GraduationCap, url: "/growth" }
 ];
 
-// Drawing constants
-const STAGE_GAP = 300; // Gap between each wave step
-const WAVE_AMPLITUDE = 120; // Height of the waves
-const BASELINE_Y = 250; // Vertical center for the wave
+// Mathematical geometry
+const VIEW_WIDTH = 1200;
+const VIEW_HEIGHT = 900;
+const CX = 600;
+const CY = 450;
+const RADIUS = 180;
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+const ITEMS = 11;
+const ANGLE_STEP = 360 / ITEMS;
+const DASH_GAP = 12;
+const DASH_LENGTH = (CIRCUMFERENCE / ITEMS) - DASH_GAP;
+
+const PILL_WIDTH = 280;
+const PILL_HEIGHT = 86;
+
+const PILL_POSITIONS = [
+  { x: 880, y: 120, connectSide: "left" },
+  { x: 880, y: 250, connectSide: "left" },
+  { x: 880, y: 380, connectSide: "left" },
+  { x: 880, y: 510, connectSide: "left" },
+  { x: 880, y: 640, connectSide: "left" },
+  { x: 880, y: 770, connectSide: "left" },
+  { x: 40, y: 740, connectSide: "right" },
+  { x: 40, y: 590, connectSide: "right" },
+  { x: 40, y: 440, connectSide: "right" },
+  { x: 40, y: 290, connectSide: "right" },
+  { x: 40, y: 140, connectSide: "right" },
+];
+
+function getSegmentCenterPoint(index: number) {
+  const angleDeg = (index * ANGLE_STEP) - 90 + (ANGLE_STEP / 2);
+  const angleRad = (angleDeg * Math.PI) / 180;
+  const rOuter = RADIUS + 18;
+  return {
+    x: CX + rOuter * Math.cos(angleRad),
+    y: CY + rOuter * Math.sin(angleRad),
+    angleDeg
+  };
+}
 
 export function InteractiveRoadmapFlow() {
   const router = useRouter();
+  const containerRef = useRef(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   
+  // High-performance scroll tracking for "scrolled highlights"
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  useEffect(() => {
+    return scrollYProgress.onChange((v) => setScrollProgress(v));
+  }, [scrollYProgress]);
+
   const currentIndex = STAGES.findIndex(s => s.isCurrent);
   
-  // Create an array of x points for our steps
-  const xPoints = STAGES.map((_, i) => i * STAGE_GAP + 150);
-  
-  // Build the wave path string using cubic bezier loops
-  // M x y C x1 y1, x2 y2, x3 y3
-  let wavePath = `M ${xPoints[0]} ${BASELINE_Y}`;
-  for (let i = 0; i < xPoints.length - 1; i++) {
-    const startX = xPoints[i];
-    const endX = xPoints[i+1];
-    const midX = (startX + endX) / 2;
-    
-    // Alt peaks and troughs
-    const isUp = i % 2 === 0;
-    const cpY = isUp ? BASELINE_Y - WAVE_AMPLITUDE : BASELINE_Y + WAVE_AMPLITUDE;
-    
-    // We'll use two control points at the peak/trough to make the "fluid" shape more rounded
-    wavePath += ` C ${midX - 50} ${cpY}, ${midX + 50} ${cpY}, ${endX} ${BASELINE_Y}`;
-  }
+  // Calculate which stage should be highlighted based on either hover OR scroll
+  const activeIndex = hoveredId !== null 
+    ? hoveredId 
+    : Math.min(STAGES.length - 1, Math.floor(scrollProgress * (STAGES.length + 2))); 
+
+  const displayStage = STAGES[activeIndex];
 
   return (
-    <div className="w-full bg-white rounded-[3rem] p-8 lg:p-14 border border-slate-100 shadow-2xl shadow-slate-200/50 relative overflow-hidden group">
-      
-      {/* Decorative Branding Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50/60 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-50/60 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150 pointer-events-none" />
+    <div 
+      ref={containerRef}
+      className="w-full bg-white rounded-[3rem] p-8 lg:p-14 border border-slate-100 shadow-2xl shadow-slate-200/50 relative overflow-hidden"
+    >
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50/60 blur-[120px] rounded-full -z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-50/60 blur-[120px] rounded-full -z-10 pointer-events-none" />
 
-      {/* Header Inline */}
-      <div className="mb-14 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10 text-center md:text-left">
+      {/* Header */}
+      <div className="mb-0 flex items-center justify-between relative z-10 text-center mx-auto md:text-left">
         <div>
-            <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-emerald-600">Dynamic Roadmap</h3>
-            <h4 className="text-4xl font-black text-slate-900 tracking-tight mt-1">Journey Wave Timeline</h4>
-            <p className="text-slate-500 font-medium text-sm mt-3">
-                Your mission path from research to graduation. Navigate the wave and click to launch tools.
+            <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-emerald-600">Deep Performance Roadmap</h3>
+            <h4 className="text-4xl font-black text-slate-900 tracking-tight mt-1">Interactive Hub Infographic</h4>
+            <p className="text-slate-500 font-medium text-sm mt-2">
+                This board responds to your scroll position and hover actions. Experience the journey.
             </p>
-        </div>
-        <div className="flex items-center gap-2 px-6 py-3 bg-slate-50 border border-slate-100 rounded-2xl">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 whitespace-nowrap">
-               Live Progress Active
-            </span>
         </div>
       </div>
 
-      {/* Fluid Wave Map (Horizontally scrollable) */}
-      <div className="w-full overflow-x-auto custom-scrollbar pb-20 pt-10 px-8 relative z-10">
-        <div 
-          className="relative" 
-          style={{ width: `${(STAGES.length - 1) * STAGE_GAP + 500}px`, height: "500px" }}
-        >
-          {/* Main SVG Container */}
+      {/* Radial Infographic Wrapper */}
+      <div className="w-full overflow-x-auto custom-scrollbar pb-10">
+        <div className="min-w-[1200px] h-[900px] relative mt-8">
           <svg 
             width="100%" 
-            height="500" 
-            viewBox={`0 0 ${(STAGES.length - 1) * STAGE_GAP + 500} 500`}
+            height="100%" 
+            viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
-            className="absolute top-0 left-0 drop-shadow-sm pointer-events-none"
+            className="absolute inset-0"
           >
             <defs>
-              <linearGradient id="wave-grad" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#34d399" />
-                <stop offset="50%" stopColor="#60a5fa" />
-                <stop offset="100%" stopColor="#fbbf24" />
-              </linearGradient>
-              <filter id="wave-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <filter id="glow-emerald" x="-20%" y="-20%" width="140%" height="140%">
                 <feGaussianBlur stdDeviation="8" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="glow-orange" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
 
-            {/* Base Ghost Path (Grey) */}
-            <path 
-              d={wavePath} 
-              stroke="#f1f5f9" 
-              strokeWidth="48" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-            />
+            {/* Connecting Lines with pathLength drawing logic */}
+            {STAGES.map((stage, i) => {
+               const pos = PILL_POSITIONS[i];
+               const startPoint = getSegmentCenterPoint(i);
+               const endX = pos.connectSide === "left" ? pos.x : pos.x + PILL_WIDTH;
+               const endY = pos.y + (PILL_HEIGHT / 2);
+               
+               const isRow1 = i < 4;
+               const isRow2 = i >= 4 && i < 8;
+               const colorClass = isRow1 ? "#34d399" : (isRow2 ? "#60a5fa" : "#fbbf24");
+               
+               const midX = (startPoint.x + endX) / 2;
+               const d = `M ${startPoint.x} ${startPoint.y} Q ${midX} ${startPoint.y}, ${endX} ${endY}`;
 
-            {/* Progress/Hover Animated Path */}
-            {STAGES.map((_, i) => {
-               if (i === 0) return null;
-               const isHovered = hoveredId === i;
-               const isPast = i <= currentIndex;
-               const isActive = isHovered || isPast;
+               const isActive = activeIndex === i;
+               const isPast = i < activeIndex;
 
-               // Split wave segments to animate them individually or as group
-               // In this simple version, we'll draw parts of the wave
-               return null; 
+               return (
+                  <motion.path
+                     key={`line-${i}`}
+                     d={d}
+                     stroke={colorClass}
+                     strokeWidth={isActive ? "4" : "2"}
+                     strokeDasharray={isActive ? "0" : "5 5"}
+                     fill="none"
+                     initial={{ pathLength: 0, opacity: 0.1 }}
+                     animate={{
+                        opacity: isActive ? 1 : (isPast ? 0.3 : 0.05),
+                        pathLength: isActive || isPast ? 1 : 0.2
+                     }}
+                     transition={{ duration: 0.6, ease: "easeOut" }}
+                  />
+               );
             })}
 
-            {/* Gradient Overlay for the wave up to current progress */}
-            <motion.path 
-              d={wavePath} 
-              stroke="url(#wave-grad)"
-              strokeWidth="48" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: (currentIndex / (STAGES.length - 1)) }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              style={{ filter: "url(#wave-glow)", opacity: 0.8 }}
-            />
+            {/* Segmented Donut SVG */}
+            <circle cx={CX} cy={CY} r={RADIUS + 15} stroke="#f8fafc" strokeWidth="48" fill="none" />
+            
+            {STAGES.map((stage, i) => {
+              const rotation = (i * ANGLE_STEP) - 90;
+              const isRow1 = i < 4;
+              const isRow2 = i >= 4 && i < 8;
+              const tailwindColor = isRow1 ? "#10b981" : (isRow2 ? "#3b82f6" : "#f59e0b");
+              const glowFilter = isRow1 ? "url(#glow-emerald)" : (isRow2 ? "url(#glow-blue)" : "url(#glow-orange)");
+
+              const isActive = activeIndex === i;
+              const isPast = i < activeIndex;
+
+              return (
+                 <motion.circle 
+                    key={`seg-${i}`}
+                    cx={CX} 
+                    cy={CY} 
+                    r={RADIUS} 
+                    fill="none"
+                    stroke={tailwindColor}
+                    strokeWidth={isActive ? "42" : "32"}
+                    strokeDasharray={`${DASH_LENGTH} ${CIRCUMFERENCE}`}
+                    strokeLinecap="round"
+                    transform={`rotate(${rotation} ${CX} ${CY})`}
+                    className="origin-center cursor-pointer"
+                    onMouseEnter={() => setHoveredId(i)}
+                    onMouseLeave={() => setHoveredId(null)}
+                    style={{ filter: isActive ? glowFilter : "none" }}
+                    animate={{ 
+                       opacity: isActive ? 1 : (isPast ? 0.6 : 0.1)
+                    }}
+                 />
+              )
+            })}
           </svg>
 
-          {/* HTML Overlay - Interactive Steps */}
+          {/* HTML Overlay - Functional Points and Sonar Nodes */}
           {STAGES.map((stage, i) => {
-             const x = xPoints[i];
-             const isUp = i % 2 === 0;
-             const isHovered = hoveredId === i;
-             const isCompleted = i < currentIndex;
-             const isCurrent = i === currentIndex;
-             const isPast = i <= currentIndex;
-
-             // Logic colors
-             const themeColor = i < 4 ? "emerald" : (i < 8 ? "blue" : "orange");
+             const pos = PILL_POSITIONS[i];
+             const endX = pos.connectSide === "left" ? pos.x : pos.x + PILL_WIDTH;
+             const endY = pos.y + (PILL_HEIGHT / 2);
+             
+             const isRow1 = i < 4;
+             const isRow2 = i >= 4 && i < 8;
+             const themeColor = isRow1 ? "emerald" : (isRow2 ? "blue" : "orange");
+             const isActive = activeIndex === i;
 
              return (
-                <div 
-                  key={stage.id}
-                  className="absolute pointer-events-auto"
-                  style={{ left: x, top: BASELINE_Y }}
-                  onMouseEnter={() => setHoveredId(i)}
-                  onMouseLeave={() => setHoveredId(null)}
-                >
-                   {/* Main Step Hub (The Bubble) */}
-                   <motion.div 
-                     onClick={() => router.push(stage.url)}
-                     animate={{ 
-                        scale: isHovered ? 1.15 : 1, 
-                        y: isHovered ? (isUp ? -10 : 10) : 0,
-                        rotate: isHovered ? (isUp ? 5 : -5) : 0
-                     }}
-                     className={cn(
-                        "w-24 h-24 rounded-full flex flex-col items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-500 relative z-50",
-                        isPast ? "bg-white shadow-xl" : "bg-slate-50 opacity-80",
-                        isHovered ? `border-[8px] border-${themeColor}-400` : `border-[8px] border-white shadow-md`,
-                        isCurrent && `shadow-[0_0_40px_rgba(52,211,153,0.3)]`
-                     )}
-                   >
-                      <div className={cn(
-                         "w-full h-full rounded-full flex items-center justify-center border-4 border-transparent",
-                         isPast && !isHovered ? `bg-${themeColor}-50 text-${themeColor}-500` : 
-                         isHovered ? `bg-${themeColor}-500 text-white` : "bg-slate-100 text-slate-300"
-                      )}>
-                         {isCompleted && !isHovered ? <CheckCircle2 className="w-10 h-10" /> : <stage.icon className="w-10 h-10" />}
-                      </div>
-
-                      {/* Number Tab */}
-                      <div className="absolute -top-2 -right-2 w-8 h-8 rounded-xl bg-slate-900 border-2 border-white text-white flex items-center justify-center text-[10px] font-black z-10">
-                        {stage.id < 10 ? `0${stage.id}` : stage.id}
-                      </div>
-
-                      {/* Arrow indicator matches reference */}
-                      <div className={cn(
-                        "absolute w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent transition-opacity",
-                        isUp ? "border-t-[12px] border-t-white -bottom-3" : "border-b-[12px] border-b-white -top-3",
-                        !isHovered && "opacity-0"
-                      )} />
-                   </motion.div>
-
-                   {/* Information Card (Alternating Top/Bottom) */}
-                   <div 
-                      className={cn(
-                         "absolute left-1/2 -translate-x-1/2 w-64 text-center pointer-events-none transition-all duration-500",
-                         isUp ? "bottom-[5.5rem]" : "top-[5.5rem]",
-                         isHovered ? "opacity-100 translate-y-0" : "opacity-60"
-                      )}
-                   >
-                      <div className="flex flex-col items-center">
-                         {/* Year/Phase Label Top */}
-                         <div className={cn(
-                           "text-[10px] font-black tracking-[0.2em] uppercase mb-2",
-                           isHovered ? `text-${themeColor}-600` : "text-slate-400"
-                         )}>
-                           {stage.date}
-                         </div>
-
-                         {/* Main Content Box */}
-                         <div className={cn(
-                           "bg-white/80 backdrop-blur-md p-4 rounded-3xl border transition-all duration-300 shadow-sm",
-                           isHovered ? "border-emerald-100 shadow-lg scale-105" : "border-transparent"
-                         )}>
-                            <h5 className="text-[15px] font-black text-slate-800 leading-tight mb-1">
-                               {stage.title}
-                            </h5>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter line-clamp-1">
-                               {stage.phase.split(' • ')[1]}
-                            </p>
-                            
-                            {/* Action hint inside card */}
-                            <AnimatePresence>
-                               {isHovered && (
-                                  <motion.div 
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: "auto", opacity: 1 }}
-                                    className="flex items-center justify-center gap-1.5 mt-3 pt-3 border-t border-slate-50"
-                                  >
-                                     <Zap className={cn("w-3 h-3 fill-current", `text-${themeColor}-400`)} />
-                                     <span className="text-[10px] font-black uppercase text-slate-900 tracking-widest">
-                                        Open Toolkit
-                                     </span>
-                                  </motion.div>
-                               )}
-                            </AnimatePresence>
-                         </div>
-                      </div>
-                   </div>
-
-                </div>
+               <div 
+                  key={`point-${i}`}
+                  className="absolute pointer-events-none"
+                  style={{ left: endX, top: endY }}
+               >
+                  {/* Glowing Interaction Point matching user's "Clickable Points" request */}
+                  <div className={cn(
+                     "w-6 h-6 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-500",
+                     isActive ? "opacity-100" : "opacity-0"
+                  )}>
+                     <div className={cn("absolute w-full h-full rounded-full animate-ping opacity-75", `bg-${themeColor}-400`)} />
+                     <div className={cn("w-3 h-3 rounded-full relative z-10", `bg-${themeColor}-500 shadow-lg shadow-${themeColor}-500/50`)} />
+                  </div>
+               </div>
              )
           })}
+
+          {/* HTML Overlay - Central Radial Hub with 3D Effect */}
+          <div 
+             className="absolute flex flex-col items-center justify-center text-center rounded-full bg-white shadow-[0_0_80px_rgba(0,0,0,0.08)] border-[12px] border-slate-50 z-40 overflow-hidden"
+             style={{ 
+               left: CX - (RADIUS - 40), 
+               top: CY - (RADIUS - 40), 
+               width: (RADIUS - 40) * 2, 
+               height: (RADIUS - 40) * 2 
+             }}
+          >
+             <AnimatePresence mode="wait">
+                 <motion.div 
+                    key={displayStage.id}
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                    transition={{ type: "spring", damping: 12 }}
+                    className="flex flex-col items-center justify-center p-4"
+                 >
+                     <motion.div 
+                        animate={{ y: [0, -5, 0], scale: [1, 1.05, 1] }}
+                        transition={{ duration: 4, repeat: Infinity }}
+                        className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center mb-4 shadow-sm"
+                     >
+                        <displayStage.icon className="w-8 h-8" />
+                     </motion.div>
+                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">
+                        STAGE {displayStage.id}
+                     </span>
+                     <h3 className="text-xl font-black text-slate-900 leading-tight mb-2 max-w-[180px]">
+                        {displayStage.title}
+                     </h3>
+                     <span className="text-[10px] font-bold text-slate-500 bg-slate-100 rounded-md px-2 py-1 mb-4 flex items-center gap-1.5">
+                        <Calendar className="w-3 h-3" /> {displayStage.date}
+                     </span>
+                     
+                     <button 
+                        onClick={() => router.push(displayStage.url)}
+                        className="group flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-lg hover:shadow-emerald-500/20 active:scale-95"
+                     >
+                        Initialize toolkit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                     </button>
+                 </motion.div>
+             </AnimatePresence>
+          </div>
+
+          {/* HTML Overlay - Interactive Pillars */}
+          {STAGES.map((stage, i) => {
+             const pos = PILL_POSITIONS[i];
+             const isRow1 = i < 4;
+             const isRow2 = i >= 4 && i < 8;
+             const themeColor = i < 4 ? "emerald" : (i < 8 ? "blue" : "orange");
+             const isActive = activeIndex === i;
+             const isPast = i < activeIndex;
+
+             return (
+                 <div 
+                    key={`pill-${stage.id}`}
+                    onMouseEnter={() => setHoveredId(i)}
+                    onMouseLeave={() => setHoveredId(null)}
+                    onClick={() => router.push(stage.url)}
+                    className={cn(
+                        "absolute flex items-center p-2 pr-6 rounded-full border-[1px] transition-all duration-500 cursor-pointer group",
+                        isActive ? `bg-white border-${themeColor}-400 shadow-2xl scale-[1.08] z-50` : 
+                        isPast ? `bg-white border-slate-200 hover:border-${themeColor}-300 hover:shadow-lg shadow-slate-200/20` : 
+                        `bg-slate-50 border-slate-100 hover:bg-white hover:border-${themeColor}-200`,
+                        !isActive && "opacity-50"
+                    )}
+                    style={{ 
+                        left: pos.x, 
+                        top: pos.y, 
+                        width: PILL_WIDTH, 
+                        height: PILL_HEIGHT 
+                    }}
+                 >
+                     {/* Icon bubble */}
+                     <div className={cn(
+                        "w-16 h-16 rounded-full flex items-center justify-center shrink-0 transition-all duration-700 mr-4 border-[6px] shadow-sm",
+                        isActive ? `bg-${themeColor}-500 text-white border-white scale-110` : 
+                        isPast ? `bg-${themeColor}-50 text-${themeColor}-500 border-white` : 
+                        "bg-white text-slate-300 border-white"
+                     )}>
+                         {isPast && !isActive ? (
+                            <CheckCircle2 className="w-8 h-8" />
+                         ) : (
+                            <stage.icon className="w-8 h-8" />
+                         )}
+                     </div>
+
+                     <div className="flex flex-col justify-center overflow-hidden">
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className={cn(
+                                "text-[14px] font-black",
+                                isActive ? `text-${themeColor}-600` : "text-slate-400"
+                            )}>
+                                {stage.id < 10 ? `0${stage.id}` : stage.id}
+                            </span>
+                            <span className={cn(
+                                "text-[9px] font-black uppercase tracking-widest leading-none",
+                                isActive ? "text-slate-800" : "text-slate-400 opacity-60"
+                            )}>
+                                {stage.phase.split(' • ')[1]}
+                            </span>
+                        </div>
+                        <h5 className={cn(
+                            "text-[15px] font-black leading-tight transition-all",
+                            isActive ? "text-slate-900" : "text-slate-600"
+                        )}>
+                            {stage.title}
+                        </h5>
+
+                        <motion.div 
+                          initial={false}
+                          animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -5 }}
+                          className={cn("text-[9px] font-black uppercase tracking-tighter mt-1 flex items-center gap-1", `text-${themeColor}-500`)}
+                        >
+                          <Zap className="w-3 h-3 fill-current" /> Active Stage
+                        </motion.div>
+                     </div>
+                 </div>
+             )
+          })}
+          
         </div>
       </div>
     </div>
