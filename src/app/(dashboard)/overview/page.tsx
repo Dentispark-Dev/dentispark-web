@@ -6,6 +6,7 @@ import PersonalizedMentors from "@/src/features/(dashboard)/overview/components/
 import PopularResources from "@/src/features/(dashboard)/overview/components/popular-resources";
 import { PerformanceGrid } from "@/src/features/analytics/components/performance-grid";
 import { DeadlineCountdown } from "@/src/features/automation/components/deadline-countdown";
+import { ApplicationFlowSankey } from "@/src/features/analytics/components/application-flow-sankey";
 import { AdmissionRoadmap } from "@/src/features/(dashboard)/overview/components/admission-roadmap";
 import { MissionControl } from "@/src/features/(dashboard)/overview/components/mission-control";
 import { useAuth } from "@/src/providers/auth-provider";
@@ -91,6 +92,9 @@ export default function OverviewPage() {
                         mentors={mentors} 
                         isLoading={isDataLoading}
                     />
+
+                    {/* New Application Flow Sankey Diagram */}
+                    <ApplicationFlowSankey />
 
                     <div className="bg-white rounded-[3rem] border border-slate-100 p-10 lg:p-16 shadow-2xl shadow-slate-200/50">
                         <div className="flex items-center justify-between mb-12">
