@@ -1,278 +1,273 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   CheckCircle2, 
   Map, 
-  AlignLeft, 
+  Target,
+  FileText,
+  MessageSquare,
+  Trophy,
   Calendar,
-  ChevronDown,
+  Zap,
   ArrowRight
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
-interface Stage {
-  id: number;
-  phase: string;
-  title: string;
-  date: string;
-  isCurrent?: boolean;
-}
-
-const STAGES: Stage[] = [
+// 11 Applicant Stages mapping to user's screenshot
+const STAGES = [
   { id: 1, phase: "STAGE 1 • RESEARCH", title: "Research Schools & UCAS Strategy", date: "JAN - MAR" },
   { id: 2, phase: "STAGE 2 • PREPARATION", title: "UCAT Registration Window", date: "APR - MAY", isCurrent: true },
   { id: 3, phase: "STAGE 3 • PREPARATION", title: "Mastering the Personal Statement", date: "APR - MAY" },
   { id: 4, phase: "STAGE 4 • PREPARATION", title: "Secure Academic References", date: "APR - MAY" },
+  
   { id: 5, phase: "STAGE 5 • EXAMS", title: "The UCAT Entrance Exam", date: "JUN - JUL" },
   { id: 6, phase: "STAGE 6 • APPLICATION", title: "Finalise UCAS Choices (4+1)", date: "AUG" },
   { id: 7, phase: "STAGE 7 • APPLICATION", title: "Submit UCAS Application", date: "SEPT" },
   { id: 8, phase: "STAGE 8 • APPLICATION", title: "THE HARD DEADLINE", date: "OCT 15" },
+  
   { id: 9, phase: "STAGE 9 • INTERVIEWS", title: "MMI & Panel Interviews", date: "OCT - NOV" },
   { id: 10, phase: "STAGE 10 • INTERVIEWS", title: "Offers & Firm Choices", date: "JAN - MAR (2027)" },
   { id: 11, phase: "STAGE 11 • ENROLMENT", title: "Enrollment & Success", date: "MAY - SEPT" }
 ];
 
-export function InteractiveRoadmapFlow() {
-  const [layout, setLayout] = useState<"scurve" | "horizontal">("horizontal");
-  const [expandedId, setExpandedId] = useState<number | null>(2); // Default open the current one
+// Snake coordinates mapped to a 1000x800 viewBox
+const NODE_POSITIONS = [
+  { cx: 100, cy: 150 }, // 1
+  { cx: 366, cy: 150 }, // 2
+  { cx: 633, cy: 150 }, // 3
+  { cx: 900, cy: 150 }, // 4
+  
+  { cx: 900, cy: 400 }, // 5
+  { cx: 633, cy: 400 }, // 6
+  { cx: 366, cy: 400 }, // 7
+  { cx: 100, cy: 400 }, // 8
+  
+  { cx: 100, cy: 650 }, // 9
+  { cx: 450, cy: 650 }, // 10
+  { cx: 800, cy: 650 }  // 11
+];
 
-  // Find the index of the current stage (used for green vs grey path coloring)
+// Connecting SVG paths between the nodes
+const PATH_SEGMENTS = [
+  { id: 1, d: "M 100 150 L 366 150" }, // 1 to 2
+  { id: 2, d: "M 366 150 L 633 150" }, // 2 to 3
+  { id: 3, d: "M 633 150 L 900 150" }, // 3 to 4
+  { id: 4, d: "M 900 150 A 125 125 0 0 1 900 400" }, // 4 to 5 (curve down)
+  { id: 5, d: "M 900 400 L 633 400" }, // 5 to 6
+  { id: 6, d: "M 633 400 L 366 400" }, // 6 to 7
+  { id: 7, d: "M 366 400 L 100 400" }, // 7 to 8
+  { id: 8, d: "M 100 400 A 125 125 0 0 0 100 650" }, // 8 to 9 (curve down)
+  { id: 9, d: "M 100 650 L 450 650" }, // 9 to 10
+  { id: 10, d: "M 450 650 L 800 650" } // 10 to 11
+];
+
+export function InteractiveRoadmapFlow() {
+  const [hoveredNode, setHoveredNode] = useState<number | null>(null);
+  const [expandedNode, setExpandedNode] = useState<number | null>(null);
+
   const currentIndex = STAGES.findIndex(s => s.isCurrent);
 
   return (
-    <div className="w-full bg-white rounded-[3rem] p-10 lg:p-14 border border-slate-100 shadow-xl shadow-slate-200/40 relative overflow-hidden group">
-      {/* Decorative Blob */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50/50 blur-3xl rounded-full -z-10 transition-transform duration-700 group-hover:scale-150" />
+    <div className="w-full bg-slate-900 rounded-[3rem] p-8 lg:p-14 border border-slate-800 shadow-2xl relative overflow-hidden group">
       
-      {/* Header & Controls */}
-      <div className="mb-10 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-        <div className="text-center md:text-left">
-            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600">Your Journey</h3>
-            <h4 className="text-3xl font-black text-slate-900 tracking-tight">Applicant Roadmap</h4>
-            <p className="text-slate-500 font-medium text-sm mt-2 max-w-md">
-                Your step-by-step intelligence checklist for the UK 2026/27 cycle. Expand a stage to view critical tasks.
+      {/* Dark modern background effects */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none -z-10" />
+
+      {/* Header */}
+      <div className="mb-8 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10 text-center md:text-left">
+        <div>
+            <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-emerald-400">Step-by-Step Intelligence</h3>
+            <h4 className="text-4xl font-black text-white tracking-tight mt-1">Applicant Process Flow</h4>
+            <p className="text-slate-400 font-medium text-sm mt-3 max-w-lg">
+                Hover over the path to illuminate stages, or click a node to expand toolsets and critical actions.
             </p>
-        </div>
-        
-        {/* Layout Toggle */}
-        <div className="flex items-center p-1 bg-slate-50 border border-slate-100 rounded-2xl">
-            <button 
-                onClick={() => setLayout("horizontal")}
-                className={cn(
-                    "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
-                    layout === "horizontal" ? "bg-white text-slate-900 shadow-sm border border-slate-200" : "text-slate-400 hover:text-slate-600"
-                )}
-            >
-                <AlignLeft className="w-4 h-4" /> Timeline
-            </button>
-            <button 
-                onClick={() => setLayout("scurve")}
-                className={cn(
-                    "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
-                    layout === "scurve" ? "bg-white text-slate-900 shadow-sm border border-slate-200" : "text-slate-400 hover:text-slate-600"
-                )}
-            >
-                <Map className="w-4 h-4" /> Board
-            </button>
         </div>
       </div>
 
-      {/* RENDER VIEW */}
-      <div className="relative w-full z-10 p-2">
-          {layout === "horizontal" ? (
-             <HorizontalView expandedId={expandedId} setExpandedId={setExpandedId} currentIndex={currentIndex} />
-          ) : (
-             <SCurveView expandedId={expandedId} setExpandedId={setExpandedId} currentIndex={currentIndex} />
-          )}
+      {/* Interactive SVG Flow Map */}
+      <div className="w-full overflow-x-auto custom-scrollbar pb-10">
+        <div className="min-w-[1000px] h-[800px] relative mt-4">
+          
+          <svg 
+            width="100%" 
+            height="100%" 
+            viewBox="0 0 1000 800" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full drop-shadow-2xl"
+          >
+            <defs>
+              <linearGradient id="glowG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="100%" stopColor="#059669" />
+              </linearGradient>
+              <linearGradient id="glowB" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#2563eb" />
+              </linearGradient>
+              <linearGradient id="glowO" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#d97706" />
+              </linearGradient>
+              <filter id="svgGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Base Background Path */}
+            {PATH_SEGMENTS.map(seg => (
+               <path 
+                 key={`base-${seg.id}`} 
+                 d={seg.d} 
+                 stroke="#1e293b" 
+                 strokeWidth="40" 
+                 strokeLinecap="round"
+                 strokeLinejoin="round"
+               />
+            ))}
+
+            {/* Dynamic Interactive Paths */}
+            {PATH_SEGMENTS.map((seg, i) => {
+              // Determine if this segment should be lit up
+              const isPastNode = i < currentIndex; // 0-indexed, so seg 0 is before node 1
+              const isHoveredRoute = hoveredNode !== null && i < hoveredNode;
+              
+              // Color logic
+              const isActiveRoute = isHoveredRoute || isPastNode;
+              // Change color randomly or based on row (1st row green, 2nd row blue, 3rd row orange)
+              let colorUrl = "url(#glowG)";
+              if (i >= 4 && i <= 7) colorUrl = "url(#glowB)";
+              if (i > 7) colorUrl = "url(#glowO)";
+
+              return (
+                <motion.path 
+                  key={`active-${seg.id}`}
+                  d={seg.d}
+                  stroke={isActiveRoute ? colorUrl : "transparent"}
+                  strokeWidth="24"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ 
+                    pathLength: isActiveRoute ? 1 : 0, 
+                    opacity: isActiveRoute ? 1 : 0 
+                  }}
+                  transition={{ duration: 0.5, delay: isHoveredRoute ? i * 0.05 : 0 }}
+                  style={{ filter: isActiveRoute ? "url(#svgGlow)" : "none" }}
+                  className="transition-all duration-300"
+                />
+              );
+            })}
+          </svg>
+
+          {/* HTML Overlay for Rich Nodes & Interactions */}
+          <div className="absolute inset-0 pointer-events-none">
+            {STAGES.map((stage, i) => {
+               const pos = NODE_POSITIONS[i];
+               const xPct = (pos.cx / 1000) * 100;
+               const yPct = (pos.cy / 800) * 100;
+
+               const isExpanded = expandedNode === stage.id;
+               const isHovered = hoveredNode === stage.id;
+               const isCompleted = i < currentIndex;
+               const isCurrent = i === currentIndex;
+               
+               // Determine visual row
+               const isRow1 = i < 4;
+               const isRow2 = i >= 4 && i < 8;
+               
+               // Color theme for the node
+               const themeColor = isRow2 ? "blue" : (i >= 8 ? "orange" : "emerald");
+
+               return (
+                  <div 
+                    key={stage.id}
+                    className="absolute pointer-events-auto flex flex-col items-center justify-center -translate-x-1/2 -translate-y-1/2 z-20"
+                    style={{ left: `${xPct}%`, top: `${yPct}%` }}
+                    onMouseEnter={() => setHoveredNode(stage.id)}
+                    onMouseLeave={() => setHoveredNode(null)}
+                  >
+                    {/* The Clickable Node Button */}
+                    <button 
+                      onClick={() => setExpandedNode(isExpanded ? null : stage.id)}
+                      className={cn(
+                        "w-20 h-20 rounded-full flex flex-col items-center justify-center border-[6px] transition-all duration-300 relative group",
+                        isCompleted ? `bg-${themeColor}-500 border-slate-900 text-white` : 
+                        isCurrent ? `bg-${themeColor}-600 border-${themeColor}-300 text-white shadow-[0_0_30px_rgba(52,211,153,0.4)] scale-110` : 
+                        `bg-slate-800 border-slate-700 text-slate-400 hover:border-${themeColor}-400 hover:bg-slate-700`
+                      )}
+                    >
+                      {isCompleted ? <CheckCircle2 className="w-8 h-8" /> : <span className="font-black text-2xl">{stage.id}</span>}
+                    </button>
+
+                    {/* Pop-out Info Box (Visible on hover or expansion) */}
+                    <AnimatePresence>
+                      <motion.div 
+                        initial={{ opacity: 0, y: 15, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 15, scale: 0.9 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        className={cn(
+                          "absolute top-full mt-4 w-64 bg-slate-800 border border-slate-700 rounded-3xl p-5 shadow-2xl text-left pointer-events-auto",
+                          // Position differently if on edge to avoid overflow
+                          pos.cx > 800 ? "-translate-x-[75%]" : (pos.cx < 200 ? "-translate-x-[25%]" : "-translate-x-1/2"),
+                          (isHovered || isExpanded) ? "z-50" : "opacity-0 pointer-events-none hidden",
+                          `hover:border-${themeColor}-500/50`
+                        )}
+                      >
+                         <div className={cn(
+                             "text-[9px] font-black uppercase tracking-widest mb-1.5",
+                             `text-${themeColor}-400`
+                         )}>
+                             {stage.phase}
+                         </div>
+                         <h4 className="text-[15px] font-black text-white leading-tight mb-3">
+                             {stage.title}
+                         </h4>
+
+                         <div className="flex items-center gap-2 text-xs font-bold text-slate-400 bg-slate-900/50 p-2 rounded-xl border border-slate-800/80 mb-3">
+                             <Calendar className={cn("w-3.5 h-3.5", `text-${themeColor}-400`)} /> {stage.date}
+                         </div>
+
+                         {/* Only show rich action content if fully expanded (clicked) */}
+                         <AnimatePresence>
+                             {isExpanded && (
+                                 <motion.div 
+                                    initial={{ height: 0, opacity: 0 }} 
+                                    animate={{ height: "auto", opacity: 1 }} 
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="pt-3 mt-3 border-t border-slate-700"
+                                 >
+                                    <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1">
+                                        <Zap className="w-3 h-3 text-amber-400" /> Suggested Action
+                                    </h5>
+                                    <button className={cn(
+                                        "w-full py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors flex items-center justify-center gap-2",
+                                        `bg-${themeColor}-500 hover:bg-${themeColor}-400 text-white`
+                                    )}>
+                                        Open Toolkit <ArrowRight className="w-3 h-3" />
+                                    </button>
+                                 </motion.div>
+                             )}
+                         </AnimatePresence>
+                      </motion.div>
+                    </AnimatePresence>
+
+                  </div>
+               )
+            })}
+          </div>
+
+        </div>
       </div>
     </div>
   );
-}
-
-
-// ----------------------------------------------------
-// HORIZONTAL SCROLL VIEW
-// ----------------------------------------------------
-function HorizontalView({ expandedId, setExpandedId, currentIndex }: { expandedId: number | null, setExpandedId: any, currentIndex: number }) {
-    return (
-        <div className="w-full overflow-x-auto pb-12 pt-4 px-4 overflow-y-hidden custom-scrollbar">
-            <div className="flex items-start min-w-max relative gap-16">
-                
-                {/* Background Connection Line */}
-                <div className="absolute top-[3.25rem] left-8 w-[calc(100%-4rem)] h-1 bg-slate-100 -z-10 rounded-full" />
-                {/* Active Connection Line */}
-                <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(currentIndex / (STAGES.length - 1)) * 100}%` }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="absolute top-[3.25rem] left-8 h-1 bg-emerald-400 -z-10 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.5)]" 
-                />
-
-                {STAGES.map((stage, i) => {
-                    const isCompleted = i < currentIndex;
-                    const isCurrent = i === currentIndex;
-                    const isExpanded = expandedId === stage.id;
-                    const colorState = isCompleted ? "emerald" : isCurrent ? "emerald" : "slate";
-
-                    return (
-                        <div key={stage.id} className="relative w-64 flex flex-col items-center">
-                            
-                            {/* Node Core */}
-                            <button 
-                                onClick={() => setExpandedId(isExpanded ? null : stage.id)}
-                                className={cn(
-                                    "w-12 h-12 mb-6 rounded-2xl flex items-center justify-center transition-all duration-300 ring-4 ring-white relative z-10",
-                                    isCompleted && "bg-emerald-50 text-emerald-500 border-2 border-emerald-500",
-                                    isCurrent && "bg-emerald-600 text-white shadow-xl shadow-emerald-500/30 scale-110",
-                                    !isCompleted && !isCurrent && "bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200"
-                                )}
-                            >
-                                {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : <span className="font-black text-lg">{stage.id}</span>}
-                            </button>
-
-                            {/* Node Details */}
-                            <div className={cn(
-                                "text-center transition-opacity duration-300",
-                                !isExpanded && "opacity-60 hover:opacity-100 cursor-pointer"
-                            )} onClick={() => setExpandedId(isExpanded ? null : stage.id)}>
-                                
-                                <div className="flex flex-col items-center gap-1 mb-2">
-                                     <span className={cn(
-                                        "text-[8px] font-black uppercase tracking-widest",
-                                        isCurrent ? "text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full" : "text-slate-400"
-                                     )}>{stage.phase}</span>
-                                </div>
-                                <h4 className="text-sm font-black text-slate-800 leading-tight mb-2">
-                                    {stage.title}
-                                </h4>
-                                <span className="text-[10px] font-bold text-slate-400 inline-flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
-                                    <Calendar className="w-3 h-3" /> {stage.date}
-                                </span>
-                            </div>
-
-                            {/* Expanded Data Dropdown Mock */}
-                            <AnimatePresence>
-                                {isExpanded && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, height: 0, y: -10 }}
-                                        animate={{ opacity: 1, height: "auto", y: 0 }}
-                                        exit={{ opacity: 0, height: 0, y: -10 }}
-                                        className="w-full mt-4 bg-white border border-slate-200 rounded-3xl p-5 shadow-xl shadow-slate-200/50 text-left overflow-hidden"
-                                    >
-                                        <p className="text-xs text-slate-500 font-medium mb-3">Tasks to unlock progression for {stage.title}:</p>
-                                        <ul className="space-y-3">
-                                            {[1, 2, 3].map(t => (
-                                                <li key={t} className="flex gap-2 items-start text-xs font-bold text-slate-700">
-                                                    <div className="w-4 h-4 rounded-full border-2 border-slate-200 mt-0.5 shrink-0" />
-                                                    Complete sub-task {t}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        <button className="w-full mt-4 py-2 bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
-                                            Open Tool <ArrowRight className="w-3 h-3" />
-                                        </button>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-}
-
-// ----------------------------------------------------
-// S-CURVE BOARD VIEW
-// ----------------------------------------------------
-function SCurveView({ expandedId, setExpandedId, currentIndex }: { expandedId: number | null, setExpandedId: any, currentIndex: number }) {
-    
-    // Split into rows of 4 for the snake pattern
-    const chunkedStages = [];
-    for (let i = 0; i < STAGES.length; i += 4) {
-        chunkedStages.push(STAGES.slice(i, i + 4));
-    }
-
-    return (
-        <div className="w-full relative px-2 py-8 m-auto max-w-5xl">
-            {chunkedStages.map((row, rowIndex) => {
-                const isEvenRow = rowIndex % 2 !== 0; // Reverse every other row for S-Curve
-                const displayRow = isEvenRow ? [...row].reverse() : row;
-                
-                return (
-                    <div key={rowIndex} className="relative">
-                        
-                        {/* The Horizontal Line for this row */}
-                        <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full h-1 bg-slate-100 -z-10 rounded-full hidden md:block" />
-                        
-                        <div className={cn(
-                            "grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-4 relative mb-12",
-                            // No reverse needed physically in DOM because grid flow isn't visually mapped to line without explicit ordering,
-                            // But we reversed the array to map the visual S.
-                        )}>
-                            {displayRow.map((stage, colIndex) => {
-                                const i = STAGES.findIndex(s => s.id === stage.id);
-                                const isCompleted = i < currentIndex;
-                                const isCurrent = i === currentIndex;
-                                const isExpanded = expandedId === stage.id;
-
-                                return (
-                                    <div key={stage.id} className="relative flex md:flex-col items-center md:text-center p-4 bg-white md:bg-transparent rounded-3xl border border-slate-100 shadow-sm md:border-transparent md:shadow-none hover:shadow-md md:hover:shadow-none transition-all cursor-pointer group" onClick={() => setExpandedId(isExpanded ? null : stage.id)}>
-                                        
-                                        {/* Node Marker */}
-                                        <div className={cn(
-                                            "w-10 h-10 md:mb-6 rounded-2xl flex items-center justify-center transition-all duration-300 ring-4 ring-white shrink-0 mr-4 md:mr-0 relative z-10",
-                                            isCompleted && "bg-emerald-50 text-emerald-500 border-2 border-emerald-500",
-                                            isCurrent && "bg-emerald-600 text-white shadow-lg shadow-emerald-500/30 scale-110",
-                                            !isCompleted && !isCurrent && "bg-slate-100 text-slate-400 border border-slate-200 group-hover:bg-slate-200"
-                                        )}>
-                                            {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : <span className="font-black text-sm">{stage.id}</span>}
-                                        </div>
-
-                                        <div className="flex-1">
-                                            <div className="flex flex-col md:items-center gap-1 mb-1">
-                                                <span className={cn(
-                                                    "text-[8px] font-black uppercase tracking-widest",
-                                                    isCurrent ? "text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full w-fit md:mx-auto" : "text-slate-400"
-                                                )}>{stage.phase}</span>
-                                            </div>
-                                            <h4 className="text-sm font-black text-slate-800 leading-tight mb-2">
-                                                {stage.title}
-                                            </h4>
-                                            
-                                            <AnimatePresence>
-                                                {isExpanded && (
-                                                    <motion.div 
-                                                        initial={{ opacity: 0, height: 0 }}
-                                                        animate={{ opacity: 1, height: "auto" }}
-                                                        exit={{ opacity: 0, height: 0 }}
-                                                        className="mt-3 text-left bg-slate-50 p-4 rounded-2xl border border-slate-100"
-                                                    >
-                                                        <ul className="space-y-2 mb-3">
-                                                            <li className="text-[10px] font-bold text-slate-600 flex gap-2">
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1 shrink-0" /> Focus on milestones
-                                                            </li>
-                                                            <li className="text-[10px] font-bold text-slate-600 flex gap-2">
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1 shrink-0" /> Unlock tools
-                                                            </li>
-                                                        </ul>
-                                                        <button className="w-full py-1.5 bg-white border border-slate-200 text-slate-800 rounded-lg text-[9px] font-black uppercase tracking-widest shadow-sm hover:border-emerald-300 transition-colors">
-                                                            View Guide
-                                                        </button>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
-    );
 }
