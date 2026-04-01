@@ -6,8 +6,7 @@ import PersonalizedMentors from "@/src/features/(dashboard)/overview/components/
 import PopularResources from "@/src/features/(dashboard)/overview/components/popular-resources";
 import { PerformanceGrid } from "@/src/features/analytics/components/performance-grid";
 import { DeadlineCountdown } from "@/src/features/automation/components/deadline-countdown";
-import { ApplicationFlowSankey } from "@/src/features/analytics/components/application-flow-sankey";
-import { AdmissionRoadmap } from "@/src/features/(dashboard)/overview/components/admission-roadmap";
+import { InteractiveRoadmapFlow } from "@/src/features/(dashboard)/overview/components/interactive-roadmap-flow";
 import { MissionControl } from "@/src/features/(dashboard)/overview/components/mission-control";
 import { useAuth } from "@/src/providers/auth-provider";
 import { useEffect, useState } from "react";
@@ -82,7 +81,7 @@ export default function OverviewPage() {
             />
             
             {/* New Interactive Applicant Roadmap */}
-            <ApplicationFlowSankey data={progressData} isLoading={isDataLoading} />
+            <InteractiveRoadmapFlow />
 
             {/* Cinematic Mission Control */}
             <MissionControl />
