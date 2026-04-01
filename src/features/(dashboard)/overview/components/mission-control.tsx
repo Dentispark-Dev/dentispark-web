@@ -230,10 +230,24 @@ export function MissionControl() {
             <div 
               key={mission.id} 
               className={cn(
-                "group border-b border-slate-100 last:border-b-0 transition-colors duration-300",
-                isExpanded ? "bg-slate-50/50" : "hover:bg-slate-50/30"
+                "group border-b border-slate-100 last:border-b-0 transition-all duration-500 relative",
+                isExpanded ? "bg-slate-50/80" : "hover:bg-slate-50/40"
               )}
             >
+              {/* Dynamic Theme Color Left Border (Hover Only) */}
+              <div className={cn(
+                "absolute left-0 top-0 bottom-0 w-1 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top",
+                mission.color === "emerald" && "bg-emerald-500",
+                mission.color === "blue" && "bg-blue-500",
+                mission.color === "amber" && "bg-amber-500",
+                mission.color === "indigo" && "bg-indigo-500",
+                mission.color === "orange" && "bg-orange-500",
+                mission.color === "rose" && "bg-rose-500",
+                mission.color === "teal" && "bg-teal-500",
+                mission.color === "red" && "bg-red-500",
+                mission.color === "purple" && "bg-purple-500",
+                mission.color === "cyan" && "bg-cyan-500",
+              )} />
               <button 
                 onClick={() => toggleAccordion(mission.id)}
                 className="w-full flex items-center justify-between p-6 lg:px-10 lg:py-8 text-left focus:outline-none"
@@ -241,14 +255,16 @@ export function MissionControl() {
                 <div className="flex items-center gap-6">
                   {/* Status Indicator */}
                   <div className="relative">
-                    <div className={cn(
-                        "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10 relative",
-                        isCompleted ? "bg-emerald-100 text-emerald-600" : 
-                        isActive ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20" : 
-                        "bg-slate-100 text-slate-400"
+                    <motion.div 
+                        whileHover={{ scale: 1.15, rotate: 5 }}
+                        className={cn(
+                        "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 z-10 relative border-4 border-transparent shadow-sm",
+                        isCompleted ? "bg-emerald-100 text-emerald-600 border-white" : 
+                        isActive ? "bg-emerald-600 text-white shadow-xl shadow-emerald-500/30" : 
+                        "bg-white text-slate-300 border-slate-100 group-hover:border-slate-50 group-hover:shadow-md"
                     )}>
-                      {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : mission.icon}
-                    </div>
+                      {isCompleted ? <CheckCircle2 className="w-7 h-7" /> : mission.icon}
+                    </motion.div>
                     {/* Vertical Line Connector (unless last item) */}
                     {!isLast && (
                       <div className={cn(
@@ -259,7 +275,7 @@ export function MissionControl() {
                   </div>
 
                   {/* Title & Phase */}
-                  <div>
+                  <div className="relative">
                      <div className="flex items-center gap-3 mb-1">
                         <span className={cn(
                            "text-[10px] font-black uppercase tracking-widest",
@@ -273,12 +289,30 @@ export function MissionControl() {
                           </span>
                         )}
                      </div>
-                     <h3 className={cn(
-                       "text-xl lg:text-2xl font-black transition-colors duration-300",
-                       isActive ? "text-slate-900" : isCompleted ? "text-slate-700" : "text-slate-500"
-                     )}>
-                       {mission.title}
-                     </h3>
+                      <motion.h3 
+                        whileHover={{ x: 5 }}
+                        className={cn(
+                        "text-xl lg:text-2xl font-black transition-colors duration-500",
+                        isActive ? "text-slate-900" : isCompleted ? "text-slate-700" : "text-slate-400 group-hover:text-slate-900"
+                      )}>
+                        {mission.title}
+                      </motion.h3>
+                      
+                      {/* Interactive Hint (Visible on group-hover) */}
+                      {!isExpanded && (
+                        <div className="absolute top-1/2 -translate-y-1/2 right-12 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-500 hidden lg:flex items-center gap-2">
+                           <span className={cn(
+                             "text-[9px] font-black uppercase tracking-[0.2em]",
+                             isActive ? "text-emerald-600" : "text-slate-400"
+                           )}>
+                              Launch Station
+                           </span>
+                           <ArrowRight className={cn(
+                             "w-4 h-4",
+                             isActive ? "text-emerald-500" : "text-slate-300"
+                           )} />
+                        </div>
+                      )}
                   </div>
                 </div>
 
