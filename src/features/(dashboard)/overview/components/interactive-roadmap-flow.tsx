@@ -7,24 +7,46 @@ import {
   Calendar,
   Layers,
   Zap,
-  ArrowRight
+  ArrowRight,
+  Search,
+  PenTool,
+  ClipboardCheck,
+  Brain,
+  ListChecks,
+  Send,
+  Timer,
+  MessagesSquare,
+  Trophy,
+  GraduationCap,
+  LucideIcon
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
+import { useRouter } from "next/navigation";
 
-// 11 Applicant Stages
-const STAGES = [
-  { id: 1, phase: "STAGE 1 • RESEARCH", title: "Research Schools & UCAS Strategy", date: "JAN - MAR" },
-  { id: 2, phase: "STAGE 2 • PREPARATION", title: "UCAT Registration Window", date: "APR - MAY", isCurrent: true },
-  { id: 3, phase: "STAGE 3 • PREPARATION", title: "Mastering the Personal Statement", date: "APR - MAY" },
-  { id: 4, phase: "STAGE 4 • PREPARATION", title: "Secure Academic References", date: "APR - MAY" },
-  { id: 5, phase: "STAGE 5 • EXAMS", title: "The UCAT Entrance Exam", date: "JUN - JUL" },
-  { id: 6, phase: "STAGE 6 • APPLICATION", title: "Finalise UCAS Choices (4+1)", date: "AUG" },
+interface StageData {
+  id: number;
+  phase: string;
+  title: string;
+  date: string;
+  icon: LucideIcon;
+  url: string;
+  isCurrent?: boolean;
+}
+
+// 11 Applicant Stages with Real Tool Mappings
+const STAGES: StageData[] = [
+  { id: 1, phase: "STAGE 1 • RESEARCH", title: "Research Schools & UCAS Strategy", date: "JAN - MAR", icon: Search, url: "/university-hub" },
+  { id: 2, phase: "STAGE 2 • PREPARATION", title: "UCAT Registration Window", date: "APR - MAY", icon: Calendar, url: "/ai-hub/study-planner", isCurrent: true },
+  { id: 3, phase: "STAGE 3 • PREPARATION", title: "Mastering the Personal Statement", date: "APR - MAY", icon: PenTool, url: "/ai-hub/personal-statement" },
+  { id: 4, phase: "STAGE 4 • PREPARATION", title: "Secure Academic References", date: "APR - MAY", icon: ClipboardCheck, url: "/guidance-hub" },
+  { id: 5, phase: "STAGE 5 • EXAMS", title: "The UCAT Entrance Exam", date: "JUN - JUL", icon: Brain, url: "/ai-hub/study-planner" },
+  { id: 6, phase: "STAGE 6 • APPLICATION", title: "Finalise UCAS Choices (4+1)", date: "AUG", icon: ListChecks, url: "/university-hub" },
   
-  { id: 7, phase: "STAGE 7 • APPLICATION", title: "Submit UCAS Application", date: "SEPT" },
-  { id: 8, phase: "STAGE 8 • APPLICATION", title: "THE HARD DEADLINE", date: "OCT 15" },
-  { id: 9, phase: "STAGE 9 • INTERVIEWS", title: "MMI & Panel Interviews", date: "OCT - NOV" },
-  { id: 10, phase: "STAGE 10 • INTERVIEWS", title: "Offers & Firm Choices", date: "JAN - MAR (2027)" },
-  { id: 11, phase: "STAGE 11 • ENROLMENT", title: "Enrollment & Success", date: "MAY - SEPT" }
+  { id: 7, phase: "STAGE 7 • APPLICATION", title: "Submit UCAS Application", date: "SEPT", icon: Send, url: "/applications" },
+  { id: 8, phase: "STAGE 8 • APPLICATION", title: "THE HARD DEADLINE", date: "OCT 15", icon: Timer, url: "/applications" },
+  { id: 9, phase: "STAGE 9 • INTERVIEWS", title: "MMI & Panel Interviews", date: "OCT - NOV", icon: MessagesSquare, url: "/ai-hub/interview-prep" },
+  { id: 10, phase: "STAGE 10 • INTERVIEWS", title: "Offers & Firm Choices", date: "JAN - MAR (2027)", icon: Trophy, url: "/ai-hub/acceptance-odds" },
+  { id: 11, phase: "STAGE 11 • ENROLMENT", title: "Enrollment & Success", date: "MAY - SEPT", icon: GraduationCap, url: "/growth" }
 ];
 
 // Mathematical geometry for the Central Hub & Radial Donut
@@ -77,6 +99,7 @@ function getSegmentCenterPoint(index: number) {
 }
 
 export function InteractiveRoadmapFlow() {
+  const router = useRouter();
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
   
   const currentIndex = STAGES.findIndex(s => s.isCurrent);
@@ -212,8 +235,20 @@ export function InteractiveRoadmapFlow() {
           </svg>
 
           {/* HTML Overlay - Central Radial Hub Engine */}
+          <motion.div 
+             animate={{ rotate: [0, 360] }}
+             transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+             className="absolute rounded-full border-[1px] border-slate-100 opacity-20 pointer-events-none"
+             style={{ 
+               left: CX - (RADIUS + 80), 
+               top: CY - (RADIUS + 80), 
+               width: (RADIUS + 80) * 2, 
+               height: (RADIUS + 80) * 2 
+             }}
+          />
+
           <div 
-             className="absolute flex flex-col items-center justify-center text-center rounded-full bg-white shadow-[0_0_60px_rgba(0,0,0,0.05)] border-[12px] border-slate-50 transition-all duration-500 ease-out"
+             className="absolute flex flex-col items-center justify-center text-center rounded-full bg-white shadow-[0_0_80px_rgba(0,0,0,0.08)] border-[12px] border-slate-50 transition-all duration-500 ease-out z-40"
              style={{ 
                left: CX - (RADIUS - 40), 
                top: CY - (RADIUS - 40), 
@@ -230,21 +265,28 @@ export function InteractiveRoadmapFlow() {
                     transition={{ duration: 0.2 }}
                     className="flex flex-col items-center justify-center p-4"
                  >
-                     <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 text-emerald-500 flex items-center justify-center mb-3">
-                        <Layers className="w-6 h-6" />
-                     </div>
+                     <motion.div 
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center mb-4 shadow-sm"
+                     >
+                        <displayStage.icon className="w-7 h-7" />
+                     </motion.div>
                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">
                         STAGE {displayStage.id}
                      </span>
-                     <h3 className="text-lg font-black text-slate-900 leading-tight mb-2 max-w-[160px]">
+                     <h3 className="text-xl font-black text-slate-900 leading-tight mb-2 max-w-[180px]">
                         {displayStage.title}
                      </h3>
-                     <span className="text-[10px] font-bold text-slate-500 bg-slate-100 rounded-md px-2 py-1">
-                        Timeline: {displayStage.date}
+                     <span className="text-[10px] font-bold text-slate-500 bg-slate-100 rounded-md px-2 py-1 mb-4 flex items-center gap-1.5">
+                        <Calendar className="w-3 h-3" /> {displayStage.date}
                      </span>
                      
-                     <button className="mt-4 px-4 py-2 bg-slate-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-colors">
-                        View Details
+                     <button 
+                        onClick={() => router.push(displayStage.url)}
+                        className="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-lg hover:shadow-emerald-500/20 active:scale-95"
+                     >
+                        Open Tool <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                      </button>
                  </motion.div>
              </AnimatePresence>
@@ -267,12 +309,13 @@ export function InteractiveRoadmapFlow() {
                     key={`pill-${stage.id}`}
                     onMouseEnter={() => setHoveredNode(i)}
                     onMouseLeave={() => setHoveredNode(null)}
+                    onClick={() => router.push(stage.url)}
                     className={cn(
-                        "absolute flex items-center p-3 rounded-full border-2 transition-all duration-300 cursor-pointer group shadow-sm",
-                        isHovered ? `bg-white border-${themeColor}-400 shadow-xl shadow-${themeColor}-400/20 scale-[1.03] z-50` : 
-                        isPast ? `bg-white border-slate-200 hover:border-${themeColor}-300` : 
-                        `bg-slate-50 border-transparent hover:bg-white hover:border-${themeColor}-200`,
-                        isDim && "opacity-40 grayscale"
+                        "absolute flex items-center p-2 pr-5 rounded-full border-[1px] transition-all duration-500 cursor-pointer group",
+                        isHovered ? `bg-white border-${themeColor}-400 shadow-2xl shadow-${themeColor}-400/20 scale-[1.05] z-50` : 
+                        isPast ? `bg-white border-slate-200 hover:border-${themeColor}-300 hover:shadow-lg shadow-slate-200/40` : 
+                        `bg-slate-50 border-slate-100 hover:bg-white hover:border-${themeColor}-200 hover:shadow-lg shadow-slate-200/20`,
+                        isDim && "opacity-30 grayscale blur-[0.5px]"
                     )}
                     style={{ 
                         left: pos.x, 
@@ -281,41 +324,54 @@ export function InteractiveRoadmapFlow() {
                         height: PILL_HEIGHT 
                     }}
                  >
-                     {/* Pill Icon Cirle */}
+                     {/* Pill Icon Bubble - Exact reference style */}
                      <div className={cn(
-                        "w-14 h-14 rounded-full flex items-center justify-center shrink-0 transition-colors mr-4 border-4",
-                        isHovered ? `bg-${themeColor}-500 text-white border-${themeColor}-100` : 
+                        "w-16 h-16 rounded-full flex items-center justify-center shrink-0 transition-all duration-500 mr-4 border-[6px] shadow-sm",
+                        isHovered ? `bg-${themeColor}-500 text-white border-white scale-110 rotate-12` : 
                         isPast ? `bg-${themeColor}-50 text-${themeColor}-500 border-white` : 
-                        "bg-slate-200 text-slate-400 border-white group-hover:bg-white"
+                        "bg-white text-slate-300 border-white group-hover:bg-slate-50"
                      )}>
-                         {isPast && !isHovered ? <CheckCircle2 className="w-6 h-6" /> : <span className="font-black text-xl">{stage.id < 10 ? `0${stage.id}` : stage.id}</span>}
+                         {isPast && !isHovered ? (
+                            <CheckCircle2 className="w-7 h-7" />
+                         ) : (
+                            <stage.icon className="w-7 h-7" />
+                         )}
                      </div>
 
                      {/* Pill Core Text */}
                      <div className="flex flex-col justify-center overflow-hidden">
-                        <span className={cn(
-                            "text-[8px] font-black uppercase tracking-widest leading-none mb-1.5",
-                            isHovered ? `text-${themeColor}-500` : "text-slate-400"
+                        <div className="flex items-center gap-1.5 mb-1">
+                            <span className={cn(
+                                "text-[14px] font-black",
+                                isHovered ? `text-${themeColor}-600` : "text-slate-400"
+                            )}>
+                                {stage.id < 10 ? `0${stage.id}` : stage.id}
+                            </span>
+                            <span className={cn(
+                                "text-[8px] font-black uppercase tracking-widest leading-none",
+                                isHovered ? "text-slate-600" : "text-slate-300"
+                            )}>
+                                {stage.phase.split(' • ')[1]}
+                            </span>
+                        </div>
+                        <h5 className={cn(
+                            "text-[14px] font-black leading-tight transition-colors transition-all",
+                            isHovered ? "text-slate-900" : "text-slate-600"
                         )}>
-                            {stage.phase}
-                        </span>
-                        <h5 className="text-[13px] font-bold text-slate-800 leading-tight pr-2 truncate">
                             {stage.title}
                         </h5>
                         
-                        {/* Expandable interaction text only visible on hover inside the pill */}
-                        <AnimatePresence>
-                            {isHovered && (
-                                <motion.div 
-                                    initial={{ height: 0, opacity: 0 }} 
-                                    animate={{ height: "auto", opacity: 1 }} 
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="text-[9px] font-bold text-slate-500 mt-1 flex items-center gap-1"
-                                >
-                                    <Zap className={cn("w-3 h-3 transition-colors", `text-${themeColor}-400 fill-${themeColor}-400/30`)} /> Explore Stage
-                                </motion.div>
+                        {/* Interactive Hint */}
+                        <motion.div 
+                            initial={false}
+                            animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -5 }}
+                            className={cn(
+                                "text-[9px] font-black uppercase tracking-tighter mt-1 flex items-center gap-1",
+                                `text-${themeColor}-500`
                             )}
-                        </AnimatePresence>
+                        >
+                            <Zap className="w-3 h-3 fill-current" /> Initialize {stage.title.split(' ')[0]}
+                        </motion.div>
                      </div>
                  </div>
              )
