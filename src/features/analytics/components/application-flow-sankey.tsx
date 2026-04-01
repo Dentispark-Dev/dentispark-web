@@ -1,39 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { toast } from "sonner";
 import { cn } from "@/src/lib/utils";
+import type { ApplicationProgress } from "@/src/features/(dashboard)/overview/services/overview.api";
 
-// Define the flow data structure for easier interactivity
-const NODES = [
-  { id: "apps", label: "Applications", value: 47, x: 50, y: 200, color: "text-slate-900", bg: "bg-slate-100" },
-  { id: "interviews", label: "Interviews", value: 16, x: 415, y: 55, color: "text-emerald-900", bg: "bg-emerald-100" },
-  { id: "rejected", label: "Rejected/No Answer", value: 30, x: 415, y: 220, color: "text-orange-900", bg: "bg-orange-100" },
-  { id: "waitlist_interview", label: "Interview Waitlist", value: 1, x: 415, y: 370, color: "text-rose-900", bg: "bg-rose-100" },
-  { id: "attended", label: "Attended", value: 15, x: 615, y: 55, color: "text-teal-900", bg: "bg-teal-100" },
-  { id: "declined", label: "Declined", value: 1, x: 580, y: 175, color: "text-emerald-900", bg: "bg-emerald-100" },
-  { id: "offers", label: "Offers", value: 9, x: 810, y: 30, color: "text-amber-900", bg: "bg-amber-100" },
-  { id: "waitlist", label: "Waitlist", value: 2, x: 810, y: 100, color: "text-purple-900", bg: "bg-purple-100" },
-  { id: "rejection", label: "Rejection", value: 3, x: 810, y: 150, color: "text-pink-900", bg: "bg-pink-100" },
-  { id: "no_response", label: "No response", value: 1, x: 810, y: 200, color: "text-slate-900", bg: "bg-slate-100" },
-  { id: "accepted", label: "Accepted", value: 1, x: 960, y: 30, color: "text-emerald-900", bg: "bg-emerald-100" },
-];
+interface ApplicationFlowSankeyProps {
+  data?: ApplicationProgress | null;
+  isLoading?: boolean;
+}
 
-const PATHS = [
-  { id: "p1", source: "apps", target: "interviews", d: "M 150 150 C 300 150, 250 80, 400 80", stroke: "url(#gradBlue)", width: 60, hoverColor: "#34d399" },
-  { id: "p2", source: "apps", target: "rejected", d: "M 150 210 C 250 210, 250 260, 400 260", stroke: "url(#gradOrange)", width: 110, hoverColor: "#fb923c" },
-  { id: "p3", source: "apps", target: "waitlist_interview", d: "M 150 270 C 200 270, 250 380, 400 380", stroke: "url(#gradRed)", width: 10, hoverColor: "#f43f5e" },
-  { id: "p4", source: "interviews", target: "declined", d: "M 450 100 C 500 100, 500 180, 550 180", stroke: "url(#gradGreen)", width: 8, hoverColor: "#10b981" },
-  { id: "p5", source: "interviews", target: "attended", d: "M 450 70 C 520 70, 520 70, 600 70", stroke: "url(#gradTeal)", width: 50, hoverColor: "#14b8a6" },
-  { id: "p6", source: "attended", target: "offers", d: "M 650 60 C 700 60, 750 40, 800 40", stroke: "url(#gradYellow)", width: 35, hoverColor: "#fbbf24" },
-  { id: "p7", source: "attended", target: "waitlist", d: "M 650 75 C 700 75, 750 110, 800 110", stroke: "url(#gradPurple)", width: 10, hoverColor: "#a855f7" },
-  { id: "p8", source: "attended", target: "rejection", d: "M 650 85 C 700 85, 750 160, 800 160", stroke: "url(#gradPink)", width: 12, hoverColor: "#ec4899" },
-  { id: "p9", source: "attended", target: "no_response", d: "M 650 90 C 700 90, 750 210, 800 210", stroke: "url(#gradBrown)", width: 5, hoverColor: "#b45309" },
-  { id: "p10", source: "offers", target: "accepted", d: "M 850 35 C 900 35, 930 25, 950 25", stroke: "url(#gradGrey)", width: 5, hoverColor: "#64748b" },
-];
-
-export function ApplicationFlowSankey() {
+export function ApplicationFlowSankey({ data, isLoading }: ApplicationFlowSankeyProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
@@ -42,9 +20,62 @@ export function ApplicationFlowSankey() {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) return <div className="h-[400px] bg-slate-50 rounded-[2.5rem] animate-pulse" />;
+  if (!isMounted || isLoading) return <div className="h-[400px] bg-slate-50 rounded-[2.5rem] animate-pulse" />;
 
-  const pathVariants = {
+  // Default fallback if no data provided
+  const flow = data || {
+    total: 47,
+    interviews: 16,
+    rejected: 30,
+    interviewWaitlist: 1,
+    attended: 15,
+    declined: 1,
+    offers: 9,
+    waitlist: 2,
+    rejection: 3,
+    noResponse: 1,
+    accepted: 1
+  };
+
+  const totalScale = Math.max(1, flow.total);
+
+  // Math helper for dynamic path width (max 90 thickness)
+  const calcWidth = (val: number) => Math.max(3, (val / totalScale) * 110);
+
+  const NODES = [
+    { id: "apps", label: "Applications", value: flow.total, x: 50, y: 200, color: "text-slate-900", bg: "bg-slate-100" },
+    { id: "interviews", label: "Interviews", value: flow.interviews, x: 415, y: 55, color: "text-emerald-900", bg: "bg-emerald-100" },
+    { id: "rejected", label: "Rejected/No Answer", value: flow.rejected, x: 415, y: 220, color: "text-orange-900", bg: "bg-orange-100" },
+    { id: "waitlist_interview", label: "Interview Waitlist", value: flow.interviewWaitlist, x: 415, y: 370, color: "text-rose-900", bg: "bg-rose-100" },
+    
+    { id: "attended", label: "Attended", value: flow.attended, x: 615, y: 55, color: "text-teal-900", bg: "bg-teal-100" },
+    { id: "declined", label: "Declined", value: flow.declined, x: 580, y: 175, color: "text-emerald-900", bg: "bg-emerald-100" },
+    
+    { id: "offers", label: "Offers", value: flow.offers, x: 810, y: 30, color: "text-amber-900", bg: "bg-amber-100" },
+    { id: "waitlist", label: "Waitlist", value: flow.waitlist, x: 810, y: 100, color: "text-purple-900", bg: "bg-purple-100" },
+    { id: "rejection", label: "Rejection", value: flow.rejection, x: 810, y: 150, color: "text-pink-900", bg: "bg-pink-100" },
+    { id: "no_response", label: "No response", value: flow.noResponse, x: 810, y: 200, color: "text-slate-900", bg: "bg-slate-100" },
+    
+    { id: "accepted", label: "Accepted", value: flow.accepted, x: 960, y: 30, color: "text-emerald-900", bg: "bg-emerald-100" },
+  ];
+
+  const PATHS = [
+    { id: "p1", source: "apps", target: "interviews", val: flow.interviews, d: "M 150 150 C 300 150, 250 80, 400 80", stroke: "url(#gradBlue)", hoverColor: "#34d399" },
+    { id: "p2", source: "apps", target: "rejected", val: flow.rejected, d: "M 150 210 C 250 210, 250 260, 400 260", stroke: "url(#gradOrange)", hoverColor: "#fb923c" },
+    { id: "p3", source: "apps", target: "waitlist_interview", val: flow.interviewWaitlist, d: "M 150 270 C 200 270, 250 380, 400 380", stroke: "url(#gradRed)", hoverColor: "#f43f5e" },
+    
+    { id: "p4", source: "interviews", target: "declined", val: flow.declined, d: "M 450 100 C 500 100, 500 180, 550 180", stroke: "url(#gradGreen)", hoverColor: "#10b981" },
+    { id: "p5", source: "interviews", target: "attended", val: flow.attended, d: "M 450 70 C 520 70, 520 70, 600 70", stroke: "url(#gradTeal)", hoverColor: "#14b8a6" },
+    
+    { id: "p6", source: "attended", target: "offers", val: flow.offers, d: "M 650 60 C 700 60, 750 40, 800 40", stroke: "url(#gradYellow)", hoverColor: "#fbbf24" },
+    { id: "p7", source: "attended", target: "waitlist", val: flow.waitlist, d: "M 650 75 C 700 75, 750 110, 800 110", stroke: "url(#gradPurple)", hoverColor: "#a855f7" },
+    { id: "p8", source: "attended", target: "rejection", val: flow.rejection, d: "M 650 85 C 700 85, 750 160, 800 160", stroke: "url(#gradPink)", hoverColor: "#ec4899" },
+    { id: "p9", source: "attended", target: "no_response", val: flow.noResponse, d: "M 650 90 C 700 90, 750 210, 800 210", stroke: "url(#gradBrown)", hoverColor: "#b45309" },
+    
+    { id: "p10", source: "offers", target: "accepted", val: flow.accepted, d: "M 850 35 C 900 35, 930 25, 950 25", stroke: "url(#gradGrey)", hoverColor: "#64748b" },
+  ];
+
+  const pathVariants: Variants = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: { 
       pathLength: 1, 
@@ -59,11 +90,10 @@ export function ApplicationFlowSankey() {
     });
   };
 
-  // Helper to determine if a path should be highlighted based on hovered node
   const isPathActive = (path: any) => {
     if (hoveredPath) return hoveredPath === path.id;
     if (hoveredNode) return path.source === hoveredNode || path.target === hoveredNode;
-    return true; // if nothing hovered, all active
+    return true; 
   };
 
   return (
@@ -91,48 +121,17 @@ export function ApplicationFlowSankey() {
             xmlns="http://www.w3.org/2000/svg"
             className="w-full h-full drop-shadow-sm"
           >
-            {/* SVG Definitions */}
             <defs>
-              <linearGradient id="gradBlue" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#94a3b8" />
-                <stop offset="100%" stopColor="#34d399" />
-              </linearGradient>
-              <linearGradient id="gradOrange" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#94a3b8" />
-                <stop offset="100%" stopColor="#fb923c" />
-              </linearGradient>
-              <linearGradient id="gradRed" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#94a3b8" />
-                <stop offset="100%" stopColor="#f43f5e" />
-              </linearGradient>
-              <linearGradient id="gradGreen" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#34d399" />
-                <stop offset="100%" stopColor="#10b981" />
-              </linearGradient>
-              <linearGradient id="gradTeal" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#34d399" />
-                <stop offset="100%" stopColor="#14b8a6" />
-              </linearGradient>
-              <linearGradient id="gradYellow" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#14b8a6" />
-                <stop offset="100%" stopColor="#fbbf24" />
-              </linearGradient>
-              <linearGradient id="gradPurple" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#14b8a6" />
-                <stop offset="100%" stopColor="#a855f7" />
-              </linearGradient>
-              <linearGradient id="gradPink" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#14b8a6" />
-                <stop offset="100%" stopColor="#ec4899" />
-              </linearGradient>
-              <linearGradient id="gradBrown" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#14b8a6" />
-                <stop offset="100%" stopColor="#b45309" />
-              </linearGradient>
-              <linearGradient id="gradGrey" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#fbbf24" />
-                <stop offset="100%" stopColor="#64748b" />
-              </linearGradient>
+              <linearGradient id="gradBlue" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#94a3b8" /><stop offset="100%" stopColor="#34d399" /></linearGradient>
+              <linearGradient id="gradOrange" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#94a3b8" /><stop offset="100%" stopColor="#fb923c" /></linearGradient>
+              <linearGradient id="gradRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#94a3b8" /><stop offset="100%" stopColor="#f43f5e" /></linearGradient>
+              <linearGradient id="gradGreen" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#34d399" /><stop offset="100%" stopColor="#10b981" /></linearGradient>
+              <linearGradient id="gradTeal" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#34d399" /><stop offset="100%" stopColor="#14b8a6" /></linearGradient>
+              <linearGradient id="gradYellow" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#14b8a6" /><stop offset="100%" stopColor="#fbbf24" /></linearGradient>
+              <linearGradient id="gradPurple" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#14b8a6" /><stop offset="100%" stopColor="#a855f7" /></linearGradient>
+              <linearGradient id="gradPink" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#14b8a6" /><stop offset="100%" stopColor="#ec4899" /></linearGradient>
+              <linearGradient id="gradBrown" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#14b8a6" /><stop offset="100%" stopColor="#b45309" /></linearGradient>
+              <linearGradient id="gradGrey" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#fbbf24" /><stop offset="100%" stopColor="#64748b" /></linearGradient>
               <filter id="glow">
                 <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                 <feMerge>
@@ -142,47 +141,49 @@ export function ApplicationFlowSankey() {
               </filter>
             </defs>
 
-            {/* Paths */}
             {PATHS.map((path) => {
               const active = isPathActive(path);
               const isHovered = hoveredPath === path.id;
+              
+              // If val is 0, path gets invisible/very thin
+              const isZero = path.val === 0;
 
               return (
                 <motion.path 
                   key={path.id}
                   d={path.d}
-                  stroke={isHovered ? path.hoverColor : path.stroke}
-                  strokeWidth={path.width}
+                  stroke={isHovered && !isZero ? path.hoverColor : path.stroke}
+                  strokeWidth={isZero ? 1 : calcWidth(path.val)}
                   fill="none" 
                   variants={pathVariants}
                   initial="hidden"
                   animate={{ 
                     pathLength: 1, 
-                    opacity: active ? (isHovered ? 1 : 0.6) : 0.1 
+                    opacity: isZero ? 0.05 : (active ? (isHovered ? 1 : 0.6) : 0.1)
                   }}
                   transition={{ duration: 0.3 }}
                   onMouseEnter={() => setHoveredPath(path.id)}
                   onMouseLeave={() => setHoveredPath(null)}
-                  className="cursor-pointer transition-colors duration-300"
-                  style={{ filter: isHovered ? "url(#glow)" : "none" }}
+                  className={cn("transition-colors duration-300", !isZero && "cursor-pointer")}
+                  style={{ filter: isHovered && !isZero ? "url(#glow)" : "none" }}
                 />
               )
             })}
           </svg>
           
-          {/* HTML Overlay for Nodes (Points) */}
           <div className="absolute inset-0 pointer-events-none">
             {NODES.map((node) => {
                const isHovered = hoveredNode === node.id;
                const inactive = (hoveredNode && !isHovered) || (hoveredPath !== null && !PATHS.find(p => p.id === hoveredPath && (p.source === node.id || p.target === node.id)));
+               const isZero = node.value === 0;
 
                return (
                   <motion.div 
                     key={node.id}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ 
-                      opacity: inactive ? 0.3 : 1, 
-                      scale: isHovered ? 1.05 : 1,
+                      opacity: isZero ? 0.15 : (inactive ? 0.3 : 1), 
+                      scale: isHovered && !isZero ? 1.05 : 1,
                       zIndex: isHovered ? 50 : 10
                     }}
                     transition={{ duration: 0.3 }}
@@ -192,18 +193,25 @@ export function ApplicationFlowSankey() {
                     <button 
                       className={cn(
                         "group relative flex flex-col items-start focus:outline-none transition-all duration-300",
-                        isHovered && "drop-shadow-lg"
+                        isHovered && !isZero && "drop-shadow-lg",
+                        isZero && "cursor-default drop-shadow-none grayscale"
                       )}
                       onMouseEnter={() => setHoveredNode(node.id)}
                       onMouseLeave={() => setHoveredNode(null)}
-                      onClick={() => handleNodeClick(node)}
+                      onClick={() => !isZero && handleNodeClick(node)}
                     >
-                      {/* Clickable Point Indicator */}
-                      <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-4 border-emerald-500 shadow-md group-hover:scale-150 transition-transform duration-300 group-hover:border-emerald-400 group-hover:bg-emerald-50" />
+                      <div className={cn(
+                        "absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-4 shadow-md transition-transform duration-300",
+                        isZero ? "border-slate-200" : "border-emerald-500 group-hover:scale-150 group-hover:border-emerald-400 group-hover:bg-emerald-50"
+                      )} />
                       
-                      <div className={cn("px-4 py-2 rounded-2xl border flex items-baseline gap-3 transition-colors duration-300", node.bg, isHovered ? "border-emerald-300 bg-white" : "border-transparent")}>
-                        <span className={cn("text-2xl font-black", node.color)}>{node.value}</span>
-                        <span className="text-xs font-bold text-slate-600 whitespace-nowrap">{node.label}</span>
+                      <div className={cn(
+                        "px-4 py-2 rounded-2xl border flex items-baseline gap-3 transition-colors duration-300", 
+                        isZero ? "bg-slate-50 border-transparent" : node.bg, 
+                        isHovered && !isZero ? "border-emerald-300 bg-white" : "border-transparent"
+                      )}>
+                        <span className={cn("text-2xl font-black", isZero ? "text-slate-400" : node.color)}>{node.value}</span>
+                        <span className={cn("text-xs font-bold whitespace-nowrap", isZero ? "text-slate-400" : "text-slate-600")}>{node.label}</span>
                       </div>
                     </button>
                   </motion.div>

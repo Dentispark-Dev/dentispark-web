@@ -12,7 +12,7 @@ import { MissionControl } from "@/src/features/(dashboard)/overview/components/m
 import { useAuth } from "@/src/providers/auth-provider";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { overviewApi, type StudentProfile, type PersonalizedMentor } from "@/src/features/(dashboard)/overview/services/overview.api";
+import { overviewApi, type StudentProfile, type PersonalizedMentor, type ApplicationProgress } from "@/src/features/(dashboard)/overview/services/overview.api";
 import { toast } from "sonner";
 import { Star } from "lucide-react";
 
@@ -21,6 +21,7 @@ export default function OverviewPage() {
     const router = useRouter();
     const [studentData, setStudentData] = useState<StudentProfile | null>(null);
     const [mentors, setMentors] = useState<PersonalizedMentor[]>([]);
+    const [progressData, setProgressData] = useState<ApplicationProgress | null>(null);
     const [isDataLoading, setIsDataLoading] = useState(true);
 
     useEffect(() => {
@@ -45,13 +46,20 @@ export default function OverviewPage() {
                     return [];
                 });
 
-                const [profile, personalizedMentors] = await Promise.all([
+                const progressPromise = overviewApi.GET_APPLICATION_PROGRESS().catch(err => {
+                    console.warn("Progress fetch failed:", err);
+                    return null;
+                });
+
+                const [profile, personalizedMentors, progress] = await Promise.all([
                     profilePromise,
-                    mentorsPromise
+                    mentorsPromise,
+                    progressPromise
                 ]);
 
                 if (profile) setStudentData(profile);
                 if (personalizedMentors) setMentors(personalizedMentors);
+                if (progress) setProgressData(progress);
             } catch (error) {
                 console.error("Critical dashboard load error:", error);
             } finally {
@@ -74,7 +82,7 @@ export default function OverviewPage() {
             />
             
             {/* New Interactive Applicant Roadmap */}
-            <ApplicationFlowSankey />
+            <ApplicationFlowSankey data={progressData} isLoading={isDataLoading} />
 
             {/* Cinematic Mission Control */}
             <MissionControl />
