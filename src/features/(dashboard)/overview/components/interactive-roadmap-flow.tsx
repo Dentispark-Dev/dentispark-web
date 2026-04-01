@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   CheckCircle2, 
@@ -70,19 +70,19 @@ export function InteractiveRoadmapFlow() {
   const currentIndex = STAGES.findIndex(s => s.isCurrent);
 
   return (
-    <div className="w-full bg-slate-900 rounded-[3rem] p-8 lg:p-14 border border-slate-800 shadow-2xl relative overflow-hidden group">
+    <div className="w-full bg-white rounded-[3rem] p-8 lg:p-14 border border-slate-100 shadow-2xl shadow-slate-200/50 relative overflow-hidden group">
       
-      {/* Dark modern background effects */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none -z-10" />
+      {/* Light modern background effects */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50/60 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-50/60 blur-[120px] rounded-full -z-10 transition-transform duration-1000 group-hover:scale-150 pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none -z-10" />
 
       {/* Header */}
       <div className="mb-8 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10 text-center md:text-left">
         <div>
-            <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-emerald-400">Step-by-Step Intelligence</h3>
-            <h4 className="text-4xl font-black text-white tracking-tight mt-1">Applicant Process Flow</h4>
-            <p className="text-slate-400 font-medium text-sm mt-3 max-w-lg">
+            <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-emerald-600">Step-by-Step Intelligence</h3>
+            <h4 className="text-4xl font-black text-slate-900 tracking-tight mt-1">Applicant Process Flow</h4>
+            <p className="text-slate-500 font-medium text-sm mt-3 max-w-lg">
                 Hover over the path to illuminate stages, or click a node to expand toolsets and critical actions.
             </p>
         </div>
@@ -98,23 +98,23 @@ export function InteractiveRoadmapFlow() {
             viewBox="0 0 1000 800" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full drop-shadow-2xl"
+            className="w-full h-full drop-shadow-sm"
           >
             <defs>
               <linearGradient id="glowG" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="0%" stopColor="#34d399" />
                 <stop offset="100%" stopColor="#059669" />
               </linearGradient>
               <linearGradient id="glowB" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="0%" stopColor="#60a5fa" />
                 <stop offset="100%" stopColor="#2563eb" />
               </linearGradient>
               <linearGradient id="glowO" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="0%" stopColor="#fbbf24" />
                 <stop offset="100%" stopColor="#d97706" />
               </linearGradient>
               <filter id="svgGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feGaussianBlur stdDeviation="6" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur"/>
                   <feMergeNode in="SourceGraphic"/>
@@ -122,12 +122,12 @@ export function InteractiveRoadmapFlow() {
               </filter>
             </defs>
 
-            {/* Base Background Path */}
+            {/* Base Background Path - ALL visible clearly in light theme */}
             {PATH_SEGMENTS.map(seg => (
                <path 
                  key={`base-${seg.id}`} 
                  d={seg.d} 
-                 stroke="#1e293b" 
+                 stroke="#f1f5f9" // Visible slate-100 base
                  strokeWidth="40" 
                  strokeLinecap="round"
                  strokeLinejoin="round"
@@ -180,11 +180,11 @@ export function InteractiveRoadmapFlow() {
                const isCompleted = i < currentIndex;
                const isCurrent = i === currentIndex;
                
-               // Determine visual row
+               // Determine visual row for hover color theme logic
                const isRow1 = i < 4;
                const isRow2 = i >= 4 && i < 8;
                
-               // Color theme for the node
+               // Tailored distinct theme colors
                const themeColor = isRow2 ? "blue" : (i >= 8 ? "orange" : "emerald");
 
                return (
@@ -195,20 +195,34 @@ export function InteractiveRoadmapFlow() {
                     onMouseEnter={() => setHoveredNode(stage.id)}
                     onMouseLeave={() => setHoveredNode(null)}
                   >
-                    {/* The Clickable Node Button */}
+                    {/* The Clickable Node Button - Fully visible base states */}
                     <button 
                       onClick={() => setExpandedNode(isExpanded ? null : stage.id)}
                       className={cn(
-                        "w-20 h-20 rounded-full flex flex-col items-center justify-center border-[6px] transition-all duration-300 relative group",
-                        isCompleted ? `bg-${themeColor}-500 border-slate-900 text-white` : 
-                        isCurrent ? `bg-${themeColor}-600 border-${themeColor}-300 text-white shadow-[0_0_30px_rgba(52,211,153,0.4)] scale-110` : 
-                        `bg-slate-800 border-slate-700 text-slate-400 hover:border-${themeColor}-400 hover:bg-slate-700`
+                        "w-20 h-20 rounded-full flex flex-col items-center justify-center border-[6px] shadow-sm transition-all duration-300 relative group",
+                        
+                        // Default Base (visible steps)
+                        !isCompleted && !isCurrent && "bg-white border-slate-200 text-slate-400 hover:text-white hover:border-transparent",
+                        !isCompleted && !isCurrent && `hover:bg-${themeColor}-500 hover:shadow-lg hover:shadow-${themeColor}-500/30`,
+                        
+                        // Completed Route
+                        isCompleted && `bg-${themeColor}-50 text-${themeColor}-600 border-${themeColor}-200 hover:bg-${themeColor}-100`, 
+                        
+                        // Active Student Location
+                        isCurrent && `bg-${themeColor}-600 border-${themeColor}-200 text-white shadow-xl shadow-${themeColor}-500/40 scale-110`
                       )}
                     >
                       {isCompleted ? <CheckCircle2 className="w-8 h-8" /> : <span className="font-black text-2xl">{stage.id}</span>}
                     </button>
 
-                    {/* Pop-out Info Box (Visible on hover or expansion) */}
+                    {/* Stage Label directly below the node so it's always readable */}
+                    <div className="absolute top-[5rem] w-48 text-center pointer-events-none">
+                       <h5 className="font-bold text-slate-600 text-[11px] leading-tight drop-shadow-sm bg-white/50 backdrop-blur-sm rounded-lg px-2 py-1 mx-auto max-w-fit border border-slate-100/50">
+                           {stage.title}
+                       </h5>
+                    </div>
+
+                    {/* Pop-out Action Menu (Visible on click/expansion) */}
                     <AnimatePresence>
                       <motion.div 
                         initial={{ opacity: 0, y: 15, scale: 0.9 }}
@@ -216,48 +230,48 @@ export function InteractiveRoadmapFlow() {
                         exit={{ opacity: 0, y: 15, scale: 0.9 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         className={cn(
-                          "absolute top-full mt-4 w-64 bg-slate-800 border border-slate-700 rounded-3xl p-5 shadow-2xl text-left pointer-events-auto",
+                          "absolute top-[7.5rem] mt-2 w-72 bg-white border border-slate-200 rounded-[2rem] p-6 shadow-2xl text-left pointer-events-auto",
                           // Position differently if on edge to avoid overflow
                           pos.cx > 800 ? "-translate-x-[75%]" : (pos.cx < 200 ? "-translate-x-[25%]" : "-translate-x-1/2"),
-                          (isHovered || isExpanded) ? "z-50" : "opacity-0 pointer-events-none hidden",
-                          `hover:border-${themeColor}-500/50`
+                          (isExpanded) ? "z-50" : "opacity-0 pointer-events-none hidden",
+                          `hover:border-${themeColor}-300 hover:shadow-${themeColor}-500/10`
                         )}
                       >
                          <div className={cn(
                              "text-[9px] font-black uppercase tracking-widest mb-1.5",
-                             `text-${themeColor}-400`
+                             `text-${themeColor}-600`
                          )}>
                              {stage.phase}
                          </div>
-                         <h4 className="text-[15px] font-black text-white leading-tight mb-3">
+                         <h4 className="text-[16px] font-black text-slate-900 leading-tight mb-3">
                              {stage.title}
                          </h4>
 
-                         <div className="flex items-center gap-2 text-xs font-bold text-slate-400 bg-slate-900/50 p-2 rounded-xl border border-slate-800/80 mb-3">
-                             <Calendar className={cn("w-3.5 h-3.5", `text-${themeColor}-400`)} /> {stage.date}
+                         <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 bg-slate-50 p-2 rounded-xl border border-slate-100 mb-4 w-fit">
+                             <Calendar className={cn("w-3.5 h-3.5", `text-${themeColor}-500`)} /> {stage.date}
                          </div>
 
-                         {/* Only show rich action content if fully expanded (clicked) */}
-                         <AnimatePresence>
-                             {isExpanded && (
-                                 <motion.div 
-                                    initial={{ height: 0, opacity: 0 }} 
-                                    animate={{ height: "auto", opacity: 1 }} 
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="pt-3 mt-3 border-t border-slate-700"
-                                 >
-                                    <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1">
-                                        <Zap className="w-3 h-3 text-amber-400" /> Suggested Action
-                                    </h5>
-                                    <button className={cn(
-                                        "w-full py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors flex items-center justify-center gap-2",
-                                        `bg-${themeColor}-500 hover:bg-${themeColor}-400 text-white`
-                                    )}>
-                                        Open Toolkit <ArrowRight className="w-3 h-3" />
-                                    </button>
-                                 </motion.div>
-                             )}
-                         </AnimatePresence>
+                         {/* Rich action content block */}
+                         <div className="pt-4 border-t border-slate-100">
+                             <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                                 <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500/20" /> Mission Objectives
+                             </h5>
+                             <ul className="space-y-2 mb-4">
+                                <li className="text-[11px] font-bold text-slate-600 flex items-start gap-2">
+                                     <div className={cn("w-1.5 h-1.5 rounded-full mt-1.5 shrink-0", `bg-${themeColor}-400`)} /> Monitor portal daily
+                                </li>
+                                <li className="text-[11px] font-bold text-slate-600 flex items-start gap-2">
+                                     <div className={cn("w-1.5 h-1.5 rounded-full mt-1.5 shrink-0", `bg-${themeColor}-400`)} /> Complete mock assessments
+                                </li>
+                             </ul>
+
+                             <button className={cn(
+                                 "w-full py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                                 `bg-${themeColor}-50 hover:bg-${themeColor}-100 text-${themeColor}-700 border border-${themeColor}-200`
+                             )}>
+                                 Deploy Toolkit <ArrowRight className="w-3 h-3" />
+                             </button>
+                         </div>
                       </motion.div>
                     </AnimatePresence>
 
