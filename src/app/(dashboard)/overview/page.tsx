@@ -73,7 +73,8 @@ export default function OverviewPage() {
                 userYear={studentData?.yearOfStudy} 
             />
             
-            <AdmissionRoadmap />
+            {/* New Interactive Applicant Roadmap */}
+            <ApplicationFlowSankey />
 
             {/* Cinematic Mission Control */}
             <MissionControl />
@@ -92,9 +93,6 @@ export default function OverviewPage() {
                         mentors={mentors} 
                         isLoading={isDataLoading}
                     />
-
-                    {/* New Application Flow Sankey Diagram */}
-                    <ApplicationFlowSankey />
 
                     <div className="bg-white rounded-[3rem] border border-slate-100 p-10 lg:p-16 shadow-2xl shadow-slate-200/50">
                         <div className="flex items-center justify-between mb-12">
