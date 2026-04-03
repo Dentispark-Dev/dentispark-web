@@ -28,6 +28,7 @@ import {
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
+import { useDashboardStore } from "@/src/store/dashboard-store";
 
 interface Mission {
   id: number;
@@ -190,15 +191,15 @@ const MISSIONS: Mission[] = [
 ];
 
 export function MissionControl() {
+  const { stages, completeStage } = useDashboardStore();
   const currentMonth = new Date().getMonth();
+  
   const activeMissionId = useMemo(() => {
-    if (currentMonth >= 0 && currentMonth <= 2) return 1;
-    if (currentMonth >= 3 && currentMonth <= 4) return 2;
-    if (currentMonth >= 5 && currentMonth <= 6) return 5;
-    if (currentMonth >= 7 && currentMonth <= 8) return 6;
-    if (currentMonth >= 9 && currentMonth <= 10) return 9;
-    return 11;
-  }, [currentMonth]);
+    // Priority: The first "Not Completed" stage is the focus
+    const firstIncomplete = stages.find(s => !s.isCompleted);
+    if (firstIncomplete) return firstIncomplete.id;
+    return 1;
+  }, [stages]);
 
   const [expandedId, setExpandedId] = useState<number>(activeMissionId);
 
@@ -221,8 +222,9 @@ export function MissionControl() {
       {/* Accordion Timeline */}
       <div className="bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-sm">
         {MISSIONS.map((mission, index) => {
+          const storeStage = stages.find(s => s.id === mission.id);
+          const isCompleted = storeStage?.isCompleted || false;
           const isExpanded = expandedId === mission.id;
-          const isCompleted = mission.id < activeMissionId;
           const isActive = mission.id === activeMissionId;
           const isLast = index === MISSIONS.length - 1;
 
@@ -257,9 +259,13 @@ export function MissionControl() {
                   <div className="relative">
                     <motion.div 
                         whileHover={{ scale: 1.15, rotate: 5 }}
+                        animate={isCompleted ? { 
+                            boxShadow: ["0px 0px 0px rgba(16, 185, 129, 0)", "0px 0px 25px rgba(16, 185, 129, 0.6)", "0px 0px 0px rgba(16, 185, 129, 0)"] 
+                        } : {}}
+                        transition={{ duration: 1.5, repeat: Infinity }}
                         className={cn(
                         "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 z-10 relative border-4 border-transparent shadow-sm",
-                        isCompleted ? "bg-emerald-100 text-emerald-600 border-white" : 
+                        isCompleted ? "bg-emerald-500 text-white border-white" : 
                         isActive ? "bg-emerald-600 text-white shadow-xl shadow-emerald-500/30" : 
                         "bg-white text-slate-300 border-slate-100 group-hover:border-slate-50 group-hover:shadow-md"
                     )}>
@@ -369,18 +375,33 @@ export function MissionControl() {
                           </div>
                        </div>
 
-                       {/* Action Button */}
-                       <div className="flex items-center gap-4">
+                       {/* Action & Completion Buttons */}
+                       <div className="flex items-center gap-4 flex-wrap">
                           <Button 
                             asChild 
-                            className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl h-12 px-6 font-bold tracking-wide shadow-sm"
+                            className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl h-12 px-6 font-bold tracking-wide shadow-md transition-all active:scale-95"
                           >
                             <Link href={mission.actionHref} target={mission.actionHref.startsWith('http') ? '_blank' : '_self'}>
                               {mission.actionLabel}
                               <ArrowUpRight className="ml-2 w-4 h-4" />
                             </Link>
                           </Button>
-                          {isActive && (
+
+                          {!isCompleted && (
+                            <Button 
+                                variant="outline"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    completeStage(mission.id);
+                                }}
+                                className="border-emerald-500 text-emerald-600 hover:bg-emerald-50 rounded-xl h-12 px-6 font-bold transition-all active:scale-95 flex items-center gap-2"
+                            >
+                                <CheckCircle2 className="w-4 h-4" />
+                                Mark as Complete
+                            </Button>
+                          )}
+                          
+                          {(isActive || isCompleted) && (
                             <Link href="/mentorship" className="text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors">
                               Book Mentor Guidance →
                             </Link>

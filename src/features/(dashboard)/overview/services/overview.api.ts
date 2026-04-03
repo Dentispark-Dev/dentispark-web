@@ -21,18 +21,22 @@ export interface PersonalizedMentor {
   flag: string;
 }
 
+export interface RoadmapStage {
+  id: number;
+  isCompleted: boolean;
+  isCurrent: boolean;
+}
+
 export interface ApplicationProgress {
-  total: number;
-  interviews: number;
-  rejected: number;
-  interviewWaitlist: number;
-  attended: number;
-  declined: number;
-  offers: number;
-  waitlist: number;
-  rejection: number;
-  noResponse: number;
-  accepted: number;
+  // Stats for the visual counters
+  stats: {
+    total: number;
+    offers: number;
+    interviews: number;
+    rejected: number;
+  };
+  // Detailed roadmap progress (the 11 steps)
+  roadmap: RoadmapStage[];
 }
 
 class OverviewAPIService extends BaseAPI {
@@ -49,19 +53,20 @@ class OverviewAPIService extends BaseAPI {
   }
 
   async GET_APPLICATION_PROGRESS(): Promise<ApplicationProgress> {
-    // Mock data for a single student (e.g. applying to 4 dental schools via UCAS)
+    // In production, this would be: return this.get<ApplicationProgress>("/student/roadmap-progress");
+    // For now, we perform a clean "Scaffold" that returns the 11-step progress
     return Promise.resolve({
-      total: 4,
-      interviews: 2,
-      rejected: 2,
-      interviewWaitlist: 0,
-      attended: 2,
-      declined: 0,
-      offers: 1,
-      waitlist: 1,
-      rejection: 0,
-      noResponse: 0,
-      accepted: 1
+      stats: {
+        total: 4,
+        offers: 1,
+        interviews: 2,
+        rejected: 1
+      },
+      roadmap: Array.from({ length: 11 }, (_, i) => ({
+        id: i + 1,
+        isCompleted: i === 0, // Mock: Stage 1 complete
+        isCurrent: i === 1    // Mock: Stage 2 active
+      }))
     });
   }
 }
