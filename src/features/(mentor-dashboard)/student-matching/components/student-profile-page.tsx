@@ -15,6 +15,7 @@ import { AcceptBookingModal } from "./accept-booking-modal";
 import { PracticeTestDetailModal } from "./practice-test-detail-modal";
 import { BaseAPI } from "@/src/connection/base-api";
 import { toast } from "sonner";
+import { StudentSnapshotDemo } from "./student-snapshot";
 
 interface StudentProfilePageProps {
   className?: string;
@@ -382,6 +383,15 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                   </div>
                 </div>
               </div>
+            </motion.div>
+
+            {/* AI Student Intelligence Snapshot */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.35 }}
+            >
+              <StudentSnapshotDemo />
             </motion.div>
 
             {/* Practice Test Results */}
