@@ -34,6 +34,8 @@ const protectedRoutes = [
   "/guidance-hub",
   "/profile-setup",
   "/admin",
+  "/mentor",
+  "/ai-hub"
 ];
 
 function isRouteMatch(pathname: string, routes: string[]): boolean {
@@ -139,11 +141,31 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
+    // Role-Based Access Control Restrictions
+    const isMentorRoute = pathname.startsWith("/mentor");
+    const isAdminRoute = pathname.startsWith("/admin");
+    const isStudentRoute = ["/overview", "/university-hub", "/applications", "/ai-hub", "/mentorship"].some(route => pathname.startsWith(route));
+
+    if (isAdminRoute && !isAdmin) {
+      // Deny non-admins access to /admin
+      return NextResponse.redirect(new URL(isMentor ? "/mentor/overview" : "/overview", request.url));
+    }
+
+    if (isMentorRoute && !isMentor && !isAdmin) {
+      // Deny Students access to /mentor
+      return NextResponse.redirect(new URL("/overview", request.url));
+    }
+
+    if (isStudentRoute && isMentor && !isAdmin) {
+       // Deny Mentors access to Student tooling (like /ai-hub)
+       return NextResponse.redirect(new URL("/mentor/overview", request.url));
+    }
+
     // Handle profile setup requirements
     if (pathname === "/profile-setup") {
       if (profileStatus === "COMPLETED" || isAdmin) {
         // Redirect to overview if profile is already completed (or user is admin)
-        return NextResponse.redirect(new URL(isAdmin ? "/admin" : "/overview", request.url));
+        return NextResponse.redirect(new URL(isAdmin ? "/admin" : (isMentor ? "/mentor/overview" : "/overview"), request.url));
       }
     } else if (!isAdmin) {
       // Other protected routes require completed profile (skip for admins)
