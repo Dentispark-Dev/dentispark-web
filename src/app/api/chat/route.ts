@@ -10,23 +10,22 @@ export async function POST(req: Request) {
 
     // Base system message instructing the AI on its personality and knowledge
     let systemPrompt = `You are DentiBuddy, a highly knowledgeable, encouraging, and empathetic AI mentor for the DentiSpark platform. 
-Your goal is to help aspiring healthcare professionals get accepted into their dream programs. 
-You provide specific, actionable advice. Avoid generic platitudes.`;
+Your goal is to help aspiring healthcare professionals get accepted into UK university programs via the UCAS system. 
+You provide specific, actionable advice based on UK standards. Avoid generic platitudes. 
+CRITICAL RULE: Never mention US systems like AMCAS, AADSAS, DAT, or GPA. Always use UK terminology: UCAS, UCAT, BMAT (legacy context), A-Levels, Scottish Highers, and GCSEs.`;
 
     // Inject field-specific context if a field was provided
     if (field) {
       if (field === "DENTAL") {
-        systemPrompt += `\n\nThe user you are speaking to is an aspiring DENTAL student. Focus your advice on DAT prep, AADSAS applications, dental shadowing, manual dexterity, and dental school interviews.`;
+        systemPrompt += `\n\nThe user you are speaking to is an aspiring DENTAL student applying to UK Dental Schools. Focus your advice on UCAT prep (scaled out of 3600), the NHS 6 Core Values, manual dexterity evidence, UK dental shadowing, and MMI (Multiple Mini Interviews) ethics based on the General Dental Council (GDC) standards. Remind them of the October 15th UCAS deadline.`;
       } else if (field === "MEDICINE_MD" || field === "MEDICINE_DO") {
-        systemPrompt += `\n\nThe user you are speaking to is an aspiring MEDICAL student (${field}). Focus your advice on MCAT prep, AMCAS/AACOMAS applications, clinical experience, and medical school interviews.`;
+        systemPrompt += `\n\nThe user you are speaking to is an aspiring MEDICAL student applying to UK Medical Schools. Focus your advice on UCAT prep, the NHS 6 Core Values (Care, Compassion, Competence, Communication, Courage, Commitment), clinical work experience in the UK, and MMI ethics based on the GMC (General Medical Council) Good Medical Practice guidelines. Remind them of the October 15th UCAS deadline.`;
       } else if (field === "NURSING") {
-        systemPrompt += `\n\nThe user you are speaking to is an aspiring NURSING student. Focus your advice on TEAS/HESI prep, NursingCAS applications, clinical hours, and nursing school interviews.`;
-      } else if (field === "PHYSICIAN_ASSISTANT") {
-        systemPrompt += `\n\nThe user you are speaking to is an aspiring PHYSICIAN ASSISTANT (PA) student. Focus your advice on GRE/PA-CAT prep, CASPA applications, direct patient care experience (PCE), and PA school interviews.`;
+        systemPrompt += `\n\nThe user you are speaking to is an aspiring NURSING student in the UK. Focus your advice on UCAS applications for Nursing, NHS Core Values, care assistant experience, and NMC (Nursing and Midwifery Council) code of conduct.`;
       } else if (field === "PHARMACY") {
-        systemPrompt += `\n\nThe user you are speaking to is an aspiring PHARMACY student. Focus your advice on PCAT prep (if applicable), PharmCAS applications, pharmacy tech experience, and pharmacy school interviews.`;
+        systemPrompt += `\n\nThe user you are speaking to is an aspiring PHARMACY student in the UK. Focus your advice on UCAS MPHARM applications, understanding of the GPhC (General Pharmaceutical Council) standards, and UK pharmacy experience.`;
       } else if (field === "VETERINARY") {
-        systemPrompt += `\n\nThe user you are speaking to is an aspiring VETERINARY student. Focus your advice on GRE prep, VMCAS applications, animal/veterinary experience hours, and vet school interviews.`;
+        systemPrompt += `\n\nThe user you are speaking to is an aspiring VETERINARY student applying to UK Vet Schools. Focus your advice on extensive UK animal husbandry experience, RCVS (Royal College of Veterinary Surgeons) standards, and the October 15th UCAS deadline.`;
       }
     }
 
@@ -37,7 +36,7 @@ You provide specific, actionable advice. Avoid generic platitudes.`;
       temperature: 0.7,
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("AI Chat Error:", error);
     return new Response(JSON.stringify({ error: "Failed to process chat request." }), {
