@@ -12,6 +12,7 @@ import { NotificationPrompt } from "@/src/features/automation/components/notific
 import { I18nProvider } from "@/src/providers/i18n-provider";
 import { robotoSlab, bricolage, jakarta } from "@/src/lib/font";
 import { cn } from "@/src/lib/utils";
+import { PostHogProvider } from "@/src/providers/posthog-provider";
 
 export const metadata: Metadata = {
   title: "Dentispark - Dental School Guidance & Mentorship",
@@ -59,21 +60,23 @@ export default function RootLayout({
         <script async src="https://cdn.vercel-insights.com/v1/speed-insights.js"></script>
       </head>
       <body suppressHydrationWarning={true}>
-        <ReactQueryProvider>
-          <I18nProvider>
-            <AuthProvider>
-              <FieldProvider>
-                {children}
-              </FieldProvider>
-            </AuthProvider>
-          </I18nProvider>
-        </ReactQueryProvider>
-        <ModalProvider />
-        {/* Components hidden at user request - can be toggled on later */}
-        {/* <DentiBuddy /> */}
-        <Toaster richColors />
-        {/* <GDPRBanner /> */}
-        {/* <NotificationPrompt /> */}
+        <PostHogProvider>
+          <ReactQueryProvider>
+            <I18nProvider>
+              <AuthProvider>
+                <FieldProvider>
+                  {children}
+                </FieldProvider>
+              </AuthProvider>
+            </I18nProvider>
+          </ReactQueryProvider>
+          <ModalProvider />
+          {/* Components hidden at user request - can be toggled on later */}
+          {/* <DentiBuddy /> */}
+          <Toaster richColors />
+          {/* <GDPRBanner /> */}
+          {/* <NotificationPrompt /> */}
+        </PostHogProvider>
       </body>
     </html>
   );

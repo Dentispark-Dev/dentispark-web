@@ -1,0 +1,7 @@
+{
+  "agents": {
+    "primary": ["Claw"],
+    "enabled": ["claw-plugin"]
+  },
+  "primaryAgents": ["Claw"]
+}
