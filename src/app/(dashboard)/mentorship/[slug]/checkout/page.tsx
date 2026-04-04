@@ -7,6 +7,8 @@ import { ArrowLeft, Shield, Loader2, Calendar, Clock, Video, Zap, FileText, Mess
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
 import { MENTORS_BY_SLUG } from "@/src/features/(website)/mentors/data/mentors";
+import { TimeSlotPicker } from "@/src/features/(dashboard)/mentorship/components/time-slot-picker";
+import { format } from "date-fns";
 
 const SESSION_META: Record<string, { label: string; duration: string; icon: React.ReactNode; color: string; bg: string }> = {
   "intro":           { label: "Free Intro Call",          duration: "15 min", icon: <MessageSquare className="w-5 h-5" />, color: "text-emerald-600", bg: "bg-emerald-50" },
@@ -27,6 +29,8 @@ export default function CheckoutRedirectPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | undefined>();
+  const [selectedTime, setSelectedTime] = useState<string | undefined>();
 
   if (!mentor || !sessionMeta) {
     router.push("/mentorship");
@@ -48,6 +52,8 @@ export default function CheckoutRedirectPage() {
           sessionType: sessionMeta.label,
           price,
           mentorSlug: slug,
+          scheduledDate: selectedDate,
+          scheduledTime: selectedTime,
         }),
       });
 
@@ -85,6 +91,16 @@ export default function CheckoutRedirectPage() {
         <div>
           <h1 className="text-2xl font-black text-slate-900">Confirm Your Booking</h1>
           <p className="text-slate-500 mt-1">Review the details before proceeding to secure payment.</p>
+        </div>
+
+      {/* Time Slot Picker */}
+        <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-6">
+          <TimeSlotPicker
+            mentorName={mentor.name}
+            onSlotSelected={(date, time) => { setSelectedDate(date); setSelectedTime(time); }}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+          />
         </div>
 
         {/* Booking Summary */}
