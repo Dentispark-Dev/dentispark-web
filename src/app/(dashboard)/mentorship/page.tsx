@@ -210,7 +210,7 @@ function MentorCard({ mentor }: { mentor: typeof MOCK_MENTORS[0] }) {
                         )}
 
                         <Link
-                            href={`/dashboard/mentor/${mentor.slug}`}
+                            href={`/mentorship/${mentor.slug}`}
                             className="text-xs font-semibold text-gray-600 hover:text-gray-900 hover:underline"
                         >
                             View profile
