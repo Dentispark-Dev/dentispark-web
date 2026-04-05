@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/src/lib/auth";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+  const userDataCookie = cookieStore.get("userData")?.value;
 
-  if (!session) {
+  if (!accessToken || !userDataCookie) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  let user;
+  try {
+    user = JSON.parse(userDataCookie);
+  } catch (e) {
+    return NextResponse.json({ error: "Invalid session" }, { status: 401 });
   }
 
   try {

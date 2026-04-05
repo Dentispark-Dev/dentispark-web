@@ -49,6 +49,7 @@
     "react-quill-new": "^3.8.3",
     "sonner": "^2.0.5",
     "@sentry/nextjs": "^8.20.0",
+    "canvas-confetti": "^1.9.3",
     "posthog-js": "^1.154.2",
     "tailwind-merge": "^3.3.1",
     "stripe": "^14.21.0",
