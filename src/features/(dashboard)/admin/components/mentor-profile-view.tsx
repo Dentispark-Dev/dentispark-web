@@ -15,7 +15,10 @@ import {
     ArrowLeft,
     Stethoscope,
     Briefcase,
-    Award
+    Award,
+    FileText,
+    ExternalLink,
+    Clock3
 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
@@ -212,6 +215,70 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                         <span className="flex items-center gap-1.5 text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full"><AlertCircle className="h-3.5 w-3.5" /> Pending</span>
                                     )}
                                 </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Verification Dossier */}
+                    <Card className="border-none shadow-xl shadow-gray-200/40 bg-white/80 backdrop-blur-xl rounded-3xl overflow-hidden">
+                        <div className="h-2 bg-gradient-to-r from-amber-400 to-orange-500" />
+                        <CardHeader className="pb-4">
+                            <CardTitle className="text-lg font-bold text-gray-900 flex items-center gap-2 font-sora">
+                                <div className="p-2 bg-amber-50 rounded-lg text-amber-600">
+                                    <Award className="h-5 w-5" />
+                                </div>
+                                Verification Dossier
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Submitted Documents</p>
+                                
+                                {mentor.documentUploadLinks && mentor.documentUploadLinks.length > 0 ? (
+                                    mentor.documentUploadLinks.map((link, idx) => (
+                                        <a 
+                                            key={idx}
+                                            href={link} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-between p-3 bg-gray-50 hover:bg-amber-50 border border-gray-100 rounded-2xl transition-all group"
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <div className="p-1.5 bg-white rounded-lg shadow-sm text-gray-400 group-hover:text-amber-500">
+                                                    <FileText className="h-4 w-4" />
+                                                </div>
+                                                <span className="text-sm font-semibold text-gray-700">
+                                                    {link.includes("cv") ? "Curriculum Vitae" : link.includes("cert") ? "Certification" : `Document ${idx + 1}`}
+                                                </span>
+                                            </div>
+                                            <ExternalLink className="h-3.5 w-3.5 text-gray-300 group-hover:text-amber-400" />
+                                        </a>
+                                    ))
+                                ) : (
+                                    <div className="p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-200 text-center">
+                                        <p className="text-xs text-gray-400 font-medium italic">No documents uploaded yet.</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="pt-4 border-t border-gray-100 space-y-3">
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Vetting Interview</p>
+                                <div className="flex items-center gap-3 p-3 bg-indigo-50/50 rounded-2xl border border-indigo-100">
+                                    <Clock3 className="h-4 w-4 text-indigo-500" />
+                                    <div>
+                                        <p className="text-[10px] font-bold text-indigo-400 uppercase">Scheduled Slot</p>
+                                        <p className="text-sm font-bold text-indigo-900">{mentor.interviewDate ? `${mentor.interviewDate} ${mentor.interviewSlot || ""}` : "Not scheduled"}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="pt-4">
+                                <Button 
+                                    className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-2xl font-bold py-6 shadow-lg shadow-amber-500/20"
+                                    onClick={() => verifyMutation.mutate(!mentor.verified)}
+                                >
+                                    {mentor.verified ? "Revoke Verification" : "Verify Credentials"}
+                                </Button>
                             </div>
                         </CardContent>
                     </Card>

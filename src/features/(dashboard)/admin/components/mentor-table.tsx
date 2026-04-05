@@ -182,7 +182,16 @@ export function MentorTable() {
                                 Verified
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}>
-                                Unverified
+                                Unverified (Pending)
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Action Required</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem 
+                                className="text-amber-600 font-semibold"
+                                onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", verified: false, page: 0 }))}
+                            >
+                                Needs Vetting
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

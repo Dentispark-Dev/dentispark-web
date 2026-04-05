@@ -498,6 +498,8 @@ export interface MentorDetail {
   interviewDate: string;
   averageRating: number;
   totalReviews: number;
+  documentUploadLinks?: string[];
+  interviewSlot?: string;
   strengths?: {
     ucat?: number;
     mmi?: number;
