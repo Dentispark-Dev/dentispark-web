@@ -1,14 +1,27 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { CheckCircle2, Calendar, Video, ArrowRight } from "lucide-react";
+import { CheckCircle2, Calendar, Video, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
 
 export default function BookingConfirmedPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 text-emerald-600 animate-spin" />
+      </div>
+    }>
+      <BookingConfirmedContent />
+    </Suspense>
+  );
+}
+
+function BookingConfirmedContent() {
   const searchParams = useSearchParams();
   const session = searchParams.get("session") || "your session";
   const isFree = searchParams.get("free") === "true";

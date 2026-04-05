@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft, Shield, Loader2, Calendar, Clock, Video, Zap, FileText, MessageSquare } from "lucide-react";
@@ -18,6 +18,18 @@ const SESSION_META: Record<string, { label: string; duration: string; icon: Reac
 };
 
 export default function CheckoutRedirectPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 text-slate-400 animate-spin" />
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
+  );
+}
+
+function CheckoutContent() {
   const { slug } = useParams<{ slug: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -33,7 +45,9 @@ export default function CheckoutRedirectPage() {
   const [selectedTime, setSelectedTime] = useState<string | undefined>();
 
   if (!mentor || !sessionMeta) {
-    router.push("/mentorship");
+    if (typeof window !== "undefined") {
+      router.push("/mentorship");
+    }
     return null;
   }
 
