@@ -1,7 +1,7 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Loader2, Plus, Trash2, GraduationCap, BarChart3, Briefcase, Building2 } from "lucide-react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -21,21 +21,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
-
+import { Input } from "@/src/components/ui/input";
+import { Textarea } from "@/src/components/ui/textarea";
 import { academicSchema } from "../types";
 import {
   yearOptions,
   gradeOptions,
   gcseOptions,
+  universityStatusOptions,
   defaultAcademicData,
 } from "../constants";
 import { useUpdateAcademicProfileMutation } from "../services";
-import { Input } from "@/src/components/ui/input";
-import { Textarea } from "@/src/components/ui/textarea";
+import { cn } from "@/src/lib/utils";
 
-// Note: This modal now uses real API integration
-
-// Extended schema to include course of interest
 const academicModalSchema = academicSchema.extend({
   courseOfInterest: z.enum(
     ["dental-science", "dental-hygiene-therapy", "dental-nursing"],
@@ -69,18 +67,20 @@ export function AcademicProfileModal({
     },
   });
 
+  const { fields: expFields, append: appendExp, remove: removeExp } = useFieldArray({
+    control: form.control,
+    name: "workExperience" as any,
+  });
+
+  const { fields: uniFields, append: appendUni, remove: removeUni } = useFieldArray({
+    control: form.control,
+    name: "universityShortlist" as any,
+  });
+
   const handleSubmit = async (data: AcademicModalFormData) => {
     try {
       await updateAcademicProfileMutation.mutateAsync({
-        yearOfStudy: data.yearOfStudy,
-        gcseResult: data.gcseResult,
-        ucatScore: data.ucatScore,
-        casperScore: data.casperScore,
-        goals: data.goals,
-        biologyGrade: data.biologyGrade,
-        chemistryGrade: data.chemistryGrade,
-        otherSubject: data.otherSubject,
-        otherSubjectGrade: data.otherSubjectGrade,
+        ...data,
       });
       onSubmit(data);
     } catch {
@@ -89,168 +89,36 @@ export function AcademicProfileModal({
   };
 
   return (
-    <div className="space-y-6 pb-6">
+    <div className="space-y-8 pb-10">
       <Form {...form}>
         <form
           id="academic-profile-form"
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="space-y-6"
+          className="space-y-10"
         >
-          {/* Year of Study and GCSE Result */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="yearOfStudy"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-gray-700">
-                    Year of study
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="h-12 w-full">
-                        <SelectValue placeholder="Select your grade" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {yearOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="gcseResult"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-gray-700">
-                    GCSE Result
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="h-12 w-full">
-                        <SelectValue placeholder="Select your grade" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {gcseOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          {/* Scores Section */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="ucatScore"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-gray-700">
-                    UCAT Score
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter your UCAT score"
-                      className="h-12"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="casperScore"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-gray-700">
-                    CASPer Score
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter your CASPer score"
-                      className="h-12"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name="goals"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  Target Schools/Goals
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder="List your target schools or academic goals"
-                    className="min-h-[80px] resize-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* A-Level Grades Section */}
-          <div className="space-y-4">
-            <h3 className="text-base font-medium text-gray-900">
-              What are your achieved/predicted A-Level grades?
-            </h3>
-
+          {/* Section: Core Profile */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 text-slate-900 border-b border-slate-100 pb-2">
+              <GraduationCap className="h-5 w-5 text-primary" />
+              <h3 className="font-sora font-bold">Core Academic Info</h3>
+            </div>
+            
             <div className="grid gap-4 sm:grid-cols-2">
               <FormField
                 control={form.control}
-                name="biologyGrade"
+                name="yearOfStudy"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">
-                      Biology
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <FormLabel className="text-xs font-bold text-slate-500 uppercase tracking-wider">Year of study</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-12 w-full">
-                          <SelectValue placeholder="Select your grade" />
+                        <SelectTrigger className="h-12 rounded-xl">
+                          <SelectValue placeholder="Select Year" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {gradeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
+                        {yearOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -261,87 +129,19 @@ export function AcademicProfileModal({
 
               <FormField
                 control={form.control}
-                name="chemistryGrade"
+                name="gcseResult"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">
-                      Chemistry
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <FormLabel className="text-xs font-bold text-slate-500 uppercase tracking-wider">GCSE Average</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-12 w-full">
-                          <SelectValue placeholder="Select your grade" />
+                        <SelectTrigger className="h-12 rounded-xl">
+                          <SelectValue placeholder="Select Grade" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {gradeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="otherSubject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">
-                      Other subject
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="h-12 w-full">
-                          <SelectValue placeholder="Select other subject" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Mathematics">Mathematics</SelectItem>
-                        <SelectItem value="Physics">Physics</SelectItem>
-                        <SelectItem value="Psychology">Psychology</SelectItem>
-                        <SelectItem value="English">English</SelectItem>
-                        <SelectItem value="History">History</SelectItem>
-                        <SelectItem value="Geography">Geography</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="otherSubjectGrade"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">
-                      Subject grade
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="h-12 w-full">
-                          <SelectValue placeholder="Select your grade" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {gradeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
+                        {gcseOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -352,125 +152,251 @@ export function AcademicProfileModal({
             </div>
           </div>
 
-          {/* Course of Interest Section */}
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="courseOfInterest"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-medium text-gray-900">
-                    What is your course of interest?
-                  </FormLabel>
-                  <div className="mb-4 text-sm text-gray-600">
-                    Choose only 1 answer:
-                  </div>
-                  <FormControl>
-                    <div className="space-y-3">
-                      <div
-                        className={`flex cursor-pointer items-center space-x-3 rounded-lg border p-4 transition-colors ${
-                          field.value === "dental-science"
-                            ? "border-primary-200 bg-primary-100"
-                            : "border-gray-200 bg-white hover:border-gray-300"
-                        }`}
-                        onClick={() => field.onChange("dental-science")}
-                      >
-                        <input
-                          type="radio"
-                          id="dental-science"
-                          name="courseOfInterest"
-                          value="dental-science"
-                          checked={field.value === "dental-science"}
-                          onChange={() => field.onChange("dental-science")}
-                          className="radio-green size-5"
-                        />
-                        <label
-                          htmlFor="dental-science"
-                          className="flex-1 cursor-pointer font-medium text-gray-900"
-                        >
-                          Dental Science
-                        </label>
-                      </div>
+          {/* Section: Admissions Tests */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 text-slate-900 border-b border-slate-100 pb-2">
+              <BarChart3 className="h-5 w-5 text-emerald-500" />
+              <h3 className="font-sora font-bold">Admissions Tests</h3>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="grid gap-4 sm:grid-cols-3">
+                <FormField
+                  control={form.control}
+                  name="ucatScore"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-bold text-slate-500 uppercase tracking-wider">UCAT Total</FormLabel>
+                      <FormControl><Input {...field} placeholder="e.g. 2800" className="h-12 rounded-xl" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="casperScore"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-bold text-slate-500 uppercase tracking-wider">CASPer</FormLabel>
+                      <FormControl><Input {...field} placeholder="Quartile" className="h-12 rounded-xl" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="bmatSection1"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-bold text-slate-500 uppercase tracking-wider">BMAT S1</FormLabel>
+                      <FormControl><Input {...field} placeholder="Score" className="h-12 rounded-xl" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-                      <div
-                        className={`flex cursor-pointer items-center space-x-3 rounded-lg border p-4 transition-colors ${
-                          field.value === "dental-hygiene-therapy"
-                            ? "border-primary-200 bg-primary-100"
-                            : "border-gray-200 bg-white hover:border-gray-300"
-                        }`}
-                        onClick={() => field.onChange("dental-hygiene-therapy")}
-                      >
-                        <input
-                          type="radio"
-                          id="dental-hygiene-therapy"
-                          name="courseOfInterest"
-                          value="dental-hygiene-therapy"
-                          checked={field.value === "dental-hygiene-therapy"}
-                          onChange={() =>
-                            field.onChange("dental-hygiene-therapy")
-                          }
-                          className="radio-green size-5"
-                        />
-                        <label
-                          htmlFor="dental-hygiene-therapy"
-                          className="flex-1 cursor-pointer font-medium text-gray-900"
-                        >
-                          Dental Hygiene/Therapy
-                        </label>
-                      </div>
+              <div className="p-6 bg-slate-50 rounded-[2rem] border border-slate-100 space-y-4">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2 text-center">UCAT Component Breakdown</p>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                  {[
+                    { name: "ucatVerbal", label: "Verbal" },
+                    { name: "ucatDecision", label: "Decision" },
+                    { name: "ucatQuant", label: "Quant" },
+                    { name: "ucatAbstract", label: "Abstract" },
+                    { name: "ucatSituational", label: "SJT" },
+                  ].map((sub) => (
+                    <FormField
+                      key={sub.name}
+                      control={form.control}
+                      name={sub.name as any}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[9px] font-extrabold text-slate-500 uppercase flex justify-center mb-1">{sub.label}</FormLabel>
+                          <FormControl><Input {...field} className="h-10 text-center rounded-lg bg-white" placeholder="—" /></FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
 
-                      <div
-                        className={`flex cursor-pointer items-center space-x-3 rounded-lg border p-4 transition-colors ${
-                          field.value === "dental-nursing"
-                            ? "border-primary-200 bg-primary-100"
-                            : "border-gray-200 bg-white hover:border-gray-300"
-                        }`}
-                        onClick={() => field.onChange("dental-nursing")}
-                      >
-                        <input
-                          type="radio"
-                          id="dental-nursing"
-                          name="courseOfInterest"
-                          value="dental-nursing"
-                          checked={field.value === "dental-nursing"}
-                          onChange={() => field.onChange("dental-nursing")}
-                          className="radio-green size-5"
-                        />
-                        <label
-                          htmlFor="dental-nursing"
-                          className="flex-1 cursor-pointer font-medium text-gray-900"
-                        >
-                          Dental Nursing
-                        </label>
-                      </div>
+          {/* Section: Work Experience */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+              <div className="flex items-center gap-2 text-slate-900">
+                <Briefcase className="h-5 w-5 text-blue-500" />
+                <h3 className="font-sora font-bold">Experience Logs</h3>
+              </div>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm" 
+                onClick={() => appendExp({ id: Math.random().toString(), company: "", role: "", duration: "", reflection: "" } as any)}
+                className="h-8 text-xs font-bold border-blue-100 text-blue-600 hover:bg-blue-50"
+              >
+                <Plus className="h-3 w-3 mr-1" /> Add Experience
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              {expFields.map((field, index) => (
+                <div key={field.id} className="p-6 bg-white border border-slate-100 shadow-sm rounded-3xl space-y-4 relative group">
+                  <Button 
+                    type="button" 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => removeExp(index)}
+                    className="absolute top-4 right-4 h-8 w-8 p-0 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-full"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                  
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name={`workExperience.${index}.company` as any}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Hospital/Clinic</FormLabel>
+                          <FormControl><Input {...field} className="h-10 rounded-xl" /></FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <FormField
+                        control={form.control}
+                        name={`workExperience.${index}.role` as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Role</FormLabel>
+                            <FormControl><Input {...field} className="h-10 rounded-xl" /></FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`workExperience.${index}.duration` as any}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Duration</FormLabel>
+                            <FormControl><Input {...field} className="h-10 rounded-xl" /></FormControl>
+                          </FormItem>
+                        )}
+                      />
                     </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name={`workExperience.${index}.reflection` as any}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Personal Reflection (Critical for AI)</FormLabel>
+                        <FormControl><Textarea {...field} placeholder="What did you learn from this placement?" className="min-h-[80px] rounded-2xl resize-none" /></FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+              {expFields.length === 0 && (
+                <div className="text-center py-10 border-2 border-dashed border-slate-100 rounded-[2rem] bg-slate-50/30">
+                  <p className="text-slate-400 text-sm font-medium">Add your clinical placements or shadowing experience.</p>
+                </div>
               )}
-            />
+            </div>
+          </div>
+
+          {/* Section: University Shortlist */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+              <div className="flex items-center gap-2 text-slate-900">
+                <Building2 className="h-5 w-5 text-slate-900" />
+                <h3 className="font-sora font-bold">University Choices</h3>
+              </div>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm" 
+                onClick={() => appendUni({ id: Math.random().toString(), university: "", course: "Dental Science", status: "Interested" } as any)}
+                className="h-8 text-xs font-bold border-slate-200 text-slate-600 hover:bg-slate-50"
+              >
+                <Plus className="h-3 w-3 mr-1" /> Add University
+              </Button>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {uniFields.map((field, index) => (
+                <div key={field.id} className="p-4 bg-slate-50 border border-slate-100 rounded-2xl space-y-3 relative group">
+                  <Button 
+                    type="button" 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => removeUni(index)}
+                    className="absolute top-2 right-2 h-6 w-6 p-0 text-slate-300 hover:text-red-500 rounded-full"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </Button>
+                  <FormField
+                    control={form.control}
+                    name={`universityShortlist.${index}.university` as any}
+                    render={({ field }) => (
+                      <Input {...field} placeholder="University Name" className="h-10 bg-white border-slate-200 rounded-xl" />
+                    )}
+                  />
+                  <div className="flex gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`universityShortlist.${index}.course` as any}
+                      render={({ field }) => (
+                        <Input {...field} placeholder="Course" className="h-9 bg-white border-slate-200 rounded-xl text-xs flex-1" />
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`universityShortlist.${index}.status` as any}
+                      render={({ field }) => (
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-9 w-[110px] bg-white border-slate-200 rounded-xl text-[10px] font-bold">
+                              <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {universityStatusOptions.map(opt => (
+                              <SelectItem key={opt.value} value={opt.value} className="text-xs">{opt.label}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex w-full gap-3 pt-6">
+          <div className="flex w-full gap-4 pt-10 border-t border-slate-100">
             <Button
               type="button"
               variant="outline"
-              className="hover:text-primary h-12 flex-1/2 px-8 hover:bg-white"
+              className="h-14 flex-1 rounded-2xl text-slate-600 font-bold hover:bg-slate-50"
               onClick={onCancel}
               disabled={updateAcademicProfileMutation.isPending}
             >
-              Cancel
+              Discard Changes
             </Button>
             <Button
               type="submit"
-              className="bg-primary hover:bg-primary-700 h-12 flex-1/2 px-8"
+              className="bg-slate-900 hover:bg-slate-800 text-white h-14 flex-1 rounded-2xl font-sora font-extrabold text-lg shadow-xl"
               disabled={updateAcademicProfileMutation.isPending}
             >
               {updateAcademicProfileMutation.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
-                "Update Profile"
+                "Save Admissions Portfolio"
               )}
             </Button>
           </div>

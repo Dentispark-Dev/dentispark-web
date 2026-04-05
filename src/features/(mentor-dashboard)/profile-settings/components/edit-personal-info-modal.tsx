@@ -29,6 +29,8 @@ const editPersonalInfoSchema = z.object({
   emailAddress: z.string().email("Please enter a valid email address"),
   phoneNumber: z.string().min(1, "Phone number is required"),
   countryCode: z.string().min(1, "Country code is required"),
+  gdcNumber: z.string().min(6, "GDC number must be at least 6 digits").optional().or(z.literal("")),
+  professionalTier: z.enum(["student", "associate", "specialist"]),
   aboutMe: z.string().optional(),
   whyDoIMentor: z.string().optional(),
 });
@@ -38,7 +40,7 @@ type EditPersonalInfoFormData = z.infer<typeof editPersonalInfoSchema>;
 interface EditPersonalInfoModalProps {
   onSave: (data: EditPersonalInfoFormData) => void;
   onCancel: () => void;
-  initialData?: Partial<EditPersonalInfoFormData>;
+  initialData?: any; // Using any to handle the extended fields passed from view
 }
 
 export function EditPersonalInfoModal({
@@ -52,11 +54,13 @@ export function EditPersonalInfoModal({
   const form = useForm<EditPersonalInfoFormData>({
     resolver: zodResolver(editPersonalInfoSchema),
     defaultValues: {
-      firstName: initialData?.firstName || "John",
-      lastName: initialData?.lastName || "Doe",
-      emailAddress: initialData?.emailAddress || "johndoe@dentispark.co.uk",
-      phoneNumber: initialData?.phoneNumber || "+41 1234567",
-      countryCode: initialData?.countryCode || "US",
+      firstName: initialData?.firstName || "",
+      lastName: initialData?.lastName || "",
+      emailAddress: initialData?.emailAddress || "",
+      phoneNumber: initialData?.phoneNumber || "",
+      countryCode: initialData?.countryCode || "UK",
+      gdcNumber: initialData?.gdcNumber || "",
+      professionalTier: initialData?.professionalTier || "associate",
       aboutMe: initialData?.aboutMe || "",
       whyDoIMentor: initialData?.whyDoIMentor || "",
     },
@@ -81,9 +85,59 @@ export function EditPersonalInfoModal({
   };
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-8 py-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {/* Section: Professional Vetting */}
+          <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 space-y-6">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Elite Verification Data</h3>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="gdcNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-slate-700">
+                      GDC Registration Number
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="e.g. 123456" className="h-12 bg-white rounded-xl" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="professionalTier"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-slate-700">
+                      Professional Tier
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="h-12 bg-white rounded-xl">
+                          <SelectValue placeholder="Select Tier" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="student">Dental Student / Trainee</SelectItem>
+                        <SelectItem value="associate">Dental Associate</SelectItem>
+                        <SelectItem value="specialist">Consultant / Specialist</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
           {/* Name Fields */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField
@@ -95,7 +149,7 @@ export function EditPersonalInfoModal({
                     First name
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} className="h-12" />
+                    <Input {...field} className="h-12 rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,7 +165,7 @@ export function EditPersonalInfoModal({
                     Last name
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} className="h-12" />
+                    <Input {...field} className="h-12 rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -130,7 +184,7 @@ export function EditPersonalInfoModal({
                     Email Address
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} type="email" className="h-12" />
+                    <Input {...field} type="email" className="h-12 rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,21 +209,21 @@ export function EditPersonalInfoModal({
                             onValueChange={countryField.onChange}
                             defaultValue={countryField.value}
                           >
-                            <SelectTrigger className="w-20 rounded-r-none border-r-0">
+                            <SelectTrigger className="w-24 rounded-r-none border-r-0 h-12 rounded-l-xl">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="US">US</SelectItem>
-                              <SelectItem value="UK">UK</SelectItem>
-                              <SelectItem value="CA">CA</SelectItem>
+                              <SelectItem value="UK">UK (+44)</SelectItem>
+                              <SelectItem value="US">US (+1)</SelectItem>
+                              <SelectItem value="CA">CA (+1)</SelectItem>
                             </SelectContent>
                           </Select>
                         )}
                       />
                       <Input
                         {...field}
-                        className="h-12 rounded-l-none"
-                        placeholder="+41 1234567"
+                        className="h-12 rounded-l-none rounded-r-xl"
+                        placeholder="7700 900000"
                       />
                     </div>
                   </FormControl>
@@ -179,74 +233,76 @@ export function EditPersonalInfoModal({
             />
           </div>
 
-          {/* About Me */}
-          <FormField
-            control={form.control}
-            name="aboutMe"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  About me
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder="Tell us about yourself"
-                    className="min-h-[120px] resize-none"
-                    onChange={(e) => {
-                      const value = handleAboutMeChange(e.target.value);
-                      field.onChange(value);
-                    }}
-                  />
-                </FormControl>
-                <div className="font-sora text-xs text-gray-500">
-                  Word count: {aboutMeWordCount}/1000
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* About Me */}
+            <FormField
+              control={form.control}
+              name="aboutMe"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    About me
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      placeholder="Tell us about yourself"
+                      className="min-h-[150px] resize-none rounded-2xl"
+                      onChange={(e) => {
+                        const value = handleAboutMeChange(e.target.value);
+                        field.onChange(value);
+                      }}
+                    />
+                  </FormControl>
+                  <div className="font-sora text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1 flex justify-end">
+                    Word count: {aboutMeWordCount}/1000
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {/* Why do I mentor */}
-          <FormField
-            control={form.control}
-            name="whyDoIMentor"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  Why do I mentor?
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder="Tell us about your reasons..."
-                    className="min-h-[120px] resize-none"
-                    onChange={(e) => {
-                      const value = handleWhyMentorChange(e.target.value);
-                      field.onChange(value);
-                    }}
-                  />
-                </FormControl>
-                <div className="font-sora text-xs text-gray-500">
-                  Word count: {whyMentorWordCount}/1000
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            {/* Why do I mentor */}
+            <FormField
+              control={form.control}
+              name="whyDoIMentor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Why do I mentor?
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      placeholder="Tell us about your reasons..."
+                      className="min-h-[150px] resize-none rounded-2xl"
+                      onChange={(e) => {
+                        const value = handleWhyMentorChange(e.target.value);
+                        field.onChange(value);
+                      }}
+                    />
+                  </FormControl>
+                  <div className="font-sora text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1 flex justify-end">
+                    Word count: {whyMentorWordCount}/1000
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           {/* Action Buttons */}
-          <div className="font-sora flex w-full gap-3 pt-4">
+          <div className="font-sora flex w-full gap-4 pt-6 border-t border-slate-100">
             <Button
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="flex-1/2 px-6"
+              className="h-14 flex-1 rounded-2xl text-slate-600 font-bold hover:bg-slate-50"
             >
-              Cancel
+              Discard Changes
             </Button>
-            <Button type="submit" className="flex-1/2 px-6">
-              Save changes
+            <Button type="submit" className="h-14 flex-1 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-sora font-extrabold text-lg shadow-xl">
+              Apply Credentials
             </Button>
           </div>
         </form>

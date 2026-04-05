@@ -19,12 +19,32 @@ export const gcseOptions: SelectOption[] = [
   { value: "C", label: "C" },
 ];
 
+export const universityStatusOptions: SelectOption[] = [
+  { value: "Interested", label: "Interested" },
+  { value: "Applied", label: "Applied" },
+  { value: "Interview", label: "Interview" },
+  { value: "Offer", label: "Offer" },
+  { value: "Rejected", label: "Rejected" },
+];
+
 export const defaultAcademicData = {
   yearOfStudy: "year-12",
   gcseResult: "7",
-  ucatScore: "Unavailable",
+  ucatScore: "",
+  ucatVerbal: "",
+  ucatDecision: "",
+  ucatQuant: "",
+  ucatAbstract: "",
+  ucatSituational: "",
+  bmatSection1: "",
+  bmatSection2: "",
+  bmatSection3: "",
+  casperScore: "",
+  goals: "",
   biologyGrade: "A",
   chemistryGrade: "B",
   otherSubject: "Mathematics",
   otherSubjectGrade: "A",
+  workExperience: [],
+  universityShortlist: [],
 };
