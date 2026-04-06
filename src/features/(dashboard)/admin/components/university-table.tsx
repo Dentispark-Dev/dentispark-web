@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     Search,
-    Filter,
     ChevronLeft,
     ChevronRight,
     MoreVertical,
@@ -15,7 +14,6 @@ import {
     Globe,
     BookPlus,
     Building2,
-    LayoutGrid,
     ArrowRight,
     Trash2,
     Star
@@ -42,13 +40,14 @@ import { cn } from "@/src/lib/utils";
 
 export function UniversityTable() {
     const router = useRouter();
-    const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+    // Enforced "table" (list) style as per user request
+    const [viewMode] = useState<"table">("table");
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [selectedUniForProgram, setSelectedUniForProgram] = useState<string | undefined>(undefined);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<AdminUniversityQuery>({
         page: 0,
-        perPage: 12,
+        perPage: 15, // Slightly increased for list view
         searchKey: "",
         dentalSchoolPathway: ""
     });
@@ -104,18 +103,18 @@ export function UniversityTable() {
                 
                 <div className="relative z-10 space-y-4 w-full xl:w-auto">
                     <div>
-                        <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex">
+                        <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
                             University Registry
                         </Badge>
-                        <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Global Hub <span className="text-primary-600">Network</span></h2>
+                        <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Academic <span className="text-primary-600">Inventory</span></h2>
                     </div>
-                    <div className="flex items-center gap-4 text-greys-500 font-medium">
-                        <p className="text-[10px] font-bold text-primary-600 uppercase tracking-widest flex items-center gap-2 font-jakarta">
+                    <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
+                        <p className="text-[10px] font-bold text-primary-600 uppercase tracking-widest flex items-center gap-2">
                             <Building2 className="w-3.5 h-3.5" />
-                            Enrollment Ecosystem
+                            Global Directory
                         </p>
                         <div className="h-1 w-1 rounded-full bg-greys-300" />
-                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">
+                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
                             {data?.totalElements || 0} Registered Institutes
                         </p>
                     </div>
@@ -125,174 +124,53 @@ export function UniversityTable() {
                     <div className="relative group flex-1 xl:flex-none">
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-primary-600 transition-colors" />
                         <Input
-                            placeholder="Find university by name or location..."
-                            className="pl-14 pr-8 h-14 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-primary-500/10 focus:border-primary-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
+                            placeholder="Search by institution name or hub location..."
+                            className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-primary-500/10 focus:border-primary-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
                         />
                     </div>
 
                     <div className="flex gap-3 shrink-0">
-                        <div className="bg-greys-100 p-1 rounded-2xl border border-greys-300 flex items-center gap-1">
-                            <Button 
-                                variant="ghost" 
-                                size="icon"
-                                onClick={() => setViewMode("grid")}
-                                className={cn(
-                                    "h-12 w-12 rounded-xl transition-all",
-                                    viewMode === "grid" ? "bg-white text-primary-600 shadow-md ring-1 ring-black/5" : "text-greys-400 hover:text-text-color hover:bg-greys-200"
-                                )}
-                            >
-                                <LayoutGrid className="h-5 w-5" />
-                            </Button>
-                            <Button 
-                                variant="ghost" 
-                                size="icon"
-                                onClick={() => setViewMode("table")}
-                                className={cn(
-                                    "h-12 w-12 rounded-xl transition-all",
-                                    viewMode === "table" ? "bg-white text-primary-600 shadow-md ring-1 ring-black/5" : "text-greys-400 hover:text-text-color hover:bg-greys-200"
-                                )}
-                            >
-                                <Filter className="h-5 w-5" />
-                            </Button>
-                        </div>
                         <Button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="bg-primary-600 hover:bg-primary-500 text-white h-14 px-8 rounded-2xl shadow-lg shadow-primary-100 gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
+                            className="bg-primary-600 hover:bg-primary-500 text-white h-14 px-10 rounded-2xl shadow-lg shadow-primary-100 gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <Plus className="h-4 w-4" />
-                            Link Institute
+                            Register Institute
                         </Button>
                     </div>
                 </div>
             </div>
 
-            {/* ── Content View ── */}
+            {/* ── Content View (List Enforced) ── */}
             {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {[...Array(8)].map((_, i) => (
-                        <div key={i} className="bg-white rounded-3xl p-8 border border-greys-300 animate-pulse space-y-6">
-                            <div className="h-20 w-20 bg-greys-100 rounded-2xl mx-auto" />
-                            <div className="space-y-3">
-                                <div className="h-6 w-3/4 bg-greys-100 rounded-lg mx-auto" />
-                                <div className="h-4 w-1/2 bg-greys-100 rounded-lg mx-auto" />
-                            </div>
-                            <div className="flex gap-2 justify-center">
-                                <div className="h-8 w-20 bg-greys-100 rounded-full" />
-                                <div className="h-8 w-20 bg-greys-100 rounded-full" />
-                            </div>
-                        </div>
-                    ))}
+                <div className="bg-white rounded-3xl border border-greys-300 overflow-hidden">
+                    <div className="p-8 space-y-4 animate-pulse">
+                        {[...Array(6)].map((_, i) => (
+                            <div key={i} className="h-20 bg-greys-100 rounded-2xl w-full" />
+                        ))}
+                    </div>
                 </div>
             ) : universities.length === 0 ? (
                 <div className="bg-white rounded-3xl p-24 text-center border border-greys-300 shadow-sm">
                     <div className="bg-greys-50 h-28 w-28 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner group overflow-hidden">
                         <Building2 className="h-12 w-12 text-greys-200 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500" />
                     </div>
-                    <h3 className="text-2xl font-semibold text-text-heading tracking-tight font-jakarta mb-4">Institutional Registry Empty</h3>
+                    <h3 className="text-2xl font-semibold text-text-heading tracking-tight font-jakarta mb-4">Registry Empty</h3>
                     <p className="text-greys-400 font-medium text-sm max-w-sm mx-auto leading-relaxed font-jakarta">No institutional matches found for current search parameters. Expand your criteria to refresh the registry data.</p>
                 </div>
-            ) : viewMode === "grid" ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {universities.map((uni) => (
-                        <motion.div
-                            key={uni.hid}
-                            whileHover={{ y: -5 }}
-                            className="bg-white rounded-3xl border border-greys-300 shadow-sm overflow-hidden group hover:shadow-xl hover:shadow-primary-100/50 transition-all duration-500"
-                        >
-                            <div className="p-8 space-y-8 relative">
-                                <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="h-10 w-10 text-greys-400 hover:text-text-heading hover:bg-greys-100 rounded-xl">
-                                                <MoreVertical className="h-5 w-5" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-greys-300 shadow-2xl ring-1 ring-black/5">
-                                            <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest gap-3 p-3 font-jakarta" onClick={() => router.push(`/admin/content/universities/${uni.hid}`)}>
-                                                <ArrowRight className="w-4 h-4 text-primary-500" />
-                                                View Blueprint
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => handleAddProgramSet(uni.hid)} className="rounded-xl font-bold text-xs uppercase tracking-widest gap-3 p-3 text-success-600 focus:bg-success-50 font-jakarta">
-                                                <BookPlus className="h-4 w-4" />
-                                                Add Program
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator className="bg-greys-100 my-1" />
-                                            <DropdownMenuItem 
-                                                onClick={(e) => { e.stopPropagation(); deleteMutation.mutate(uni.hid); }} 
-                                                className="rounded-xl font-bold text-xs uppercase tracking-widest gap-3 p-3 text-error-600 focus:bg-error-50 font-jakarta"
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                                Expunge Record
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </div>
-
-                                <div 
-                                    className="flex flex-col items-center text-center space-y-6 cursor-pointer"
-                                    onClick={() => router.push(`/admin/content/universities/${uni.hid}`)}
-                                >
-                                    <div className="h-24 w-24 rounded-2xl bg-white border border-greys-300 flex items-center justify-center text-primary-600 shadow-sm group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500 overflow-hidden p-4">
-                                        {(uni as any).logoUrl ? (
-                                            <img src={(uni as any).logoUrl} alt={uni.name} className="h-full w-full object-contain" />
-                                        ) : (
-                                            <Globe className="h-10 w-10 opacity-20" />
-                                        )}
-                                    </div>
-                                    
-                                    <div className="space-y-2">
-                                        <h4 className="text-xl font-semibold text-text-heading font-jakarta tracking-tight truncate w-full px-2">
-                                            {uni.name}
-                                        </h4>
-                                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest flex items-center justify-center gap-2 font-jakarta">
-                                            <MapPin className="h-3.3 w-3.5 text-error-500 opacity-60" />
-                                            {uni.location || "United Kingdom"}
-                                        </p>
-                                    </div>
-
-                                    <div className="flex flex-wrap items-center justify-center gap-2">
-                                        <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-[9px] tracking-widest rounded-full uppercase leading-none font-jakarta">
-                                            {uni.dentalSchoolPathway || "Direct Entry"}
-                                        </Badge>
-                                        <Badge className="bg-warning-500/10 text-warning-700 border-none px-4 py-1.5 font-bold text-[9px] tracking-widest rounded-full uppercase leading-none font-jakarta">
-                                            Rank #{uni.ranking || "—"}
-                                        </Badge>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="bg-greys-50 p-6 flex items-center justify-between border-t border-greys-300">
-                                <div className="flex items-center gap-2">
-                                    <div className="h-8 w-8 rounded-full bg-white border border-greys-300 flex items-center justify-center">
-                                        <Building2 className="h-3.5 w-3.5 text-greys-400" />
-                                    </div>
-                                    <span className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">8 Tracks</span>
-                                </div>
-                                <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    className="text-[10px] font-bold text-text-heading uppercase tracking-widest hover:bg-white hover:shadow-md rounded-xl transition-all group-hover:translate-x-1 font-jakarta px-4 h-9"
-                                    onClick={() => router.push(`/admin/content/universities/${uni.hid}`)}
-                                >
-                                    Manage <ArrowRight className="h-3 w-3 ml-2 group-hover:text-primary-600" />
-                                </Button>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
             ) : (
-                <div className="bg-white rounded-3xl shadow-sm border border-greys-300 overflow-hidden relative">
+                <div className="bg-white rounded-[2.5rem] shadow-sm border border-greys-300 overflow-hidden relative">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-separate border-spacing-0">
                             <thead>
-                                <tr className="bg-greys-100">
-                                    <th className="pl-12 pr-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">Institute Blueprint</th>
-                                    <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">Global Hub</th>
-                                    <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">Pathway</th>
-                                    <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">Global Ranking</th>
-                                    <th className="pr-12 pl-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta text-right">Registry Operations</th>
+                                <tr className="bg-greys-100/50">
+                                    <th className="pl-12 pr-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Institute Detail</th>
+                                    <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Hub Location</th>
+                                    <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Pathway</th>
+                                    <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Global Ranking</th>
+                                    <th className="pr-12 pl-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Operations</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-greys-100">
@@ -304,7 +182,7 @@ export function UniversityTable() {
                                     >
                                         <td className="pl-12 pr-6 py-8">
                                             <div className="flex items-center gap-6">
-                                                <div className="h-16 w-16 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-sm group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
+                                                <div className="h-16 w-16 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
                                                     {(uni as any).logoUrl ? (
                                                         <img src={(uni as any).logoUrl} alt={uni.name} className="h-full w-full object-contain" />
                                                     ) : (
@@ -317,37 +195,37 @@ export function UniversityTable() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8">
-                                            <div className="flex items-center gap-3 text-greys-600 font-jakarta">
-                                                <MapPin className="h-4 w-4 text-error-500/50" />
+                                        <td className="px-6 py-8 font-jakarta">
+                                            <div className="flex items-center gap-3 text-greys-600">
+                                                <MapPin className="h-3.5 w-3.5 text-error-500/50" />
                                                 <span className="text-sm font-medium">{uni.location || "United Kingdom"}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8">
-                                            <Badge variant="outline" className="bg-white text-indigo-600 border-indigo-100 px-5 py-1.5 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-indigo-50 transition-colors uppercase font-jakarta">
+                                        <td className="px-6 py-8 font-jakarta">
+                                            <Badge variant="outline" className="bg-white text-primary-600 border-primary-100 px-5 py-1.5 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-primary-50 transition-colors uppercase">
                                                 {uni.dentalSchoolPathway || "Direct Entry"}
                                             </Badge>
                                         </td>
-                                        <td className="px-6 py-8">
+                                        <td className="px-6 py-8 font-jakarta">
                                             <div className="flex items-center gap-3">
-                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center shadow-sm">
+                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center shadow-xs">
                                                     <Star className="h-5 w-5 text-warning-500 fill-warning-50" />
                                                 </div>
-                                                <span className="text-base font-bold text-text-heading font-jakarta tracking-tight">#{uni.ranking || "—"}</span>
+                                                <span className="text-base font-bold text-text-heading tracking-tight">#{uni.ranking || "—"}</span>
                                             </div>
                                         </td>
-                                        <td className="pr-12 pl-6 py-8 text-right" onClick={(e) => e.stopPropagation()}>
+                                        <td className="pr-12 pl-6 py-8 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-12 w-12 text-greys-400 hover:text-text-heading hover:bg-white rounded-xl transition-all border border-transparent hover:border-greys-300 shadow-none hover:shadow-sm">
-                                                        <MoreVertical className="h-6 w-6" />
+                                                    <Button variant="ghost" size="icon" className="h-10 w-10 text-greys-400 hover:text-text-heading hover:bg-white rounded-xl transition-all border border-transparent hover:border-greys-300 shadow-none hover:shadow-xs">
+                                                        <MoreVertical className="h-5 w-5" />
                                                     </Button>
                                                 </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end" className="w-64 p-3 rounded-2xl border-greys-300 shadow-2xl">
-                                                    <DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-greys-400 px-4 py-3 font-jakarta">Operations Terminal</DropdownMenuLabel>
+                                                <DropdownMenuContent align="end" className="w-64 p-3 rounded-2xl border-greys-300 shadow-2xl ring-1 ring-black/5 font-jakarta">
+                                                    <DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-greys-400 px-4 py-3">Operations Terminal</DropdownMenuLabel>
                                                     <DropdownMenuSeparator className="bg-greys-100 mx-2" />
                                                     <DropdownMenuItem 
-                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 mb-1 font-jakarta" 
+                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 mb-1" 
                                                         onClick={() => router.push(`/admin/content/universities/${uni.hid}`)}
                                                     >
                                                         <div className="h-10 w-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center">
@@ -357,7 +235,7 @@ export function UniversityTable() {
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem 
                                                         onClick={() => handleAddProgramSet(uni.hid)} 
-                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 text-success-600 focus:bg-success-50 mb-1 font-jakarta"
+                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 text-success-600 focus:bg-success-50 mb-1"
                                                     >
                                                         <div className="h-10 w-10 rounded-xl bg-success-50 text-success-600 flex items-center justify-center">
                                                             <BookPlus className="h-5 w-5" />
@@ -367,7 +245,7 @@ export function UniversityTable() {
                                                     <DropdownMenuSeparator className="bg-greys-100 mx-2" />
                                                     <DropdownMenuItem 
                                                         onClick={() => deleteMutation.mutate(uni.hid)} 
-                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 text-error-600 focus:bg-error-50 font-jakarta"
+                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 text-error-600 focus:bg-error-50"
                                                     >
                                                         <div className="h-10 w-10 rounded-xl bg-error-50 text-error-600 flex items-center justify-center">
                                                             <Trash2 className="w-5 h-5" />
@@ -385,12 +263,12 @@ export function UniversityTable() {
                 </div>
             )}
 
-            {/* ── Intelligent Pagination ── */}
+            {/* ── Pagination Hub ── */}
             {totalPages > 1 && (
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-8 pt-10 border-t border-greys-300">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-8 pt-10 border-t border-greys-300 font-jakarta">
                     <div className="flex items-center gap-4">
-                        <div className="p-4 bg-white rounded-2xl shadow-sm border border-greys-300">
-                            <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">
+                        <div className="p-4 bg-white rounded-2xl shadow-xs border border-greys-300">
+                            <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
                                 Mapping <span className="text-text-heading">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> Entry Nodes
                             </p>
                         </div>
@@ -401,21 +279,21 @@ export function UniversityTable() {
                             size="icon"
                             disabled={currentPage === 0}
                             onClick={() => handlePageChange(currentPage - 1)}
-                            className="h-12 w-12 rounded-2xl hover:bg-white text-greys-400 hover:text-text-heading transition-all font-jakarta shadow-none hover:shadow-md"
+                            className="h-12 w-12 rounded-2xl hover:bg-white text-greys-400 hover:text-text-heading transition-all shadow-none hover:shadow-md"
                         >
                             <ChevronLeft className="h-6 w-6" />
                         </Button>
                         <div className="flex items-center gap-3 px-8 bg-white rounded-2xl border border-greys-300 shadow-md">
-                            <span className="text-base font-bold text-text-heading font-jakarta tracking-tight">{currentPage + 1}</span>
+                            <span className="text-base font-bold text-text-heading tracking-tight">{currentPage + 1}</span>
                             <span className="h-4 w-px bg-greys-200" />
-                            <span className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">{totalPages} NODES</span>
+                            <span className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">{totalPages} NODES</span>
                         </div>
                         <Button
                             variant="ghost"
                             size="icon"
                             disabled={currentPage >= totalPages - 1}
                             onClick={() => handlePageChange(currentPage + 1)}
-                            className="h-12 w-12 rounded-2xl hover:bg-white text-greys-400 hover:text-text-heading transition-all font-jakarta shadow-none hover:shadow-md"
+                            className="h-12 w-12 rounded-2xl hover:bg-white text-greys-400 hover:text-text-heading transition-all shadow-none hover:shadow-md"
                         >
                             <ChevronRight className="h-6 w-6" />
                         </Button>

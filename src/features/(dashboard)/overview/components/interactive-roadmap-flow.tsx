@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useRouter } from "next/navigation";
+import { useDashboardStore } from "@/src/store/dashboard-store";
 
 // 11 Applicant Stages
 const STAGES = [
@@ -82,9 +83,11 @@ function getSegmentCenterPoint(index: number) {
 
 export function InteractiveRoadmapFlow() {
   const router = useRouter();
+  const { stages, toggleStage } = useDashboardStore();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   
-  const currentIndex = STAGES.findIndex(s => s.isCurrent);
+  const currentStage = stages.find(s => s.isCurrent);
+  const currentIndex = currentStage ? currentStage.id - 1 : 0;
   
   // Show the hovered stage or the current one in the center hub
   const activeIndex = hoveredId !== null ? hoveredId : currentIndex;
@@ -150,7 +153,7 @@ export function InteractiveRoadmapFlow() {
                const d = `M ${startPoint.x} ${startPoint.y} Q ${midX} ${startPoint.y}, ${endX} ${endY}`;
 
                const isActive = activeIndex === i;
-               const isPast = i < currentIndex;
+               const isCompleted = stages.find(s => s.id === stage.id)?.isCompleted;
 
                return (
                   <motion.path
@@ -162,7 +165,7 @@ export function InteractiveRoadmapFlow() {
                      fill="none"
                      initial={{ pathLength: 1, opacity: 0.15 }}
                      animate={{
-                        opacity: isActive ? 1 : (isPast ? 0.4 : 0.1),
+                        opacity: isActive ? 1 : (isCompleted ? 0.4 : 0.1),
                         strokeWidth: isActive ? "4" : "2.5",
                         strokeDasharray: isActive ? "0" : "6 6"
                      }}
@@ -182,7 +185,7 @@ export function InteractiveRoadmapFlow() {
               const glowFilter = isRow1 ? "url(#glow-emerald)" : (isRow2 ? "url(#glow-blue)" : "url(#glow-orange)");
 
               const isActive = activeIndex === i;
-              const isPast = i < currentIndex;
+              const isCompleted = stages.find(s => s.id === stage.id)?.isCompleted;
 
               return (
                  <motion.circle 
@@ -203,7 +206,7 @@ export function InteractiveRoadmapFlow() {
                         filter: isActive ? glowFilter : "none",
                     }}
                     animate={{ 
-                       opacity: isActive ? 1 : (isPast ? 0.6 : 0.25)
+                       opacity: isActive ? 1 : (isCompleted ? 0.6 : 0.25)
                     }}
                  />
               )
@@ -257,7 +260,7 @@ export function InteractiveRoadmapFlow() {
              const pos = PILL_POSITIONS[i];
              const themeColor = i < 4 ? "emerald" : (i < 8 ? "blue" : "orange");
              const isActive = activeIndex === i;
-             const isPast = i < currentIndex;
+             const isCompleted = stages.find(s => s.id === stage.id)?.isCompleted;
 
              return (
                  <div 
@@ -268,7 +271,7 @@ export function InteractiveRoadmapFlow() {
                     className={cn(
                         "absolute flex items-center p-2 pr-6 rounded-full border-[1px] transition-all duration-500 cursor-pointer group bg-white",
                         isActive ? `border-${themeColor}-400 shadow-2xl scale-[1.05] z-50` : 
-                        isPast ? `border-slate-200 opacity-90 hover:border-${themeColor}-300 hover:shadow-lg` : 
+                        isCompleted ? `border-slate-200 opacity-90 hover:border-${themeColor}-300 hover:shadow-lg` : 
                         `border-transparent opacity-60 hover:opacity-100 hover:border-${themeColor}-200`,
                     )}
                     style={{ 
@@ -282,10 +285,10 @@ export function InteractiveRoadmapFlow() {
                      <div className={cn(
                         "w-16 h-16 rounded-full flex items-center justify-center shrink-0 transition-all duration-700 mr-4 border-[6px] shadow-sm",
                         isActive ? `bg-${themeColor}-500 text-white border-white scale-110` : 
-                        isPast ? `bg-${themeColor}-50 text-${themeColor}-500 border-white` : 
+                        isCompleted ? `bg-${themeColor}-50 text-${themeColor}-500 border-white font-bold` : 
                         "bg-slate-50 text-slate-300 border-white"
                      )}>
-                         {isPast && !isActive ? (
+                         {isCompleted && !isActive ? (
                             <CheckCircle2 className="w-8 h-8" />
                          ) : (
                             <stage.icon className="w-8 h-8" />

@@ -16,6 +16,7 @@ interface DashboardState {
   
   // Actions
   completeStage: (id: number) => void;
+  toggleStage: (id: number) => void;
   setCurrentStage: (id: number) => void;
   triggerConfetti: () => void;
   resetProgress: () => void;
@@ -39,6 +40,14 @@ export const useDashboardStore = create<DashboardState>()(
           s.id === id ? { ...s, isCompleted: true } : s
         ),
         confettiTrigger: true
+      })),
+
+      toggleStage: (id) => set((state) => ({
+        stages: state.stages.map((s) => 
+          s.id === id ? { ...s, isCompleted: !s.isCompleted } : s
+        ),
+        // Only trigger confetti when marking as completed
+        confettiTrigger: !state.stages.find(s => s.id === id)?.isCompleted
       })),
 
       setCurrentStage: (id) => set((state) => ({

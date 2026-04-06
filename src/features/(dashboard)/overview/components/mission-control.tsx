@@ -9,6 +9,7 @@ import {
   ShieldCheck, 
   Zap, 
   AlertCircle, 
+  XCircle, 
   Send, 
   Clock, 
   MessageSquare, 
@@ -191,7 +192,7 @@ const MISSIONS: Mission[] = [
 ];
 
 export function MissionControl() {
-  const { stages, completeStage } = useDashboardStore();
+  const { stages, toggleStage } = useDashboardStore();
   const currentMonth = new Date().getMonth();
   
   const activeMissionId = useMemo(() => {
@@ -387,14 +388,26 @@ export function MissionControl() {
                             </Link>
                           </Button>
 
-                          {!isCompleted && (
+                          {isCompleted ? (
+                             <Button 
+                                 variant="ghost"
+                                 onClick={(e) => {
+                                     e.stopPropagation();
+                                     toggleStage(mission.id);
+                                 }}
+                                 className="text-slate-400 hover:text-emerald-600 rounded-xl h-12 px-6 font-bold transition-all active:scale-95 flex items-center gap-2"
+                             >
+                                 <XCircle className="w-4 h-4" />
+                                 Mark as Pending
+                             </Button>
+                          ) : (
                             <Button 
                                 variant="outline"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    completeStage(mission.id);
+                                    toggleStage(mission.id);
                                 }}
-                                className="border-emerald-500 text-emerald-600 hover:bg-emerald-50 rounded-xl h-12 px-6 font-bold transition-all active:scale-95 flex items-center gap-2"
+                                className="border-emerald-500 text-emerald-600 hover:bg-emerald-50 rounded-xl h-12 px-6 font-bold transition-all active:scale-95 flex items-center gap-2 shadow-sm"
                             >
                                 <CheckCircle2 className="w-4 h-4" />
                                 Mark as Complete
