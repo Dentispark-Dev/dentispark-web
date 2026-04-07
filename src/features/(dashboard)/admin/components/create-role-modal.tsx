@@ -16,7 +16,8 @@ import { adminService } from "@/src/connection/admin-service";
 import { PlatformPermissionData, PlatformRoleData } from "@/src/connection/api-types";
 import { toast } from "sonner";
 import { Checkbox } from "@/src/components/ui/checkbox";
-import { Loader2, Search } from "lucide-react";
+import { Loader2, Search, ShieldCheck, ShieldAlert, Sparkles, X, Fingerprint, Lock } from "lucide-react";
+import { cn } from "@/src/lib/utils";
 
 interface CreateRoleModalProps {
     isOpen: boolean;
@@ -56,7 +57,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                 setFormData({
                     roleName: editRole.name,
                     description: editRole.description || "",
-                    permissionEnums: [] // This should be fetched if editing, but our service currently expects the Guid
+                    permissionEnums: [] 
                 });
                 fetchRolePermissions(editRole.guid);
             } else {
@@ -74,7 +75,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
             const response = await adminService.getRolePermissions(guid);
             setFormData(prev => ({
                 ...prev,
-                permissionEnums: response.permissions.map(p => p.name) // Permissions are identified by Enum Name in the payload
+                permissionEnums: response.permissions.map(p => p.name)
             }));
         } catch {
             console.error("Failed to fetch role permissions");
@@ -120,76 +121,126 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[600px] h-[90vh] flex flex-col p-0">
-                <div className="p-6 pb-0">
+            <DialogContent className="sm:max-w-[700px] max-h-[90vh] flex flex-col p-4 bg-white border-slate-100 rounded-[2.5rem] shadow-2xl overflow-hidden font-jakarta">
+                
+                {/* Header Section */}
+                <div className="p-8 pb-4 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 h-32 w-32 bg-teal-50 rounded-bl-full opacity-40 -mr-8 -mt-8" />
                     <DialogHeader>
-                        <DialogTitle>{editRole ? "Edit Role Permissions" : "Create New Role"}</DialogTitle>
-                        <DialogDescription>
-                            Define a role name and select the associated permissions.
-                        </DialogDescription>
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="h-14 w-14 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200">
+                                <ShieldCheck className="h-7 w-7" />
+                            </div>
+                            <div className="text-left">
+                                <DialogTitle className="text-3xl font-black text-slate-900 tracking-tight">
+                                    {editRole ? "Modify Node" : "Deploy Architecture"}
+                                </DialogTitle>
+                                <DialogDescription className="text-slate-400 font-bold text-[11px] uppercase tracking-[0.2em] mt-1">
+                                    Configure Institutional Permissions & Access
+                                </DialogDescription>
+                            </div>
+                        </div>
                     </DialogHeader>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                    <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                        <div className="grid gap-2">
-                            <Label htmlFor="roleName">Role Name</Label>
-                            <Input
-                                id="roleName"
-                                placeholder="e.g. Content Manager"
-                                value={formData.roleName}
-                                onChange={(e) => setFormData(p => ({ ...p, roleName: e.target.value }))}
-                                required
-                                disabled={!!editRole}
-                            />
+                <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto px-8 py-2 space-y-8 custom-scrollbar">
+                        
+                        {/* Core Details */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="roleName" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Architectural Node Name</Label>
+                                <div className="relative group">
+                                    <Fingerprint className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
+                                    <Input
+                                        id="roleName"
+                                        placeholder="e.g. Lead Moderator"
+                                        className="pl-12 h-14 bg-slate-50/50 border-slate-100 rounded-2xl focus:bg-white focus:ring-teal-500/20 focus:border-teal-500 transition-all font-bold text-slate-600 shadow-sm"
+                                        value={formData.roleName}
+                                        onChange={(e) => setFormData(p => ({ ...p, roleName: e.target.value }))}
+                                        required
+                                        disabled={!!editRole}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="description" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Node Objective</Label>
+                                <div className="relative group">
+                                    <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
+                                    <Input
+                                        id="description"
+                                        placeholder="Define the purpose..."
+                                        className="pl-12 h-14 bg-slate-50/50 border-slate-100 rounded-2xl focus:bg-white focus:ring-teal-500/20 focus:border-teal-500 transition-all font-bold text-slate-600 shadow-sm"
+                                        value={formData.description}
+                                        onChange={(e) => setFormData(p => ({ ...p, description: e.target.value }))}
+                                        disabled={!!editRole}
+                                    />
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="grid gap-2">
-                            <Label htmlFor="description">Description</Label>
-                            <Input
-                                id="description"
-                                placeholder="Brief description of this role's purpose"
-                                value={formData.description}
-                                onChange={(e) => setFormData(p => ({ ...p, description: e.target.value }))}
-                                disabled={!!editRole}
-                            />
-                        </div>
-
-                        <div className="space-y-3">
-                            <Label>Permissions</Label>
-                            <div className="relative mb-2">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        {/* Permissions Registry */}
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Permission Registry</Label>
+                                <span className={cn(
+                                    "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest",
+                                    formData.permissionEnums.length > 0 ? "bg-teal-50 text-teal-600" : "bg-slate-50 text-slate-400"
+                                )}>
+                                    {formData.permissionEnums.length} Selected
+                                </span>
+                            </div>
+                            
+                            <div className="relative group">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
                                 <Input
-                                    placeholder="Filter permissions..."
-                                    className="pl-10 h-9 text-sm"
+                                    placeholder="Filter system permissions..."
+                                    className="pl-10 h-11 bg-slate-50/50 border-slate-100 rounded-xl focus:bg-white focus:ring-teal-500/10 focus:border-teal-500 transition-all font-bold text-xs"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                             </div>
 
-                            <div className="border rounded-lg divide-y bg-gray-50/30 max-h-[300px] overflow-y-auto">
+                            <div className="border border-slate-100 rounded-2xl divide-y divide-slate-50 bg-slate-50/20 max-h-[300px] overflow-y-auto custom-scrollbar shadow-inner">
                                 {isLoadingPermissions ? (
-                                    <div className="flex items-center justify-center p-8">
-                                        <Loader2 className="h-6 w-6 animate-spin text-gray-300" />
+                                    <div className="flex items-center justify-center p-12">
+                                        <Loader2 className="h-8 w-8 animate-spin text-teal-400" />
                                     </div>
                                 ) : filteredPermissions.length === 0 ? (
-                                    <p className="p-8 text-center text-sm text-gray-400">No permissions found.</p>
+                                    <div className="p-12 text-center">
+                                        <Lock className="h-10 w-10 text-slate-200 mx-auto mb-2" />
+                                        <p className="text-sm font-bold text-slate-400">Zero permissions matching query.</p>
+                                    </div>
                                 ) : (
                                     filteredPermissions.map((permission) => (
-                                        <div key={permission.guid} className="flex items-start gap-3 p-3 hover:bg-white transition-colors">
-                                            <Checkbox
-                                                id={`perm-${permission.guid}`}
-                                                className="mt-1"
-                                                checked={formData.permissionEnums.includes(permission.name)}
-                                                onCheckedChange={() => handlePermissionToggle(permission.name)}
-                                            />
-                                            <Label
-                                                htmlFor={`perm-${permission.guid}`}
-                                                className="text-sm font-normal cursor-pointer flex-1"
-                                            >
-                                                <span className="font-semibold text-gray-900">{permission.name}</span>
-                                                <span className="block text-xs text-gray-500 mt-0.5">{permission.description}</span>
-                                            </Label>
+                                        <div 
+                                            key={permission.guid} 
+                                            className={cn(
+                                                "flex items-start gap-4 p-5 hover:bg-white transition-all cursor-pointer group/item",
+                                                formData.permissionEnums.includes(permission.name) && "bg-teal-50/30"
+                                            )}
+                                            onClick={() => handlePermissionToggle(permission.name)}
+                                        >
+                                            <div className="pt-1">
+                                                <Checkbox
+                                                    id={`perm-${permission.guid}`}
+                                                    checked={formData.permissionEnums.includes(permission.name)}
+                                                    onCheckedChange={() => handlePermissionToggle(permission.name)}
+                                                    className="h-5 w-5 rounded-md border-slate-200 data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600 hover:border-teal-600 transition-colors"
+                                                />
+                                            </div>
+                                            <div className="flex-1 space-y-1">
+                                                <Label
+                                                    htmlFor={`perm-${permission.guid}`}
+                                                    className="text-sm font-black text-slate-900 cursor-pointer group-hover/item:text-teal-600 transition-colors"
+                                                >
+                                                    {permission.name}
+                                                </Label>
+                                                <p className="text-[11px] font-bold text-slate-400 leading-tight">
+                                                    {permission.description}
+                                                </p>
+                                            </div>
                                         </div>
                                     ))
                                 )}
@@ -197,14 +248,25 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                         </div>
                     </div>
 
-                    <div className="p-6 border-t bg-gray-50/50">
-                        <DialogFooter>
-                            <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-                                Cancel
+                    {/* Footer Section */}
+                    <div className="p-8 pt-6 mt-4 border-t border-slate-50 bg-slate-50/30">
+                        <DialogFooter className="flex flex-col sm:flex-row gap-4">
+                            <Button 
+                                type="button" 
+                                variant="ghost" 
+                                onClick={onClose} 
+                                disabled={isSubmitting}
+                                className="h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 hover:bg-white transition-all"
+                            >
+                                Abort Operation
                             </Button>
-                            <Button type="submit" className="bg-primary-600 hover:bg-primary-700 min-w-[120px]" disabled={isSubmitting}>
-                                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                                {editRole ? "Update Permissions" : "Create Role"}
+                            <Button 
+                                type="submit" 
+                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-black text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[180px]" 
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <ShieldCheck className="h-5 w-5" />}
+                                {editRole ? "Finalize Node" : "Deploy Node"}
                             </Button>
                         </DialogFooter>
                     </div>
