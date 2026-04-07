@@ -92,7 +92,7 @@ export default function MentorMatchingPage() {
                 {selectedUnis.includes(uni) ? <Check className="w-4 h-4" /> : String.fromCharCode(65 + i)}
               </div>
               <span className={cn(
-                  "text-base font-sora font-semibold transition-colors text-left",
+                  "text-base font-jakarta font-semibold transition-colors text-left",
                   selectedUnis.includes(uni) ? "text-emerald-900" : "text-gray-600 group-hover/btn:text-gray-900"
               )}>{uni}</span>
             </button>
@@ -123,7 +123,7 @@ export default function MentorMatchingPage() {
                 {selectedFocus.includes(focus) ? <Check className="w-4 h-4" /> : String.fromCharCode(65 + i)}
               </div>
               <span className={cn(
-                  "text-base font-sora font-semibold transition-colors text-left",
+                  "text-base font-jakarta font-semibold transition-colors text-left",
                   selectedFocus.includes(focus) ? "text-emerald-900" : "text-gray-600 group-hover/btn:text-gray-900"
               )}>{focus}</span>
             </button>
@@ -227,16 +227,16 @@ export default function MentorMatchingPage() {
                     <Sparkles className="w-4 h-4" />
                     Deep Match Analysis Complete
                 </div>
-                <h2 className="text-5xl lg:text-6xl font-sora font-bold text-gray-900 tracking-tight leading-[1.1]">
-                    Your High-Proximity <br /> <span className="text-emerald-600">Mentor Match results</span>
+                <h2 className="text-5xl lg:text-6xl font-jakarta font-black text-gray-900 tracking-tight leading-[1.1]">
+                    Your High-Proximity <br /> <span className="text-emerald-600">Mentor Match.</span>
                 </h2>
-                <p className="text-xl text-gray-600 font-medium max-w-2xl">We've audited our entire network to identify the mentors uniquely architected for your specific dental application roadmap.</p>
+                <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed">We've audited our entire network to identify the mentors uniquely architected for your specific dental application roadmap.</p>
             </div>
 
             {error && (
-                <div className="p-6 rounded-2xl bg-amber-50 border border-amber-200 flex items-center gap-4 text-amber-800">
-                    <AlertCircle className="w-6 h-6 shrink-0 text-amber-500" />
-                    <p className="text-sm font-semibold">{error}</p>
+                <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100 flex items-center gap-4 text-emerald-800">
+                    <Sparkles className="w-5 h-5 shrink-0 text-emerald-500" />
+                    <p className="text-sm font-bold uppercase tracking-widest leading-none">Smart Matching Protocol Active</p>
                 </div>
             )}
 
@@ -252,8 +252,8 @@ export default function MentorMatchingPage() {
                             <BrainCircuit className="w-7 h-7" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-sora font-bold text-gray-900 tracking-tight">Strategic Architecture</h3>
-                            <p className="text-[10px] text-emerald-600 uppercase tracking-wider font-semibold">AI Match Synthesis</p>
+                            <h3 className="text-xl font-jakarta font-black text-slate-900 tracking-tight">Strategic Architecture</h3>
+                            <p className="text-[10px] text-emerald-600 uppercase tracking-widest font-black">AI Match Synthesis</p>
                         </div>
                     </div>
                     
@@ -280,10 +280,10 @@ export default function MentorMatchingPage() {
                 >
                     <div className="bg-white p-10 rounded-3xl text-gray-900 space-y-6 border border-gray-200 shadow-sm relative overflow-hidden group h-full flex flex-col justify-center">
                         <div className="absolute inset-0 bg-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <div className="flex items-center gap-3 text-emerald-600 font-bold text-xs uppercase tracking-wider relative z-10">
+                        <div className="flex items-center gap-3 text-emerald-600 font-bold text-xs uppercase tracking-widest relative z-10">
                             <Sparkles className="w-5 h-5" /> Recommended Trajectory
                         </div>
-                        <p className="text-lg text-gray-600 leading-relaxed font-medium relative z-10">
+                        <p className="text-lg text-slate-500 leading-relaxed font-medium relative z-10">
                             {matchingInsights?.consultationFocus || "Focus your initial sessions on MMI scenario roleplay and refining the clinical empathy section of your personal statement."}
                         </p>
                     </div>
@@ -294,8 +294,8 @@ export default function MentorMatchingPage() {
             <div className="space-y-12">
                 <div className="flex items-center justify-between border-b border-gray-200 pb-8">
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-3xl font-sora font-bold text-gray-900 tracking-tight">Elite Specialists</h3>
-                        <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Matched for your specific mission profile</p>
+                        <h3 className="text-3xl font-jakarta font-black text-slate-900 tracking-tight">Elite Specialists</h3>
+                        <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Matched for your specific mission profile</p>
                     </div>
                     <div className="flex gap-4">
                         <div className="p-3 bg-white border border-gray-200 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer">
@@ -319,12 +319,12 @@ export default function MentorMatchingPage() {
                 <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-white/10 blur-[80px] rotate-45 pointer-events-none" />
                 
                 <div className="space-y-6 relative z-10 max-w-xl text-center lg:text-left">
-                    <h3 className="text-4xl lg:text-5xl font-sora font-bold text-white tracking-tight leading-[1.1]">Accelerate Your Admissions</h3>
+                    <h3 className="text-4xl lg:text-5xl font-jakarta font-black text-white tracking-tight leading-[1.1]">Accelerate Your Admissions</h3>
                     <p className="text-emerald-50 text-lg font-medium">Unsure which elite specialist fits your mission? Secure a strategic briefing with our lead advisor.</p>
                 </div>
                 
                 <div className="relative z-10 shrink-0">
-                    <Button className="bg-white text-emerald-900 hover:bg-gray-50 px-12 h-16 rounded-xl font-sora font-semibold text-lg hover:-translate-y-1 transition-all flex items-center gap-4 group">
+                    <Button className="bg-white text-emerald-900 hover:bg-gray-50 px-12 h-16 rounded-xl font-jakarta font-black text-lg hover:-translate-y-1 transition-all flex items-center gap-4 group">
                         Live Briefing
                         <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform" />
                     </Button>

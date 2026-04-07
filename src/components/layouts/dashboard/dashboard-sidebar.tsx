@@ -50,7 +50,7 @@ export default function DashboardSidebar({
         </div>
 
         {/* Navigation */}
-        <nav className="font-sora mt-2 flex-1 space-y-1 px-4 py-2 text-sm overflow-y-auto">
+        <nav className="font-jakarta mt-2 flex-1 space-y-1 px-4 py-2 text-sm overflow-y-auto">
           {menuItems.map((item) => {
             const hasChildren = item.children && item.children.length > 0;
             const isExpanded = expandedGroups.includes(item.id);
@@ -184,7 +184,7 @@ export default function DashboardSidebar({
                     Premium Plan
                   </h3>
 
-                  <p className="text-text-color font-sora mb-4 text-base leading-relaxed">
+                  <p className="text-slate-500 font-jakarta mb-4 text-xs font-bold leading-relaxed">
                     Need More?
                     <br />
                     Upgrade for 1:1 Mentorship and More
