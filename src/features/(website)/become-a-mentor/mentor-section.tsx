@@ -92,7 +92,7 @@ export function MentorSection() {
                   transition={{ delay: 0.2, duration: 0.8 }}
                   className="mb-10 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl"
                 >
-                  <p className="font-sora text-sm md:text-base leading-relaxed italic text-slate-200">
+                  <p className="font-jakarta text-sm md:text-base leading-relaxed italic text-slate-200">
                     &ldquo;{mentor.quote}&rdquo;
                   </p>
                 </motion.div>
@@ -100,7 +100,7 @@ export function MentorSection() {
                 <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
                   {/* Mentor Info */}
                   <div className="space-y-2">
-                    <h3 className="font-sora text-3xl font-extrabold text-white group-hover:text-emerald-400 transition-colors">
+                    <h3 className="font-jakarta text-3xl font-extrabold text-white group-hover:text-emerald-400 transition-colors">
                       {mentor.name}
                     </h3>
                     <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-widest">
@@ -112,7 +112,7 @@ export function MentorSection() {
                   <div className="shrink-0">
                     <Link href={`/mentor/${mentor.slug}`}>
                       <Button
-                        className="h-14 px-8 rounded-2xl bg-white text-slate-950 font-sora font-extrabold text-sm hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-xl shadow-white/5 hover:shadow-emerald-500/20"
+                        className="h-14 px-8 rounded-2xl bg-white text-slate-950 font-jakarta font-extrabold text-sm hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-xl shadow-white/5 hover:shadow-emerald-500/20"
                       >
                         View Profile
                       </Button>

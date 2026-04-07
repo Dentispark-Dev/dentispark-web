@@ -3,15 +3,18 @@ import path from "path";
 import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: "/",
-  //       destination: "http://158.220.83.23:1000",
-  //       permanent: false,
-  //     },
-  //   ];
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.transparenttextures.com",
+      },
+    ],
+  },
 
   eslint: {
     ignoreDuringBuilds: true,

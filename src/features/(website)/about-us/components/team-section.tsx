@@ -135,7 +135,7 @@ export function TeamSection() {
             <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
               The Visionaries
             </motion.div>
-            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+            <motion.h2 variants={itemVariants} className="font-jakarta text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
               Meet the <span className="text-emerald-600">Team.</span>
             </motion.h2>
           </div>
@@ -163,7 +163,7 @@ export function TeamSection() {
 
                 {/* Member Info */}
                 <div className="text-center space-y-3">
-                  <h3 className="font-sora text-2xl font-extrabold text-slate-900">
+                  <h3 className="font-jakarta text-2xl font-extrabold text-slate-900">
                     {member.name}
                   </h3>
                   <div className="inline-block px-4 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-400 text-[10px] font-bold uppercase tracking-widest transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-600 group-hover:border-emerald-100">

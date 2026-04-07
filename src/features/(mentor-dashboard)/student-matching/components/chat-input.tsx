@@ -78,10 +78,10 @@ export function ChatInput({ onSendMessage, onAttachFile }: ChatInputProps) {
                     <FileText className="text-primary h-5 w-5" />
                   </div>
                   <div>
-                    <p className="font-sora text-black-800 text-sm font-medium">
+                    <p className="font-jakarta text-black-800 text-sm font-medium">
                       {attachedFile.file.name}
                     </p>
-                    <p className="font-sora text-greys-600 text-xs">
+                    <p className="font-jakarta text-greys-600 text-xs">
                       {formatFileSize(attachedFile.file.size)}
                     </p>
                   </div>
@@ -122,7 +122,7 @@ export function ChatInput({ onSendMessage, onAttachFile }: ChatInputProps) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Send a message..."
-            className="font-sora flex-1 bg-transparent text-base text-gray-900 placeholder:text-gray-400 focus:outline-none"
+            className="font-jakarta flex-1 bg-transparent text-base text-gray-900 placeholder:text-gray-400 focus:outline-none"
           />
 
           <div className="mt-20 flex items-center gap-2">
@@ -138,7 +138,7 @@ export function ChatInput({ onSendMessage, onAttachFile }: ChatInputProps) {
               disabled={!message.trim() && attachedFiles.length === 0}
               className="bg-primary hover:bg-primary/90 flex h-12 flex-shrink-0 items-center gap-2 rounded-full px-6 py-3 text-white disabled:opacity-50"
             >
-              <span className="font-sora text-base font-medium">Send</span>
+              <span className="font-jakarta text-base font-medium">Send</span>
               <Send className="h-5 w-5" />
             </Button>
           </div>

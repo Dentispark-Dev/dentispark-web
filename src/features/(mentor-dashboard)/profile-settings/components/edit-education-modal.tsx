@@ -190,7 +190,7 @@ export function EditEducationModal({
           ))}
 
           {/* Action Buttons */}
-          <div className="font-sora flex w-full gap-3 pt-4">
+          <div className="font-jakarta flex w-full gap-3 pt-4">
             <Button
               type="button"
               variant="outline"

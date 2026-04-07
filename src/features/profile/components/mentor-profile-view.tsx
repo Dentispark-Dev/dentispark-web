@@ -90,11 +90,11 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                 >
                     <div className="max-w-6xl mx-auto flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 font-sora font-bold text-sm">
+                            <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 font-jakarta font-bold text-sm">
                                 {initials}
                             </div>
                             <div>
-                                <h4 className="font-sora font-bold text-gray-900 text-sm leading-none">{mentor.name}</h4>
+                                <h4 className="font-jakarta font-bold text-gray-900 text-sm leading-none">{mentor.name}</h4>
                                 <div className="flex items-center gap-1 mt-1">
                                     <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                                     <span className="text-[10px] font-bold text-gray-500">{mentor.stats.rating} rating</span>
@@ -102,8 +102,8 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <span className="hidden md:block text-sm font-sora font-bold text-emerald-700">${mentor.hourlyRate}/hr</span>
-                            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-9 px-6 font-sora font-bold text-xs shadow-sm shadow-emerald-200">
+                            <span className="hidden md:block text-sm font-jakarta font-bold text-emerald-700">${mentor.hourlyRate}/hr</span>
+                            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-9 px-6 font-jakarta font-bold text-xs shadow-sm shadow-emerald-200">
                                 {isDashboard ? "Book Session" : "Book Now"}
                             </Button>
                         </div>
@@ -134,7 +134,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                 <motion.button 
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="group flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-sora font-bold hover:bg-white/20 transition-all hover:scale-105"
+                    className="group flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-jakarta font-bold hover:bg-white/20 transition-all hover:scale-105"
                 >
                     <PlayCircle className="w-6 h-6 text-emerald-400 group-hover:text-emerald-300" />
                     Watch Intro Video
@@ -166,7 +166,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                 className="flex flex-col md:flex-row items-end gap-8 -mt-24 relative z-20 mb-12"
             >
                 <div className="relative group">
-                    <div className="h-40 w-40 md:h-52 md:w-52 rounded-3xl border-[8px] border-gray-50 overflow-hidden bg-emerald-100 flex items-center justify-center text-emerald-800 text-5xl md:text-6xl font-sora font-bold shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                    <div className="h-40 w-40 md:h-52 md:w-52 rounded-3xl border-[8px] border-gray-50 overflow-hidden bg-emerald-100 flex items-center justify-center text-emerald-800 text-5xl md:text-6xl font-jakarta font-bold shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
                         {initials}
                     </div>
                 </div>
@@ -174,20 +174,20 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                 <div className="flex-1 pb-4">
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <h1 className="text-4xl md:text-5xl font-sora font-extrabold text-gray-900 tracking-tight">{mentor.name}</h1>
+                            <h1 className="text-4xl md:text-5xl font-jakarta font-extrabold text-gray-900 tracking-tight">{mentor.name}</h1>
                             <CheckCircle2 className="h-8 w-8 text-emerald-500 fill-emerald-50" />
                         </div>
-                        <p className="text-2xl font-sora font-bold text-gray-600 tracking-tight">{mentor.title}</p>
+                        <p className="text-2xl font-jakarta font-bold text-gray-600 tracking-tight">{mentor.title}</p>
                         
                         <div className="flex flex-wrap items-center gap-6 mt-4">
                             <div className="flex items-center gap-1.5 px-4 py-2 bg-amber-50 rounded-2xl border border-amber-100">
                                 <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
-                                <span className="font-sora font-extrabold text-amber-700">{mentor.stats.rating}</span>
+                                <span className="font-jakarta font-extrabold text-amber-700">{mentor.stats.rating}</span>
                                 <span className="text-amber-600/60 text-[10px] font-bold uppercase tracking-wider ml-1">Overall Rating</span>
                             </div>
                             <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100">
                                 <ShieldCheck className="h-5 w-5 text-emerald-600" />
-                                <span className="text-xs font-sora font-extrabold text-emerald-700 uppercase tracking-widest">{mentor.credentials.split("|")[0]}</span>
+                                <span className="text-xs font-jakarta font-extrabold text-emerald-700 uppercase tracking-widest">{mentor.credentials.split("|")[0]}</span>
                             </div>
                         </div>
                     </div>
@@ -201,7 +201,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                         key={tab}
                         onClick={() => setActiveTab(tab as any)}
                         className={cn(
-                            "pb-4 text-sm font-sora font-bold uppercase tracking-[0.2em] transition-all relative whitespace-nowrap",
+                            "pb-4 text-sm font-jakarta font-bold uppercase tracking-[0.2em] transition-all relative whitespace-nowrap",
                             activeTab === tab ? "text-emerald-700" : "text-gray-400 hover:text-gray-600"
                         )}
                     >
@@ -244,7 +244,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                                 {stat.icon}
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-3xl font-sora font-extrabold text-gray-900">
+                                                <p className="text-3xl font-jakarta font-extrabold text-gray-900">
                                                     <AnimatedCounter value={typeof stat.value === 'number' ? stat.value : parseInt(stat.value)} />
                                                     {typeof stat.value === 'string' && !parseInt(stat.value) && stat.value}
                                                 </p>
@@ -259,7 +259,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-white rounded-full text-[10px] font-bold uppercase tracking-widest">
                                         Mentorship Philosophy
                                     </div>
-                                    <h2 className="text-3xl font-sora font-bold text-gray-900 tracking-tight">Guiding the Next Generation of Dentists</h2>
+                                    <h2 className="text-3xl font-jakarta font-bold text-gray-900 tracking-tight">Guiding the Next Generation of Dentists</h2>
                                     <p className="text-xl text-gray-600 leading-relaxed font-medium">
                                         {mentor.bio}
                                     </p>
@@ -288,7 +288,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                                 0{i + 1}
                                             </div>
                                             <div className="space-y-1">
-                                                <h3 className="text-xl font-sora font-bold text-gray-900">{typeof service === 'string' ? service : service.name}</h3>
+                                                <h3 className="text-xl font-jakarta font-bold text-gray-900">{typeof service === 'string' ? service : service.name}</h3>
                                                 <p className="text-gray-500 text-sm font-medium">{typeof service === 'string' ? "Expert mentorship and guidance." : service.desc}</p>
                                             </div>
                                         </div>
@@ -311,7 +311,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                             <div className="flex items-center gap-3">
                                                 <div className="w-12 h-12 rounded-full bg-gray-100" />
                                                 <div>
-                                                    <h5 className="font-sora font-bold text-gray-900">Student User {r}</h5>
+                                                    <h5 className="font-jakarta font-bold text-gray-900">Student User {r}</h5>
                                                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">DentiSpark Member</p>
                                                 </div>
                                             </div>
@@ -342,7 +342,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                         <div className="relative z-10 space-y-10">
                             <div className="flex items-center justify-between">
                                 <div className="text-gray-900 border-l-4 border-emerald-500 pl-4">
-                                    <span className="text-5xl font-sora font-extrabold tracking-tighter">${mentor.hourlyRate}</span>
+                                    <span className="text-5xl font-jakarta font-extrabold tracking-tighter">${mentor.hourlyRate}</span>
                                     <span className="text-gray-400 font-bold text-xs uppercase tracking-widest ml-2">per hour</span>
                                 </div>
                                 <div className="p-4 bg-emerald-50 rounded-2xl">
@@ -358,20 +358,20 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                             <Calendar className="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <p className="font-sora font-extrabold text-gray-900 text-sm">{mentor.availability}</p>
+                                            <p className="font-jakarta font-extrabold text-gray-900 text-sm">{mentor.availability}</p>
                                             <p className="text-xs text-gray-500 font-semibold mt-0.5">Quick booking enabled</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 {isDashboard ? (
-                                    <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-sora font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
+                                    <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-jakarta font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
                                         Request Partnership
                                         <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                 ) : (
                                     <Link href={`/login?redirect=/mentor/${mentor.slug}`} className="block">
-                                        <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-sora font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
+                                        <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-jakarta font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
                                             Secure This Slot
                                             <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                         </Button>

@@ -97,7 +97,7 @@ export function PaymentSetupStep2({
             name="dentalExperience"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Dental work experience or volunteering?{" "}
                   <span className="text-gray-500">
                     (Yes/No, details optional)
@@ -121,7 +121,7 @@ export function PaymentSetupStep2({
             name="interestedSchools"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Interested UK dental schools?
                 </FormLabel>
                 <Select
@@ -182,7 +182,7 @@ export function PaymentSetupStep2({
             name="applicationChallenges"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Biggest application challenges?{" "}
                   <span className="text-gray-500">
                     (e.g., UCAT, personal statement)

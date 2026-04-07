@@ -84,7 +84,7 @@ export function Hero() {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              className="bg-primary font-sora hover:bg-primary/90 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-normal text-white shadow transition"
+              className="bg-primary font-jakarta hover:bg-primary/90 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-normal text-white shadow transition"
             >
               <span>Start for Free</span>
               <motion.span variants={bounceX} className="flex">
@@ -98,7 +98,7 @@ export function Hero() {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              className="border-primary font-sora text-primary inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-normal transition hover:bg-green-50"
+              className="border-primary font-jakarta text-primary inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-normal transition hover:bg-green-50"
             >
               <span>Explore Free Resources</span>
               <motion.span variants={bounceY} className="flex">

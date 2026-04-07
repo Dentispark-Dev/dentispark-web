@@ -43,10 +43,10 @@ export default function UniversityPartner() {
     >
       {/* Left column */}
       <motion.div variants={itemVariants} className="flex flex-1 flex-col items-start py-6 text-left md:pl-8">
-        <p className="mb-8 font-sora text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">
+        <p className="mb-8 font-jakarta text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">
           The Authority
         </p>
-        <h3 className="mb-8 font-sora text-lg font-extrabold text-slate-900 leading-relaxed">
+        <h3 className="mb-8 font-jakarta text-lg font-extrabold text-slate-900 leading-relaxed">
           The #1 Platform for underprivileged students
           <br />
           applying to dental school.
@@ -67,10 +67,10 @@ export default function UniversityPartner() {
 
       {/* Right column */}
       <motion.div variants={itemVariants} className="flex flex-col py-6 text-left md:w-[45%] md:items-start md:pl-10">
-        <p className="mb-8 font-sora text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">
+        <p className="mb-8 font-jakarta text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">
           Alliances
         </p>
-        <h3 className="mb-8 font-sora text-lg font-extrabold text-slate-900 leading-relaxed">
+        <h3 className="mb-8 font-jakarta text-lg font-extrabold text-slate-900 leading-relaxed">
           Partnered with leading nonprofits to support
           <br />
           underprivileged students.

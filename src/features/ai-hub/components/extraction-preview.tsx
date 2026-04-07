@@ -34,7 +34,7 @@ export function ExtractionPreview({ items, title }: ExtractionPreviewProps) {
           >
             <div className="space-y-0.5">
                 <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.key}</span>
-                <p className="text-sm font-sora font-bold text-gray-900">{item.value}</p>
+                <p className="text-sm font-jakarta font-bold text-gray-900">{item.value}</p>
             </div>
             
             <div className="flex items-center gap-3">

@@ -31,13 +31,13 @@ export function ContactSupportForm({
             <h2 className="text-black-800 text-2xl font-semibold">
               Contact Support
             </h2>
-            <p className="font-sora text-sm text-gray-600">
+            <p className="font-jakarta text-sm text-gray-600">
               Do you have any questions/challenges?
             </p>
           </div>
 
           <div className="space-y-6">
-            <label className="font-sora text-sm font-medium text-gray-700">
+            <label className="font-jakarta text-sm font-medium text-gray-700">
               Send us a message
             </label>
             <div>
@@ -52,7 +52,7 @@ export function ContactSupportForm({
                 className="focus:border-success-600 focus:ring-success-600 mt-4 min-h-[120px] resize-none rounded-xl border-gray-300"
                 disabled={isSubmitting}
               />
-              <div className="font-sora mt-2 text-xs text-gray-500">
+              <div className="font-jakarta mt-2 text-xs text-gray-500">
                 Word count: {message.length}/{maxLength}
               </div>
             </div>

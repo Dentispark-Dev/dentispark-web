@@ -10,7 +10,7 @@ export default function AdminNewsletterPage() {
         <div className="space-y-6 max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 font-sora flex items-center gap-3">
+                    <h1 className="text-3xl font-bold text-gray-900 font-jakarta flex items-center gap-3">
                         <Mail className="h-8 w-8 text-primary-600" />
                         Newsletter Management
                     </h1>

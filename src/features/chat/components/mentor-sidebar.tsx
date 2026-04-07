@@ -14,7 +14,7 @@ const MOCK_MENTORS = [
 
 export function MentorSidebar() {
   return (
-    <div className="w-full h-full flex flex-col bg-white border-r border-gray-100 font-sora">
+    <div className="w-full h-full flex flex-col bg-white border-r border-gray-100 font-jakarta">
       {/* Refined Sidebar Header - Streamlined */}
       <div className="p-4 space-y-4">
         <div className="relative group">

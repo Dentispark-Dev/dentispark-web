@@ -103,7 +103,7 @@ export default function TranscriptParserPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-sora font-bold text-gray-900">Academic Transcript Parser</h1>
+            <h1 className="text-2xl font-jakarta font-bold text-gray-900">Academic Transcript Parser</h1>
             <p className="text-gray-500 text-sm font-medium">Automated data extraction for your application profile.</p>
           </div>
         </div>
@@ -121,13 +121,13 @@ export default function TranscriptParserPage() {
             <div className="flex gap-2 p-1 bg-gray-100 rounded-2xl mb-8">
                 <button 
                     onClick={() => setMode("upload")}
-                    className={cn("px-6 py-2 rounded-xl text-xs font-sora font-bold transition-all", mode === "upload" ? "bg-white text-gray-900 shadow-sm" : "text-gray-400 hover:text-gray-600")}
+                    className={cn("px-6 py-2 rounded-xl text-xs font-jakarta font-bold transition-all", mode === "upload" ? "bg-white text-gray-900 shadow-sm" : "text-gray-400 hover:text-gray-600")}
                 >
                     Upload Document
                 </button>
                 <button 
                     onClick={() => setMode("paste")}
-                    className={cn("px-6 py-2 rounded-xl text-xs font-sora font-bold transition-all", mode === "paste" ? "bg-white text-gray-900 shadow-sm" : "text-gray-400 hover:text-gray-600")}
+                    className={cn("px-6 py-2 rounded-xl text-xs font-jakarta font-bold transition-all", mode === "paste" ? "bg-white text-gray-900 shadow-sm" : "text-gray-400 hover:text-gray-600")}
                 >
                     Paste Text
                 </button>
@@ -141,7 +141,7 @@ export default function TranscriptParserPage() {
                 {mode === "upload" ? (
                     <>
                         <div className="space-y-2">
-                            <h2 className="text-3xl font-sora font-bold text-gray-900">Drop your transcript here</h2>
+                            <h2 className="text-3xl font-jakarta font-bold text-gray-900">Drop your transcript here</h2>
                             <p className="text-gray-500 font-medium">We support PDF, DOCX, and high-res images.</p>
                         </div>
                         
@@ -152,7 +152,7 @@ export default function TranscriptParserPage() {
                                 onChange={handleFileUpload}
                                 accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
                             />
-                            <div className="bg-gray-900 text-white px-10 h-14 rounded-2xl font-sora font-bold flex items-center gap-2 shadow-sm hover:bg-gray-800 transition-all">
+                            <div className="bg-gray-900 text-white px-10 h-14 rounded-2xl font-jakarta font-bold flex items-center gap-2 shadow-sm hover:bg-gray-800 transition-all">
                                 Browse Files
                             </div>
                         </label>
@@ -160,7 +160,7 @@ export default function TranscriptParserPage() {
                 ) : (
                     <div className="w-full space-y-4">
                         <div className="space-y-2">
-                            <h2 className="text-3xl font-sora font-bold text-gray-900">Paste your transcript text</h2>
+                            <h2 className="text-3xl font-jakarta font-bold text-gray-900">Paste your transcript text</h2>
                             <p className="text-gray-500 font-medium">Copy & paste grades, scores, or CV details.</p>
                         </div>
                         <Textarea 
@@ -172,7 +172,7 @@ export default function TranscriptParserPage() {
                         <Button 
                             onClick={handleAIParsing}
                             disabled={!rawText.trim() || isParsing}
-                            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-14 rounded-2xl font-sora font-bold shadow-sm"
+                            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-14 rounded-2xl font-jakarta font-bold shadow-sm"
                         >
                             {isParsing ? "Extracting..." : "Start AI Extraction"}
                         </Button>
@@ -216,7 +216,7 @@ export default function TranscriptParserPage() {
                         <BrainCircuit className="w-4 h-4" />
                         Analyzing Structure
                     </div>
-                    <h2 className="text-4xl font-sora font-bold text-gray-900 tracking-tight">Extracting Academic Insights</h2>
+                    <h2 className="text-4xl font-jakarta font-bold text-gray-900 tracking-tight">Extracting Academic Insights</h2>
                     <p className="text-gray-500 font-medium leading-relaxed max-w-md">Our neural network is identifying tables, dates, and clinical keywords from your document to ensure maximum accuracy.</p>
                 </div>
 
@@ -235,7 +235,7 @@ export default function TranscriptParserPage() {
                                 {step.done ? <CheckCircle2 className="w-3.5 h-3.5" /> : <div className="w-1.5 h-1.5 rounded-full bg-current" />}
                             </div>
                             <span className={cn(
-                                "text-sm font-semibold font-sora",
+                                "text-sm font-semibold font-jakarta",
                                 step.done ? "text-gray-900" : "text-gray-400"
                             )}>{step.label}</span>
                         </div>
@@ -257,16 +257,16 @@ export default function TranscriptParserPage() {
                     <div className="relative z-10 space-y-6">
                         <div className="space-y-1">
                             <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Total Credits Extracted</span>
-                            <p className="text-5xl font-sora font-bold text-gray-900">420<span className="text-xl text-emerald-400 ml-1">pts</span></p>
+                            <p className="text-5xl font-jakarta font-bold text-gray-900">420<span className="text-xl text-emerald-400 ml-1">pts</span></p>
                         </div>
                         <div className="pt-4 border-t border-gray-50 space-y-4">
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-gray-500 font-medium">Quality Score</span>
-                                <span className="font-sora font-bold text-emerald-500">Excellent (98%)</span>
+                                <span className="font-jakarta font-bold text-emerald-500">Excellent (98%)</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-gray-500 font-medium">Profile Impact</span>
-                                <span className="font-sora font-bold text-emerald-600">+12% SEO Boost</span>
+                                <span className="font-jakarta font-bold text-emerald-600">+12% SEO Boost</span>
                             </div>
                         </div>
                     </div>
@@ -324,7 +324,7 @@ export default function TranscriptParserPage() {
                                     console.error(e);
                                 }
                             }}
-                             className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white h-14 rounded-2xl font-sora font-bold shadow-sm gap-2 transition-all active:scale-95"
+                             className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white h-14 rounded-2xl font-jakarta font-bold shadow-sm gap-2 transition-all active:scale-95"
                         >
                             <Save className="w-5 h-5" />
                             Sync to My Profile
@@ -332,7 +332,7 @@ export default function TranscriptParserPage() {
                         <Button 
                             variant="ghost" 
                             onClick={() => {setShowResults(false); setUploadedFile(null); setRawText(""); setParsedData(null);}}
-                            className="bg-gray-50 hover:bg-gray-100 text-gray-600 h-14 px-8 rounded-2xl font-sora font-bold flex items-center gap-2 transition-all"
+                            className="bg-gray-50 hover:bg-gray-100 text-gray-600 h-14 px-8 rounded-2xl font-jakarta font-bold flex items-center gap-2 transition-all"
                         >
                             <Trash2 className="w-5 h-5" />
                             Discard

@@ -8,8 +8,6 @@ import Container from "@/src/components/layouts/container";
 // Import resource images
 import resource4 from "@/public/images/resource-4.png";
 import resource5 from "@/public/images/resource-5.png";
-import resource6 from "@/public/images/resource-6.png";
-import resource7 from "@/public/images/resource-7.png";
 
 const resources = [
   {
@@ -90,13 +88,13 @@ export function ResourcesGridSecondary() {
                 </div>
 
                 <div className="flex flex-col py-6">
-                  <p className="text-black-400 font-sora mb-2 text-sm">
+                  <p className="text-black-400 font-jakarta mb-2 text-sm">
                     {resource.date}
                   </p>
                   <h3 className="text-black-700 mb-3 line-clamp-2 text-lg font-semibold">
                     {resource.title}
                   </h3>
-                  <p className="text-text-color font-sora flex-1 text-xs leading-[160%]">
+                  <p className="text-text-color font-jakarta flex-1 text-xs leading-[160%]">
                     {resource.description}
                   </p>
                 </div>

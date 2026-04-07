@@ -54,7 +54,7 @@ export default function WarRoomPage() {
             <div className="absolute inset-0 bg-emerald-100 blur-3xl rounded-full scale-150 animate-pulse" />
             <BrainCircuit className="w-16 h-16 text-emerald-600 relative animate-float" />
         </div>
-        <p className="text-gray-400 font-sora font-bold uppercase tracking-widest text-[10px]">Assembling Command Center Intelligence...</p>
+        <p className="text-gray-400 font-jakarta font-bold uppercase tracking-widest text-[10px]">Assembling Command Center Intelligence...</p>
       </div>
     );
   }
@@ -65,11 +65,11 @@ export default function WarRoomPage() {
         <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-red-600 mb-4">
             <AlertCircle className="w-10 h-10" />
         </div>
-        <h2 className="text-2xl font-sora font-bold text-gray-900 tracking-tight">Command Center Offline</h2>
+        <h2 className="text-2xl font-jakarta font-bold text-gray-900 tracking-tight">Command Center Offline</h2>
         <p className="text-gray-500 font-medium">{error}</p>
         <Button 
             onClick={() => window.location.reload()}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-xl font-sora font-bold shadow-sm"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-xl font-jakarta font-bold shadow-sm"
         >
             Retry Connection
         </Button>
@@ -88,14 +88,14 @@ export default function WarRoomPage() {
                 <ArrowLeft className="w-3 h-3" /> Back to Intelligence Hub
             </Link>
             <div className="space-y-1">
-                <h1 className="text-5xl font-sora font-bold text-gray-900 tracking-tight">Admissions War-Room</h1>
+                <h1 className="text-5xl font-jakarta font-bold text-gray-900 tracking-tight">Admissions War-Room</h1>
                 <p className="text-gray-500 font-medium text-lg">Real-time tactical briefing for your application journey.</p>
             </div>
         </div>
         <div className="flex items-center gap-4 bg-white p-2 rounded-3xl border border-gray-100 shadow-sm">
             <div className="px-6 py-4 rounded-2xl bg-gray-900 text-white text-center">
                 <span className="block text-[8px] font-bold uppercase tracking-[0.3em] opacity-50 mb-1">Combat Readiness</span>
-                <span className="text-3xl font-sora font-bold">{data?.readinessScore}%</span>
+                <span className="text-3xl font-jakarta font-bold">{data?.readinessScore}%</span>
             </div>
             <div className="pr-6">
                 <span className="block text-[8px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-1">Status</span>
@@ -119,7 +119,7 @@ export default function WarRoomPage() {
                 <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
                     <div className="flex-1 space-y-6">
                         <div className="space-y-2">
-                            <h3 className="text-2xl font-sora font-bold text-gray-900 tracking-tight">Tactical Radar</h3>
+                            <h3 className="text-2xl font-jakarta font-bold text-gray-900 tracking-tight">Tactical Radar</h3>
                             <p className="text-sm text-gray-500 font-medium">Visualization of your application balance across critical axes.</p>
                         </div>
                         <div className="space-y-4">
@@ -127,7 +127,7 @@ export default function WarRoomPage() {
                                 <div key={item.subject} className="space-y-1.5">
                                     <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest px-1">
                                         <span className="text-gray-400">{item.subject}</span>
-                                        <span className="text-emerald-600 font-sora">{item.A}%</span>
+                                        <span className="text-emerald-600 font-jakarta">{item.A}%</span>
                                     </div>
                                     <div className="h-1.5 w-full bg-gray-50 rounded-full overflow-hidden">
                                         <motion.div 
@@ -153,9 +153,9 @@ export default function WarRoomPage() {
                         <Zap className="w-20 h-20" />
                     </div>
                     <div className="space-y-4 relative z-10">
-                        <h4 className="text-xl font-sora font-bold tracking-tight">Next Strategic Strike</h4>
+                        <h4 className="text-xl font-jakarta font-bold tracking-tight">Next Strategic Strike</h4>
                         <p className="text-gray-400 text-sm leading-relaxed font-medium">Based on your Radar, your **Clinical Reflection** log is the highest priority for Manchester entry.</p>
-                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-12 font-sora font-bold gap-2 shadow-sm transition-all active:scale-95">
+                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-12 font-jakarta font-bold gap-2 shadow-sm transition-all active:scale-95">
                             Execute Log Update <ChevronRight className="w-4 h-4" />
                         </Button>
                     </div>
@@ -166,10 +166,10 @@ export default function WarRoomPage() {
                         <Sparkles className="w-20 h-20" />
                     </div>
                     <div className="space-y-4 relative z-10">
-                        <h4 className="text-xl font-sora font-bold tracking-tight">Interview Simulation</h4>
+                        <h4 className="text-xl font-jakarta font-bold tracking-tight">Interview Simulation</h4>
                         <p className="text-white/80 text-sm leading-relaxed font-medium">Your **Vocal Command** is at 78%. Reach 90% to upgrade King's College odds to Low Risk.</p>
                         <Link href="/ai-hub/interview-prep" className="block w-full">
-                            <Button className="w-full bg-white text-emerald-700 hover:bg-gray-50 rounded-2xl h-12 font-sora font-bold gap-2 transition-all active:scale-95">
+                            <Button className="w-full bg-white text-emerald-700 hover:bg-gray-50 rounded-2xl h-12 font-jakarta font-bold gap-2 transition-all active:scale-95">
                                 Start Session <ChevronRight className="w-4 h-4" />
                             </Button>
                         </Link>
@@ -183,7 +183,7 @@ export default function WarRoomPage() {
             
             {/* Strategic Directives Feed */}
             <div className="p-8 rounded-[2.5rem] bg-white border border-gray-100 shadow-sm space-y-6">
-                <h3 className="text-xl font-sora font-bold text-gray-900 flex items-center gap-2">
+                <h3 className="text-xl font-jakarta font-bold text-gray-900 flex items-center gap-2">
                     <ShieldAlert className="w-5 h-5 text-amber-500" />
                     Strategic Directives
                 </h3>
@@ -206,7 +206,7 @@ export default function WarRoomPage() {
                 {data?.schoolBriefings?.map((brief: any, i: number) => (
                     <div key={i} className="p-6 rounded-[2rem] bg-white border border-gray-100 hover:border-emerald-300 hover:shadow-md transition-all flex items-center justify-between group shadow-sm">
                         <div className="space-y-0.5">
-                            <h5 className="font-sora font-bold text-gray-900 text-sm">{brief.name}</h5>
+                            <h5 className="font-jakarta font-bold text-gray-900 text-sm">{brief.name}</h5>
                             <div className="flex items-center gap-2">
                                 <span className={cn(
                                     "text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded",
@@ -218,7 +218,7 @@ export default function WarRoomPage() {
                             </div>
                         </div>
                         <div className="text-right">
-                            <span className="block text-2xl font-sora font-bold text-emerald-600">{brief.probability}%</span>
+                            <span className="block text-2xl font-jakarta font-bold text-emerald-600">{brief.probability}%</span>
                             <span className="text-[8px] font-bold text-gray-300 uppercase tracking-tighter">Prob.</span>
                         </div>
                     </div>

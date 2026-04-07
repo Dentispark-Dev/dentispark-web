@@ -17,7 +17,7 @@ export function HeroSection() {
           <h1 className="max-w-4xl text-4xl leading-[120%] font-extrabold text-black sm:text-5xl">
             UCAT Guide resources
           </h1>
-          <p className="text-black-600 md:max-w-3x font-sora">
+          <p className="text-black-600 md:max-w-3x font-jakarta">
             Concise articles, free resources, and guides to help you achieve
             your goals.
           </p>

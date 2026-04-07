@@ -87,7 +87,7 @@ export function BankInformationForm({
     <div className={cn("mx-auto w-full max-w-md", className)}>
       <div className="space-y-6">
         {/* Description */}
-        <p className="font-sora text-black-600 text-center text-sm">
+        <p className="font-jakarta text-black-600 text-center text-sm">
           Please provide your bank details below to ensure you can receive
           payments promptly and securely.
         </p>
@@ -95,7 +95,7 @@ export function BankInformationForm({
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Sort Code Field */}
           <div className="space-y-4">
-            <label className="font-sora text-black-800 text-sm font-medium">
+            <label className="font-jakarta text-black-800 text-sm font-medium">
               Sort code
             </label>
             <input
@@ -104,7 +104,7 @@ export function BankInformationForm({
               onChange={handleSortCodeChange}
               placeholder="11-22-33"
               className={cn(
-                "font-sora w-full rounded-lg border px-4 py-3 text-sm",
+                "font-jakarta w-full rounded-lg border px-4 py-3 text-sm",
                 "focus:ring-primary-500 focus:border-transparent focus:ring-2 focus:outline-none",
                 "transition-colors duration-200",
                 errors.sortCode
@@ -113,7 +113,7 @@ export function BankInformationForm({
               )}
             />
             {errors.sortCode && (
-              <p className="font-sora text-error-500 text-xs">
+              <p className="font-jakarta text-error-500 text-xs">
                 {errors.sortCode}
               </p>
             )}
@@ -121,7 +121,7 @@ export function BankInformationForm({
 
           {/* Account Number Field */}
           <div className="space-y-4">
-            <label className="font-sora text-black-800 text-sm font-medium">
+            <label className="font-jakarta text-black-800 text-sm font-medium">
               Account number
             </label>
             <input
@@ -130,7 +130,7 @@ export function BankInformationForm({
               onChange={handleAccountNumberChange}
               placeholder="01234567"
               className={cn(
-                "font-sora w-full rounded-lg border px-4 py-3 text-sm",
+                "font-jakarta w-full rounded-lg border px-4 py-3 text-sm",
                 "focus:ring-primary-500 focus:border-transparent focus:ring-2 focus:outline-none",
                 "transition-colors duration-200",
                 errors.accountNumber
@@ -139,7 +139,7 @@ export function BankInformationForm({
               )}
             />
             {errors.accountNumber && (
-              <p className="font-sora text-error-500 text-xs">
+              <p className="font-jakarta text-error-500 text-xs">
                 {errors.accountNumber}
               </p>
             )}
@@ -151,13 +151,13 @@ export function BankInformationForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="font-sora flex-1 text-sm font-medium"
+              className="font-jakarta flex-1 text-sm font-medium"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="font-sora flex-1 text-sm font-medium text-white"
+              className="font-jakarta flex-1 text-sm font-medium text-white"
             >
               Submit
             </Button>

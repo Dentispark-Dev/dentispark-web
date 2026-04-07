@@ -375,7 +375,7 @@ export function AccountRegistration({
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="font-sora text-sm font-normal">
+                  <FormLabel className="font-jakarta text-sm font-normal">
                     I agree to data processing for vetting and{" "}
                     <a
                       href="/terms"
@@ -406,18 +406,18 @@ export function AccountRegistration({
 
       {/* Footer Links */}
       <div className="mt-8 text-center">
-        <p className="font-sora text-xs text-gray-600">
+        <p className="font-jakarta text-xs text-gray-600">
           Already have an account?{" "}
           <a
             href="/mentor/login"
-            className="text-primary font-sora cursor-pointer text-xs underline"
+            className="text-primary font-jakarta cursor-pointer text-xs underline"
           >
             Log in
           </a>
         </p>
       </div>
 
-      <div className="font-sora mt-4 flex justify-center space-x-6 text-xs text-gray-500 underline">
+      <div className="font-jakarta mt-4 flex justify-center space-x-6 text-xs text-gray-500 underline">
         <a href="/terms" className="cursor-pointer hover:text-gray-700">
           Terms & Conditions
         </a>

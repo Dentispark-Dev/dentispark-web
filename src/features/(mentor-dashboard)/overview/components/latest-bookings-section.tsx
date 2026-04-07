@@ -89,7 +89,7 @@ export function LatestBookingsSection({
     <div className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-sora text-black-800 text-xl font-semibold">
+        <h2 className="font-jakarta text-black-800 text-xl font-semibold">
           Latest bookings
         </h2>
 
@@ -98,7 +98,7 @@ export function LatestBookingsSection({
           <button
             onClick={() => setActiveFilter("all")}
             className={cn(
-              "font-sora rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              "font-jakarta rounded-lg px-4 py-2 text-sm font-medium transition-colors",
               activeFilter === "all"
                 ? "bg-greys-300 text-black-800"
                 : "bg-greys-100 text-black-600 hover:bg-greys-200",
@@ -109,7 +109,7 @@ export function LatestBookingsSection({
           <button
             onClick={() => setActiveFilter("personal-statement")}
             className={cn(
-              "font-sora rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              "font-jakarta rounded-lg px-4 py-2 text-sm font-medium transition-colors",
               activeFilter === "personal-statement"
                 ? "bg-greys-300 text-black-800"
                 : "bg-greys-100 text-black-600 hover:bg-greys-200",
@@ -120,7 +120,7 @@ export function LatestBookingsSection({
           <button
             onClick={() => setActiveFilter("ucat")}
             className={cn(
-              "font-sora rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              "font-jakarta rounded-lg px-4 py-2 text-sm font-medium transition-colors",
               activeFilter === "ucat"
                 ? "bg-greys-300 text-black-800"
                 : "bg-greys-100 text-black-600 hover:bg-greys-200",

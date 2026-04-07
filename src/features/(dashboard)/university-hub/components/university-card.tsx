@@ -56,7 +56,7 @@ export function UniversityCard({
               />
             </svg>
           </div>
-          <p className="font-sora text-sm leading-relaxed text-[#868686] md:w-[70%]">
+          <p className="font-jakarta text-sm leading-relaxed text-[#868686] md:w-[70%]">
             {university.fullAddress}
           </p>
         </div>
@@ -118,7 +118,7 @@ export function UniversityCard({
               />
             </svg>
           )}
-          <span className={cn("font-sora text-sm font-medium text-[#868686]")}>
+          <span className={cn("font-jakarta text-sm font-medium text-[#868686]")}>
             Admission {isAdmissionOpen ? "Open" : "Closed"}
           </span>
         </div>

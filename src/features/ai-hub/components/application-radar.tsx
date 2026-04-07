@@ -82,7 +82,7 @@ export function ApplicationRadar({ data }: ApplicationRadarProps) {
               x={coords.x}
               y={coords.y}
               textAnchor="middle"
-              className="text-[9px] font-sora font-bold uppercase tracking-widest fill-gray-400"
+              className="text-[9px] font-jakarta font-bold uppercase tracking-widest fill-gray-400"
             >
               {d.subject}
             </text>

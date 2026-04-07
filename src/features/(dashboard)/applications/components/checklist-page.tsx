@@ -90,7 +90,7 @@ export function ChecklistPage() {
                       <Circle className="text-greys-300 h-6 w-6" />
                     )}
                     <div>
-                      <h3 className="font-sora text-lg font-semibold">{item.title}</h3>
+                      <h3 className="font-jakarta text-lg font-semibold">{item.title}</h3>
                       <p className="text-black-400 text-sm">{item.description}</p>
                     </div>
                   </div>

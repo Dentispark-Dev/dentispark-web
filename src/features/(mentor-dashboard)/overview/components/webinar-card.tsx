@@ -60,7 +60,7 @@ export function WebinarCard({
                   />
                 </svg>
 
-                <span className="font-sora text-black-800 text-sm font-medium">
+                <span className="font-jakarta text-black-800 text-sm font-medium">
                   Premium
                 </span>
               </div>
@@ -69,7 +69,7 @@ export function WebinarCard({
 
           <div className="pb-4">
             {/* Title */}
-            <h3 className="font-sora text-black-800 line-clamp-2 text-base font-semibold">
+            <h3 className="font-jakarta text-black-800 line-clamp-2 text-base font-semibold">
               {webinar.title}
             </h3>
 
@@ -81,18 +81,18 @@ export function WebinarCard({
                   className="h-full w-full rounded-full object-cover"
                 />
               </div>
-              <span className="font-sora text-black-600 text-sm">
+              <span className="font-jakarta text-black-600 text-sm">
                 With {webinar.instructor.name}
               </span>
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-[#F8BE42] text-[#F8BE42]" />
-                <span className="font-sora text-black-800 text-sm font-medium">
+                <span className="font-jakarta text-black-800 text-sm font-medium">
                   {webinar.rating}
                 </span>
               </div>
             </div>
 
-            <p className="font-sora text-black-400 mt-2 text-sm">
+            <p className="font-jakarta text-black-400 mt-2 text-sm">
               {webinar.date} @ {webinar.time}
             </p>
 
@@ -111,7 +111,7 @@ export function WebinarCard({
                   </div>
                 ))}
               </div>
-              <span className="font-sora text-black-600 text-sm">
+              <span className="font-jakarta text-black-600 text-sm">
                 {webinar.attendees} people going
               </span>
             </div>

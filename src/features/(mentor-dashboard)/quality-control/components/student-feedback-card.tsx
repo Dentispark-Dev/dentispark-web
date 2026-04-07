@@ -47,7 +47,7 @@ export function StudentFeedbackCard({ feedback }: StudentFeedbackCardProps) {
                 {feedback.studentName}
               </p>
               <div className="mt-1 flex items-center justify-between">
-                <p className="font-sora text-sm text-gray-600">
+                <p className="font-jakarta text-sm text-gray-600">
                   {feedback.year}
                 </p>
                 {/* Star Rating */}
@@ -71,7 +71,7 @@ export function StudentFeedbackCard({ feedback }: StudentFeedbackCardProps) {
         </div>
 
         {/* Feedback Text */}
-        <div className="font-sora p-4 text-sm leading-relaxed text-gray-700">
+        <div className="font-jakarta p-4 text-sm leading-relaxed text-gray-700">
           {feedback.feedback}
         </div>
       </div>

@@ -105,7 +105,7 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
                       <div className="size-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
                         <Search size={32} />
                       </div>
-                      <p className="font-sora text-lg text-slate-500 font-bold">No scholarships found matching your criteria.</p>
+                      <p className="font-jakarta text-lg text-slate-500 font-bold">No scholarships found matching your criteria.</p>
                   </div>
               ) : (
                 filteredScholarships.map((scholarship) => (
@@ -127,16 +127,16 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
                         <span className="rounded-full bg-slate-100 group-hover:bg-emerald-100 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 group-hover:text-emerald-600 transition-colors">
                           {scholarship.targetDegreeLevel}
                         </span>
-                        <div className="font-sora text-xl font-extrabold text-emerald-600">
+                        <div className="font-jakarta text-xl font-extrabold text-emerald-600">
                           {scholarship.amountCurrency}{scholarship.amountValue > 0 ? scholarship.amountValue.toLocaleString() : "Varies"}
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <h3 className="font-sora text-2xl font-extrabold text-slate-900 line-clamp-2 transition-colors group-hover:text-emerald-600">
+                        <h3 className="font-jakarta text-2xl font-extrabold text-slate-900 line-clamp-2 transition-colors group-hover:text-emerald-600">
                           {scholarship.title}
                         </h3>
-                        <p className="font-sora text-slate-500 text-sm leading-relaxed line-clamp-3">
+                        <p className="font-jakarta text-slate-500 text-sm leading-relaxed line-clamp-3">
                           {scholarship.description}
                         </p>
                       </div>
@@ -152,7 +152,7 @@ export function ScholarshipGrid({ searchQuery, degreeFilter }: ScholarshipGridPr
                         </div>
                       </div>
 
-                      <Button asChild className="h-14 mt-8 w-full rounded-2xl bg-slate-900 hover:bg-emerald-500 text-white font-sora font-extrabold transition-all duration-300 shadow-xl shadow-slate-900/10 hover:shadow-emerald-500/20">
+                      <Button asChild className="h-14 mt-8 w-full rounded-2xl bg-slate-900 hover:bg-emerald-500 text-white font-jakarta font-extrabold transition-all duration-300 shadow-xl shadow-slate-900/10 hover:shadow-emerald-500/20">
                           <Link href={`/scholarships/${scholarship.slug}`}>View Details</Link>
                       </Button>
                     </div>

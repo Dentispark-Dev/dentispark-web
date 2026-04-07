@@ -48,7 +48,7 @@ export function PayoutSection({
   return (
     <Card
       className={cn(
-        "font-sora rounded-lg border text-center shadow-none",
+        "font-jakarta rounded-lg border text-center shadow-none",
         className,
       )}
     >

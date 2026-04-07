@@ -21,7 +21,7 @@ export function SuccessStories({ stories }: SuccessStoriesProps) {
       <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2 px-1">
           <TrendingUp className="w-5 h-5 text-emerald-600" />
-          <h2 className="text-lg font-bold text-gray-900 font-sora">Trending Topics</h2>
+          <h2 className="text-lg font-bold text-gray-900 font-jakarta">Trending Topics</h2>
         </div>
         <div className="flex flex-wrap gap-2">
           {trendingTags.map((tag) => (
@@ -37,7 +37,7 @@ export function SuccessStories({ stories }: SuccessStoriesProps) {
       <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-6">
         <div className="flex items-center gap-2 px-1">
           <Award className="w-5 h-5 text-blue-600" />
-          <h2 className="text-lg font-bold text-gray-900 font-sora">Success Spotlights</h2>
+          <h2 className="text-lg font-bold text-gray-900 font-jakarta">Success Spotlights</h2>
         </div>
 
         <div className="space-y-6">
@@ -59,7 +59,7 @@ export function SuccessStories({ stories }: SuccessStoriesProps) {
             <Star className="w-5 h-5 fill-white" />
           </div>
           <div className="space-y-1">
-             <h3 className="font-bold text-lg font-sora">Member Perk</h3>
+             <h3 className="font-bold text-lg font-jakarta">Member Perk</h3>
              <p className="text-white/80 text-xs font-medium leading-relaxed">Get 15% off UCAT Mocks when you share your first helpful study insight!</p>
           </div>
           <button className="w-full py-2.5 bg-white text-emerald-600 rounded-xl font-bold text-xs hover:bg-emerald-50 transition-all shadow-sm">

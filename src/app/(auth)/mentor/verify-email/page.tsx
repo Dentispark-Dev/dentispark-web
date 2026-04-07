@@ -134,7 +134,7 @@ export default function MentorVerifyEmailPage({
           <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
             We sent a code to your email
           </h1>
-          <p className="font-sora mt-2 text-sm text-gray-400">
+          <p className="font-jakarta mt-2 text-sm text-gray-400">
             To reset your mentor account password, enter the 6 digit
             verification code that was sent to your email:{" "}
             <span className="font-medium text-gray-900">{email}</span>
@@ -196,7 +196,7 @@ export default function MentorVerifyEmailPage({
 
               {/* Resend Code */}
               <div className="text-center">
-                <p className="font-sora text-xs text-gray-500">
+                <p className="font-jakarta text-xs text-gray-500">
                   Didn&apos;t get the code?{" "}
                   {timeLeft > 0 ? (
                     <span className="text-primary">
@@ -234,7 +234,7 @@ export default function MentorVerifyEmailPage({
 
         {/* Footer Links */}
         <motion.div
-          className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+          className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
           variants={itemVariants}
         >
           <Link href="/terms" className="cursor-pointer hover:text-gray-700">

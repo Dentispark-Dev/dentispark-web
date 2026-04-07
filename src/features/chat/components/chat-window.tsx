@@ -25,7 +25,7 @@ export function ChatWindow() {
   };
 
   return (
-    <div className="flex-1 h-full flex flex-col bg-gray-50/50 relative overflow-hidden font-sora">
+    <div className="flex-1 h-full flex flex-col bg-gray-50/50 relative overflow-hidden font-jakarta">
       {/* Cleaner, Non-WhatsApp Background */}
       <div className="absolute inset-0 bg-white" />
 

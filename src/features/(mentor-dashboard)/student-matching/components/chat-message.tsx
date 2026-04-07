@@ -37,11 +37,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
           : "text-black-800 border border-gray-200 bg-white",
       )}
     >
-      <p className="font-sora flex-1 text-sm">{message.content}</p>
+      <p className="font-jakarta flex-1 text-sm">{message.content}</p>
       <div className="flex flex-shrink-0 items-center gap-1.5">
         <span
           className={cn(
-            "font-sora text-xs",
+            "font-jakarta text-xs",
             message.isSent ? "text-white/80" : "text-gray-500",
           )}
         >
@@ -95,12 +95,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
           />
         </div>
         <div className="flex-1">
-          <p className="font-sora text-sm font-semibold">
+          <p className="font-jakarta text-sm font-semibold">
             {message.fileData?.name}
           </p>
           <p
             className={cn(
-              "font-sora text-xs",
+              "font-jakarta text-xs",
               message.isSent ? "text-white/80" : "text-gray-500",
             )}
           >
@@ -111,7 +111,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
       <div className="flex items-center justify-end gap-1.5">
         <span
           className={cn(
-            "font-sora text-xs",
+            "font-jakarta text-xs",
             message.isSent ? "text-white/80" : "text-gray-500",
           )}
         >
@@ -145,7 +145,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         <div className="flex-1">
           <h4
             className={cn(
-              "font-sora mb-1 text-sm font-semibold",
+              "font-jakarta mb-1 text-sm font-semibold",
               message.isSent ? "text-white" : "text-black-800",
             )}
           >
@@ -153,7 +153,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </h4>
           <p
             className={cn(
-              "font-sora text-xs",
+              "font-jakarta text-xs",
               message.isSent ? "text-white/80" : "text-gray-600",
             )}
           >
@@ -172,7 +172,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         target="_blank"
         rel="noopener noreferrer"
         className={cn(
-          "font-sora mb-2 block truncate text-xs underline",
+          "font-jakarta mb-2 block truncate text-xs underline",
           message.isSent ? "text-white" : "text-primary",
         )}
       >
@@ -181,7 +181,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
       <div className="flex items-center justify-end gap-1.5">
         <span
           className={cn(
-            "font-sora text-xs",
+            "font-jakarta text-xs",
             message.isSent ? "text-white/80" : "text-gray-500",
           )}
         >
@@ -219,7 +219,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         {message.isSent && (
           <div className="flex items-center justify-end gap-1">
             <Check className="text-primary h-3 w-3" strokeWidth={2.5} />
-            <span className="font-sora text-primary text-xs">Sent</span>
+            <span className="font-jakarta text-primary text-xs">Sent</span>
           </div>
         )}
       </div>

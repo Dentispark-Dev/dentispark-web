@@ -31,7 +31,7 @@ export function QuestionCarousel({ question, index }: QuestionCarouselProps) {
             <div className="h-0.5 flex-1 bg-gray-100" />
           </div>
 
-          <h3 className="text-3xl font-sora font-bold text-gray-900 leading-tight">
+          <h3 className="text-3xl font-jakarta font-bold text-gray-900 leading-tight">
             {question}
           </h3>
 

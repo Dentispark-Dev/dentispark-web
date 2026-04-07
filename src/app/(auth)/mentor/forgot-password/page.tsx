@@ -98,7 +98,7 @@ export default function MentorForgotPasswordPage() {
           <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
             Forgot Password?
           </h1>
-          <p className="font-sora mt-2 text-sm text-gray-400">
+          <p className="font-jakarta mt-2 text-sm text-gray-400">
             Enter the email associated with your mentor account. We will send
             you a verification code to reset your password.
           </p>
@@ -144,7 +144,7 @@ export default function MentorForgotPasswordPage() {
 
         {/* Footer Links */}
         <motion.div
-          className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+          className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
           variants={itemVariants}
         >
           <Link href="/terms" className="cursor-pointer hover:text-gray-700">

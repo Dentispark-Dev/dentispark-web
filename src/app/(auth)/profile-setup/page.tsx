@@ -165,7 +165,7 @@ export default function ProfileSetupPage() {
                 name="academicYear"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                    <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                       Academic Year
                     </FormLabel>
                     <Select
@@ -199,7 +199,7 @@ export default function ProfileSetupPage() {
                 name="targetSchools"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                    <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                       Target Dental Schools
                     </FormLabel>
                     <FormControl>
@@ -227,7 +227,7 @@ export default function ProfileSetupPage() {
                 name="county"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                    <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                       County
                     </FormLabel>
                     <Select
@@ -258,7 +258,7 @@ export default function ProfileSetupPage() {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                    <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                       Category
                     </FormLabel>
                     <Select
@@ -292,7 +292,7 @@ export default function ProfileSetupPage() {
                 name="takenUCAT"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                    <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                       Have you taken the UCAT?
                     </FormLabel>
                     <Select
@@ -320,7 +320,7 @@ export default function ProfileSetupPage() {
                 name="takenCasper"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                    <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                       Have you taken the Casper test?
                     </FormLabel>
                     <Select

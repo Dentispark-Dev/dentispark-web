@@ -60,7 +60,7 @@ export function IntelligenceRadar({ step, dataPoints, label }: IntelligenceRadar
           key={label}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-gray-900 font-sora font-bold text-2xl uppercase tracking-wider"
+          className="text-gray-900 font-jakarta font-bold text-2xl uppercase tracking-wider"
         >
           {label || "System Scanning"}
         </motion.p>

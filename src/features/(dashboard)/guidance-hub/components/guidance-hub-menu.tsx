@@ -206,7 +206,7 @@ export default function GuidanceHubMenu() {
                     {item.title}
                   </h3>
 
-                  <p className="font-sora flex-1 text-sm leading-relaxed text-gray-600">
+                  <p className="font-jakarta flex-1 text-sm leading-relaxed text-gray-600">
                     {item.description}
                   </p>
                 </motion.div>
@@ -246,7 +246,7 @@ export default function GuidanceHubMenu() {
               {item.title}
             </h3>
 
-            <p className="font-sora flex-1 text-sm leading-relaxed text-gray-600">
+            <p className="font-jakarta flex-1 text-sm leading-relaxed text-gray-600">
               {item.description}
             </p>
           </motion.div>

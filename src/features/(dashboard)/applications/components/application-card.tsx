@@ -32,7 +32,7 @@ export function ApplicationCard({
 
       <h3 className={cn(titleColor, "mb-2 text-xl font-semibold")}>{title}</h3>
 
-      <p className="font-sora text-sm leading-relaxed text-[#585858]">
+      <p className="font-jakarta text-sm leading-relaxed text-[#585858]">
         {description}
       </p>
     </motion.div>

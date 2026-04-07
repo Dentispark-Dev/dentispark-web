@@ -79,7 +79,7 @@ export function DocumentUploadCard({
 
   return (
     <div className="space-y-3">
-      <h3 className="font-sora text-text-color text-xs">{title}</h3>
+      <h3 className="font-jakarta text-text-color text-xs">{title}</h3>
 
       <motion.div
         whileHover={{ scale: 1.01 }}
@@ -100,12 +100,12 @@ export function DocumentUploadCard({
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1 pr-3">
                   <p
-                    className="font-sora truncate text-sm text-gray-900"
+                    className="font-jakarta truncate text-sm text-gray-900"
                     title={uploadedFile.name}
                   >
                     {uploadedFile.name}
                   </p>
-                  <p className="font-sora mt-1 text-left text-xs text-gray-500">
+                  <p className="font-jakarta mt-1 text-left text-xs text-gray-500">
                     {formatUploadDate(uploadedFile.uploadedAt)}
                   </p>
                 </div>

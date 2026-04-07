@@ -39,7 +39,7 @@ export function CommentItem({ comment }: CommentItemProps) {
         {/* Comment Content */}
         <div>
           <div className="mb-1 flex items-center space-x-2">
-            <p className="font-sora text-sm font-bold text-gray-900">
+            <p className="font-jakarta text-sm font-bold text-gray-900">
               {comment.author}
             </p>
             {comment.isMentor && (
@@ -47,11 +47,11 @@ export function CommentItem({ comment }: CommentItemProps) {
                 Expert
               </span>
             )}
-            <p className="font-sora text-[10px] font-bold text-gray-400 uppercase tracking-tight">{comment.time}</p>
+            <p className="font-jakarta text-[10px] font-bold text-gray-400 uppercase tracking-tight">{comment.time}</p>
           </div>
           {comment.content && (
             <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm group-hover/comment:border-emerald-100 transition-all">
-              <p className="font-sora text-sm leading-relaxed text-gray-600 font-medium">
+              <p className="font-jakarta text-sm leading-relaxed text-gray-600 font-medium">
                 {comment.content}
               </p>
             </div>

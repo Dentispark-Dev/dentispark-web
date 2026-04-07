@@ -48,7 +48,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
     <div className="space-y-6">
       {/* Step Indicator */}
       <div className="flex items-center gap-4">
-        <span className="text-emerald-600 font-sora font-bold text-xl flex items-center gap-2">
+        <span className="text-emerald-600 font-jakarta font-bold text-xl flex items-center gap-2">
             {currentStep + 1} <ChevronRight className="w-4 h-4 opacity-50" />
         </span>
         <div className="flex gap-1.5 flex-1 max-w-[200px]">
@@ -75,7 +75,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
            className="space-y-6"
         >
           <div className="space-y-2">
-            <h2 className="text-3xl lg:text-4xl font-sora font-bold text-gray-900 tracking-tight leading-tight">
+            <h2 className="text-3xl lg:text-4xl font-jakarta font-bold text-gray-900 tracking-tight leading-tight">
               {steps[currentStep].title}
             </h2>
             <p className="text-base text-gray-600 leading-relaxed font-medium max-w-lg">
@@ -94,7 +94,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
         <div className="flex items-center gap-4">
             <Button 
                 onClick={handleNext}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-xl font-sora font-semibold text-base shadow-sm transform active:scale-95 transition-all group"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-xl font-jakarta font-semibold text-base shadow-sm transform active:scale-95 transition-all group"
             >
                 {currentStep === steps.length - 1 ? "Start Analysis" : "Continue"} 
                 <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

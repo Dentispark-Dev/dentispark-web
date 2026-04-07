@@ -83,7 +83,7 @@ export function MentorEducationWork() {
         <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Sparkles className="h-6 w-6 text-amber-500" />
-            <h2 className="font-sora text-xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="font-jakarta text-xl font-extrabold text-slate-900 tracking-tight">
               Mentorship Specialties
             </h2>
           </div>
@@ -107,7 +107,7 @@ export function MentorEducationWork() {
           <div className="mb-8 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <GraduationCap className="h-6 w-6 text-primary" />
-              <h2 className="font-sora text-xl font-extrabold text-slate-900 tracking-tight">Education</h2>
+              <h2 className="font-jakarta text-xl font-extrabold text-slate-900 tracking-tight">Education</h2>
             </div>
             <Button onClick={handleEditEducation} variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-full hover:bg-slate-50">
               <Edit className="h-4 w-4 text-slate-400" />
@@ -121,7 +121,7 @@ export function MentorEducationWork() {
                    <Image src={edu.logo} alt="" width={32} height={32} className="opacity-80" />
                 </div>
                 <div className="flex-1 space-y-1">
-                  <h4 className="font-sora font-bold text-slate-900 leading-tight">{edu.university}</h4>
+                  <h4 className="font-jakarta font-bold text-slate-900 leading-tight">{edu.university}</h4>
                   <p className="text-xs font-bold text-primary uppercase tracking-wider">{edu.degree}</p>
                   <p className="text-xs font-bold text-slate-400 uppercase">{edu.period}</p>
                 </div>
@@ -135,7 +135,7 @@ export function MentorEducationWork() {
           <div className="mb-8 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Briefcase className="h-6 w-6 text-blue-500" />
-              <h2 className="font-sora text-xl font-extrabold text-slate-900 tracking-tight">Experience</h2>
+              <h2 className="font-jakarta text-xl font-extrabold text-slate-900 tracking-tight">Experience</h2>
             </div>
             <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-full hover:bg-slate-50">
               <Edit className="h-4 w-4 text-slate-400" />
@@ -150,7 +150,7 @@ export function MentorEducationWork() {
                     <Image src={work.logo} alt="" width={32} height={32} className="opacity-80" />
                   </div>
                   <div className="flex-1 space-y-1">
-                    <h4 className="font-sora font-bold text-slate-900 leading-tight">{work.company}</h4>
+                    <h4 className="font-jakarta font-bold text-slate-900 leading-tight">{work.company}</h4>
                     <p className="text-xs font-bold text-blue-600 uppercase tracking-wider">{work.position}</p>
                     <p className="text-xs font-bold text-slate-400 uppercase">{work.period}</p>
                   </div>

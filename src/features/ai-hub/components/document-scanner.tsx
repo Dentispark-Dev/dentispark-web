@@ -37,7 +37,7 @@ export function DocumentScanner() {
             <FileSearch className="w-10 h-10" />
         </div>
         <div className="text-center space-y-1">
-            <h4 className="font-sora font-bold text-gray-900">Reading Document...</h4>
+            <h4 className="font-jakarta font-bold text-gray-900">Reading Document...</h4>
             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">AI Vision Processing</p>
         </div>
       </div>

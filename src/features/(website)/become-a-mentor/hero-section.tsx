@@ -69,14 +69,14 @@ export function HeroSection() {
               <div className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.3em] uppercase w-fit">
                 Legacy Building
               </div>
-              <h1 className="font-sora text-5xl md:text-7xl font-extrabold text-slate-950 tracking-tighter leading-[1.1]">
+              <h1 className="font-jakarta text-5xl md:text-7xl font-extrabold text-slate-950 tracking-tighter leading-[1.1]">
                 Utilise your skills to <span className="text-emerald-600">assist</span> those in need.
               </h1>
             </motion.div>
 
             <motion.div variants={itemVariants} className="relative">
               <div className="absolute -left-6 top-0 bottom-0 w-1 bg-emerald-500 rounded-full opacity-50 transition-all duration-500 group-hover:h-full group-hover:opacity-100" />
-              <p className="font-sora text-slate-500 text-lg md:text-xl leading-relaxed max-w-xl">
+              <p className="font-jakarta text-slate-500 text-lg md:text-xl leading-relaxed max-w-xl">
                 Mentoring provides the chance to earn extra income whilst
                 nurturing enduring relationships with the leaders of tomorrow. Join an elite circle of educators.
               </p>
@@ -87,7 +87,7 @@ export function HeroSection() {
                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-2xl blur opacity-30 group-hover/btn:opacity-60 transition duration-500" />
                 <Button 
                   size="lg" 
-                  className="relative h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.02]"
+                  className="relative h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-jakarta font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.02]"
                 >
                   Become a Mentor <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
@@ -114,7 +114,7 @@ export function HeroSection() {
                 
                 {/* Float Badge */}
                 <div className="absolute bottom-10 left-10 right-10 p-6 rounded-3xl bg-white/20 backdrop-blur-xl border border-white/20 shadow-2xl transform translate-y-4 opacity-0 group-hover/img:translate-y-0 group-hover/img:opacity-100 transition-all duration-700 delay-100">
-                  <p className="font-sora text-white text-sm font-bold text-center">Join 500+ Elite Mentor Members</p>
+                  <p className="font-jakarta text-white text-sm font-bold text-center">Join 500+ Elite Mentor Members</p>
                 </div>
               </div>
             </div>

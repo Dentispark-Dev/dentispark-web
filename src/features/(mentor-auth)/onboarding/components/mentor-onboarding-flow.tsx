@@ -333,7 +333,7 @@ export function MentorOnboardingFlow() {
               <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-[0.3em] mb-4 block">
                 Step {currentStep + 1} of {STEPS.length}
               </span>
-              <h1 className="text-4xl md:text-5xl font-sora font-bold text-slate-900 leading-tight tracking-tight">
+              <h1 className="text-4xl md:text-5xl font-jakarta font-bold text-slate-900 leading-tight tracking-tight">
                 {currentStep === 0 && <span className="inline-block text-emerald-500 mr-2 italic">1 &rarr;</span>}
                 {STEPS[currentStep].title}
               </h1>
@@ -690,7 +690,7 @@ export function MentorOnboardingFlow() {
               <div className="size-16 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-8 border border-emerald-500/20 shadow-inner group-hover:scale-110 transition-transform">
                 <StarIcon size={32} fill="currentColor" />
               </div>
-              <h2 className="text-3xl font-sora font-semibold leading-tight tracking-tight mb-4">
+              <h2 className="text-3xl font-jakarta font-semibold leading-tight tracking-tight mb-4">
                 Join the top 5% of dental mentors.
               </h2>
               <p className="text-slate-400 text-lg">
@@ -728,7 +728,7 @@ export function MentorOnboardingFlow() {
                       {currentProof.benefit}
                     </span>
                     <div className="flex flex-col">
-                      <span className="text-4xl font-sora font-bold text-white tracking-widest">
+                      <span className="text-4xl font-jakarta font-bold text-white tracking-widest">
                         {currentProof.stat}
                       </span>
                       <span className="text-xs text-slate-500 font-medium uppercase tracking-widest mt-1">

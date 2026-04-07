@@ -97,7 +97,7 @@ function AppTabsTrigger({
   return (
     <button
       className={cn(
-        "font-sora text-black-500 hover:text-black-600 focus-visible:ring-ring border-b-2 border-transparent bg-transparent px-4 py-3 text-base font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
+        "font-jakarta text-black-500 hover:text-black-600 focus-visible:ring-ring border-b-2 border-transparent bg-transparent px-4 py-3 text-base font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
         isSelected && "border-primary-300 text-black-600",
         className,
       )}

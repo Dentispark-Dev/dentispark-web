@@ -31,13 +31,13 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
       className={cn("space-y-8 py-6", className)}
     >
       <div className="mb-8">
-        <h1 className="text-black-800 font-sora mb-2 text-xl">
+        <h1 className="text-black-800 font-jakarta mb-2 text-xl">
           Good Morning, Dr. Sarah
         </h1>
-        <p className="text-black-300 font-sora">Ready to Guide Students?</p>
+        <p className="text-black-300 font-jakarta">Ready to Guide Students?</p>
       </div>
 
-      <div className="font-sora grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <div className="font-jakarta grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
         <StatsCard
           icon={
             <div className="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-600">

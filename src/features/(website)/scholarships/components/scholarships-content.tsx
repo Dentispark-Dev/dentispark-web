@@ -31,10 +31,10 @@ export function ScholarshipsContent() {
                 <div className="inline-block px-4 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-[0.3em] uppercase">
                 Financial Empowerment
                 </div>
-                <h1 className="font-sora text-3xl md:text-5xl font-extrabold text-white tracking-tighter leading-tight">
+                <h1 className="font-jakarta text-3xl md:text-5xl font-extrabold text-white tracking-tighter leading-tight">
                 Funding Your <span className="text-emerald-400">Future.</span>
                 </h1>
-                <p className="font-sora text-slate-400 text-xs md:text-base max-w-xl mx-auto leading-relaxed">
+                <p className="font-jakarta text-slate-400 text-xs md:text-base max-w-xl mx-auto leading-relaxed">
                 Browse our verified database of dental and medical grants.
                 </p>
             </motion.div>
@@ -52,16 +52,16 @@ export function ScholarshipsContent() {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 h-4 w-4 group-focus-within/search:text-emerald-400 transition-colors" />
                         <Input 
                             placeholder="Search by name, university, or location..." 
-                            className="w-full h-12 bg-white/5 pl-12 rounded-xl border-white/10 focus:border-emerald-500/50 focus:ring-emerald-500/10 font-sora text-sm text-white placeholder:text-slate-500"
+                            className="w-full h-12 bg-white/5 pl-12 rounded-xl border-white/10 focus:border-emerald-500/50 focus:ring-emerald-500/10 font-jakarta text-sm text-white placeholder:text-slate-500"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
                     <Select value={degreeFilter} onValueChange={setDegreeFilter}>
-                        <SelectTrigger className="h-12 w-full md:w-[200px] bg-white/5 rounded-xl border-white/10 focus:border-emerald-500/50 font-sora text-sm text-white">
+                        <SelectTrigger className="h-12 w-full md:w-[200px] bg-white/5 rounded-xl border-white/10 focus:border-emerald-500/50 font-jakarta text-sm text-white">
                             <SelectValue placeholder="Degree Level" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl border-slate-800 bg-slate-900 text-white font-sora">
+                        <SelectContent className="rounded-xl border-slate-800 bg-slate-900 text-white font-jakarta">
                             <SelectItem value="all">All Degrees</SelectItem>
                             <SelectItem value="BDS">BDS / DDS</SelectItem>
                             <SelectItem value="Masters">Masters</SelectItem>

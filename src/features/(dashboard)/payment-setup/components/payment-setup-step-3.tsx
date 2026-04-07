@@ -84,7 +84,7 @@ export function PaymentSetupStep3({
             name="mentorshipAvailability"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Mentorship availability?{" "}
                   <span className="text-gray-500">
                     (e.g., Weekends, Evenings)
@@ -108,7 +108,7 @@ export function PaymentSetupStep3({
             name="financialSupport"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Qualify for financial support?{" "}
                   <span className="text-gray-500">(Yes/No, for subsidies)</span>
                 </FormLabel>
@@ -137,7 +137,7 @@ export function PaymentSetupStep3({
             name="hearAboutDentispark"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   How did you hear about Dentispark?{" "}
                   <span className="text-gray-500">
                     (e.g., Nonprofit, Social Media)

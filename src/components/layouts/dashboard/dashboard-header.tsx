@@ -49,7 +49,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-0 shadow-2xl border-slate-200">
-                <DropdownMenuLabel className="p-4 font-sora text-sm font-bold">Notifications</DropdownMenuLabel>
+                <DropdownMenuLabel className="p-4 font-jakarta text-sm font-bold">Notifications</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
                   <div className="bg-slate-50 p-3 rounded-full mb-3">
@@ -80,7 +80,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center space-x-3 outline-none transition-all hover:bg-white/5 p-1 rounded-md active:scale-[0.98]">
-                  <div className="hidden text-right font-sora lg:block">
+                  <div className="hidden text-right font-jakarta lg:block">
                     <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold opacity-60">Howdy,</p>
                     <p className="text-white text-sm font-semibold leading-tight">{user?.fullName?.split(' ')[0]}</p>
                   </div>
@@ -96,7 +96,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                       />
                     </div>
                   ) : user?.fullName ? (
-                    <div className="bg-[#12AC75] font-sora flex size-9 items-center justify-center rounded-full font-bold text-white uppercase shadow-lg ring-1 ring-white/20">
+                    <div className="bg-[#12AC75] font-jakarta flex size-9 items-center justify-center rounded-full font-bold text-white uppercase shadow-lg ring-1 ring-white/20">
                       {user.fullName.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                     </div>
                   ) : (
@@ -105,7 +105,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64 mt-2 shadow-2xl border-slate-200">
-                <DropdownMenuLabel className="font-sora text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 py-3 opacity-60">
+                <DropdownMenuLabel className="font-jakarta text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 py-3 opacity-60">
                    Quick Links
                 </DropdownMenuLabel>
                 <DropdownMenuItem onClick={() => router.push("/profile")} className="cursor-pointer py-3 px-4 font-medium">

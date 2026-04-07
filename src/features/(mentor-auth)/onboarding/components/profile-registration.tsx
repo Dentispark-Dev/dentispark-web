@@ -199,7 +199,7 @@ export function ProfileRegistration({
     isRequired?: boolean;
   }) => (
     <div className="space-y-3">
-      <h4 className="font-sora text-sm font-medium text-gray-900">{title}</h4>
+      <h4 className="font-jakarta text-sm font-medium text-gray-900">{title}</h4>
 
       <div className="flex items-center space-x-3">
         {/* File Display Area */}
@@ -246,7 +246,7 @@ export function ProfileRegistration({
                 />
               </svg>
 
-              <span className="font-sora flex-1 text-xs text-gray-900">
+              <span className="font-jakarta flex-1 text-xs text-gray-900">
                 {uploadedFile.name}
               </span>
               <button
@@ -257,7 +257,7 @@ export function ProfileRegistration({
               </button>
             </div>
           ) : (
-            <span className="font-sora text-sm text-gray-500">
+            <span className="font-jakarta text-sm text-gray-500">
               Upload your document
             </span>
           )}
@@ -270,7 +270,7 @@ export function ProfileRegistration({
           className="flex h-11 items-center space-x-2 px-4"
           disabled={isLoading}
         >
-          <span className="font-sora text-xs text-white">Upload</span>
+          <span className="font-jakarta text-xs text-white">Upload</span>
           <svg
             width="20"
             height="20"
@@ -310,7 +310,7 @@ export function ProfileRegistration({
         </Button>
       </div>
 
-      <p className="font-sora text-xs text-gray-500">Upload a PDF under 5MB</p>
+      <p className="font-jakarta text-xs text-gray-500">Upload a PDF under 5MB</p>
     </div>
   );
 
@@ -514,7 +514,7 @@ export function ProfileRegistration({
               name="experienceWithUKDentalAdmissions"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-sora text-sm font-medium text-gray-900">
+                  <FormLabel className="font-jakarta text-sm font-medium text-gray-900">
                     Experience with UK dental admissions or underprivileged
                     students
                   </FormLabel>
@@ -528,7 +528,7 @@ export function ProfileRegistration({
                   </FormControl>
                   <div className="flex justify-between">
                     <FormMessage />
-                    <p className="font-sora text-xs text-gray-500">
+                    <p className="font-jakarta text-xs text-gray-500">
                       Word count: {characterCount}/500
                     </p>
                   </div>
@@ -549,12 +549,12 @@ export function ProfileRegistration({
             <div className="grid grid-cols-3">
               <div className="col-span-2 space-y-10">
                 {/* Meeting Info */}
-                <div className="font-sora mt-4 space-y-4">
+                <div className="font-jakarta mt-4 space-y-4">
                   <div>
                     <h3 className="text-2xl font-semibold text-gray-900">
                       Zoom meeting
                     </h3>
-                    <p className="font-sora text-xs text-gray-400">
+                    <p className="font-jakarta text-xs text-gray-400">
                       With Dentispark team
                     </p>
                   </div>
@@ -663,8 +663,8 @@ export function ProfileRegistration({
 
                 {/* Timezone */}
                 <div className="mt-4 pt-4">
-                  <span className="font-sora text-sm">Time zone</span>
-                  <div className="font-sora mt-2 flex items-center space-x-2 text-xs text-gray-600">
+                  <span className="font-jakarta text-sm">Time zone</span>
+                  <div className="font-jakarta mt-2 flex items-center space-x-2 text-xs text-gray-600">
                     <Globe size="16" /> <span>United Kingdom (GMT+1)</span>
                   </div>
                 </div>
@@ -673,7 +673,7 @@ export function ProfileRegistration({
               {/* Time Slots */}
               <div className="space-y-4 border-l border-gray-200 pl-8">
                 <div className="text-right">
-                  <p className="font-sora text-center text-sm text-gray-900">
+                  <p className="font-jakarta text-center text-sm text-gray-900">
                     {formatSelectedDate()}
                   </p>
                 </div>
@@ -730,7 +730,7 @@ export function ProfileRegistration({
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel className="font-sora text-sm font-normal">
+                    <FormLabel className="font-jakarta text-sm font-normal">
                       I agree to data processing for vetting and{" "}
                       <a
                         href="/terms"

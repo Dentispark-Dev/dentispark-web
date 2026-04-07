@@ -27,7 +27,7 @@ export function PayoutSettings({ isStripeConnected = false, onConnect }: PayoutS
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-black text-slate-900 font-sora tracking-tight">Payout Settings</h2>
+        <h2 className="text-2xl font-black text-slate-900 font-jakarta tracking-tight">Payout Settings</h2>
         <p className="text-slate-500 font-medium">Manage how you receive your earnings from mentorship sessions.</p>
       </div>
 

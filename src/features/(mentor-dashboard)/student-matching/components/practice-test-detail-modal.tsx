@@ -31,10 +31,10 @@ export function PracticeTestDetailModal({
       <div className="space-y-6 px-2 py-4">
         {/* Header */}
         <div>
-          <h2 className="font-sora text-black-800 mb-2 text-xl font-semibold">
+          <h2 className="font-jakarta text-black-800 mb-2 text-xl font-semibold">
             Practice Test Score Details
           </h2>
-          <p className="font-sora text-black-800 text-base font-medium">
+          <p className="font-jakarta text-black-800 text-base font-medium">
             {test.category} - {test.title}
           </p>
         </div>
@@ -43,20 +43,20 @@ export function PracticeTestDetailModal({
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Practice Test Score */}
           <div className="md:col-span-1">
-            <label className="font-sora mb-2 block text-sm font-medium text-gray-700">
+            <label className="font-jakarta mb-2 block text-sm font-medium text-gray-700">
               Practice Test Score
             </label>
             <input
               type="number"
               value={score}
               readOnly
-              className="font-sora focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-xs focus:ring-1 focus:outline-none"
+              className="font-jakarta focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-xs focus:ring-1 focus:outline-none"
             />
           </div>
 
           {/* Time Stamp - Date */}
           <div className="md:col-span-1">
-            <label className="font-sora mb-2 block text-sm font-medium text-gray-700">
+            <label className="font-jakarta mb-2 block text-sm font-medium text-gray-700">
               Time Stamp
             </label>
             <div className="relative">
@@ -64,7 +64,7 @@ export function PracticeTestDetailModal({
                 type="text"
                 value={date}
                 readOnly
-                className="font-sora focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-xs focus:ring-1 focus:outline-none"
+                className="font-jakarta focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-xs focus:ring-1 focus:outline-none"
               />
               <Calendar className="pointer-events-none absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
             </div>
@@ -72,7 +72,7 @@ export function PracticeTestDetailModal({
 
           {/* Time Stamp - Time */}
           <div className="md:col-span-1">
-            <label className="font-sora mb-2 block text-sm font-medium text-gray-700">
+            <label className="font-jakarta mb-2 block text-sm font-medium text-gray-700">
               &nbsp;
             </label>
             <div className="relative">
@@ -80,7 +80,7 @@ export function PracticeTestDetailModal({
                 type="text"
                 value={time}
                 readOnly
-                className="font-sora focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-xs focus:ring-1 focus:outline-none"
+                className="font-jakarta focus:border-primary focus:ring-primary w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-xs focus:ring-1 focus:outline-none"
               />
               <Clock className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
             </div>
@@ -89,7 +89,7 @@ export function PracticeTestDetailModal({
 
         {/* Uploaded File */}
         <div>
-          <label className="font-sora mb-2 block text-sm font-medium text-gray-700">
+          <label className="font-jakarta mb-2 block text-sm font-medium text-gray-700">
             Uploaded file
           </label>
           <div className="border-greys-300 bg-greys-50 flex items-center justify-between rounded-lg border p-3">
@@ -132,13 +132,13 @@ export function PracticeTestDetailModal({
                 />
               </svg>
 
-              <span className="font-sora text-black-800 text-xs font-medium">
+              <span className="font-jakarta text-black-800 text-xs font-medium">
                 {fileName}
               </span>
             </div>
             <button
               onClick={handleViewFile}
-              className="text-primary font-sora text-sm font-medium hover:underline"
+              className="text-primary font-jakarta text-sm font-medium hover:underline"
             >
               View
             </button>

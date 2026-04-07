@@ -135,13 +135,13 @@ export default function PrerequisiteChecklistGuides({
                         />
                       </div>
                       <div className="flex flex-1 flex-col pt-4">
-                        <p className="text-black-500 font-sora mb-2 text-xs">
+                        <p className="text-black-500 font-jakarta mb-2 text-xs">
                           {guide.date}
                         </p>
                         <h3 className="text-black-800 mb-2 line-clamp-2 text-sm font-semibold md:text-base">
                           {guide.title}
                         </h3>
-                        <p className="text-black-600 font-sora line-clamp-3 flex-1 text-xs md:text-sm">
+                        <p className="text-black-600 font-jakarta line-clamp-3 flex-1 text-xs md:text-sm">
                           {guide.description}
                         </p>
                       </div>

@@ -48,10 +48,10 @@ export function ServicesContent({ services }: { services: any[] }) {
             <div className="inline-block px-4 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-0">
               Premium Marketplace
             </div>
-            <h1 className="font-sora text-3xl md:text-5xl font-extrabold text-white tracking-tighter leading-[1.1]">
+            <h1 className="font-jakarta text-3xl md:text-5xl font-extrabold text-white tracking-tighter leading-[1.1]">
               Expert Help, <span className="text-emerald-400">On Demand.</span>
             </h1>
-            <p className="font-sora text-slate-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="font-jakarta text-slate-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
               Browse our curated marketplace of high-end services offered by top dental professionals and scholars. Get the elite support you deserve.
             </p>
             
@@ -62,9 +62,9 @@ export function ServicesContent({ services }: { services: any[] }) {
                 <input 
                   type="text" 
                   placeholder="What service do you need help with?" 
-                  className="w-full px-6 py-4 text-white placeholder-slate-500 outline-none bg-transparent font-sora text-lg"
+                  className="w-full px-6 py-4 text-white placeholder-slate-500 outline-none bg-transparent font-jakarta text-lg"
                 />
-                <Button className="h-14 px-10 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20">
+                <Button className="h-14 px-10 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-jakarta font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20">
                   Search
                 </Button>
               </div>
@@ -88,7 +88,7 @@ export function ServicesContent({ services }: { services: any[] }) {
                 <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase w-fit">
                   Curated Catalog
                 </motion.div>
-                <motion.h2 variants={itemVariants} className="font-sora text-2xl font-extrabold text-slate-900 md:text-3xl tracking-tight">
+                <motion.h2 variants={itemVariants} className="font-jakarta text-2xl font-extrabold text-slate-900 md:text-3xl tracking-tight">
                   Featured <span className="text-emerald-600">Services.</span>
                 </motion.h2>
               </div>
@@ -96,7 +96,7 @@ export function ServicesContent({ services }: { services: any[] }) {
               <motion.div variants={itemVariants} className="flex gap-4">
                 <div className="relative">
                   <Filter className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-                  <select className="pl-12 pr-6 py-3 border border-slate-100 rounded-2xl bg-white shadow-sm outline-none font-sora text-sm font-bold text-slate-700 appearance-none hover:border-emerald-200 transition-colors">
+                  <select className="pl-12 pr-6 py-3 border border-slate-100 rounded-2xl bg-white shadow-sm outline-none font-jakarta text-sm font-bold text-slate-700 appearance-none hover:border-emerald-200 transition-colors">
                     <option>All Categories</option>
                     <option>Personal Statement</option>
                     <option>Interviews</option>
@@ -124,16 +124,16 @@ export function ServicesContent({ services }: { services: any[] }) {
                       </span>
                       <div className="flex items-center space-x-1 text-emerald-500 bg-emerald-50/50 px-3 py-1 rounded-full border border-emerald-100/50">
                         <Star className="h-3 w-3 fill-current" />
-                        <span className="font-sora font-extrabold text-xs">{service.mentorRating}</span>
+                        <span className="font-jakarta font-extrabold text-xs">{service.mentorRating}</span>
                         <span className="text-[10px] text-slate-400 font-bold">({service.reviews})</span>
                       </div>
                     </div>
                     
                     <div className="space-y-3">
-                      <h3 className="font-sora text-2xl font-extrabold text-slate-900 leading-tight group-hover:text-emerald-600 transition-colors line-clamp-2">
+                      <h3 className="font-jakarta text-2xl font-extrabold text-slate-900 leading-tight group-hover:text-emerald-600 transition-colors line-clamp-2">
                         {service.title}
                       </h3>
-                      <p className="font-sora text-slate-500 text-sm leading-relaxed line-clamp-3">
+                      <p className="font-jakarta text-slate-500 text-sm leading-relaxed line-clamp-3">
                         {service.description}
                       </p>
                     </div>
@@ -145,7 +145,7 @@ export function ServicesContent({ services }: { services: any[] }) {
                         </div>
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-sora text-xs font-extrabold text-slate-900">{service.mentorName}</span>
+                        <span className="font-jakarta text-xs font-extrabold text-slate-900">{service.mentorName}</span>
                         <div className="flex items-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
                            <Clock className="h-3 w-3 mr-1" /> {service.durationMinutes} min delivery
                         </div>
@@ -156,9 +156,9 @@ export function ServicesContent({ services }: { services: any[] }) {
                   <div className="p-8 pt-6 border-t border-slate-50 flex items-center justify-between bg-slate-50/30 group-hover:bg-emerald-50/30 transition-colors">
                     <div className="flex flex-col">
                       <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Starting at</span>
-                      <span className="font-sora text-2xl font-extrabold text-slate-900">${service.price}</span>
+                      <span className="font-jakarta text-2xl font-extrabold text-slate-900">${service.price}</span>
                     </div>
-                    <Link href={`/services/${service.slug}`} className="group/btn relative inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white font-sora font-extrabold text-sm rounded-2xl hover:bg-emerald-500 transition-all duration-300 shadow-lg shadow-slate-900/10 hover:shadow-emerald-500/20">
+                    <Link href={`/services/${service.slug}`} className="group/btn relative inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white font-jakarta font-extrabold text-sm rounded-2xl hover:bg-emerald-500 transition-all duration-300 shadow-lg shadow-slate-900/10 hover:shadow-emerald-500/20">
                       Book Now <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
                     </Link>
                   </div>

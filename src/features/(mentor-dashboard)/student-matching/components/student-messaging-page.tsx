@@ -108,7 +108,7 @@ export function StudentMessagingPage({
   const handleRateStudent = () => {
     openModal({
       modalTitle: "Rating and Review",
-      modalTitleClassName: "font-sora text-center",
+      modalTitleClassName: "font-jakarta text-center",
       bodyContent: (
         <RatingReviewModal
           studentName={MOCK_STUDENT.name}
@@ -210,13 +210,13 @@ export function StudentMessagingPage({
               />
             </div>
             <div className="flex items-center gap-4">
-              <h1 className="font-sora text-black-800 text-lg font-semibold">
+              <h1 className="font-jakarta text-black-800 text-lg font-semibold">
                 {MOCK_STUDENT.name}
               </h1>
               {MOCK_STUDENT.isOnline && (
                 <div className="border-success-200 bg-success-50 bg-success-200/20 flex items-center gap-2 rounded-full border p-1.5">
                   <div className="bg-primary h-1.5 w-1.5 rounded-full"></div>
-                  <span className="text-primary font-sora text-xs">Online</span>
+                  <span className="text-primary font-jakarta text-xs">Online</span>
                 </div>
               )}
             </div>
@@ -226,13 +226,13 @@ export function StudentMessagingPage({
             <Button
               onClick={handleRateStudent}
               variant="outline"
-              className="font-sora border-greys-300 text-greys-1000 hover:text-greys-1000 h-10 rounded-lg hover:bg-white"
+              className="font-jakarta border-greys-300 text-greys-1000 hover:text-greys-1000 h-10 rounded-lg hover:bg-white"
             >
               Rate student
             </Button>
             <Button
               onClick={handleViewProfile}
-              className="bg-primary hover:bg-primary/90 font-sora h-10 rounded-lg text-white"
+              className="bg-primary hover:bg-primary/90 font-jakarta h-10 rounded-lg text-white"
             >
               View profile
             </Button>

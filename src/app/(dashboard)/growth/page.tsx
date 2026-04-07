@@ -5,6 +5,7 @@ import { ReferralSystem } from "@/src/features/growth/components/referral-system
 import { SuccessCard } from "@/src/features/growth/components/success-card";
 import { motion } from "framer-motion";
 import { Rocket, Trophy, Globe } from "lucide-react";
+import Link from "next/link";
 
 export default function GrowthPage() {
   return (
@@ -64,9 +65,9 @@ export default function GrowthPage() {
                 Are you part of a dental academy or school? Contact us for corporate licensing and institutional mentor dashboards.
             </p>
         </div>
-        <button className="h-16 px-10 bg-white text-black-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-primary-50 transition-all relative z-10">
+        <Link href="/contact-us" className="h-16 px-10 bg-white text-black-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-primary-50 transition-all relative z-10 flex items-center justify-center">
             Contact Partnerships
-        </button>
+        </Link>
         <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
       </div>
     </div>

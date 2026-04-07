@@ -58,7 +58,7 @@ export function InterviewTimer({ durationSeconds, onComplete, isActive }: Interv
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className={cn(
-                "text-4xl font-sora font-bold tabular-nums transition-colors duration-500",
+                "text-4xl font-jakarta font-bold tabular-nums transition-colors duration-500",
                 isUrgent ? "text-red-600 animate-pulse" : "text-gray-900"
             )}>
                 {minutes}:{seconds.toString().padStart(2, '0')}

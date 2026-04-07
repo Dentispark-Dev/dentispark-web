@@ -28,7 +28,7 @@ export function ProgressIndicator({
       </div>
 
       {/* Step Text */}
-      <p className="font-sora text-sm text-gray-400">
+      <p className="font-jakarta text-sm text-gray-400">
         Step {currentStep} of {totalSteps}
       </p>
     </div>

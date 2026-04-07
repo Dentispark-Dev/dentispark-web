@@ -460,10 +460,10 @@ export default function Quiz({ className }: QuizProps) {
                   <h2 className="mb-6 text-center text-xl font-semibold text-gray-900 lg:mb-12 lg:text-2xl">
                     {currentSection?.title}
                   </h2>
-                  <h3 className="font-sora mb-3 text-base font-semibold text-gray-800 lg:mb-4">
+                  <h3 className="font-jakarta mb-3 text-base font-semibold text-gray-800 lg:mb-4">
                     {currentQuestion?.question}
                   </h3>
-                  <p className="font-sora text-sm text-gray-600">
+                  <p className="font-jakarta text-sm text-gray-600">
                     Choose only 1 answer:
                   </p>
                 </div>
@@ -499,7 +499,7 @@ export default function Quiz({ className }: QuizProps) {
                                 <div className="h-full w-full scale-50 rounded-full bg-white" />
                               )}
                             </div>
-                            <div className="font-sora flex-1 text-sm text-gray-800 lg:text-base">
+                            <div className="font-jakarta flex-1 text-sm text-gray-800 lg:text-base">
                               {option.text}
                             </div>
                           </div>
@@ -527,7 +527,7 @@ export default function Quiz({ className }: QuizProps) {
                 />
               </div>
 
-              <span className="font-sora text-sm font-medium text-gray-600">
+              <span className="font-jakarta text-sm font-medium text-gray-600">
                 {currentQuestionIndex + 1}/{totalQuestionsInSection}
               </span>
             </motion.div>

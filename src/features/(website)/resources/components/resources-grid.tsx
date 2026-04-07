@@ -96,13 +96,13 @@ export function ResourcesGrid() {
                   />
                 </div>
                 <div className="flex flex-col py-6">
-                  <p className="text-black-400 font-sora mb-2 text-sm">
+                  <p className="text-black-400 font-jakarta mb-2 text-sm">
                     {resource.date}
                   </p>
                   <h3 className="text-black-700 mb-3 line-clamp-2 text-lg font-semibold">
                     {resource.title}
                   </h3>
-                  <p className="text-text-color font-sora flex-1 text-xs leading-[160%]">
+                  <p className="text-text-color font-jakarta flex-1 text-xs leading-[160%]">
                     {resource.description}
                   </p>
                 </div>

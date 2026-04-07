@@ -36,7 +36,7 @@ export function UniversityHubPage() {
 
     openModal({
       modalTitle: "Compare Schools",
-      modalTitleClassName: "font-sora text-xl font-semibold",
+      modalTitleClassName: "font-jakarta text-xl font-semibold",
       bodyContent: (
         <ComparisonModal 
           universities={selectedUnis} 

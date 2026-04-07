@@ -146,7 +146,7 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                               <button
                                 onClick={() => scrollToSection(sectionId)}
                                 className={cn(
-                                  "font-sora text-left text-sm transition-colors hover:text-black",
+                                  "font-jakarta text-left text-sm transition-colors hover:text-black",
                                   isActive
                                     ? "font-medium text-black"
                                     : "text-black-400",
@@ -213,7 +213,7 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                     >
                       Dental School Admissions: The Ultimate Journey
                     </h2>
-                    <p className="font-sora text-sm leading-relaxed text-black">
+                    <p className="font-jakarta text-sm leading-relaxed text-black">
                       So, you&apos;re interested in pursuing a career in dentistry!
                       That&apos;s an exciting and rewarding journey ahead of you. 
                       Whether you&apos;re drawn to the clinical precision of restorative work, 
@@ -250,7 +250,7 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                     >
                       Introduction: Why Dentistry?
                     </h2>
-                    <p className="font-sora text-sm leading-relaxed text-black">
+                    <p className="font-jakarta text-sm leading-relaxed text-black">
                       Choosing dentistry means committing to a life of service, 
                       precision, and lifelong learning. Applicants are expected 
                       to demonstrate not only academic excellence but also high 
@@ -276,7 +276,7 @@ export default function GuideDetail({ className }: GuideDetailProps) {
                         >
                           {item}
                         </h2>
-                        <p className="font-sora text-sm leading-relaxed text-black">
+                        <p className="font-jakarta text-sm leading-relaxed text-black">
                           Detailed guidance for this section is available to DentiSpark 
                           Premium members. This covers specific university requirements, 
                           past interview questions, and expert tips to maximize your score.

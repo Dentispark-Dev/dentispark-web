@@ -5,6 +5,7 @@ import WelcomeSection from "@/src/features/(dashboard)/overview/components/welco
 import { SentimentVisualizer } from "@/src/features/ai-assistant/components/sentiment-visualizer";
 import { motion } from "framer-motion";
 import { MessageSquare, Video, FileText, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function AIAnalyticsPage() {
   return (
@@ -16,18 +17,22 @@ export default function AIAnalyticsPage() {
           <SentimentVisualizer />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <QuickAction 
-              title="Mock Interview" 
-              desc="Start 15-min practice" 
-              icon={<Video className="w-5 h-5" />} 
-              color="bg-primary-600" 
-            />
-            <QuickAction 
-              title="PS Reviewer" 
-              desc="Get AI feedback" 
-              icon={<FileText className="w-5 h-5" />} 
-              color="bg-black-900" 
-            />
+            <Link href="/ai-hub/interview-prep">
+                <QuickAction 
+                  title="Mock Interview" 
+                  desc="Start 15-min practice" 
+                  icon={<Video className="w-5 h-5" />} 
+                  color="bg-primary-600" 
+                />
+            </Link>
+            <Link href="/ai-hub/personal-statement">
+                <QuickAction 
+                  title="PS Reviewer" 
+                  desc="Get AI feedback" 
+                  icon={<FileText className="w-5 h-5" />} 
+                  color="bg-black-900" 
+                />
+            </Link>
           </div>
         </div>
 
@@ -45,10 +50,10 @@ export default function AIAnalyticsPage() {
                 <div className="relative z-10">
                     <h3 className="font-black italic uppercase text-lg tracking-tight mb-2">Mentor Access</h3>
                     <p className="text-white/70 text-xs mb-6 font-medium">Connect with current dental students for 1:1 strategy calls.</p>
-                    <button className="w-full h-12 bg-white text-primary-600 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-white-50 transition-all flex items-center justify-center gap-2">
+                    <Link href="/mentorship" className="w-full h-12 bg-white text-primary-600 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-white-50 transition-all flex items-center justify-center gap-2">
                         Browse Mentors
                         <ArrowRight className="w-3 h-3" />
-                    </button>
+                    </Link>
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
             </div>
@@ -60,7 +65,7 @@ export default function AIAnalyticsPage() {
 
 function QuickAction({ title, desc, icon, color }: { title: string, desc: string, icon: React.ReactNode, color: string }) {
     return (
-        <button className="glass-card bg-white p-6 rounded-3xl border-greys-100 shadow-lg hover:shadow-xl hover:translate-y-[-4px] transition-all flex items-center gap-4 text-left">
+        <div className="glass-card bg-white p-6 rounded-3xl border-greys-100 shadow-lg hover:shadow-xl hover:translate-y-[-4px] transition-all flex items-center gap-4 text-left w-full">
             <div className={`w-12 h-12 rounded-2xl ${color} flex items-center justify-center text-white`}>
                 {icon}
             </div>
@@ -68,7 +73,7 @@ function QuickAction({ title, desc, icon, color }: { title: string, desc: string
                 <h4 className="font-black text-black-900 text-sm uppercase tracking-tight">{title}</h4>
                 <p className="text-black-400 text-xs">{desc}</p>
             </div>
-        </button>
+        </div>
     )
 }
 

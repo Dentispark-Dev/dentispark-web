@@ -139,10 +139,10 @@ export function MentorProfileTabs({
                 <AppTabsContent value="about" className="">
                   <div className="space-y-6">
                     <div className="flex flex-col gap-2">
-                      <h2 className="font-sora text-black-600 text-base font-semibold">
+                      <h2 className="font-jakarta text-black-600 text-base font-semibold">
                         Business Owner
                       </h2>
-                      <span className="font-sora flex gap-4">
+                      <span className="font-jakarta flex gap-4">
                         <p className="text-black-400 text-xs">
                           Wise Graduate Admission
                         </p>
@@ -153,7 +153,7 @@ export function MentorProfileTabs({
                     </div>
 
                     <div className="prose text-text-color max-w-none text-sm">
-                      <p className="text-black-500 font-sora leading-relaxed whitespace-pre-line">
+                      <p className="text-black-500 font-jakarta leading-relaxed whitespace-pre-line">
                         {mentor.about}
                       </p>
                     </div>
@@ -175,7 +175,7 @@ export function MentorProfileTabs({
               >
                 <AppTabsContent value="work-experience" className="">
                   <div className="space-y-6">
-                    <h2 className="font-sora text-black-600 text-xl font-semibold">
+                    <h2 className="font-jakarta text-black-600 text-xl font-semibold">
                       Work Experience
                     </h2>
                     <div className="space-y-6">
@@ -229,7 +229,7 @@ export function MentorProfileTabs({
               >
                 <AppTabsContent value="education" className="">
                   <div className="space-y-6">
-                    <h2 className="font-sora text-black-600 text-xl font-semibold">
+                    <h2 className="font-jakarta text-black-600 text-xl font-semibold">
                       Education
                     </h2>
                     <div className="space-y-6">
@@ -284,7 +284,7 @@ export function MentorProfileTabs({
                 <AppTabsContent value="ratings" className="">
                   <div className="space-y-6">
                     <div className="flex items-center gap-4">
-                      <h2 className="font-sora text-black-600 text-xl font-semibold">
+                      <h2 className="font-jakarta text-black-600 text-xl font-semibold">
                         Ratings and reviews
                       </h2>
                       <div className="flex items-center gap-2">

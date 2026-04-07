@@ -187,7 +187,7 @@ export function ProfileSettings({ initialData }: ProfileSettingsProps) {
                   </span>
                 )}
               </div>
-              <p className="text-black-500 font-sora">
+              <p className="text-black-500 font-jakarta">
                 {form.watch("emailAddress")}
               </p>
             </div>

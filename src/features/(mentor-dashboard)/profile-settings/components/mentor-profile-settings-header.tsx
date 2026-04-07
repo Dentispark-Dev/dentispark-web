@@ -59,7 +59,7 @@ export function MentorProfileSettingsHeader() {
         <h2 className="text-2xl font-semibold text-gray-900">
           {user?.fullName || "Dr. Sara Barrywhite"}
         </h2>
-        <p className="font-sora text-gray-600">
+        <p className="font-jakarta text-gray-600">
           {user?.emailAddress || "johndoe@dentispark.co.uk"}
         </p>
       </div>

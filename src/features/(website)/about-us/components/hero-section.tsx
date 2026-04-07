@@ -52,14 +52,14 @@ export function HeroSection() {
               <div className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.3em] uppercase w-fit">
                 Our Story
               </div>
-              <h1 className="font-sora text-5xl md:text-7xl font-extrabold text-slate-950 tracking-tighter leading-[1.1]">
+              <h1 className="font-jakarta text-5xl md:text-7xl font-extrabold text-slate-950 tracking-tighter leading-[1.1]">
                 Empowering <span className="text-emerald-600">Tomorrow&apos;s</span> Dentists.
               </h1>
             </motion.div>
 
             <motion.div variants={itemVariants} className="relative">
               <div className="absolute -left-6 top-0 bottom-0 w-1 bg-emerald-500 rounded-full opacity-50 transition-all duration-500 group-hover:h-full group-hover:opacity-100" />
-              <p className="font-sora text-slate-500 text-lg md:text-xl leading-relaxed max-w-xl">
+              <p className="font-jakarta text-slate-500 text-lg md:text-xl leading-relaxed max-w-xl">
                 We&apos;re on a mission to break down barriers to dental
                 education by providing accessible guidance, mentorship and
                 support for underprivileged students—one application at a time.

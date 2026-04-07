@@ -222,7 +222,7 @@ export function EditWorkModal({
                         }}
                       />
                     </FormControl>
-                    <div className="font-sora text-xs text-gray-500">
+                    <div className="font-jakarta text-xs text-gray-500">
                       Word count: {wordCounts[index] || 0}/1000
                     </div>
                     <FormMessage />
@@ -248,7 +248,7 @@ export function EditWorkModal({
           ))}
 
           {/* Action Buttons */}
-          <div className="font-sora flex w-full gap-3 pt-4">
+          <div className="font-jakarta flex w-full gap-3 pt-4">
             <Button
               type="button"
               variant="outline"

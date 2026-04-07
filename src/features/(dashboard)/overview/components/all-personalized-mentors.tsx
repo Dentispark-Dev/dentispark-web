@@ -168,12 +168,12 @@ export default function AllPersonalizedMentors() {
                 </div>
               </div>
 
-              <h3 className="text-black-800 font-sora mb-1 flex items-center gap-2 text-sm font-normal">
+              <h3 className="text-black-800 font-jakarta mb-1 flex items-center gap-2 text-sm font-normal">
                 {mentor.name}
                 <span className="text-lg">{mentor.flag}</span>
               </h3>
 
-              <p className="text-text-color font-sora mb-3 text-xs font-medium">
+              <p className="text-text-color font-jakarta mb-3 text-xs font-medium">
                 {mentor.title}
               </p>
 
@@ -182,18 +182,18 @@ export default function AllPersonalizedMentors() {
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="text-sm font-medium">{mentor.rating}</span>
                 </div>
-                <span className="font-sora text-xs text-[#12AC75] underline">
+                <span className="font-jakarta text-xs text-[#12AC75] underline">
                   {mentor.reviewCount} reviews
                 </span>
               </div>
 
-              <p className="text-text-color font-sora mb-6 line-clamp-2 flex-1 text-xs leading-relaxed font-normal">
+              <p className="text-text-color font-jakarta mb-6 line-clamp-2 flex-1 text-xs leading-relaxed font-normal">
                 {mentor.description}
               </p>
 
               <Button
                 variant={"outline"}
-                className="font-sora mt-auto w-full rounded-lg border text-sm font-medium transition-colors"
+                className="font-jakarta mt-auto w-full rounded-lg border text-sm font-medium transition-colors"
               >
                 View Profile
               </Button>

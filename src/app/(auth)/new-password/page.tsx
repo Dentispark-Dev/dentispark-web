@@ -142,7 +142,7 @@ export default function NewPasswordPage({
               <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
                 Password Updated!
               </h1>
-              <p className="font-sora mt-2 text-sm text-gray-400">
+              <p className="font-jakarta mt-2 text-sm text-gray-400">
                 Your password has been successfully updated. You can now login
                 with your new password.
               </p>
@@ -159,7 +159,7 @@ export default function NewPasswordPage({
 
           {/* Footer Links */}
           <motion.div
-            className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+            className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
             variants={itemVariants}
           >
             <Link href="/terms" className="cursor-pointer hover:text-gray-700">
@@ -200,7 +200,7 @@ export default function NewPasswordPage({
           <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
             Create a new password
           </h1>
-          <p className="font-sora mt-2 text-sm text-gray-400">
+          <p className="font-jakarta mt-2 text-sm text-gray-400">
             Create a new password to continue. This password will be used to log
             into your account
           </p>
@@ -297,7 +297,7 @@ export default function NewPasswordPage({
         <motion.div className="text-center" variants={itemVariants}>
           <Link
             href="/login"
-            className="font-sora flex items-center justify-center text-xs text-gray-600 hover:text-gray-800"
+            className="font-jakarta flex items-center justify-center text-xs text-gray-600 hover:text-gray-800"
           >
             <ArrowLeft className="mr-1 h-3 w-3" />
             Back to Login
@@ -306,7 +306,7 @@ export default function NewPasswordPage({
 
         {/* Footer Links */}
         <motion.div
-          className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+          className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
           variants={itemVariants}
         >
           <Link href="/terms" className="cursor-pointer hover:text-gray-700">

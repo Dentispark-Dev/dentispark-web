@@ -49,7 +49,7 @@ export function PostItem({ post }: PostItemProps) {
                     className="object-cover w-full h-full"
                   />
                 ) : (
-                  <span className="text-sm font-bold text-white font-sora">
+                  <span className="text-sm font-bold text-white font-jakarta">
                     {post.author.split(" ").map((n) => n[0]).join("")}
                   </span>
                 )}
@@ -62,7 +62,7 @@ export function PostItem({ post }: PostItemProps) {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-sora font-bold text-gray-900 decoration-emerald-500/30 hover:underline cursor-pointer">
+                <span className="font-jakarta font-bold text-gray-900 decoration-emerald-500/30 hover:underline cursor-pointer">
                   {post.author}
                 </span>
                 {post.isMentor && (
@@ -71,7 +71,7 @@ export function PostItem({ post }: PostItemProps) {
                   </span>
                 )}
               </div>
-              <span className="text-[11px] font-bold text-gray-400 font-sora uppercase tracking-tight">
+              <span className="text-[11px] font-bold text-gray-400 font-jakarta uppercase tracking-tight">
                 {post.time} • Admissions Strategy
               </span>
             </div>
@@ -83,7 +83,7 @@ export function PostItem({ post }: PostItemProps) {
 
         {/* Post Content */}
         <div className="space-y-4">
-          <p className="text-gray-600 font-medium leading-relaxed font-sora text-[15px]">
+          <p className="text-gray-600 font-medium leading-relaxed font-jakarta text-[15px]">
             {post.content}
           </p>
           
@@ -97,16 +97,16 @@ export function PostItem({ post }: PostItemProps) {
           <div className="flex items-center gap-6">
             <button 
               onClick={() => setIsLiked(!isLiked)}
-              className={`flex items-center gap-2 text-sm font-bold font-sora transition-all active:scale-90 ${isLiked ? 'text-rose-500' : 'text-gray-400 hover:text-gray-600'}`}
+              className={`flex items-center gap-2 text-sm font-bold font-jakarta transition-all active:scale-90 ${isLiked ? 'text-rose-500' : 'text-gray-400 hover:text-gray-600'}`}
             >
               <Heart className={`w-5 h-5 ${isLiked ? 'fill-rose-500' : ''}`} />
               <span>{isLiked ? 25 : 24}</span>
             </button>
-            <button className="flex items-center gap-2 text-sm font-bold font-sora text-gray-400 hover:text-gray-600 transition-all active:scale-90">
+            <button className="flex items-center gap-2 text-sm font-bold font-jakarta text-gray-400 hover:text-gray-600 transition-all active:scale-90">
               <MessageCircle className="w-5 h-5" />
               <span>{post.totalComments}</span>
             </button>
-            <button className="flex items-center gap-2 text-sm font-bold font-sora text-gray-400 hover:text-gray-600 transition-all active:scale-90">
+            <button className="flex items-center gap-2 text-sm font-bold font-jakarta text-gray-400 hover:text-gray-600 transition-all active:scale-90">
               <Share2 className="w-5 h-5" />
             </button>
           </div>

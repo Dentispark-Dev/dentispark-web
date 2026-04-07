@@ -24,11 +24,11 @@ export function ResourceCard({ resource, index = 0 }: ResourceCardProps) {
         />
       </div>
       <div className="flex flex-1 flex-col pt-4">
-        <p className="text-black-500 font-sora mb-2 text-xs">{resource.date}</p>
+        <p className="text-black-500 font-jakarta mb-2 text-xs">{resource.date}</p>
         <h3 className="text-black-800 mb-2 line-clamp-2 text-base leading-tight font-semibold">
           {resource.title}
         </h3>
-        <p className="text-black-600 font-sora line-clamp-2 flex-1 text-sm leading-relaxed">
+        <p className="text-black-600 font-jakarta line-clamp-2 flex-1 text-sm leading-relaxed">
           {resource.description}
         </p>
       </div>

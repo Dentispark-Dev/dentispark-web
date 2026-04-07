@@ -151,7 +151,7 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
       <div className="grid grid-cols-1 gap-8 py-6 md:grid-cols-2">
         {/* Left: Calendar */}
         <div>
-          <h3 className="font-sora mb-6 text-lg font-semibold">
+          <h3 className="font-jakarta mb-6 text-lg font-semibold">
             Select new date
           </h3>
 
@@ -165,7 +165,7 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
                 <ChevronLeft className="h-5 w-5 text-gray-600" />
               </button>
 
-              <h4 className="font-sora text-base font-semibold">
+              <h4 className="font-jakarta text-base font-semibold">
                 {currentDate.toLocaleDateString("en-US", {
                   month: "long",
                   year: "numeric",
@@ -185,7 +185,7 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
               {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
                 <div
                   key={`${day}-${index}`}
-                  className="font-sora flex h-10 items-center justify-center text-sm font-semibold text-gray-600"
+                  className="font-jakarta flex h-10 items-center justify-center text-sm font-semibold text-gray-600"
                 >
                   {day}
                 </div>
@@ -197,21 +197,21 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
 
         {/* Right: Time Selection */}
         <div className="space-y-6">
-          <h3 className="font-sora text-lg font-semibold">
+          <h3 className="font-jakarta text-lg font-semibold">
             Select your new time
           </h3>
 
           <div className="space-y-4">
             {/* From Time */}
             <div>
-              <label className="font-sora mb-2 block text-sm font-medium text-gray-700">
+              <label className="font-jakarta mb-2 block text-sm font-medium text-gray-700">
                 From
               </label>
               <div className="relative">
                 <select
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="font-sora focus:border-primary focus:ring-primary w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-sm focus:ring-1 focus:outline-none"
+                  className="font-jakarta focus:border-primary focus:ring-primary w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-sm focus:ring-1 focus:outline-none"
                 >
                   <option value="">Select a time</option>
                   {TIME_SLOTS.map((time) => (
@@ -226,14 +226,14 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
 
             {/* To Time */}
             <div>
-              <label className="font-sora mb-2 block text-sm font-medium text-gray-700">
+              <label className="font-jakarta mb-2 block text-sm font-medium text-gray-700">
                 To
               </label>
               <div className="relative">
                 <select
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="font-sora focus:border-primary focus:ring-primary w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-sm focus:ring-1 focus:outline-none"
+                  className="font-jakarta focus:border-primary focus:ring-primary w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-sm focus:ring-1 focus:outline-none"
                 >
                   <option value="">Select a time</option>
                   {TIME_SLOTS.map((time) => (
@@ -246,17 +246,17 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
               </div>
             </div>
 
-            <p className="font-sora text-xs text-gray-500">
+            <p className="font-jakarta text-xs text-gray-500">
               NB: Choose a minimum duration of 2 hours/week
             </p>
           </div>
 
           {/* Timezone */}
           <div>
-            <h4 className="font-sora mb-2 text-sm font-medium text-gray-700">
+            <h4 className="font-jakarta mb-2 text-sm font-medium text-gray-700">
               Time zone
             </h4>
-            <div className="font-sora flex items-center gap-2 text-sm text-gray-600">
+            <div className="font-jakarta flex items-center gap-2 text-sm text-gray-600">
               <svg
                 width="14"
                 height="15"
@@ -279,7 +279,7 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="font-sora flex-1 rounded-full border-gray-300 text-gray-700 hover:bg-white hover:text-gray-900"
+              className="font-jakarta flex-1 rounded-full border-gray-300 text-gray-700 hover:bg-white hover:text-gray-900"
             >
               Cancel
             </Button>
@@ -287,7 +287,7 @@ export function SuggestSlotForm({ onSubmit, onCancel }: SuggestSlotFormProps) {
               type="button"
               onClick={handleSubmit}
               disabled={!selectedDate || !startTime || !endTime}
-              className="bg-primary hover:bg-primary/90 font-sora flex-1 rounded-full text-white disabled:opacity-50"
+              className="bg-primary hover:bg-primary/90 font-jakarta flex-1 rounded-full text-white disabled:opacity-50"
             >
               Apply
             </Button>

@@ -38,21 +38,21 @@ export function AcceptBookingModal({
             />
           </div>
           <div>
-            <h3 className="font-sora text-black-800 text-lg font-semibold">
+            <h3 className="font-jakarta text-black-800 text-lg font-semibold">
               {student.name}
             </h3>
-            <p className="text-black-400 font-sora text-sm">{student.year}</p>
+            <p className="text-black-400 font-jakarta text-sm">{student.year}</p>
           </div>
         </div>
 
         {/* Booking Information */}
         <div>
-          <h4 className="font-sora text-black-800 mb-2 text-sm font-semibold">
+          <h4 className="font-jakarta text-black-800 mb-2 text-sm font-semibold">
             Booking Information:
           </h4>
           <div className="flex items-center gap-4">
-            <p className="text-black-600 font-sora text-sm">{booking.title}</p>
-            <p className="text-black-600 font-sora text-sm">{booking.date}</p>
+            <p className="text-black-600 font-jakarta text-sm">{booking.title}</p>
+            <p className="text-black-600 font-jakarta text-sm">{booking.date}</p>
           </div>
         </div>
 
@@ -61,13 +61,13 @@ export function AcceptBookingModal({
           <Button
             onClick={onSuggestNewSlot}
             variant="outline"
-            className="font-sora border-greys-300 text-greys-1000 hover:text-greys-1000 h-10 flex-1 rounded-lg hover:bg-white"
+            className="font-jakarta border-greys-300 text-greys-1000 hover:text-greys-1000 h-10 flex-1 rounded-lg hover:bg-white"
           >
             Suggest new slot
           </Button>
           <Button
             onClick={onAccept}
-            className="bg-primary hover:bg-primary/90 font-sora h-10 flex-1 rounded-lg text-white"
+            className="bg-primary hover:bg-primary/90 font-jakarta h-10 flex-1 rounded-lg text-white"
           >
             Accept
           </Button>

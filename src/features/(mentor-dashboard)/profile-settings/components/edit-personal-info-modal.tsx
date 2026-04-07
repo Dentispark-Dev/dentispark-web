@@ -254,7 +254,7 @@ export function EditPersonalInfoModal({
                       }}
                     />
                   </FormControl>
-                  <div className="font-sora text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1 flex justify-end">
+                  <div className="font-jakarta text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1 flex justify-end">
                     Word count: {aboutMeWordCount}/1000
                   </div>
                   <FormMessage />
@@ -282,7 +282,7 @@ export function EditPersonalInfoModal({
                       }}
                     />
                   </FormControl>
-                  <div className="font-sora text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1 flex justify-end">
+                  <div className="font-jakarta text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1 flex justify-end">
                     Word count: {whyMentorWordCount}/1000
                   </div>
                   <FormMessage />
@@ -292,7 +292,7 @@ export function EditPersonalInfoModal({
           </div>
 
           {/* Action Buttons */}
-          <div className="font-sora flex w-full gap-4 pt-6 border-t border-slate-100">
+          <div className="font-jakarta flex w-full gap-4 pt-6 border-t border-slate-100">
             <Button
               type="button"
               variant="outline"
@@ -301,7 +301,7 @@ export function EditPersonalInfoModal({
             >
               Discard Changes
             </Button>
-            <Button type="submit" className="h-14 flex-1 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-sora font-extrabold text-lg shadow-xl">
+            <Button type="submit" className="h-14 flex-1 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-jakarta font-extrabold text-lg shadow-xl">
               Apply Credentials
             </Button>
           </div>

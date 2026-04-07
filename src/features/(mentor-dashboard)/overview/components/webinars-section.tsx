@@ -85,14 +85,14 @@ export function WebinarsSection({ className }: WebinarsSectionProps) {
     <div className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-sora text-black-800 text-xl font-semibold">
+        <h2 className="font-jakarta text-black-800 text-xl font-semibold">
           Webinars
         </h2>
 
         {/* See All Link */}
         <button
           onClick={handleSeeAllWebinars}
-          className="font-sora text-black-600 hover:text-black-800 flex items-center gap-2 text-sm font-medium"
+          className="font-jakarta text-black-600 hover:text-black-800 flex items-center gap-2 text-sm font-medium"
         >
           <Users className="h-4 w-4" />
           See all Webinars

@@ -74,7 +74,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
       {/* Header Section */}
       <div className="flex items-center justify-between px-4 sm:px-0">
         <div>
-          <h1 className="text-3xl font-sora font-extrabold text-slate-900 tracking-tight">Admissions Portfolio</h1>
+          <h1 className="text-3xl font-jakarta font-extrabold text-slate-900 tracking-tight">Admissions Portfolio</h1>
           <p className="text-slate-500 mt-1 font-medium tracking-tight">Complete your profile to unlock AI-powered personal statement scoring and mentor matching.</p>
         </div>
         <Button onClick={() => setIsModalOpen(true)} className="rounded-xl px-6 h-12 shadow-lg shadow-primary/10 transition-transform hover:scale-[1.02] active:scale-[0.98]">
@@ -94,7 +94,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
             <div className="bg-slate-900 p-6 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <BarChart3 className="text-emerald-400 h-6 w-6" />
-                <h3 className="text-white font-sora font-bold uppercase tracking-widest text-xs">Admissions Test Analytics</h3>
+                <h3 className="text-white font-jakarta font-bold uppercase tracking-widest text-xs">Admissions Test Analytics</h3>
               </div>
               <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20">
                 AI Match Ready
@@ -106,19 +106,19 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total UCAT</p>
-                  <p className="text-2xl font-sora font-extrabold text-slate-900">{data.ucatScore || "—"}</p>
+                  <p className="text-2xl font-jakarta font-extrabold text-slate-900">{data.ucatScore || "—"}</p>
                 </div>
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">CASPer</p>
-                  <p className="text-2xl font-sora font-extrabold text-slate-900">{data.casperScore || "—"}</p>
+                  <p className="text-2xl font-jakarta font-extrabold text-slate-900">{data.casperScore || "—"}</p>
                 </div>
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">BMAT S1</p>
-                  <p className="text-2xl font-sora font-extrabold text-slate-900">{data.bmatSection1 || "—"}</p>
+                  <p className="text-2xl font-jakarta font-extrabold text-slate-900">{data.bmatSection1 || "—"}</p>
                 </div>
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">BMAT S2</p>
-                  <p className="text-2xl font-sora font-extrabold text-slate-900">{data.bmatSection2 || "—"}</p>
+                  <p className="text-2xl font-jakarta font-extrabold text-slate-900">{data.bmatSection2 || "—"}</p>
                 </div>
               </div>
 
@@ -138,7 +138,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
                   ].map((sub, i) => (
                     <div key={i} className="flex items-center justify-between px-4 py-3 bg-white border border-slate-100 rounded-xl shadow-sm">
                       <span className="text-[11px] font-bold text-slate-500 uppercase">{sub.label}</span>
-                      <span className="font-sora font-bold text-slate-900">{sub.val || "—"}</span>
+                      <span className="font-jakarta font-bold text-slate-900">{sub.val || "—"}</span>
                     </div>
                   ))}
                 </div>
@@ -150,7 +150,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
           <section className="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-8 space-y-6">
             <div className="flex items-center gap-3">
               <Award className="text-primary h-6 w-6" />
-              <h3 className="text-slate-900 font-sora font-bold">Academic Achievement</h3>
+              <h3 className="text-slate-900 font-jakarta font-bold">Academic Achievement</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -178,7 +178,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
                   ].map((item, i) => (
                     <div key={i} className={cn("p-4 rounded-2xl border", item.grade?.includes('A') ? "bg-emerald-50 border-emerald-100" : "bg-slate-50 border-slate-100")}>
                       <p className="text-[10px] font-bold text-slate-500 truncate mb-1">{item.sub}</p>
-                      <p className={cn("text-xl font-sora font-extrabold", item.grade?.includes('A') ? "text-emerald-700" : "text-slate-900")}>{item.grade || "—"}</p>
+                      <p className={cn("text-xl font-jakarta font-extrabold", item.grade?.includes('A') ? "text-emerald-700" : "text-slate-900")}>{item.grade || "—"}</p>
                     </div>
                   ))}
                 </div>
@@ -191,7 +191,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Briefcase className="text-blue-500 h-6 w-6" />
-                <h3 className="text-slate-900 font-sora font-bold">Experience Logs</h3>
+                <h3 className="text-slate-900 font-jakarta font-bold">Experience Logs</h3>
               </div>
               <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-bold" onClick={() => setIsModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-1" />
@@ -228,9 +228,9 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
           
           {/* Action Center */}
           <div className="bg-gradient-to-br from-primary to-primary-600 rounded-[2rem] p-8 text-white shadow-xl shadow-primary/20">
-            <h3 className="font-sora font-bold text-xl mb-2">Portfolio Score</h3>
+            <h3 className="font-jakarta font-bold text-xl mb-2">Portfolio Score</h3>
             <div className="flex items-end gap-3 mb-6">
-              <span className="text-5xl font-sora font-extrabold tracking-tighter">82%</span>
+              <span className="text-5xl font-jakarta font-extrabold tracking-tighter">82%</span>
               <span className="text-white/70 font-bold mb-2">Complete</span>
             </div>
             <div className="w-full bg-white/20 h-2 rounded-full mb-8 overflow-hidden">
@@ -245,7 +245,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
           <section className="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-8 space-y-6">
             <div className="flex items-center gap-3">
               <Building2 className="text-slate-900 h-6 w-6" />
-              <h3 className="text-slate-900 font-sora font-bold">University Shortlist</h3>
+              <h3 className="text-slate-900 font-jakarta font-bold">University Shortlist</h3>
             </div>
 
             <div className="space-y-3">
@@ -296,7 +296,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
         <DialogContent className="mx-auto max-h-[95vh] max-w-3xl overflow-hidden p-0 sm:max-h-[90vh] rounded-[2.5rem]">
           <div className="flex h-full max-h-[calc(95vh-2rem)] flex-col sm:max-h-[calc(90vh-4rem)]">
             <DialogHeader className="flex-shrink-0 border-b border-slate-100 px-6 py-6 bg-slate-50/50">
-              <DialogTitle className="text-2xl font-sora font-extrabold text-slate-900 tracking-tight">
+              <DialogTitle className="text-2xl font-jakarta font-extrabold text-slate-900 tracking-tight">
                 Update Admissions Portfolio
               </DialogTitle>
               <p className="text-slate-500 text-sm font-medium">Enter your granular test scores and background data for AI evaluation.</p>

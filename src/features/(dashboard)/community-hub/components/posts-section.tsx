@@ -41,7 +41,7 @@ export function PostsSection({ posts }: PostsSectionProps) {
       {/* Modern Create Post Module */}
       <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-4">
         <div className="flex gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-700 font-bold font-sora shadow-inner">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-700 font-bold font-jakarta shadow-inner">
             JD
           </div>
           <div className="flex-1 relative">
@@ -69,7 +69,7 @@ export function PostsSection({ posts }: PostsSectionProps) {
           
           <Button 
             disabled={!newPost.trim()}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 rounded-xl font-bold font-sora transition-all shadow-md active:scale-95"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 rounded-xl font-bold font-jakarta transition-all shadow-md active:scale-95"
           >
             Post Update
           </Button>
@@ -79,7 +79,7 @@ export function PostsSection({ posts }: PostsSectionProps) {
       {/* Posts Feed */}
       <div className="space-y-6">
         <div className="flex items-center justify-between px-2">
-          <h2 className="text-xl font-bold text-gray-900 font-sora">Recent Discussions</h2>
+          <h2 className="text-xl font-bold text-gray-900 font-jakarta">Recent Discussions</h2>
           <div className="flex items-center gap-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
             <span>Latest</span>
             <span className="opacity-40">|</span>

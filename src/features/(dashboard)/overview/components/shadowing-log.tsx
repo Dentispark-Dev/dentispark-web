@@ -35,7 +35,7 @@ export function ShadowingLog() {
     );
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (selectedProcedures.length === 0 || reflection.length < 10) {
       toast.error("Please select at least one procedure and add a brief reflection.");
       return;
@@ -43,15 +43,28 @@ export function ShadowingLog() {
     
     setIsGenerating(true);
     
-    // Simulate AI generation delay
-    setTimeout(() => {
-      setGeneratedDraft(
-        `During my clinical placement, observing ${selectedProcedures.length} complex procedures reinforced my understanding of the stamina and precision required in modern dentistry. Particularly during the procedures involving ${selectedProcedures[0].replace('-', ' ')}, I noted how the clinician seamlessly blended technical manual dexterity with empathetic patient communication. My reflection on this experience (${reflection.substring(0, 30)}...) has cemented my resolve to pursue dentistry, highlighting that clinical excellence is intrinsically linked to ethical patient care.`
-      );
-      setIsGenerating(false);
+    try {
+      const procedureLabels = selectedProcedures.map(id => {
+        const proc = procedures.find(p => p.id === id);
+        return proc ? proc.label : id;
+      });
+
+      const response = await fetch("/api/ai/shadowing-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ procedures: procedureLabels, reflection }),
+      });
+
+      const data = await response.json();
+      setGeneratedDraft(data.draft);
       setActiveTab("generate");
-      toast.success("UCAS draft generated successfully!");
-    }, 1500);
+      toast.success(data.isFallback ? "Draft generated (offline mode)." : "UCAS draft generated successfully!");
+    } catch (error) {
+      console.error("Shadowing log generation failed:", error);
+      toast.error("Failed to generate draft. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (

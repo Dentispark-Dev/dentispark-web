@@ -10,7 +10,7 @@ export function CompareSchoolsButton({
   return (
     <Button
       onClick={onCompare}
-      className="font-sora flex items-center space-x-2 border border-gray-300 bg-white text-xs text-black transition-colors"
+      className="font-jakarta flex items-center space-x-2 border border-gray-300 bg-white text-xs text-black transition-colors"
       disabled={selectedCount === 0}
     >
       <svg

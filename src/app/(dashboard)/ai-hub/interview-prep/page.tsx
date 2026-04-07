@@ -154,7 +154,7 @@ export default function InterviewPrepPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-sora font-bold text-gray-900">DentiSpark Voice Interview Beta</h1>
+            <h1 className="text-2xl font-jakarta font-bold text-gray-900">DentiSpark Voice Interview Beta</h1>
             <p className="text-gray-500 text-sm font-medium">Real-time transcription & AI Vocal guidance enabled.</p>
           </div>
         </div>
@@ -185,7 +185,7 @@ export default function InterviewPrepPage() {
           >
             <div className="p-10 rounded-3xl border border-gray-100 space-y-8 text-center bg-white shadow-sm">
                 <div className="space-y-2">
-                    <h2 className="text-3xl font-sora font-bold text-gray-900">Configure Your Session</h2>
+                    <h2 className="text-3xl font-jakarta font-bold text-gray-900">Configure Your Session</h2>
                     <p className="text-gray-500 font-medium">Select your interview style and difficulty to begin.</p>
                 </div>
 
@@ -196,7 +196,7 @@ export default function InterviewPrepPage() {
                                 {opt.icon}
                             </div>
                             <div>
-                                <h4 className="font-sora font-bold text-gray-900">{opt.title}</h4>
+                                <h4 className="font-jakarta font-bold text-gray-900">{opt.title}</h4>
                                 <p className="text-xs text-gray-500 leading-tight font-medium">{opt.desc}</p>
                             </div>
                         </button>
@@ -210,7 +210,7 @@ export default function InterviewPrepPage() {
                                 key={d}
                                 onClick={() => setDifficulty(d)}
                                 className={cn(
-                                    "px-8 py-2.5 rounded-lg text-sm font-sora font-semibold transition-all",
+                                    "px-8 py-2.5 rounded-lg text-sm font-jakarta font-semibold transition-all",
                                     difficulty === d ? "bg-white shadow-sm text-emerald-600" : "text-gray-500 hover:text-gray-900"
                                 )}
                             >
@@ -228,7 +228,7 @@ export default function InterviewPrepPage() {
 
                 <Button 
                     onClick={handleStartSession}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-14 rounded-xl font-sora font-bold shadow-sm transform active:scale-95 transition-all text-lg"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-14 rounded-xl font-jakarta font-bold shadow-sm transform active:scale-95 transition-all text-lg"
                 >
                     Initialize AI Mentor
                 </Button>
@@ -247,11 +247,11 @@ export default function InterviewPrepPage() {
                     {stationPhase === "prep" && (
                         <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center px-6">
                             <div className="bg-white p-8 rounded-3xl shadow-xl space-y-4 max-w-sm text-center border border-gray-100 animate-in fade-in zoom-in duration-300">
-                                <h4 className="text-xl font-sora font-bold text-gray-900 tracking-tight">Reading Station</h4>
+                                <h4 className="text-xl font-jakarta font-bold text-gray-900 tracking-tight">Reading Station</h4>
                                 <p className="text-gray-500 text-sm font-medium">Read the prompt below carefully. You have 60 seconds before the station begins.</p>
                                 <Button 
                                     onClick={startStation}
-                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-sora font-bold shadow-sm"
+                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-jakarta font-bold shadow-sm"
                                 >
                                     Enter Station Now <Play className="w-4 h-4 ml-2" />
                                 </Button>
@@ -263,7 +263,7 @@ export default function InterviewPrepPage() {
                         <div className="flex items-center justify-between">
                             <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-[10px] font-bold uppercase tracking-widest">Station {currentQuestionIndex + 1} of {questions.length}</span>
                         </div>
-                        <h3 className="text-2xl font-sora font-bold text-gray-900 leading-tight">
+                        <h3 className="text-2xl font-jakarta font-bold text-gray-900 leading-tight">
                             {questions[currentQuestionIndex]}
                         </h3>
                     </div>
@@ -311,7 +311,7 @@ export default function InterviewPrepPage() {
                                 {isListening ? <Square className="w-6 h-6 fill-white" /> : <Mic className="w-6 h-6" />}
                             </button>
                             <div className="space-y-1">
-                                <h4 className="font-sora font-bold text-gray-900 uppercase text-xs tracking-tight">
+                                <h4 className="font-jakarta font-bold text-gray-900 uppercase text-xs tracking-tight">
                                     {isListening ? "Listening..." : stationPhase === "prep" ? "Awaiting Station Start" : "Click to Speak"}
                                 </h4>
                                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest opacity-60">
@@ -323,7 +323,7 @@ export default function InterviewPrepPage() {
                         <Button 
                             onClick={handleNextQuestion}
                             disabled={stationPhase === "prep"}
-                            className="bg-gray-900 hover:bg-black text-white h-12 px-8 rounded-xl font-sora font-semibold flex items-center gap-2 transform active:translate-x-1 transition-all text-sm disabled:opacity-20 shadow-sm"
+                            className="bg-gray-900 hover:bg-black text-white h-12 px-8 rounded-xl font-jakarta font-semibold flex items-center gap-2 transform active:translate-x-1 transition-all text-sm disabled:opacity-20 shadow-sm"
                         >
                             {currentQuestionIndex === questions.length - 1 ? "End Interview" : "Submit & Exit Station"}
                             <ChevronRight className="w-4 h-4" />
@@ -344,13 +344,13 @@ export default function InterviewPrepPage() {
                     />
                     <div className="mt-6 text-center">
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Current Phase</p>
-                        <p className="text-sm font-sora font-bold text-emerald-600 uppercase mt-1">{stationPhase} STATION</p>
+                        <p className="text-sm font-jakarta font-bold text-emerald-600 uppercase mt-1">{stationPhase} STATION</p>
                     </div>
                 </div>
 
                 <div className="p-10 rounded-3xl border border-gray-100 space-y-6 bg-white shadow-sm overflow-hidden relative">
                     <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500" />
-                    <h5 className="text-xs font-sora font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
+                    <h5 className="text-xs font-jakarta font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 text-emerald-500" /> Admission Protocol
                     </h5>
                     <div className="space-y-5">
@@ -381,7 +381,7 @@ export default function InterviewPrepPage() {
                 <BrainCircuit className="w-24 h-24 text-emerald-600 relative animate-float" />
             </div>
             <div className="text-center space-y-2">
-                <h2 className="text-2xl font-sora font-bold text-gray-900">AI is scoring your performance...</h2>
+                <h2 className="text-2xl font-jakarta font-bold text-gray-900">AI is scoring your performance...</h2>
                 <p className="text-gray-500 font-medium">Evaluating ethics, structure, and professional tone.</p>
             </div>
             <Loader2 className="w-8 h-8 text-emerald-600 animate-spin" />
@@ -399,7 +399,7 @@ export default function InterviewPrepPage() {
                     <Award className="w-4 h-4" />
                     Interview Successfully Completed
                 </div>
-                <h2 className="text-4xl font-sora font-bold text-gray-900 tracking-tight">Performance Analytics</h2>
+                <h2 className="text-4xl font-jakarta font-bold text-gray-900 tracking-tight">Performance Analytics</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -409,7 +409,7 @@ export default function InterviewPrepPage() {
                             <BarChart3 className="w-5 h-5" />
                         </div>
                         <div>
-                            <span className="block text-2xl font-sora font-bold text-gray-900">{metric.score}%</span>
+                            <span className="block text-2xl font-jakarta font-bold text-gray-900">{metric.score}%</span>
                             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{metric.label}</span>
                         </div>
                         <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
@@ -424,7 +424,7 @@ export default function InterviewPrepPage() {
             </div>
 
             <div className="p-8 rounded-3xl border border-gray-100 space-y-6 bg-white shadow-sm">
-                <h3 className="text-xl font-sora font-bold text-gray-900 flex items-center gap-2">
+                <h3 className="text-xl font-jakarta font-bold text-gray-900 flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-emerald-600" />
                     AI Critique & Improvement Plan
                 </h3>
@@ -451,7 +451,7 @@ export default function InterviewPrepPage() {
                 <Button 
                     variant="outline" 
                     onClick={() => { setSessionState("setup"); setResults(null); }}
-                    className="px-10 h-14 rounded-xl border-gray-200 font-sora font-bold transform active:scale-95 transition-all text-gray-600 hover:bg-gray-50"
+                    className="px-10 h-14 rounded-xl border-gray-200 font-jakarta font-bold transform active:scale-95 transition-all text-gray-600 hover:bg-gray-50"
                 >
                     Try Another Session
                 </Button>
@@ -474,7 +474,7 @@ export default function InterviewPrepPage() {
                             console.error(e);
                         }
                     }}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-14 rounded-xl font-sora font-bold shadow-sm transform active:scale-95 transition-all"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 h-14 rounded-xl font-jakarta font-bold shadow-sm transform active:scale-95 transition-all"
                 >
                     Sync Performance <Sparkles className="w-4 h-4 ml-2" />
                 </Button>
@@ -483,14 +483,14 @@ export default function InterviewPrepPage() {
         ) : error ? (
              <div className="text-center py-20 bg-white rounded-3xl border border-amber-100 shadow-sm space-y-4">
                 <AlertCircle className="w-12 h-12 text-amber-500 mx-auto" />
-                <h3 className="text-2xl font-sora font-bold text-gray-900">Evaluation Failed</h3>
+                <h3 className="text-2xl font-jakarta font-bold text-gray-900">Evaluation Failed</h3>
                 <p className="text-gray-500 max-w-md mx-auto font-medium">{error}</p>
                 <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl border-gray-200 font-bold">Restart Session</Button>
             </div>
         ) : (
              <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm space-y-4">
                 <AlertCircle className="w-12 h-12 text-gray-300 mx-auto" />
-                <h3 className="text-lg font-sora font-bold text-gray-900">Evaluation Unavailable</h3>
+                <h3 className="text-lg font-jakarta font-bold text-gray-900">Evaluation Unavailable</h3>
                 <p className="text-gray-500 font-medium">Something went wrong during the AI analysis.</p>
                 <Button onClick={() => setSessionState("setup")} variant="outline" className="rounded-xl border-gray-200 font-bold">Back to Setup</Button>
             </div>

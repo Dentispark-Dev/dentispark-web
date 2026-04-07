@@ -14,7 +14,7 @@ export function SuccessStoryCard({ story }: SuccessStoryCardProps) {
           <div className="absolute -left-2 -top-2 text-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity">
             <Quote className="w-8 h-8 fill-blue-500/10" />
           </div>
-          <p className="text-sm font-medium text-gray-600 leading-relaxed font-sora line-clamp-3 italic">
+          <p className="text-sm font-medium text-gray-600 leading-relaxed font-jakarta line-clamp-3 italic">
             "{story.title}"
           </p>
         </div>
@@ -36,7 +36,7 @@ export function SuccessStoryCard({ story }: SuccessStoryCardProps) {
               )}
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-900 font-sora uppercase tracking-wider">
+            <p className="text-xs font-bold text-gray-900 font-jakarta uppercase tracking-wider">
               {story.author}
             </p>
             <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tight">

@@ -72,7 +72,7 @@ export function PaymentSetupStep1({ data, onNext, isLoading }: StepProps) {
             name="academicYear"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Academic Year
                 </FormLabel>
                 <Select
@@ -106,7 +106,7 @@ export function PaymentSetupStep1({ data, onNext, isLoading }: StepProps) {
             name="gcseGrades"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Current/predicted GCSE or A-Level grades?{" "}
                   <span className="text-gray-500">
                     (e.g., Biology, Chemistry)
@@ -130,7 +130,7 @@ export function PaymentSetupStep1({ data, onNext, isLoading }: StepProps) {
             name="takenUCAT"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Taken or planning UCAT?{" "}
                   <span className="text-gray-500">(Yes/No, with date)</span>
                 </FormLabel>
@@ -159,7 +159,7 @@ export function PaymentSetupStep1({ data, onNext, isLoading }: StepProps) {
             name="whyDentistry"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-sora text-sm font-normal text-gray-700">
+                <FormLabel className="font-jakarta text-sm font-normal text-gray-700">
                   Why dentistry?
                 </FormLabel>
                 <FormControl>

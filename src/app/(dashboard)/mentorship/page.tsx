@@ -19,25 +19,32 @@ const CATEGORIES = MENTOR_CATEGORIES;
 const MOCK_MENTORS = REAL_MENTORS;
 
 // ─── Filter Panel ─────────────────────────────────────────────
-interface FilterSection { label: string; open: boolean }
+interface Filters {
+    rates: string[];
+    specs: string[];
+}
 
-function FilterPanel({ onFiltersChange }: { onFiltersChange: (f: any) => void }) {
+function FilterPanel({ onFiltersChange, filters }: { onFiltersChange: (f: Filters) => void; filters: Filters }) {
     const [rateOpen, setRateOpen] = useState(true);
     const [specOpen, setSpecOpen] = useState(true);
     const [servicesOpen, setServicesOpen] = useState(false);
     const [identityOpen, setIdentityOpen] = useState(false);
 
-    const [rates, setRates] = useState<string[]>([]);
-    const [specs, setSpecs] = useState<string[]>([]);
-
-    const toggleRate = (r: string) => setRates(p => p.includes(r) ? p.filter(x => x !== r) : [...p, r]);
-    const toggleSpec = (s: string) => setSpecs(p => p.includes(s) ? p.filter(x => x !== s) : [...p, s]);
+    const toggleRate = (r: string) => {
+        const newRates = filters.rates.includes(r) ? filters.rates.filter(x => x !== r) : [...filters.rates, r];
+        onFiltersChange({ ...filters, rates: newRates });
+    };
+    const toggleSpec = (s: string) => {
+        const newSpecs = filters.specs.includes(s) ? filters.specs.filter(x => x !== s) : [...filters.specs, s];
+        onFiltersChange({ ...filters, specs: newSpecs });
+    };
+    const clearAll = () => onFiltersChange({ rates: [], specs: [] });
 
     return (
         <div className="w-56 shrink-0 space-y-4 text-sm">
             <div className="flex items-center justify-between">
                 <h3 className="font-bold text-gray-900 text-sm">Filters</h3>
-                <button className="text-xs text-emerald-600 hover:underline font-medium">Clear</button>
+                <button onClick={clearAll} className="text-xs text-emerald-600 hover:underline font-medium">Clear</button>
             </div>
 
             {/* Hourly Rate */}
@@ -50,15 +57,11 @@ function FilterPanel({ onFiltersChange }: { onFiltersChange: (f: any) => void })
                 </button>
                 {rateOpen && (
                     <div className="space-y-2 pt-1">
-                        <div className="flex gap-2">
-                            <Input placeholder="Min" className="h-8 text-xs rounded-sm border-gray-300" />
-                            <Input placeholder="Max" className="h-8 text-xs rounded-sm border-gray-300" />
-                        </div>
                         {["$0 - $99/hr", "$100 - $199/hr", "$200 - $299/hr", "$300+/hr"].map(r => (
                             <label key={r} className="flex items-center gap-2 cursor-pointer hover:text-emerald-700 text-gray-600">
                                 <input
                                     type="checkbox"
-                                    checked={rates.includes(r)}
+                                    checked={filters.rates.includes(r)}
                                     onChange={() => toggleRate(r)}
                                     className="rounded-sm accent-emerald-600"
                                 />
@@ -81,7 +84,12 @@ function FilterPanel({ onFiltersChange }: { onFiltersChange: (f: any) => void })
                     <div className="space-y-2 pt-1">
                         {["Personal Statement", "Test Prep", "Interview Prep (MMI)", "School Selection", "Secondary Essays", "Research & Volunteering"].map(s => (
                             <label key={s} className="flex items-center gap-2 cursor-pointer hover:text-emerald-700 text-gray-600">
-                                <input type="checkbox" className="rounded-sm accent-emerald-600" />
+                                <input
+                                    type="checkbox"
+                                    checked={filters.specs.includes(s)}
+                                    onChange={() => toggleSpec(s)}
+                                    className="rounded-sm accent-emerald-600"
+                                />
                                 <span className="text-xs">{s}</span>
                             </label>
                         ))}
@@ -115,7 +123,7 @@ function FilterPanel({ onFiltersChange }: { onFiltersChange: (f: any) => void })
                     onClick={() => setIdentityOpen(o => !o)}
                     className="flex items-center justify-between w-full font-semibold text-gray-800"
                 >
-                    Background <span className="ml-1 text-gray-400 font-normal text-xs font-normal">(optional)</span>
+                    Background <span className="ml-1 text-gray-400 font-normal text-xs">(optional)</span>
                     {identityOpen ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
                 </button>
                 {identityOpen && (
@@ -228,15 +236,41 @@ export default function MentorshipPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState("default");
     const [showFilters, setShowFilters] = useState(true);
+    const [filters, setFilters] = useState<Filters>({ rates: [], specs: [] });
 
-    const filtered = MOCK_MENTORS.filter(m => {
-        const matchesCategory = activeCategory === "all" || m.tags.includes(activeCategory);
-        const matchesSearch = !searchQuery || 
-            m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            m.credentials.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            m.specialty.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    // Rate range parser
+    const matchesRate = (mentor: Mentor, rateFilters: string[]) => {
+        if (rateFilters.length === 0) return true;
+        const rate = mentor.hourlyRate;
+        return rateFilters.some(r => {
+            if (r === "$0 - $99/hr") return rate < 100;
+            if (r === "$100 - $199/hr") return rate >= 100 && rate < 200;
+            if (r === "$200 - $299/hr") return rate >= 200 && rate < 300;
+            if (r === "$300+/hr") return rate >= 300;
+            return false;
+        });
+    };
+
+    const matchesSpec = (mentor: Mentor, specFilters: string[]) => {
+        if (specFilters.length === 0) return true;
+        return specFilters.some(s => mentor.specialty.toLowerCase().includes(s.toLowerCase()) || mentor.tags.some(t => t.toLowerCase().includes(s.toLowerCase())));
+    };
+
+    const filtered = MOCK_MENTORS
+        .filter(m => {
+            const matchesCategory = activeCategory === "all" || m.tags.includes(activeCategory);
+            const matchesSearch = !searchQuery ||
+                m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                m.credentials.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                m.specialty.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesCategory && matchesSearch && matchesRate(m, filters.rates) && matchesSpec(m, filters.specs);
+        })
+        .sort((a, b) => {
+            if (sortBy === "rating") return b.rating - a.rating;
+            if (sortBy === "price-asc") return a.hourlyRate - b.hourlyRate;
+            if (sortBy === "price-desc") return b.hourlyRate - a.hourlyRate;
+            return 0;
+        });
 
     const categoryLabel = CATEGORIES.find(c => c.key === activeCategory)?.label ?? "All Mentors";
 
@@ -268,7 +302,7 @@ export default function MentorshipPage() {
                         <h1 className="text-2xl font-bold text-gray-900">{categoryLabel} — Mentors & Coaches</h1>
                         <p className="text-sm text-gray-500 mt-1">
                             Book 1-on-1 sessions with verified experts to make progress on your admissions goals.
-                            <button className="ml-2 text-emerald-600 hover:underline font-medium">Talk to our team</button>
+                            <Link href="/contact-us" className="ml-2 text-emerald-600 hover:underline font-medium">Talk to our team</Link>
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -310,7 +344,7 @@ export default function MentorshipPage() {
             <div className="flex gap-8 pt-2">
                 {/* Left sidebar filters */}
                 {showFilters && (
-                    <FilterPanel onFiltersChange={() => {}} />
+                    <FilterPanel onFiltersChange={setFilters} filters={filters} />
                 )}
 
                 {/* Mentor list */}
@@ -342,13 +376,17 @@ export default function MentorshipPage() {
                             </div>
                         </div>
                         <div className="flex gap-2 shrink-0">
-                            <Button variant="outline" className="h-9 text-sm rounded-xl gap-1.5 font-semibold border-gray-300">
-                                <Phone className="h-3.5 w-3.5" />
-                                Schedule a call
-                            </Button>
-                            <Button className="h-9 text-sm bg-gray-900 hover:bg-gray-800 text-white rounded-xl font-bold">
-                                Get recommendations →
-                            </Button>
+                            <Link href="/contact-us">
+                                <Button variant="outline" className="h-9 text-sm rounded-xl gap-1.5 font-semibold border-gray-300">
+                                    <Phone className="h-3.5 w-3.5" />
+                                    Schedule a call
+                                </Button>
+                            </Link>
+                            <Link href="/ai-hub/mentor-matching">
+                                <Button className="h-9 text-sm bg-gray-900 hover:bg-gray-800 text-white rounded-xl font-bold">
+                                    Get recommendations →
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

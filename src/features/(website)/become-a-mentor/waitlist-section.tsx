@@ -66,7 +66,7 @@ export function WaitlistSection() {
                 
                 {/* Floating Stat */}
                 <div className="absolute top-10 right-10 p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-2xl">
-                  <p className="font-sora text-white text-xs font-bold">1k+ Pending Applications</p>
+                  <p className="font-jakarta text-white text-xs font-bold">1k+ Pending Applications</p>
                 </div>
               </div>
             </div>
@@ -78,10 +78,10 @@ export function WaitlistSection() {
               <div className="px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-[0.3em] uppercase w-fit">
                 Impact Tomorrow
               </div>
-              <h2 className="font-sora text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-[1.1]">
+              <h2 className="font-jakarta text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-[1.1]">
                 Your Mentees are <span className="text-emerald-400 font-extrabold italic">waiting</span> for you.
               </h2>
-              <p className="font-sora text-slate-400 text-lg md:text-xl leading-relaxed">
+              <p className="font-jakarta text-slate-400 text-lg md:text-xl leading-relaxed">
                 Step into a world of elite mentorship. Share your wisdom with driven individuals and shape the future of medicine.
               </p>
             </motion.div>
@@ -91,7 +91,7 @@ export function WaitlistSection() {
                 <div className="absolute -inset-1 bg-emerald-500 rounded-2xl blur opacity-30 group-hover/cta:opacity-60 transition duration-500" />
                 <Button 
                   size="lg" 
-                  className="relative h-16 px-12 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.02]"
+                  className="relative h-16 px-12 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-jakarta font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.02]"
                 >
                   Join the Waitlist
                 </Button>

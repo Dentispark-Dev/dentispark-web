@@ -91,7 +91,7 @@ export function GenericModal() {
                   <h2
                     id="modal-title"
                     className={cn(
-                      "font-sora text-lg leading-none font-semibold",
+                      "font-jakarta text-lg leading-none font-semibold",
                       config.modalTitleClassName,
                     )}
                   >
@@ -109,7 +109,7 @@ export function GenericModal() {
                     {config.bodyContent}
                   </div>
                 ) : (
-                  <div className="font-sora text-center text-sm leading-7 text-gray-600">
+                  <div className="font-jakarta text-center text-sm leading-7 text-gray-600">
                     {config.bodyContent}
                   </div>
                 )}
@@ -120,7 +120,7 @@ export function GenericModal() {
             {!config.isCustomContent && (
               <div className="flex-shrink-0 px-4 pt-4 sm:px-6">
                 <div>
-                  <div className="font-sora flex flex-row gap-3">
+                  <div className="font-jakarta flex flex-row gap-3">
                     <Button
                       variant="outline"
                       onClick={handleSecondaryAction}

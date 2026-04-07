@@ -224,7 +224,7 @@ export function SignupFlow() {
               className="space-y-10"
             >
               <div className="space-y-3 text-center md:text-left">
-                <h2 className="text-3xl md:text-4xl font-sora font-extrabold text-slate-900 tracking-tight leading-tight">
+                <h2 className="text-3xl md:text-4xl font-jakarta font-extrabold text-slate-900 tracking-tight leading-tight">
                   <span className="text-emerald-500 mr-2">{currentStep + 1} →</span>
                   {STEPS[currentStep].title}
                 </h2>
@@ -306,7 +306,7 @@ export function SignupFlow() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full h-14 rounded-2xl border-slate-100 bg-white hover:bg-slate-50 flex items-center justify-center gap-3 font-sora font-bold text-slate-700 transition-all shadow-sm"
+                    className="w-full h-14 rounded-2xl border-slate-100 bg-white hover:bg-slate-50 flex items-center justify-center gap-3 font-jakarta font-bold text-slate-700 transition-all shadow-sm"
                     onClick={signInWithGoogle}
                     disabled={isPending || oauth2SignupMutation.isPending}
                   >
@@ -374,7 +374,7 @@ export function SignupFlow() {
                     (STEPS[currentStep].id === "referral" && !formData.referral) ||
                     isPending || signupMutation.isPending
                   }
-                  className="w-full md:w-auto min-w-[200px] h-16 rounded-[1.5rem] bg-emerald-500 hover:bg-emerald-600 text-white font-sora font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95 group"
+                  className="w-full md:w-auto min-w-[200px] h-16 rounded-[1.5rem] bg-emerald-500 hover:bg-emerald-600 text-white font-jakarta font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95 group"
                 >
                   {isPending || signupMutation.isPending ? (
                     <Loader2 className="animate-spin" />
@@ -422,7 +422,7 @@ export function SignupFlow() {
                 <div className="inline-flex items-center gap-1.5 text-emerald-400">
                   {[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} fill="currentColor" />)}
                 </div>
-                <blockquote className="text-3xl font-sora font-extrabold text-white leading-tight tracking-tight">
+                <blockquote className="text-3xl font-jakarta font-extrabold text-white leading-tight tracking-tight">
                   "{SOCIAL_PROOF[Math.min(currentStep, SOCIAL_PROOF.length - 1)].quote}"
                 </blockquote>
                 <div className="flex items-center gap-4 pt-4">
@@ -431,7 +431,7 @@ export function SignupFlow() {
                   </div>
                   <div className="flex flex-col">
                     <span className="font-bold text-white">{SOCIAL_PROOF[Math.min(currentStep, SOCIAL_PROOF.length - 1)].author}</span>
-                    <span className="text-xs text-slate-400 uppercase tracking-widest font-bold font-sora">Verified Student</span>
+                    <span className="text-xs text-slate-400 uppercase tracking-widest font-bold font-jakarta">Verified Student</span>
                   </div>
                 </div>
               </div>
@@ -488,7 +488,7 @@ function OptionCard({ label, icon, selected, onClick }: any) {
             {icon}
           </div>
         )}
-        <span className={cn("font-sora font-extrabold text-lg", selected ? "text-white" : "text-slate-700")}>
+        <span className={cn("font-jakarta font-extrabold text-lg", selected ? "text-white" : "text-slate-700")}>
           {label}
         </span>
       </div>
@@ -507,7 +507,7 @@ function ChoiceButton({ label, selected, onClick }: any) {
     <button
       onClick={onClick}
       className={cn(
-        "px-6 py-3 rounded-2xl font-sora font-bold text-sm transition-all border",
+        "px-6 py-3 rounded-2xl font-jakarta font-bold text-sm transition-all border",
         selected 
           ? "bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/20" 
           : "bg-white border-slate-100 text-slate-500 hover:border-emerald-200 hover:bg-emerald-50/30"

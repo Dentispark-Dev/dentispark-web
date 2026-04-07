@@ -23,7 +23,7 @@ export function CommunityHub() {
             <Users className="w-3 h-3" />
             Global Network
           </div>
-          <h1 className="text-4xl lg:text-5xl font-sora font-bold tracking-tight text-gray-900 text-left">
+          <h1 className="text-4xl lg:text-5xl font-jakarta font-bold tracking-tight text-gray-900 text-left">
             Community Hub
           </h1>
           <p className="text-lg text-gray-500 max-w-2xl font-medium text-left">
@@ -40,7 +40,7 @@ export function CommunityHub() {
               </div>
               <div>
                 <div className="text-xl font-bold text-gray-900">{stat.value}</div>
-                <div className="text-[10px] uppercase font-bold text-gray-400 tracking-wider font-sora">{stat.label}</div>
+                <div className="text-[10px] uppercase font-bold text-gray-400 tracking-wider font-jakarta">{stat.label}</div>
               </div>
             </div>
           ))}

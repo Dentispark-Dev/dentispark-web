@@ -34,10 +34,10 @@ export default function WelcomeSection({
     >
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-sora text-black-800 mb-1 text-sm font-medium md:text-base">
+          <h1 className="font-jakarta text-black-800 mb-1 text-sm font-medium md:text-base">
             {getGreeting()}, {displayUserName}
           </h1>
-          <p className="text-black-300 font-sora text-xs md:text-sm">
+          <p className="text-black-300 font-jakarta text-xs md:text-sm">
             {t("welcome_subtitle")}
           </p>
         </div>

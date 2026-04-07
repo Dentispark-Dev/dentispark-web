@@ -60,14 +60,14 @@ export function RatingReviewModal({
               </button>
             ))}
           </div>
-          <p className="font-sora text-black-800 text-base font-medium">
+          <p className="font-jakarta text-black-800 text-base font-medium">
             Rate this student
           </p>
         </div>
 
         {/* Review Textarea */}
         <div>
-          <label className="font-sora text-black-800 mb-3 block text-sm font-semibold">
+          <label className="font-jakarta text-black-800 mb-3 block text-sm font-semibold">
             Session review
           </label>
           <textarea
@@ -75,9 +75,9 @@ export function RatingReviewModal({
             onChange={handleReviewChange}
             placeholder="Share your experience here"
             rows={6}
-            className="font-sora focus:border-primary focus:ring-primary w-full resize-none rounded-lg border border-gray-300 bg-white p-4 text-sm text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:outline-none"
+            className="font-jakarta focus:border-primary focus:ring-primary w-full resize-none rounded-lg border border-gray-300 bg-white p-4 text-sm text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:outline-none"
           />
-          <p className="font-sora mt-2 text-xs text-gray-500">
+          <p className="font-jakarta mt-2 text-xs text-gray-500">
             Word count: {review.length}/{MAX_CHARACTERS}
           </p>
         </div>
@@ -88,7 +88,7 @@ export function RatingReviewModal({
             type="button"
             onClick={onCancel}
             variant="outline"
-            className="font-sora text-black-800 hover:text-black-800 h-12 flex-1 rounded-lg border-gray-300 hover:bg-white"
+            className="font-jakarta text-black-800 hover:text-black-800 h-12 flex-1 rounded-lg border-gray-300 hover:bg-white"
           >
             Cancel
           </Button>
@@ -96,7 +96,7 @@ export function RatingReviewModal({
             type="button"
             onClick={handleSubmit}
             disabled={rating === 0}
-            className="bg-primary hover:bg-primary/90 font-sora h-12 flex-1 rounded-lg text-white disabled:opacity-50"
+            className="bg-primary hover:bg-primary/90 font-jakarta h-12 flex-1 rounded-lg text-white disabled:opacity-50"
           >
             Submit
           </Button>

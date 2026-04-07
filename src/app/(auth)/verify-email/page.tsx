@@ -139,7 +139,7 @@ export default function VerifyEmailPage({
           <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
             We sent a code to your email
           </h1>
-          <p className="font-sora mt-2 text-sm text-gray-400">
+          <p className="font-jakarta mt-2 text-sm text-gray-400">
             To Login, enter the 6 digit verification code that was sent to your
             email: <span className="font-medium text-gray-900">{email}</span>
           </p>
@@ -200,7 +200,7 @@ export default function VerifyEmailPage({
 
               {/* Resend Code */}
               <div className="text-center">
-                <p className="font-sora text-xs text-gray-500">
+                <p className="font-jakarta text-xs text-gray-500">
                   Didn&apos;t get the code?{" "}
                   {timeLeft > 0 ? (
                     <span className="text-primary">
@@ -237,7 +237,7 @@ export default function VerifyEmailPage({
         <motion.div className="text-center" variants={itemVariants}>
           <Link
             href="/login"
-            className="font-sora flex items-center justify-center text-xs text-gray-600 hover:text-gray-800"
+            className="font-jakarta flex items-center justify-center text-xs text-gray-600 hover:text-gray-800"
           >
             <ArrowLeft className="mr-1 h-3 w-3" />
             Back to Login
@@ -246,7 +246,7 @@ export default function VerifyEmailPage({
 
         {/* Footer Links */}
         <motion.div
-          className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+          className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
           variants={itemVariants}
         >
           <Link href="/terms" className="cursor-pointer hover:text-gray-700">

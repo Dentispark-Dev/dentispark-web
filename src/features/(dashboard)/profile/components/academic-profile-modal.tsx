@@ -100,7 +100,7 @@ export function AcademicProfileModal({
           <div className="space-y-6">
             <div className="flex items-center gap-2 text-slate-900 border-b border-slate-100 pb-2">
               <GraduationCap className="h-5 w-5 text-primary" />
-              <h3 className="font-sora font-bold">Core Academic Info</h3>
+              <h3 className="font-jakarta font-bold">Core Academic Info</h3>
             </div>
             
             <div className="grid gap-4 sm:grid-cols-2">
@@ -156,7 +156,7 @@ export function AcademicProfileModal({
           <div className="space-y-6">
             <div className="flex items-center gap-2 text-slate-900 border-b border-slate-100 pb-2">
               <BarChart3 className="h-5 w-5 text-emerald-500" />
-              <h3 className="font-sora font-bold">Admissions Tests</h3>
+              <h3 className="font-jakarta font-bold">Admissions Tests</h3>
             </div>
             
             <div className="space-y-6">
@@ -228,7 +228,7 @@ export function AcademicProfileModal({
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <div className="flex items-center gap-2 text-slate-900">
                 <Briefcase className="h-5 w-5 text-blue-500" />
-                <h3 className="font-sora font-bold">Experience Logs</h3>
+                <h3 className="font-jakarta font-bold">Experience Logs</h3>
               </div>
               <Button 
                 type="button" 
@@ -313,7 +313,7 @@ export function AcademicProfileModal({
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <div className="flex items-center gap-2 text-slate-900">
                 <Building2 className="h-5 w-5 text-slate-900" />
-                <h3 className="font-sora font-bold">University Choices</h3>
+                <h3 className="font-jakarta font-bold">University Choices</h3>
               </div>
               <Button 
                 type="button" 
@@ -390,7 +390,7 @@ export function AcademicProfileModal({
             </Button>
             <Button
               type="submit"
-              className="bg-slate-900 hover:bg-slate-800 text-white h-14 flex-1 rounded-2xl font-sora font-extrabold text-lg shadow-xl"
+              className="bg-slate-900 hover:bg-slate-800 text-white h-14 flex-1 rounded-2xl font-jakarta font-extrabold text-lg shadow-xl"
               disabled={updateAcademicProfileMutation.isPending}
             >
               {updateAcademicProfileMutation.isPending ? (

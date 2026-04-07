@@ -21,9 +21,9 @@ export function ScoreGauge({ score }: ScoreGaugeProps) {
             cx="96" cy="96" r="88" stroke="currentColor" strokeWidth="12" fill="transparent" strokeDasharray="552" className="text-emerald-500" 
           />
         </svg>
-        <span className="absolute text-5xl font-sora font-bold text-gray-900">{score}</span>
+        <span className="absolute text-5xl font-jakarta font-bold text-gray-900">{score}</span>
       </div>
-      <div className="flex items-center gap-2 text-emerald-600 font-sora font-semibold">
+      <div className="flex items-center gap-2 text-emerald-600 font-jakarta font-semibold">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
         Strong Potential
       </div>

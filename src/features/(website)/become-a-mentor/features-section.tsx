@@ -99,7 +99,7 @@ export function FeaturesSection() {
             <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
               The Process
             </motion.div>
-            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+            <motion.h2 variants={itemVariants} className="font-jakarta text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
               How it <span className="text-emerald-600">Works.</span>
             </motion.h2>
           </div>
@@ -113,7 +113,7 @@ export function FeaturesSection() {
                   variants={itemVariants}
                   className="group relative flex flex-col items-center text-center p-10 rounded-[3rem] bg-white border border-slate-100 shadow-[0_20px_40px_rgba(0,0,0,0.02)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(16,185,129,0.1)] hover:border-emerald-100"
                 >
-                  <div className="absolute top-6 right-8 text-4xl font-extrabold text-slate-50 group-hover:text-emerald-50 transition-colors duration-500 font-sora pointer-events-none">
+                  <div className="absolute top-6 right-8 text-4xl font-extrabold text-slate-50 group-hover:text-emerald-50 transition-colors duration-500 font-jakarta pointer-events-none">
                     0{index + 1}
                   </div>
                   
@@ -127,10 +127,10 @@ export function FeaturesSection() {
 
                   {/* Content */}
                   <div className="space-y-4">
-                    <h3 className="font-sora text-xl font-extrabold text-slate-900 transition-colors group-hover:text-emerald-600">
+                    <h3 className="font-jakarta text-xl font-extrabold text-slate-900 transition-colors group-hover:text-emerald-600">
                       {feature.title}
                     </h3>
-                    <p className="font-sora text-slate-500 text-sm leading-relaxed">
+                    <p className="font-jakarta text-slate-500 text-sm leading-relaxed">
                       {feature.description}
                     </p>
                   </div>

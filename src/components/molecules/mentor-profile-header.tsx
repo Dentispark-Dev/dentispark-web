@@ -74,11 +74,11 @@ export function MentorProfileHeader({ className }: MentorProfileHeaderProps) {
           </div>
           {/* Profession */}
           <div className="flex items-center justify-center gap-6 md:justify-start">
-            <p className="text-text-color font-sora text-sm font-light">
+            <p className="text-text-color font-jakarta text-sm font-light">
               {mentor.profession}
             </p>
 
-            <div className="font-sora flex flex-wrap items-center gap-2">
+            <div className="font-jakarta flex flex-wrap items-center gap-2">
               <div className="flex items-center gap-1">{renderStars(4.5)}</div>
               <span className="text-black-600 mr-3 text-xs">
                 {mentor.rating}
@@ -96,14 +96,14 @@ export function MentorProfileHeader({ className }: MentorProfileHeaderProps) {
       </div>
 
       <div className="mt-4 flex flex-col items-center gap-4 md:flex-row">
-        <span className="bg-whites-500 font-sora flex items-center justify-center gap-3 rounded-full px-5 py-3">
+        <span className="bg-whites-500 font-jakarta flex items-center justify-center gap-3 rounded-full px-5 py-3">
           <NewcastleUni className="size-4" />
           <p className="text-[10px]">
             Studied in American Public University System
           </p>
         </span>
 
-        <span className="bg-whites-500 font-sora flex items-center justify-center gap-3 rounded-full px-5 py-3 text-[10px]">
+        <span className="bg-whites-500 font-jakarta flex items-center justify-center gap-3 rounded-full px-5 py-3 text-[10px]">
           <NewcastleUni className="size-4" />
           <p>Worked at Stanford University</p>
         </span>

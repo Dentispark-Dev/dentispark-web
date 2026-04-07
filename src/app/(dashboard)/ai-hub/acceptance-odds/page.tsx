@@ -66,7 +66,7 @@ export default function AcceptanceOddsPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-sora font-bold text-gray-900">Admission Alpha Matchmaker</h1>
+            <h1 className="text-2xl font-jakarta font-bold text-gray-900">Admission Alpha Matchmaker</h1>
             <p className="text-gray-500 text-sm font-medium">School-specific acceptance probabilities & gap analysis.</p>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function AcceptanceOddsPage() {
             </div>
 
             <div className="space-y-2 relative z-10">
-                <h2 className="text-3xl font-sora font-bold text-gray-900 tracking-tight">Build Your Profile</h2>
+                <h2 className="text-3xl font-jakarta font-bold text-gray-900 tracking-tight">Build Your Profile</h2>
                 <p className="text-gray-500 font-medium">Our AI will match your stats against individual UK school benchmarks.</p>
             </div>
 
@@ -132,7 +132,7 @@ export default function AcceptanceOddsPage() {
             </div>
             <Button 
                 onClick={handleCalculate}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-16 rounded-xl font-sora font-semibold transition-all text-xl gap-3 shadow-sm group"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-16 rounded-xl font-jakarta font-semibold transition-all text-xl gap-3 shadow-sm group"
             >
                 Start Matching <TrendingUp className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </Button>
@@ -161,7 +161,7 @@ export default function AcceptanceOddsPage() {
                 />
             </div>
             <div className="text-center space-y-3">
-                <h3 className="text-3xl font-sora font-bold text-gray-900 tracking-tight">Running Simulation...</h3>
+                <h3 className="text-3xl font-jakarta font-bold text-gray-900 tracking-tight">Running Simulation...</h3>
                 <p className="text-gray-500 font-medium max-w-sm mx-auto">Analyzing profile against historical admission thresholds for {activeFieldLabel} schools.</p>
             </div>
           </motion.div>
@@ -176,11 +176,11 @@ export default function AcceptanceOddsPage() {
             <div className="p-10 rounded-3xl bg-emerald-600 text-white space-y-6 shadow-sm relative overflow-hidden">
                 <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-white/10 blur-[80px] rotate-45 pointer-events-none" />
                 <div className="relative z-10 flex flex-col md:flex-row items-center gap-10 text-center md:text-left">
-                    <div className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl font-sora font-bold shrink-0 shadow-sm border border-white/20">
+                    <div className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl font-jakarta font-bold shrink-0 shadow-sm border border-white/20">
                         82%
                     </div>
                     <div className="space-y-3">
-                        <h3 className="text-2xl font-sora font-bold tracking-tight text-white leading-tight">Strategic Match Directives</h3>
+                        <h3 className="text-2xl font-jakarta font-bold tracking-tight text-white leading-tight">Strategic Match Directives</h3>
                         <p className="text-emerald-50 leading-relaxed font-medium">
                             {results?.overallStrategy}
                         </p>
@@ -191,7 +191,7 @@ export default function AcceptanceOddsPage() {
             {/* University Match Grid */}
             <div className="space-y-8">
                 <div className="flex items-center justify-between px-2">
-                    <h3 className="text-2xl font-sora font-bold text-gray-900 tracking-tight">Individual School Predictions</h3>
+                    <h3 className="text-2xl font-jakarta font-bold text-gray-900 tracking-tight">Individual School Predictions</h3>
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Ranked by Probability</span>
                 </div>
                 
@@ -209,8 +209,8 @@ export default function AcceptanceOddsPage() {
 
                             <div className="space-y-6 relative z-10">
                                 <div>
-                                    <h4 className="text-xl font-sora font-bold text-gray-900 mb-1">{univ.universityName}</h4>
-                                    <div className="text-4xl font-sora font-bold text-emerald-600">{univ.probability}% <span className="text-[10px] text-gray-400 tracking-widest font-bold uppercase ml-1">Probability</span></div>
+                                    <h4 className="text-xl font-jakarta font-bold text-gray-900 mb-1">{univ.universityName}</h4>
+                                    <div className="text-4xl font-jakarta font-bold text-emerald-600">{univ.probability}% <span className="text-[10px] text-gray-400 tracking-widest font-bold uppercase ml-1">Probability</span></div>
                                 </div>
 
                                 <div className="space-y-5">
@@ -252,12 +252,12 @@ export default function AcceptanceOddsPage() {
                 <Button 
                     variant="outline" 
                     onClick={() => setResults(null)}
-                    className="flex-1 h-14 rounded-xl border-gray-200 font-sora font-semibold text-gray-600 hover:bg-gray-50"
+                    className="flex-1 h-14 rounded-xl border-gray-200 font-jakarta font-semibold text-gray-600 hover:bg-gray-50"
                 >
                     Re-calculate Thresholds
                 </Button>
                 <Button 
-                    className="flex-1 bg-gray-900 hover:bg-black text-white h-14 rounded-xl font-sora font-semibold shadow-sm gap-2"
+                    className="flex-1 bg-gray-900 hover:bg-black text-white h-14 rounded-xl font-jakarta font-semibold shadow-sm gap-2"
                 >
                     Save Strategic Roadmap <Sparkles className="w-5 h-5 text-emerald-400" />
                 </Button>

@@ -67,7 +67,7 @@ export default function LoginPage() {
           className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full space-y-6 mt-4"
         >
           <div className="space-y-2">
-            <h1 className="text-3xl font-sora font-bold text-gray-900 tracking-tight">
+            <h1 className="text-3xl font-jakarta font-bold text-gray-900 tracking-tight">
               Welcome Back
             </h1>
             <p className="text-gray-500 font-medium text-base">
@@ -160,7 +160,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-sora font-semibold text-base transition-all active:scale-95 shadow-sm group mt-2"
+                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-jakarta font-semibold text-base transition-all active:scale-95 shadow-sm group mt-2"
                 disabled={isPending || loginMutation.isPending}
               >
                 {isPending || loginMutation.isPending ? (
@@ -205,7 +205,7 @@ export default function LoginPage() {
             <div className="inline-block px-4 py-1.5 bg-emerald-100/50 border border-emerald-200/50 rounded-full text-emerald-800 text-sm font-semibold mb-2">
               Join DentiSpark
             </div>
-            <h2 className="text-5xl font-sora font-bold text-emerald-950 leading-[1.15] tracking-tight">
+            <h2 className="text-5xl font-jakarta font-bold text-emerald-950 leading-[1.15] tracking-tight">
               Empowering the next generation
             </h2>
             <p className="text-xl text-emerald-800/70 font-medium leading-relaxed max-w-lg">

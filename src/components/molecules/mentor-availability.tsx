@@ -27,10 +27,10 @@ export function MentorAvailability({
         {/* Availability Status */}
         <div className="flex max-w-sm items-center justify-between rounded-2xl border border-gray-200 bg-white p-3">
           <div>
-            <p className="font-sora text-sm font-semibold text-gray-900">
+            <p className="font-jakarta text-sm font-semibold text-gray-900">
               {mentor.availability.nextAvailable}
             </p>
-            <p className="font-sora mt-1 text-xs text-gray-600">
+            <p className="font-jakarta mt-1 text-xs text-gray-600">
               Usually responds within {mentor.availability.responseTime}
             </p>
           </div>
@@ -43,7 +43,7 @@ export function MentorAvailability({
         </div>
 
         {/* Coordination Message */}
-        <div className="font-sora my-6">
+        <div className="font-jakarta my-6">
           <p className="text-black-500 text-xs leading-relaxed">
             If none of the times on my calendar work for you, you can send me a
             message to coordinate a more convenient time.
@@ -53,7 +53,7 @@ export function MentorAvailability({
         {/* Action Buttons */}
         <div className="mb-6 space-y-3">
           <Button
-            className="bg-primary hover:bg-primary-700 font-sora w-full py-3 text-sm font-normal text-white"
+            className="bg-primary hover:bg-primary-700 font-jakarta w-full py-3 text-sm font-normal text-white"
             size="lg"
           >
             Schedule a free call
@@ -61,7 +61,7 @@ export function MentorAvailability({
 
           <Button
             variant="outline"
-            className="border-primary-300 font-sora text-primary-300 hover:bg-primary-100 w-full py-3 text-sm font-normal"
+            className="border-primary-300 font-jakarta text-primary-300 hover:bg-primary-100 w-full py-3 text-sm font-normal"
             size="lg"
           >
             Book a session
@@ -75,11 +75,11 @@ export function MentorAvailability({
               <Chat className="size-16 text-white" />
             </div>
             <div className="flex-1 p-3">
-              <p className="text-black-600 font-sora mb-1 text-xs">
-                <span className="font-sora font-semibold">Got questions?</span>{" "}
+              <p className="text-black-600 font-jakarta mb-1 text-xs">
+                <span className="font-jakarta font-semibold">Got questions?</span>{" "}
                 Start chatting with this coach before you get started.
               </p>
-              <button className="text-primary-300 hover:text-primary-400 font-sora text-sm font-light underline">
+              <button className="text-primary-300 hover:text-primary-400 font-jakarta text-sm font-light underline">
                 Send {mentor.name.split(" ")[0]} a message
               </button>
             </div>

@@ -150,7 +150,7 @@ export function DocumentUploadModal({
           </svg>
 
           <div className="space-y-2">
-            <p className="font-sora text-sm text-gray-600">
+            <p className="font-jakarta text-sm text-gray-600">
               <button
                 onClick={handleClickToUpload}
                 className="text-primary hover:underline"
@@ -159,7 +159,7 @@ export function DocumentUploadModal({
               </button>{" "}
               to upload your file or drag.
             </p>
-            <p className="font-sora text-xs text-gray-500">
+            <p className="font-jakarta text-xs text-gray-500">
               Supports: PDF, DOCx, PNG (5mb each)
             </p>
           </div>
@@ -272,7 +272,7 @@ export function DocumentUploadModal({
                 </svg>
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-sora text-xs text-gray-900">
+                    <span className="font-jakarta text-xs text-gray-900">
                       {selectedFile.name}
                     </span>
                     <button
@@ -339,10 +339,10 @@ export function DocumentUploadModal({
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="font-sora text-xs text-gray-500">
+                    <span className="font-jakarta text-xs text-gray-500">
                       {formatFileSize(selectedFile.size)}
                     </span>
-                    <span className="font-sora text-xs text-gray-500">
+                    <span className="font-jakarta text-xs text-gray-500">
                       100%
                     </span>
                   </div>
@@ -424,7 +424,7 @@ export function DocumentUploadModal({
 
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-sora text-xs text-gray-900">
+                    <span className="font-jakarta text-xs text-gray-900">
                       {selectedFile.name}
                     </span>
                     <button
@@ -486,10 +486,10 @@ export function DocumentUploadModal({
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="font-sora text-xs text-gray-500">
+                    <span className="font-jakarta text-xs text-gray-500">
                       {formatFileSize(selectedFile.size)}
                     </span>
-                    <span className="font-sora text-xs text-gray-500">
+                    <span className="font-jakarta text-xs text-gray-500">
                       100%
                     </span>
                   </div>

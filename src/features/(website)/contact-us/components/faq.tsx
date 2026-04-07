@@ -20,7 +20,7 @@ const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
         className="flex w-full cursor-pointer items-center justify-between py-8 text-left transition-all duration-300 group"
       >
         <h3 className={cn(
-          "font-sora pr-8 text-lg font-extrabold transition-all duration-300",
+          "font-jakarta pr-8 text-lg font-extrabold transition-all duration-300",
           isOpen ? "text-emerald-600" : "text-slate-900 group-hover:text-emerald-500"
         )}>
           {question}
@@ -41,7 +41,7 @@ const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="pb-8 pr-12">
-              <p className="font-sora text-slate-500 leading-relaxed text-base">
+              <p className="font-jakarta text-slate-500 leading-relaxed text-base">
                 {answer}
               </p>
             </div>
@@ -117,10 +117,10 @@ export function FAQ() {
           >
             FAQ
           </motion.div>
-          <h2 className="font-sora text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="font-jakarta text-4xl font-extrabold text-slate-900 tracking-tight">
             Common <span className="text-emerald-600 italic">Questions.</span>
           </h2>
-          <p className="font-sora text-slate-500 max-w-xl leading-relaxed">
+          <p className="font-jakarta text-slate-500 max-w-xl leading-relaxed">
             Find answers to common inquiries or <a href="mailto:contact@dentispark.co.uk" className="text-emerald-600 font-bold hover:underline">get in touch</a> for personalized assistance.
           </p>
         </div>

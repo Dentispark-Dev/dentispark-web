@@ -165,7 +165,7 @@ export default function Header() {
                       : "text-gray-500 hover:text-emerald-500",
                   )}
                 >
-                  <span className="relative z-10 font-sora">{item.label}</span>
+                  <span className="relative z-10 font-jakarta">{item.label}</span>
                   {pathname === item.href && (
                     <motion.div
                       className="absolute inset-0 -z-10 bg-emerald-50/50 blur-[2px] rounded-full"
@@ -192,10 +192,10 @@ export default function Header() {
         >
           {isAuthenticated && user ? (
             <Link href={dashboardHref} className="flex items-center gap-3 group">
-              <div className="bg-primary font-sora flex size-9 shrink-0 items-center justify-center rounded-full font-bold text-white uppercase ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
+              <div className="bg-primary font-jakarta flex size-9 shrink-0 items-center justify-center rounded-full font-bold text-white uppercase ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
                 {user.fullName?.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
               </div>
-              <div className="font-sora">
+              <div className="font-jakarta">
                 <p className="text-sm font-semibold text-gray-900 leading-tight">{user.fullName}</p>
                 <p className="text-xs text-primary font-medium">Go to Dashboard →</p>
               </div>
@@ -204,12 +204,12 @@ export default function Header() {
             <>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
                 <Link href="/login">
-                  <Button className="font-sora h-10" variant="outline">Log In</Button>
+                  <Button className="font-jakarta h-10" variant="outline">Log In</Button>
                 </Link>
               </motion.div>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
                 <Link href="/sign-up">
-                  <Button className="font-sora h-10">Sign Up</Button>
+                  <Button className="font-jakarta h-10">Sign Up</Button>
                 </Link>
               </motion.div>
             </>
@@ -225,13 +225,13 @@ export default function Header() {
         >
           {isAuthenticated && user ? (
             <Link href={dashboardHref}>
-              <div className="bg-primary font-sora flex size-9 items-center justify-center rounded-full font-bold text-white uppercase">
+              <div className="bg-primary font-jakarta flex size-9 items-center justify-center rounded-full font-bold text-white uppercase">
                 {user.fullName?.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
               </div>
             </Link>
           ) : (
             <Link href="/sign-up">
-              <Button className="font-sora h-10 px-5 py-2 text-sm">Sign Up</Button>
+              <Button className="font-jakarta h-10 px-5 py-2 text-sm">Sign Up</Button>
             </Link>
           )}
         </motion.div>
@@ -311,7 +311,7 @@ export default function Header() {
                 transition={{ duration: 0.2 }}
               >
                 <Link href="/login">
-                  <Button className="font-sora" variant="outline">
+                  <Button className="font-jakarta" variant="outline">
                     Log In
                   </Button>
                 </Link>

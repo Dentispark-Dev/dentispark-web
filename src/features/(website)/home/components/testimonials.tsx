@@ -56,7 +56,7 @@ export function Testimonials() {
             <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
               Success Stories
             </motion.div>
-            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+            <motion.h2 variants={itemVariants} className="font-jakarta text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
               Real Stories. <span className="text-emerald-600">Real Impact.</span>
             </motion.h2>
           </div>
@@ -83,7 +83,7 @@ export function Testimonials() {
                 >
                   <LondonLogo className="h-16 w-16 text-white/90" />
                 </motion.div>
-                <blockquote className="font-sora text-2xl leading-tight font-extrabold text-white md:text-4xl">
+                <blockquote className="font-jakarta text-2xl leading-tight font-extrabold text-white md:text-4xl">
                   &ldquo;Dentispark&apos;s free guides helped me ace my UCAT and secure my place at a world-class university.&rdquo;
                 </blockquote>
                 <div className="flex items-center gap-5">
@@ -91,8 +91,8 @@ export function Testimonials() {
                     <Image src={storyImg} alt="Aisha" className="object-cover h-full w-full" />
                   </div>
                   <div className="flex flex-col">
-                    <cite className="not-italic text-2xl font-extrabold text-emerald-400 font-sora">Aisha Mubarak</cite>
-                    <span className="text-lg text-slate-400 font-medium font-sora">King&apos;s College London</span>
+                    <cite className="not-italic text-2xl font-extrabold text-emerald-400 font-jakarta">Aisha Mubarak</cite>
+                    <span className="text-lg text-slate-400 font-medium font-jakarta">King&apos;s College London</span>
                   </div>
                 </div>
               </div>
@@ -130,7 +130,7 @@ export function Testimonials() {
                   <div className="relative size-12">
                     <Image src={quoteBg} alt="Quotes" fill className="opacity-10 dark:invert transition-opacity group-hover:opacity-20" />
                   </div>
-                  <p className="font-sora text-slate-600 text-lg leading-relaxed font-medium italic">
+                  <p className="font-jakarta text-slate-600 text-lg leading-relaxed font-medium italic">
                     &ldquo;{t.quote}&rdquo;
                   </p>
                 </div>
@@ -139,8 +139,8 @@ export function Testimonials() {
                     <Image src={t.img} alt={t.name} fill className="object-cover" />
                   </div>
                   <div>
-                    <h4 className="font-sora font-extrabold text-slate-900 leading-none mb-1">{t.name}</h4>
-                    <p className="font-sora text-xs text-slate-400 font-bold uppercase tracking-wider">{t.role}</p>
+                    <h4 className="font-jakarta font-extrabold text-slate-900 leading-none mb-1">{t.name}</h4>
+                    <p className="font-jakarta text-xs text-slate-400 font-bold uppercase tracking-wider">{t.role}</p>
                   </div>
                 </div>
               </motion.div>
@@ -161,7 +161,7 @@ export function Testimonials() {
             </div>
             
             <div className="relative z-10 flex-1 space-y-10 text-center md:text-left">
-              <h3 className="font-sora text-4xl font-extrabold text-white md:text-6xl md:leading-tight tracking-tight">
+              <h3 className="font-jakarta text-4xl font-extrabold text-white md:text-6xl md:leading-tight tracking-tight">
                 How Aisha Got into <span className="text-emerald-400">King&apos;s College.</span>
               </h3>
               <Button size="lg" className="h-16 px-12 rounded-full bg-emerald-500 hover:bg-emerald-600 text-lg font-extrabold transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-105 active:scale-95">

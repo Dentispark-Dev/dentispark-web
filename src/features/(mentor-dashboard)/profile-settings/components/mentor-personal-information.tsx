@@ -77,7 +77,7 @@ I mentor students to bring clarity and purpose to the graduate application proce
       <div className="mb-10 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <ShieldCheck className="h-6 w-6 text-emerald-500" />
-          <h2 className="font-sora text-xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="font-jakarta text-xl font-extrabold text-slate-900 tracking-tight">
             Professional Identity
           </h2>
         </div>
@@ -95,11 +95,11 @@ I mentor students to bring clarity and purpose to the graduate application proce
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 bg-slate-50/50 rounded-3xl border border-slate-50">
           <div className="space-y-1">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name</p>
-            <p className="font-sora font-bold text-slate-900">{personalInfo.firstName} {personalInfo.lastName}</p>
+            <p className="font-jakarta font-bold text-slate-900">{personalInfo.firstName} {personalInfo.lastName}</p>
           </div>
           <div className="space-y-1">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">GDC Number</p>
-            <p className="font-sora font-bold text-slate-900 flex items-center gap-1.5">
+            <p className="font-jakarta font-bold text-slate-900 flex items-center gap-1.5">
               {personalInfo.gdcNumber || "Not Provided"}
               {personalInfo.gdcNumber && <BadgeCheck className="h-4 w-4 text-emerald-500" />}
             </p>
@@ -131,7 +131,7 @@ I mentor students to bring clarity and purpose to the graduate application proce
           </div>
           <div className="max-w-4xl text-base leading-relaxed text-slate-600 font-medium tracking-tight">
             {personalInfo.aboutMe.split("\n\n").map((paragraph, index) => (
-              <p key={index} className="font-sora mb-4 last:mb-0">
+              <p key={index} className="font-jakarta mb-4 last:mb-0">
                 {paragraph}
               </p>
             ))}

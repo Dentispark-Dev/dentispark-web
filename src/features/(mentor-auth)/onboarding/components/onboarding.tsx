@@ -308,10 +308,10 @@ export function Onboarding({
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-sora text-sm font-medium text-gray-900">
+                  <h3 className="font-jakarta text-sm font-medium text-gray-900">
                     {video.title}
                   </h3>
-                  <p className="font-sora text-xs text-gray-500">
+                  <p className="font-jakarta text-xs text-gray-500">
                     {video.duration}
                   </p>
                 </div>
@@ -327,7 +327,7 @@ export function Onboarding({
           </h2>
 
           {/* Question Card */}
-          <div className="font-sora space-y-6 rounded-2xl border-gray-200 bg-white py-8">
+          <div className="font-jakarta space-y-6 rounded-2xl border-gray-200 bg-white py-8">
             <div>
               <h3 className="mb-4 text-lg font-semibold text-gray-900">
                 {currentQuestionIndex + 1}. {currentQuestion.question}
@@ -375,7 +375,7 @@ export function Onboarding({
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <span className="font-sora text-sm font-medium text-gray-900">
+                  <span className="font-jakarta text-sm font-medium text-gray-900">
                     {currentQuestionIndex + 1}/{totalQuestions}
                   </span>
                 </div>

@@ -24,13 +24,13 @@ export function ComparisonModal({ universities, onClose }: ComparisonModalProps)
       <table className="w-full border-collapse">
         <thead>
           <tr>
-            <th className="border-b border-greys-200 p-4 text-left font-sora text-sm font-semibold text-black-800">
+            <th className="border-b border-greys-200 p-4 text-left font-jakarta text-sm font-semibold text-black-800">
               Metric
             </th>
             {universities.map((uni) => (
               <th
                 key={uni.id}
-                className="border-b border-greys-200 p-4 text-center font-sora text-sm font-semibold text-black-800"
+                className="border-b border-greys-200 p-4 text-center font-jakarta text-sm font-semibold text-black-800"
               >
                 {uni.name}
               </th>
@@ -40,7 +40,7 @@ export function ComparisonModal({ universities, onClose }: ComparisonModalProps)
         <tbody>
           {metrics.map((metric) => (
             <tr key={metric.key} className="hover:bg-greys-50 transition-colors">
-              <td className="border-b border-greys-100 p-4 text-left font-sora text-sm text-black-600">
+              <td className="border-b border-greys-100 p-4 text-left font-jakarta text-sm text-black-600">
                 {metric.label}
               </td>
               {universities.map((uni) => {
@@ -51,7 +51,7 @@ export function ComparisonModal({ universities, onClose }: ComparisonModalProps)
                 return (
                   <td
                     key={uni.id}
-                    className="border-b border-greys-100 p-4 text-center font-sora text-sm text-black-800"
+                    className="border-b border-greys-100 p-4 text-center font-jakarta text-sm text-black-800"
                   >
                     {isStatus ? (
                       <span

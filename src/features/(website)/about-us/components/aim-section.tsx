@@ -52,7 +52,7 @@ export function AimSection() {
               <div className="px-5 py-2 rounded-full bg-emerald-500 text-white text-[10px] font-bold tracking-[0.3em] uppercase w-fit shadow-lg shadow-emerald-500/20">
                 Mission
               </div>
-              <p className="font-sora text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
+              <p className="font-jakarta text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
                 To make dental school applications <span className="text-emerald-600 underline decoration-emerald-200 underline-offset-8">easier, affordable, and accessible</span> for underprivileged students.
               </p>
             </div>
@@ -73,7 +73,7 @@ export function AimSection() {
               <div className="px-5 py-2 rounded-full bg-slate-900 text-white text-[10px] font-bold tracking-[0.3em] uppercase w-fit shadow-lg shadow-slate-900/20">
                 Vision
               </div>
-              <p className="font-sora text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
+              <p className="font-jakarta text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
                 To be the <span className="text-slate-600 underline decoration-slate-200 underline-offset-8">leading global platform</span> guiding underserved students into dental careers.
               </p>
             </div>

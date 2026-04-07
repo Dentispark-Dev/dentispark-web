@@ -33,14 +33,14 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
         ref={ref}
         aria-label="Breadcrumb"
         className={cn(
-          "font-sora flex items-center space-x-2 text-xs md:text-sm",
+          "font-jakarta flex items-center space-x-2 text-xs md:text-sm",
           className,
         )}
       >
         {showBackButton && (
           <button
             onClick={handleBack}
-            className="font-sora mr-4 flex items-center text-gray-500 transition-colors hover:text-gray-700"
+            className="font-jakarta mr-4 flex items-center text-gray-500 transition-colors hover:text-gray-700"
           >
             <ArrowLeft
               size={20}
@@ -51,7 +51,7 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
         )}
 
         {/* Mobile: Simplified breadcrumb with dots */}
-        <div className="font-sora flex items-center space-x-2 md:hidden">
+        <div className="font-jakarta flex items-center space-x-2 md:hidden">
           <span className="text-gray-400">...</span>
           <span className="text-gray-400">/</span>
           {items.map(
@@ -65,7 +65,7 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
         </div>
 
         {/* Desktop: Full breadcrumb */}
-        <ol className="font-sora hidden items-center space-x-2 md:flex">
+        <ol className="font-jakarta hidden items-center space-x-2 md:flex">
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
               {index > 0 && (

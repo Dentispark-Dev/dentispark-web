@@ -49,7 +49,7 @@ export function JoinSection() {
         >
           <motion.h2 
             variants={itemVariants}
-            className="font-sora text-4xl font-extrabold leading-tight md:text-7xl md:leading-[1.1] tracking-tighter max-w-4xl"
+            className="font-jakarta text-4xl font-extrabold leading-tight md:text-7xl md:leading-[1.1] tracking-tighter max-w-4xl"
           >
             Join <span className="text-emerald-400">5,000+</span> students who started their journey <span className="relative inline-block">this month<div className="absolute -bottom-2 left-0 w-full h-1 bg-emerald-500/30 rounded-full" /></span>
           </motion.h2>
@@ -66,7 +66,7 @@ export function JoinSection() {
             </Link>
           </motion.div>
           
-          <motion.p variants={itemVariants} className="font-sora text-slate-400 text-sm font-bold uppercase tracking-[0.3em] pt-4">
+          <motion.p variants={itemVariants} className="font-jakarta text-slate-400 text-sm font-bold uppercase tracking-[0.3em] pt-4">
             No credit card required • Join in 60 seconds
           </motion.p>
         </motion.div>

@@ -184,10 +184,10 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                   />
                 </div>
                 <div className="flex-1">
-                  <h1 className="font-sora text-black-800 mb-2 text-3xl font-bold">
+                  <h1 className="font-jakarta text-black-800 mb-2 text-3xl font-bold">
                     {MOCK_STUDENT.name}
                   </h1>
-                  <p className="text-black-400 font-sora text-base">
+                  <p className="text-black-400 font-jakarta text-base">
                     {MOCK_STUDENT.year}
                   </p>
                 </div>
@@ -196,26 +196,26 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
               {/* Student Info Pills */}
               <div className="mt-4 flex flex-wrap items-center gap-8">
                 <div className="flex items-center gap-4">
-                  <span className="font-sora text-black-800 text-sm font-semibold">
+                  <span className="font-jakarta text-black-800 text-sm font-semibold">
                     Preferred School
                   </span>
-                  <p className="text-black-400 border-greys-300 bg-greys-100 font-sora rounded-full border p-2 text-sm">
+                  <p className="text-black-400 border-greys-300 bg-greys-100 font-jakarta rounded-full border p-2 text-sm">
                     {MOCK_STUDENT.preferredSchool}
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="font-sora text-black-800 text-sm font-semibold">
+                  <span className="font-jakarta text-black-800 text-sm font-semibold">
                     UCAT Score
                   </span>
-                  <p className="text-black-400 border-greys-300 bg-greys-100 font-sora rounded-full border p-2 text-sm">
+                  <p className="text-black-400 border-greys-300 bg-greys-100 font-jakarta rounded-full border p-2 text-sm">
                     {MOCK_STUDENT.ucatScore}
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="font-sora text-black-800 text-sm font-semibold">
+                  <span className="font-jakarta text-black-800 text-sm font-semibold">
                     A-Level Score
                   </span>
-                  <p className="text-black-400 border-greys-300 bg-greys-100 font-sora rounded-full border p-2 text-sm">
+                  <p className="text-black-400 border-greys-300 bg-greys-100 font-jakarta rounded-full border p-2 text-sm">
                     {MOCK_STUDENT.aLevelScore}
                   </p>
                 </div>
@@ -229,10 +229,10 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
               transition={{ duration: 0.3, delay: 0.2 }}
               className="mb-8"
             >
-              <h2 className="font-sora text-black-800 mb-4 text-xl font-semibold">
+              <h2 className="font-jakarta text-black-800 mb-4 text-xl font-semibold">
                 Goals
               </h2>
-              <p className="text-black-600 font-sora text-sm leading-relaxed">
+              <p className="text-black-600 font-jakarta text-sm leading-relaxed">
                 {showFullGoals
                   ? MOCK_STUDENT.goals
                   : `${MOCK_STUDENT.goals.substring(0, 300)}...`}
@@ -240,7 +240,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
               {!showFullGoals && (
                 <button
                   onClick={() => setShowFullGoals(true)}
-                  className="text-primary font-sora mt-2 text-sm font-medium hover:underline"
+                  className="text-primary font-jakarta mt-2 text-sm font-medium hover:underline"
                 >
                   Read more
                 </button>
@@ -253,10 +253,10 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.3 }}
             >
-              <h2 className="font-sora text-black-800 mb-4 text-xl font-semibold">
+              <h2 className="font-jakarta text-black-800 mb-4 text-xl font-semibold">
                 Why dentistry?
               </h2>
-              <p className="text-black-600 font-sora text-sm leading-relaxed">
+              <p className="text-black-600 font-jakarta text-sm leading-relaxed">
                 {showFullWhy
                   ? MOCK_STUDENT.whyDentistry
                   : MOCK_STUDENT.whyDentistry}
@@ -264,7 +264,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
               {!showFullWhy && MOCK_STUDENT.whyDentistry.length > 250 && (
                 <button
                   onClick={() => setShowFullWhy(true)}
-                  className="text-primary font-sora mt-2 text-sm font-medium hover:underline"
+                  className="text-primary font-jakarta mt-2 text-sm font-medium hover:underline"
                 >
                   Read more
                 </button>
@@ -282,15 +282,15 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
             >
               <div className="">
                 <div className="mb-8 rounded-[16px] border p-4">
-                  <h3 className="font-sora text-black-800 mb-2 text-lg font-semibold">
+                  <h3 className="font-jakarta text-black-800 mb-2 text-lg font-semibold">
                     {MOCK_STUDENT.booking.title}
                   </h3>
-                  <p className="text-black-400 font-sora text-sm">
+                  <p className="text-black-400 font-jakarta text-sm">
                     {MOCK_STUDENT.booking.date}
                   </p>
                 </div>
 
-                <div className="font-sora space-y-4">
+                <div className="font-jakarta space-y-4">
                   <Button onClick={handleAcceptBooking} className="h-10 w-full">
                     Accept Booking
                   </Button>
@@ -368,7 +368,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                   </div>
 
                   <div className="px-2">
-                    <p className="font-sora text-black-800 text-xs font-semibold">
+                    <p className="font-jakarta text-black-800 text-xs font-semibold">
                       Got questions?{" "}
                       <span className="font-normal">
                         Start chatting with this student before you get started.
@@ -376,7 +376,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                     </p>
                     <button
                       onClick={handleSendMessage}
-                      className="text-primary font-sora mt-2 text-sm font-medium hover:underline"
+                      className="text-primary font-jakarta mt-2 text-sm font-medium hover:underline"
                     >
                       Send Daniel a message
                     </button>
@@ -400,7 +400,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 }}
             >
-              <h3 className="font-sora text-black-800 mb-4 text-lg font-semibold">
+              <h3 className="font-jakarta text-black-800 mb-4 text-lg font-semibold">
                 Practice Test Results
               </h3>
               <div className="space-y-3">
@@ -415,10 +415,10 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                         <FileText className="text-primary h-5 w-5" />
                       </div>
                       <div>
-                        <p className="font-sora text-black-800 text-sm font-semibold">
+                        <p className="font-jakarta text-black-800 text-sm font-semibold">
                           {test.title}
                         </p>
-                        <p className="text-black-400 font-sora text-xs">
+                        <p className="text-black-400 font-jakarta text-xs">
                           {test.category}
                         </p>
                       </div>

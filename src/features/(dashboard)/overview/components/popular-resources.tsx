@@ -98,7 +98,7 @@ export default function PopularResources({
         {showViewAll && (
           <Link
             href="/overview/popular-resources"
-            className="font-sora hidden items-center gap-2 text-xs transition-colors hover:text-gray-700 md:flex"
+            className="font-jakarta hidden items-center gap-2 text-xs transition-colors hover:text-gray-700 md:flex"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

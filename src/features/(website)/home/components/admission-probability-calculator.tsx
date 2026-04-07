@@ -85,10 +85,10 @@ export function AdmissionProbabilityCalculator() {
             </motion.div>
             
             <div className="space-y-6">
-              <h2 className="font-sora text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl tracking-tight">
+              <h2 className="font-jakarta text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl tracking-tight">
                 Admission <span className="text-emerald-500">Chances</span> <br />Calculator
               </h2>
-              <p className="font-sora text-slate-500 text-lg md:text-xl leading-relaxed max-w-lg">
+              <p className="font-jakarta text-slate-500 text-lg md:text-xl leading-relaxed max-w-lg">
                 Upload your profile highlights to see where you stand in the competitive dental school application landscape.
               </p>
             </div>
@@ -103,7 +103,7 @@ export function AdmissionProbabilityCalculator() {
                   <div className="size-6 rounded-full bg-white border border-slate-100 flex items-center justify-center shadow-sm">
                     <ArrowRight size={12} className="text-emerald-500" />
                   </div>
-                  <span className="font-sora text-sm font-semibold text-slate-600 tracking-wide">{item}</span>
+                  <span className="font-jakarta text-sm font-semibold text-slate-600 tracking-wide">{item}</span>
                 </div>
               ))}
             </div>
@@ -129,7 +129,7 @@ export function AdmissionProbabilityCalculator() {
                     name="studentType"
                     render={({ field }) => (
                       <FormItem className="space-y-4">
-                        <FormLabel className="font-sora text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-1">
+                        <FormLabel className="font-jakarta text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-1">
                           Applicant Path
                         </FormLabel>
                         <FormControl>
@@ -150,7 +150,7 @@ export function AdmissionProbabilityCalculator() {
                               >
                                 <RadioGroupItem value={type.value} id={type.value} className="sr-only" />
                                 <type.icon size={20} className={cn("mb-3", field.value === type.value ? "text-white" : "text-emerald-500")} />
-                                <span className="font-sora text-[11px] font-bold uppercase tracking-tight">{type.label}</span>
+                                <span className="font-jakarta text-[11px] font-bold uppercase tracking-tight">{type.label}</span>
                               </label>
                             ))}
                           </RadioGroup>
@@ -169,17 +169,17 @@ export function AdmissionProbabilityCalculator() {
                       name="ucat"
                       render={({ field }) => (
                         <FormItem className="space-y-2">
-                          <FormLabel className="font-sora text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
+                          <FormLabel className="font-jakarta text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
                             UCAT Performance
                           </FormLabel>
                           <FormControl>
                             <Select value={field.value} onValueChange={field.onChange}>
-                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-sora font-medium px-5">
+                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-jakarta font-medium px-5">
                                 <SelectValue placeholder="Range" />
                               </SelectTrigger>
                               <SelectContent className="rounded-xl border-slate-100 p-1">
                                 {scoreRanges.map((r) => (
-                                  <SelectItem key={r} value={r} className="font-sora text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
+                                  <SelectItem key={r} value={r} className="font-jakarta text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -193,17 +193,17 @@ export function AdmissionProbabilityCalculator() {
                       name="alevel"
                       render={({ field }) => (
                         <FormItem className="space-y-2">
-                          <FormLabel className="font-sora text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
+                          <FormLabel className="font-jakarta text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
                             A-Level Average
                           </FormLabel>
                           <FormControl>
                             <Select value={field.value} onValueChange={field.onChange}>
-                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-sora font-medium px-5">
+                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-jakarta font-medium px-5">
                                 <SelectValue placeholder="Range" />
                               </SelectTrigger>
                               <SelectContent className="rounded-xl border-slate-100 p-1">
                                 {scoreRanges.map((r) => (
-                                  <SelectItem key={r} value={r} className="font-sora text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
+                                  <SelectItem key={r} value={r} className="font-jakarta text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -219,17 +219,17 @@ export function AdmissionProbabilityCalculator() {
                       name="hours"
                       render={({ field }) => (
                         <FormItem className="space-y-2">
-                          <FormLabel className="font-sora text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
+                          <FormLabel className="font-jakarta text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
                             Experience Hours
                           </FormLabel>
                           <FormControl>
                             <Select value={field.value} onValueChange={field.onChange}>
-                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-sora font-medium px-5">
+                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-jakarta font-medium px-5">
                                 <SelectValue placeholder="Select" />
                               </SelectTrigger>
                               <SelectContent className="rounded-xl border-slate-100 p-1">
                                 {scoreRanges.map((r) => (
-                                  <SelectItem key={r} value={r} className="font-sora text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
+                                  <SelectItem key={r} value={r} className="font-jakarta text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -243,17 +243,17 @@ export function AdmissionProbabilityCalculator() {
                       name="ielts"
                       render={({ field }) => (
                         <FormItem className="space-y-2">
-                          <FormLabel className="font-sora text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
+                          <FormLabel className="font-jakarta text-[10px] font-bold text-slate-400 uppercase tracking-tight ml-1">
                             Language Proficiency
                           </FormLabel>
                           <FormControl>
                             <Select value={field.value} onValueChange={field.onChange}>
-                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-sora font-medium px-5">
+                              <SelectTrigger className="h-14 rounded-xl border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-emerald-500/10 focus:border-emerald-500 font-jakarta font-medium px-5">
                                 <SelectValue placeholder="Score" />
                               </SelectTrigger>
                               <SelectContent className="rounded-xl border-slate-100 p-1">
                                 {scoreRanges.map((r) => (
-                                  <SelectItem key={r} value={r} className="font-sora text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
+                                  <SelectItem key={r} value={r} className="font-jakarta text-sm py-3 m-1 focus:bg-emerald-50 rounded-lg">{r}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -265,7 +265,7 @@ export function AdmissionProbabilityCalculator() {
 
                   <Button
                     type="submit"
-                    className="w-full h-16 rounded-2xl bg-[#0F172A] hover:bg-slate-800 text-white font-sora font-bold text-sm tracking-widest uppercase transition-all duration-300 shadow-xl shadow-slate-200"
+                    className="w-full h-16 rounded-2xl bg-[#0F172A] hover:bg-slate-800 text-white font-jakarta font-bold text-sm tracking-widest uppercase transition-all duration-300 shadow-xl shadow-slate-200"
                   >
                     View Success Probability
                   </Button>

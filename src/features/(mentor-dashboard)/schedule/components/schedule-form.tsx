@@ -137,7 +137,7 @@ export function ScheduleForm({
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-2 gap-8 py-6">
             <div>
-              <h3 className="font-sora mb-4 text-base font-medium">
+              <h3 className="font-jakarta mb-4 text-base font-medium">
                 Select a Date
               </h3>
 
@@ -185,7 +185,7 @@ export function ScheduleForm({
 
             <div className="space-y-6">
               <div>
-                <h3 className="font-sora mb-4 text-base font-medium">
+                <h3 className="font-jakarta mb-4 text-base font-medium">
                   Select your Preferred Time
                 </h3>
 
@@ -212,7 +212,7 @@ export function ScheduleForm({
                             {TIME_SLOTS.map((time) => (
                               <SelectItem
                                 key={time}
-                                className="font-sora text-sm"
+                                className="font-jakarta text-sm"
                                 value={time}
                               >
                                 {time}
@@ -243,7 +243,7 @@ export function ScheduleForm({
                               <Clock className="ml-auto h-4 w-4" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="font-sora text-sm">
+                          <SelectContent className="font-jakarta text-sm">
                             {TIME_SLOTS.map((time) => (
                               <SelectItem
                                 key={time}
@@ -261,7 +261,7 @@ export function ScheduleForm({
                   />
                 </div>
 
-                <p className="font-sora mt-2 text-xs text-gray-500">
+                <p className="font-jakarta mt-2 text-xs text-gray-500">
                   NB: Choose a minimum duration of 2 hours/week
                 </p>
               </div>
@@ -269,7 +269,7 @@ export function ScheduleForm({
               {/* Timezone */}
               <div>
                 <h4 className="mb-2 text-sm font-medium">Time zone</h4>
-                <div className="font-sora flex items-center gap-2 text-sm text-gray-600">
+                <div className="font-jakarta flex items-center gap-2 text-sm text-gray-600">
                   <svg
                     width="14"
                     height="15"
@@ -306,7 +306,7 @@ export function ScheduleForm({
                         {SESSION_TYPES.map((type) => (
                           <SelectItem
                             key={type.id}
-                            className="font-sora text-sm"
+                            className="font-jakarta text-sm"
                             value={type.id}
                           >
                             <div className="flex items-center gap-2">

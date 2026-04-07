@@ -44,16 +44,16 @@ export function StudentMatchingCard({
               />
             </div>
             <div>
-              <h3 className="font-sora text-black-800 text-base font-semibold">
+              <h3 className="font-jakarta text-black-800 text-base font-semibold">
                 {student.name}
               </h3>
-              <p className="font-sora text-black-400 text-sm">{student.year}</p>
+              <p className="font-jakarta text-black-400 text-sm">{student.year}</p>
             </div>
           </div>
 
           {/* Preferred School */}
           <div>
-            <p className="font-sora text-black-600 text-sm">
+            <p className="font-jakarta text-black-600 text-sm">
               <span className="font-medium">Preferred School:</span>{" "}
               <span className="text-black-400">{student.preferredSchool}</span>
             </p>
@@ -62,19 +62,19 @@ export function StudentMatchingCard({
           {/* Scores Grid */}
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <p className="font-sora text-black-600 text-sm font-medium">
+              <p className="font-jakarta text-black-600 text-sm font-medium">
                 UCAT Score
               </p>
-              <p className="font-sora text-black-400 border-greys-300 bg-greys-100 mt-1 flex w-fit items-center justify-center rounded-full border p-1 px-3 text-sm">
+              <p className="font-jakarta text-black-400 border-greys-300 bg-greys-100 mt-1 flex w-fit items-center justify-center rounded-full border p-1 px-3 text-sm">
                 {student.ucatScore}
               </p>
             </div>
             <div>
-              <p className="font-sora text-black-600 text-sm font-medium">
+              <p className="font-jakarta text-black-600 text-sm font-medium">
                 A-Level Score
               </p>
 
-              <p className="font-sora text-black-400 border-greys-300 bg-greys-100 mt-1 flex w-fit items-center justify-center rounded-full border p-1 px-3 text-sm">
+              <p className="font-jakarta text-black-400 border-greys-300 bg-greys-100 mt-1 flex w-fit items-center justify-center rounded-full border p-1 px-3 text-sm">
                 {student.aLevelScore}
               </p>
             </div>

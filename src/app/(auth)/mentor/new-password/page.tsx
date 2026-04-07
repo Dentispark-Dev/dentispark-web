@@ -127,14 +127,14 @@ export default function MentorNewPasswordPage() {
               <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
                 Mentor Password Updated!
               </h1>
-              <p className="font-sora mt-2 text-sm text-gray-400">
+              <p className="font-jakarta mt-2 text-sm text-gray-400">
                 Your mentor account password has been successfully updated. You
                 can now login to your mentor dashboard with your new password.
               </p>
             </div>
 
             <div className="rounded-lg border border-green-200 bg-green-50 p-4">
-              <p className="font-sora text-xs text-green-700">
+              <p className="font-jakarta text-xs text-green-700">
                 <strong>Welcome back, Mentor!</strong> Your account is now
                 secure and ready to help guide students.
               </p>
@@ -151,7 +151,7 @@ export default function MentorNewPasswordPage() {
 
           {/* Footer Links */}
           <motion.div
-            className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+            className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
             variants={itemVariants}
           >
             <Link href="/terms" className="cursor-pointer hover:text-gray-700">
@@ -192,7 +192,7 @@ export default function MentorNewPasswordPage() {
           <h1 className="text-3xl leading-[160%] font-medium text-gray-900">
             Create a new mentor password
           </h1>
-          <p className="font-sora mt-2 text-sm text-gray-400">
+          <p className="font-jakarta mt-2 text-sm text-gray-400">
             Create a new password for your mentor account. This password will be
             used to log into your mentor dashboard.
           </p>
@@ -289,7 +289,7 @@ export default function MentorNewPasswordPage() {
 
         {/* Footer Links */}
         <motion.div
-          className="font-sora flex justify-center space-x-6 text-xs text-gray-500 underline"
+          className="font-jakarta flex justify-center space-x-6 text-xs text-gray-500 underline"
           variants={itemVariants}
         >
           <Link href="/terms" className="cursor-pointer hover:text-gray-700">
