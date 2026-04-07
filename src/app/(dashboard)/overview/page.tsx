@@ -95,7 +95,7 @@ export default function OverviewPage() {
                 
                 {/* Bottom Intelligence Section - Full Width Stacking */}
                 <div className="space-y-16 pt-12 border-t border-slate-100">
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto w-full">
                         <DeadlineCountdown />
                     </div>
                     

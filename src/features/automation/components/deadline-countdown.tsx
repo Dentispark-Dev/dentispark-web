@@ -15,11 +15,11 @@ export function DeadlineCountdown() {
 
   return (
     <div className={cn(
-        "bg-white p-6 lg:p-8 rounded-[2rem] border transition-all duration-500 w-full flex flex-col xl:flex-row xl:items-center justify-between gap-8",
+        "bg-white p-6 lg:p-8 rounded-[2rem] border transition-all duration-500 w-full flex flex-wrap items-center justify-between gap-6 xl:gap-8",
         isCritical ? "border-red-200 shadow-xl shadow-red-500/5" : "border-slate-100 shadow-sm hover:shadow-md"
     )}>
         {/* Left Section: Target Info */}
-        <div className="flex items-center gap-6 flex-1 min-w-0">
+        <div className="flex items-center gap-6 flex-[1_1_320px] min-w-[320px]">
             <div className={cn(
                 "w-16 h-16 rounded-2xl flex items-center justify-center shrink-0",
                 isCritical ? "bg-red-50 text-red-600" : "bg-emerald-50 text-emerald-600"
@@ -40,10 +40,10 @@ export function DeadlineCountdown() {
                         </span>
                     )}
                 </div>
-                <h2 className="text-xl font-black text-slate-900 tracking-tight leading-none mb-1 truncate">
+                <h2 className="text-xl font-black text-slate-900 tracking-tight leading-none mb-1">
                     {mainDeadline.title}
                 </h2>
-                <p className="text-slate-500 text-sm font-medium truncate">
+                <p className="text-slate-500 text-sm font-medium">
                     UK Dental Schools official window.
                 </p>
             </div>
