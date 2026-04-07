@@ -2,7 +2,7 @@
 
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star, ShieldCheck } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -107,7 +107,7 @@ const mentors = [
   },
 ];
 
-import { motion, Variants } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -148,14 +148,14 @@ export function MeetOurMentors() {
               <motion.div variants={itemVariants} className="text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
                 Expert Guidance
               </motion.div>
-              <motion.h2 variants={itemVariants} className="font-sora text-3xl font-extrabold text-slate-900 md:text-5xl tracking-tight">
+              <motion.h2 variants={itemVariants} className="font-jakarta text-3xl font-extrabold text-slate-900 md:text-5xl tracking-tight">
                 Meet our <span className="text-emerald-600">Mentors</span>
               </motion.h2>
             </div>
             <motion.div variants={itemVariants}>
               <Link
                 href="/mentor"
-                className="group font-sora inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold transition-all duration-300 hover:bg-emerald-500 hover:text-white"
+                className="group font-jakarta inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold transition-all duration-300 hover:bg-emerald-500 hover:text-white"
               >
                 See all Mentors <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -196,10 +196,10 @@ export function MeetOurMentors() {
                       </div>
 
                       <div className="space-y-2 mb-6">
-                        <h3 className="font-sora text-xl font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">
+                        <h3 className="font-jakarta text-xl font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">
                           {m.name}
                         </h3>
-                        <p className="font-sora text-slate-500 text-sm leading-relaxed">
+                        <p className="font-jakarta text-slate-500 text-sm leading-relaxed">
                           {m.title}
                         </p>
                       </div>
@@ -214,8 +214,8 @@ export function MeetOurMentors() {
                               <Stanford className="h-full w-full" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-sora text-[11px] font-bold text-slate-900 truncate uppercase tracking-tight">{inst.name}</p>
-                              <p className="font-sora text-[10px] text-slate-400 font-medium truncate">
+                              <p className="font-jakarta text-[11px] font-bold text-slate-900 truncate uppercase tracking-tight">{inst.name}</p>
+                              <p className="font-jakarta text-[10px] text-slate-400 font-medium truncate">
                                 {inst.role}
                               </p>
                             </div>
@@ -223,18 +223,36 @@ export function MeetOurMentors() {
                         ))}
                       </div>
 
-                      <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
+                      {/* Trust Signal */}
+                      <div className="mt-6 px-4 py-2 bg-slate-50 rounded-xl border border-dashed border-slate-200 flex items-center gap-2">
+                         <ShieldCheck className="size-3 text-emerald-500" />
+                         <span className="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Verified by DentiSpark Team</span>
+                      </div>
+
+                      {/* CTA & Rating Row */}
+                      <div className="mt-6 pt-6 border-t border-slate-50 space-y-4">
+                        <div className="flex items-center justify-between">
+                           <Link 
+                             href="/sign-up"
+                             className="h-10 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-[0.1em] flex items-center gap-2 transition-all"
+                           >
+                              Book Free Intro
+                              <ArrowRight size={12} />
+                           </Link>
+                           <div className="flex flex-col items-end">
+                              <div className="flex items-center gap-1.5 bg-emerald-50 px-2 py-0.5 rounded-md">
+                                 <Star size={10} fill="#10B981" className="text-emerald-500" />
+                                 <span className="text-[10px] font-black text-emerald-700">4.8 / 5.0</span>
+                              </div>
+                              <span className="text-[9px] text-slate-400 font-bold uppercase tracking-tighter mt-1">(43 reviewed)</span>
+                           </div>
+                        </div>
                         <Link 
                           href={`/mentor/${m.slug}`}
-                          className="font-sora text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors uppercase tracking-widest flex items-center gap-1.5"
+                          className="font-jakarta text-[10px] font-bold text-slate-400 hover:text-emerald-600 transition-colors uppercase tracking-[0.2em] flex items-center justify-center gap-1.5 w-full"
                         >
-                          View Profile <ArrowRight className="w-3 h-3" />
+                          View Full Profile
                         </Link>
-                        <div className="flex items-center gap-1">
-                          {[1, 2, 3, 4, 5].map((s) => (
-                            <div key={s} className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
-                          ))}
-                        </div>
                       </div>
                     </div>
                   </CarouselItem>

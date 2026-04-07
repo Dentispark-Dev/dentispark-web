@@ -2,6 +2,8 @@
 
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Star, ShieldCheck } from "lucide-react";
 import Container from "@/src/components/layouts/container";
 
 import whyUsImage1 from "@/public/images/why-us-1.png";
@@ -24,18 +26,16 @@ const features = [
     imageAlt: "AI robot on a screen",
   },
   {
-    title: "Direct University Access",
-    description:
-      "Gain streamlined access to verified university representatives for guidance, application support, and up-to-date information — all in one place.",
+    title: "Contextual Admission Engine",
+    description: "Our proprietary tool calculates your real percentage-chance based on POLAR4 Widening Participation data and regional context—not just grades.",
     imageSrc: whyUsImage3,
-    imageAlt: "Key unlocking a door",
+    imageAlt: "Contextual Admission Calculator",
   },
   {
-    title: "Direct University Partnerships",
-    description:
-      "Get exclusive access and direct links to partner universities, fast-track your applications, and enjoy priority support from admissions officers.",
+    title: "Guaranteed Clinical Placement",
+    description: "Secure a structured, one-week observation placement at our partner practices upon completing your 'Theory-to-Theatre' readiness gate.",
     imageSrc: whyUsImage4,
-    imageAlt: "Key unlocking a door",
+    imageAlt: "Clinical placement in Rainham",
   },
 ];
 
@@ -76,10 +76,10 @@ export default function WhyChooseUs() {
             <motion.div variants={itemVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
               The Advantage
             </motion.div>
-            <motion.h2 variants={itemVariants} className="font-sora text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+            <motion.h2 variants={itemVariants} className="font-jakarta text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
               Why Choose <span className="text-emerald-600">DentiSpark?</span>
             </motion.h2>
-            <motion.p variants={itemVariants} className="font-sora text-slate-500 max-w-2xl text-lg md:text-xl leading-relaxed">
+            <motion.p variants={itemVariants} className="font-jakarta text-slate-500 max-w-2xl text-lg md:text-xl leading-relaxed">
               We provide the elite infrastructure and support needed to dominate the competitive landscape of dental admissions.
             </motion.p>
           </div>
@@ -101,10 +101,10 @@ export default function WhyChooseUs() {
                   <div className="absolute inset-0 bg-emerald-900/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
                 <div className="flex flex-col space-y-5 p-12">
-                  <h3 className="font-sora text-2xl font-extrabold text-slate-900 leading-tight">
+                  <h3 className="font-jakarta text-2xl font-extrabold text-slate-900 leading-tight">
                     {f.title}
                   </h3>
-                  <p className="font-sora text-slate-500 text-lg leading-relaxed">
+                  <p className="font-jakarta text-slate-500 text-lg leading-relaxed">
                     {f.description}
                   </p>
                   <div className="pt-4 flex items-center gap-2 text-emerald-600 font-bold text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
@@ -116,6 +116,16 @@ export default function WhyChooseUs() {
                 </div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="flex justify-center pt-10">
+            <Link 
+              href="/sign-up"
+              className="group h-16 px-10 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-jakarta font-extrabold text-lg flex items-center gap-3 transition-all duration-300 shadow-xl shadow-emerald-600/20 hover:-translate-y-1"
+            >
+              Join DentiSpark for free and take your first step toward dental school
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </motion.div>
       </Container>

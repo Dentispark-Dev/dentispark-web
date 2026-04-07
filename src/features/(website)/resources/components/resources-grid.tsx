@@ -12,31 +12,28 @@ import resource3 from "@/public/images/resource-3.png";
 
 const resources = [
   {
-    id: 1,
-    title: "M7 MBA Programs – What They Are & How to Get In",
-    description:
-      "An expert admissions coach details how to get into an elite M7 business school with ways to stand out in your application, with deep-dives into all the M7",
-    date: "May 23, 2023",
+    id: "ucat-guide",
+    title: "DentiSpark UCAT Prep Guide",
+    description: "Master the UCAT with DentiSpark's proprietary strategic roadmap.",
+    date: "March 15, 2024",
     image: resource1,
-    imageAlt: "Student studying with laptop",
+    imageAlt: "UCAT Prep Guide",
   },
   {
-    id: 2,
-    title: "Top Strategies for MBA Interview Success",
-    description:
-      "Learn proven techniques from industry leaders to excel in your MBA interviews, including common questions and how to showcase your unique experiences.",
-    date: "June 15, 2023",
+    id: "dental-booklet",
+    title: "Dental Schools Council Yearbook",
+    description: "Your official, curated guide to UK Dental education requirements.",
+    date: "January 10, 2024",
     image: resource2,
-    imageAlt: "MBA interview preparation",
+    imageAlt: "Dental Schools Council 2025 Booklet",
   },
   {
-    id: 3,
-    title: "Financing Your MBA: Scholarships and Loans Explained",
-    description:
-      "A comprehensive guide to understanding the financial aspects of pursuing an MBA, with insights on scholarships, student loans, and budgeting for business school.",
-    date: "July 10, 2023",
+    id: "ps-template",
+    title: "Personal Statement Template",
+    description: "DentiSpark-specific template reflective of actual UK dental school requirements.",
+    date: "February 20, 2024",
     image: resource3,
-    imageAlt: "MBA financing guide",
+    imageAlt: "Personal Statement Template",
   },
 ];
 

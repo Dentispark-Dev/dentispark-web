@@ -13,40 +13,20 @@ import resource7 from "@/public/images/resource-7.png";
 
 const resources = [
   {
-    id: 4,
-    title: "M7 MBA Programs – What They Are & How to Get In",
-    description:
-      "An expert admissions coach details how to get into an elite M7 business school with ways to stand out in your application, with deep-dives into all the M7",
-    date: "May 23, 2023",
+    id: "financial-guide",
+    title: "Financial Support Guide",
+    description: "Strategic funding options for your dental academic journey.",
+    date: "April 05, 2024",
     image: resource4,
-    imageAlt: "MBA students in collaborative meeting",
+    imageAlt: "Finance Guide",
   },
   {
-    id: 5,
-    title: "Mastering the GMAT: Strategies for Success",
-    description:
-      "Discover effective study techniques and time management tips to ace the GMAT, enhancing your chances of acceptance into top business schools.",
-    date: "June 15, 2023",
+    id: "nursing-guide",
+    title: "Dental Nursing Apprenticeship Guide",
+    description: "Step-by-Step roadmap to becoming a qualified Dental Nurse.",
+    date: "May 12, 2024",
     image: resource5,
-    imageAlt: "Student preparing for GMAT exam",
-  },
-  {
-    id: 6,
-    title: "Crafting an Outstanding MBA Resume",
-    description:
-      "Learn how to highlight your achievements and experiences to create a compelling resume that captures the attention of admissions committees.",
-    date: "July 10, 2023",
-    image: resource6,
-    imageAlt: "Professional working on MBA resume",
-  },
-  {
-    id: 7,
-    title: "Networking for MBA Success: Building Your Professional Circle",
-    description:
-      "Explore the importance of networking in the MBA application process and strategies to connect with alumni and industry professionals.",
-    date: "August 5, 2023",
-    image: resource7,
-    imageAlt: "MBA networking event",
+    imageAlt: "Nursing Guide",
   },
 ];
 

@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 import { ArrowRight, Sparkles, Zap, ShieldCheck, Globe, Star } from "lucide-react";
 import Container from "@/src/components/layouts/container";
 import { cn } from "@/src/lib/utils";
@@ -22,13 +22,15 @@ type Step = {
   bgGradient: string;
   accent: string;
   phase: string;
+  expandedDescription: string;
 };
 
 const STEPS: Step[] = [
   {
     id: 1,
     title: "Discover Your Path",
-    description: "Personalized quiz to map your dental career trajectory.",
+    description: "Launch your journey with or without foundational knowledge.",
+    expandedDescription: "Our diagnostic framework audits your current clinical curiosity and academic standing to architect a bespoke roadmap. By the end of Phase 1, you will have a clear, prioritized checklist for your specific university targets.",
     icon: DiscoverYourPath,
     color: "from-emerald-400 to-teal-500",
     bgGradient: "bg-emerald-500/5",
@@ -37,8 +39,9 @@ const STEPS: Step[] = [
   },
   {
     id: 2,
-    title: "Access Free Tools",
-    description: "Elite archives of guides, checklists, and university data.",
+    title: "Elite Resource Hub",
+    description: "Access DentiSpark-specific guides and curated datasets.",
+    expandedDescription: "Gain exclusive access to our hand-selected library of UCAT strategies, PS templates, and financial guides. This phase ensures your application is grounded in the most accurate and up-to-date UK dental requirements.",
     icon: AccessFreeTools,
     color: "from-orange-400 to-rose-500",
     bgGradient: "bg-orange-500/5",
@@ -47,8 +50,9 @@ const STEPS: Step[] = [
   },
   {
     id: 3,
-    title: "Connect with Mentors",
-    description: "Direct lineage to top-tier dental scholars and experts.",
+    title: "Mentor Matchmaking",
+    description: "Connect with verified NHS consultants and dental scholars.",
+    expandedDescription: "Bridge the gap between theory and practice with 1-on-1 sessions. You'll work with mentors who have specifically navigated the routes you are targeting, providing the insider perspective necessary for elite admissions.",
     icon: ConnectWithScholars,
     color: "from-blue-400 to-indigo-600",
     bgGradient: "bg-blue-600/5",
@@ -57,15 +61,28 @@ const STEPS: Step[] = [
   },
   {
     id: 4,
-    title: "Track Your Journey",
-    description: "Strategic milestone tracking for long-term mastery.",
+    title: "Earn Your Placement",
+    description: "Unlock your guaranteed clinical work experience milestone.",
+    expandedDescription: "Complete your 'Theory-to-Theatre' modules (Anatomy, Ethics, Infection Control) to unlock a guaranteed one-week structured work placement at our partner practice in Rainham, Kent. A true earned milestone for your portfolio.",
     icon: TrackYourJourney,
     color: "from-teal-400 to-cyan-500",
     bgGradient: "bg-teal-500/5",
     accent: "text-teal-600",
-    phase: "Prestige"
+    phase: "Clinical Milestone"
   }
 ];
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 
 export function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -100,12 +117,12 @@ export function HowItWorks() {
               >
                 <Sparkles className="w-3 h-3 text-emerald-400" /> The DentiSpark Protocol
               </motion.div>
-              <h2 className="font-sora text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tighter leading-tight italic">
-                Your Journey. <span className="text-emerald-500 not-italic uppercase">Connected.</span>
-              </h2>
-              <p className="font-sora text-slate-500 text-lg md:text-xl max-w-2xl leading-relaxed font-medium">
-                A seamless transition from discovery to mastery. Every stage, every mentor, every tool—optimized for your success.
-              </p>
+              <motion.h2 variants={itemVariants} className="font-jakarta text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+                The DentiSpark <span className="text-emerald-600">Protocol.</span>
+              </motion.h2>
+              <motion.p variants={itemVariants} className="font-jakarta text-slate-500 max-w-2xl text-lg md:text-xl leading-relaxed">
+                A elite, four-phase clinical roadmap architected to transform applicants into dental scholars.
+              </motion.p>
             </div>
           </div>
 
@@ -192,12 +209,17 @@ export function HowItWorks() {
 
                     {/* Step Content */}
                     <div className="space-y-4 flex-1 relative z-10">
-                        <h3 className="font-sora text-2xl font-black text-slate-900 tracking-tighter leading-none group-hover:text-emerald-600 transition-colors">
+                        <h3 className="font-jakarta text-2xl font-black text-slate-900 tracking-tighter leading-none group-hover:text-emerald-600 transition-colors">
                             {step.title}
                         </h3>
-                        <p className="font-sora text-slate-500 text-sm leading-relaxed font-semibold">
-                            {step.description}
-                        </p>
+                        <div className="relative overflow-hidden">
+                           <p className="font-jakarta text-slate-500 text-sm leading-relaxed font-semibold transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-4">
+                              {step.description}
+                           </p>
+                           <p className="absolute inset-0 font-jakarta text-slate-600 text-xs leading-relaxed font-medium transition-all duration-500 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0">
+                              {step.expandedDescription}
+                           </p>
+                        </div>
                     </div>
 
                     {/* Interactive Bottom Bar */}
@@ -212,6 +234,21 @@ export function HowItWorks() {
                   </motion.div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Bottom Section CTA */}
+            <div className="flex flex-col items-center space-y-10 pt-20">
+               <div className="h-px w-full max-w-4xl bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+               <div className="space-y-6 text-center">
+                  <h3 className="font-jakarta text-3xl font-extrabold text-slate-900">Ready to begin Phase 1?</h3>
+                  <Link 
+                    href="/sign-up"
+                    className="group h-16 px-10 rounded-2xl bg-slate-900 hover:bg-emerald-600 text-white font-jakarta font-extrabold text-lg flex items-center gap-3 transition-all duration-500 shadow-xl hover:-translate-y-1"
+                  >
+                    Create your free DentiSpark account and start your journey today
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+               </div>
             </div>
           </div>
         </div>

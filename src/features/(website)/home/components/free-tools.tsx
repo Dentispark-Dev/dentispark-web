@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Lock, ChevronRight } from "lucide-react";
 import Container from "@/src/components/layouts/container";
 
 import ucatImage from "@/public/images/ucat.png";
@@ -11,35 +12,38 @@ import { cn } from "@/src/lib/utils";
 
 const freeResources = [
   {
-    id: 1,
-    title: "UCAT Prep Guide",
-    description: "Master the UCAT with confidence",
-    ctaText: "Get it now",
+    id: "ucat-guide",
+    title: "DentiSpark UCAT Prep Guide",
+    description: "Master the UCAT with DentiSpark's proprietary strategic roadmap.",
+    ctaText: "Unlock This Resource — It's Free",
     image: ucatImage,
     imageAlt: "UCAT Prep Guide",
     backgroundColor: "bg-green-50",
-    href: "/resources",
+    href: "/sign-up",
+    locked: true,
   },
   {
-    id: 2,
-    title: "Dental Schools Council 2025 Booklet",
-    description: "Your official guide to UK Dental education",
-    ctaText: "Get it now",
+    id: "dental-booklet",
+    title: "Dental Schools Council Yearbook",
+    description: "Your official, curated guide to UK Dental education requirements.",
+    ctaText: "Unlock This Resource — It's Free",
     image: bookletImage,
     imageAlt: "Dental Schools Council 2025 Booklet",
     backgroundColor: "bg-secondary-50",
-    href: "/resources",
+    href: "/sign-up",
+    locked: true,
   },
 ];
 
 const additionalResources = [
   {
-    id: 3,
+    id: "ps-template",
     title: "Personal Statement Template",
-    description: "Craft a compelling and structured personal statement",
-    ctaText: "Get it now",
+    description: "DentiSpark-specific template reflective of actual UK dental school requirements.",
+    ctaText: "Unlock This Resource — It's Free",
     backgroundColor: "bg-[#FDF0E6]",
-    href: "/resources",
+    href: "/sign-up",
+    locked: true,
     icon: (
       <svg width="200" height="200" viewBox="0 0 100 100" fill="none">
         <rect
@@ -62,12 +66,13 @@ const additionalResources = [
     ),
   },
   {
-    id: 4,
+    id: "financial-guide",
     title: "Financial Support Guide",
-    description: "Understanding funding options for your academic journey",
-    ctaText: "Get it now",
+    description: "Strategic funding options for your dental academic journey.",
+    ctaText: "Unlock This Resource — It's Free",
     backgroundColor: "bg-[#F8F8F8]",
-    href: "/resources",
+    href: "/sign-up",
+    locked: true,
     icon: (
       <svg width="200" height="200" viewBox="0 0 100 100" fill="none">
         <circle
@@ -97,12 +102,13 @@ const additionalResources = [
     ),
   },
   {
-    id: 5,
+    id: "nursing-guide",
     title: "Dental Nursing Apprenticeship Guide",
-    description: "Your Step-by-Step guide to becoming a qualified Dental Nurse",
-    ctaText: "Get it now",
+    description: "Step-by-Step roadmap to becoming a qualified Dental Nurse.",
+    ctaText: "Unlock This Resource — It's Free",
     backgroundColor: "bg-error-50",
-    href: "/resources",
+    href: "/sign-up",
+    locked: true,
     icon: (
       <svg width="200" height="200" viewBox="0 0 100 100" fill="none">
         <rect
@@ -161,10 +167,10 @@ export function FreeTools() {
             <motion.div variants={cardVariants} className="px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold tracking-[0.2em] uppercase">
               Resource Hub
             </motion.div>
-            <motion.h2 variants={cardVariants} className="font-sora max-w-4xl text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
+            <motion.h2 variants={cardVariants} className="font-jakarta max-w-4xl text-4xl font-extrabold text-slate-900 md:text-6xl tracking-tight">
               Begin your Dental journey with <span className="text-emerald-600">free resources</span>
             </motion.h2>
-            <motion.p variants={cardVariants} className="font-sora text-slate-500 max-w-3xl text-lg md:text-xl leading-relaxed">
+            <motion.p variants={cardVariants} className="font-jakarta text-slate-500 max-w-3xl text-lg md:text-xl leading-relaxed">
               Access curated guides, university datasets, and AI-driven checklists tailored to your specific application goals.
             </motion.p>
           </div>
@@ -179,10 +185,13 @@ export function FreeTools() {
                 >
                   <div className="flex flex-1 flex-col justify-center p-10 md:p-14">
                     <div className="space-y-6">
-                      <h3 className="font-sora text-3xl font-extrabold text-slate-900 leading-tight">
-                        {resource.title}
-                      </h3>
-                      <p className="font-sora text-slate-500 text-lg leading-relaxed">
+                      <div className="flex items-center gap-3">
+                         <h3 className="font-jakarta text-3xl font-extrabold text-slate-900 leading-tight">
+                            {resource.title}
+                         </h3>
+                         {resource.locked && <LockIcon />}
+                      </div>
+                      <p className="font-jakarta text-slate-500 text-lg leading-relaxed">
                         {resource.description}
                       </p>
                       <div className="flex items-center gap-3 font-bold text-emerald-600 group-hover:text-emerald-500 transition-colors">
@@ -232,10 +241,13 @@ export function FreeTools() {
                     </div>
                   </div>
                   <div className="flex flex-col space-y-5 p-10">
-                    <h3 className="font-sora text-2xl font-extrabold text-slate-900 leading-tight">
-                      {resource.title}
-                    </h3>
-                    <p className="font-sora text-slate-500 leading-relaxed text-sm">
+                    <div className="flex items-center gap-3">
+                      <h3 className="font-jakarta text-2xl font-extrabold text-slate-900 leading-tight">
+                        {resource.title}
+                      </h3>
+                      {resource.locked && <LockIcon size={18} />}
+                    </div>
+                    <p className="font-jakarta text-slate-500 leading-relaxed text-sm">
                       {resource.description}
                     </p>
                     <div className="flex items-center gap-2 font-bold text-emerald-600 pt-2">
@@ -249,8 +261,27 @@ export function FreeTools() {
               </motion.div>
             ))}
           </div>
+
+          {/* Single CTA Bottom */}
+          <div className="flex justify-center pt-8">
+            <Link 
+              href="/sign-up"
+              className="group h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-jakarta font-extrabold text-lg flex items-center gap-3 shadow-xl shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1"
+            >
+              Create your free account to access all guides
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </motion.div>
       </Container>
     </section>
+  );
+}
+
+function LockIcon({ size = 24 }: { size?: number }) {
+  return (
+    <div className="p-2 rounded-xl bg-slate-100 text-slate-400 group-hover:bg-emerald-50 group-hover:text-emerald-500 transition-colors">
+      <Lock size={size} />
+    </div>
   );
 }

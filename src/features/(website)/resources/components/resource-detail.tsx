@@ -26,16 +26,8 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
   const [activeSection, setActiveSection] = useState<string>("section-0");
 
   const tableOfContents = useMemo(
-    () => [
-      "Introduction: The Dental Admissions Journey",
-      "Understanding the UCAT & BMAT",
-      "Crafting a Flawless Personal Statement",
-      "Acquiring Dental Work Experience",
-      "Preparing for Multiple Mini Interviews (MMI)",
-      "Choosing Your Top 4 Dental Schools",
-      "Conclusion: Next Steps",
-    ],
-    [],
+    () => resource.sections.map(s => s.title),
+    [resource.sections],
   );
 
   // Smooth scroll to section
@@ -52,7 +44,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
   // Track active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const sections = tableOfContents.map((_, index) => `section-${index}`);
+      const sections = resource.sections.map((_, index) => `section-${index}`);
       const scrollPosition = window.scrollY + 100; // Offset for header
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -68,10 +60,10 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
     handleScroll(); // Check initial position
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [tableOfContents]);
+  }, [resource.sections]);
 
   return (
-    <main className="min-h-screen bg-white py-16">
+    <main className="min-h-screen bg-white py-16 font-jakarta">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -85,7 +77,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-black-700 mb-4 text-3xl leading-[120%] font-semibold sm:text-4xl"
+              className="text-black-700 mb-4 text-3xl leading-[120%] font-black sm:text-4xl tracking-tight"
             >
               {resource.title}
             </motion.h1>
@@ -93,9 +85,9 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-black-400 font-sora"
+              className="text-black-400 font-bold uppercase tracking-widest text-[10px]"
             >
-              {resource.date}
+              Published on {resource.date}
             </motion.p>
           </div>
 
@@ -104,7 +96,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-12 overflow-hidden rounded-2xl"
+            className="mb-12 overflow-hidden rounded-[2.5rem] border border-slate-100 shadow-2xl"
           >
             <Image
               src={resourceDetailImage}
@@ -129,14 +121,14 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
             <div className="lg:col-span-2">
               <div className="sticky top-20 space-y-6">
                 {/* Table of Contents */}
-                <div className="bg-whites-200 rounded-2xl p-6">
-                  <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-black-700 text-base font-medium">
-                      Table of Content
+                <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8">
+                  <div className="mb-6 flex items-center justify-between">
+                    <h3 className="text-slate-900 text-sm font-black uppercase tracking-widest">
+                      On This Page
                     </h3>
                     <button
                       onClick={() => setIsTocCollapsed(!isTocCollapsed)}
-                      className="hover:bg-greys-100 rounded-full p-1 transition-colors"
+                      className="hover:bg-emerald-50 text-emerald-600 rounded-full p-1 transition-colors"
                       aria-label={
                         isTocCollapsed
                           ? "Expand table of contents"
@@ -144,9 +136,9 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                       }
                     >
                       {isTocCollapsed ? (
-                        <ChevronDown className="text-black-600 h-5 w-5" />
+                        <ChevronDown className="h-5 w-5" />
                       ) : (
-                        <ChevronUp className="text-black-600 h-5 w-5" />
+                        <ChevronUp className="h-5 w-5" />
                       )}
                     </button>
                   </div>
@@ -160,7 +152,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <ul className="space-y-3">
+                    <ul className="space-y-4">
                       {tableOfContents.map((item, index) => {
                         const sectionId = `section-${index}`;
                         const isActive = activeSection === sectionId;
@@ -169,10 +161,10 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                             <button
                               onClick={() => scrollToSection(sectionId)}
                               className={cn(
-                                "font-sora text-left text-sm transition-colors hover:text-black",
+                                "font-jakarta text-left text-sm transition-all duration-300 hover:translate-x-1",
                                 isActive
-                                  ? "font-medium text-black"
-                                  : "text-black-400",
+                                  ? "font-bold text-emerald-600"
+                                  : "text-slate-400 font-medium hover:text-slate-600",
                               )}
                             >
                               {item}
@@ -185,36 +177,36 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                 </div>
 
                 {/* Share Section */}
-                <div className="bg-whites-200 rounded-2xl p-6">
-                  <h3 className="text-black-600 mb-4 text-sm font-medium">
-                    Share this article
+                <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8">
+                  <h3 className="text-slate-400 mb-4 text-[10px] font-black uppercase tracking-widest">
+                    Share Insight
                   </h3>
                   <div className="flex items-center gap-3">
                     {/* Instagram */}
                     <a
                       href="#"
-                      className="bg-greys-100 hover:bg-primary-100 flex h-10 w-10 items-center justify-center rounded-full transition-colors"
+                      className="bg-white border border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 flex h-10 w-10 items-center justify-center rounded-xl transition-all shadow-sm"
                       aria-label="Share on Instagram"
                     >
-                      <Instagram className="text-black-600 h-5 w-5" />
+                      <Instagram className="h-5 w-5" />
                     </a>
 
                     {/* Facebook */}
                     <a
                       href="#"
-                      className="bg-greys-100 hover:bg-primary-100 flex h-10 w-10 items-center justify-center rounded-full transition-colors"
+                      className="bg-white border border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 flex h-10 w-10 items-center justify-center rounded-xl transition-all shadow-sm"
                       aria-label="Share on Facebook"
                     >
-                      <Facebook className="text-black-600 h-5 w-5" />
+                      <Facebook className="h-5 w-5" />
                     </a>
 
                     {/* Twitter */}
                     <a
                       href="#"
-                      className="bg-greys-100 hover:bg-primary-100 flex h-10 w-10 items-center justify-center rounded-full transition-colors"
+                      className="bg-white border border-slate-100 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 flex h-10 w-10 items-center justify-center rounded-xl transition-all shadow-sm"
                       aria-label="Share on Twitter"
                     >
-                      <Twitter className="text-black-600 h-5 w-5" />
+                      <Twitter className="h-5 w-5" />
                     </a>
                   </div>
                 </div>
@@ -222,95 +214,37 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
             </div>
 
             {/* Main Content - Right Side */}
-            <div className="space-y-8 lg:col-span-4">
-              <div className="space-y-8" id="section-0">
-                {/* Introduction Section */}
-                <div>
+            <div className="space-y-16 lg:col-span-4">
+              {resource.sections.map((section, index) => (
+                <div key={index} className="space-y-6" id={`section-${index}`}>
                   <h2
                     className={cn(
-                      "mb-6 text-2xl font-semibold transition-colors lg:text-3xl",
-                      activeSection === "section-0"
-                        ? "text-black"
-                        : "text-black-700",
+                      "text-2xl font-black transition-colors lg:text-3xl tracking-tight leading-tight",
+                      activeSection === `section-${index}`
+                        ? "text-emerald-600"
+                        : "text-slate-900",
                     )}
                   >
-                    Introduction: The Dental Admissions Journey
+                    {section.title}
                   </h2>
-                  <p className="font-sora text-sm leading-relaxed text-black">
-                    So, you're interested in pursuing a degree in Dentistry!
-                    That's an exciting journey ahead of you. Whether you're drawn to the 
-                    intricacies of aesthetic procedures, the continuous care provided in 
-                    general practice that builds long-term relationships with patients, 
-                    or the fascinating world of maxillofacial surgery, the dental field 
-                    encompasses a diverse spectrum of roles. Admissions into UK dental 
-                    schools are notoriously competitive, requiring not just top grades in 
-                    Biology and Chemistry, but also a demonstrable passion for the 
-                    profession, strong manual dexterity, and a high UCAT score. 
-                    This guide breaks down every step of the process.
+                  <p className="text-lg leading-relaxed text-slate-600 font-medium">
+                    {section.content}
                   </p>
-                </div>
-
-                {/* Content Image */}
-                <div className="overflow-hidden rounded-2xl">
-                  <Image
-                    src={resourceContentImage}
-                    alt="Medical professionals in surgical scrubs"
-                    width={800}
-                    height={500}
-                    className="w-full object-cover"
-                    quality={90}
-                    placeholder="blur"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-8" id="section-1">
-                <div>
-                  <h2
-                    className={cn(
-                      "mb-6 text-2xl font-semibold transition-colors lg:text-3xl",
-                      activeSection === "section-1"
-                        ? "text-black"
-                        : "text-black-700",
-                    )}
-                  >
-                    Understanding the UCAT
-                  </h2>
-                  <p className="font-sora text-sm leading-relaxed text-black">
-                    The University Clinical Aptitude Test (UCAT) is a critical hurdle 
-                    for almost all UK dental schools. Scored out of 3600, a competitive 
-                    score typically hovers around 2700-2800+ for Dentistry. The test 
-                    consists of five subtests: Verbal Reasoning, Decision Making, 
-                    Quantitative Reasoning, Abstract Reasoning, and Situational Judgement. 
-                    We highly recommend starting your preparation at least six weeks in 
-                    advance, focusing heavily on timed mock exams to get used to the 
-                    intense time pressure.
-                  </p>
-                </div>
-              </div>
-
-              {/* Add more sections */}
-              {tableOfContents.slice(2).map((item, index) => {
-                const sectionId = `section-${index + 2}`;
-                const isActive = activeSection === sectionId;
-                return (
-                  <div key={sectionId} className="space-y-8" id={sectionId}>
-                    <div>
-                      <h2
-                        className={cn(
-                          "mb-6 text-2xl font-semibold transition-colors lg:text-3xl",
-                          isActive ? "text-black" : "text-black-700",
-                        )}
-                      >
-                        {item}
-                      </h2>
-                      <p className="font-sora text-sm leading-relaxed text-black">
-                        This section provides crucial information for aspiring dental students. Review your portfolio carefully, ensuring it highlights core competencies like manual dexterity, empathy, communication, and resilience. Whether you are reflecting on your shadowing hours at a local clinic or preparing for MMI ethical scenarios, authenticity is key. Remember that admissions tutors are looking for candidates who demonstrate a realistic understanding of the profession.
-                      </p>
+                  {index === 0 && (
+                    <div className="overflow-hidden rounded-[2rem] border border-slate-100 shadow-xl my-10">
+                      <Image
+                        src={resourceContentImage}
+                        alt="Clinical Guidance"
+                        width={800}
+                        height={500}
+                        className="w-full object-cover"
+                        quality={90}
+                        placeholder="blur"
+                      />
                     </div>
-                  </div>
-                );
-              })}
+                  )}
+                </div>
+              ))}
             </div>
           </motion.div>
         </motion.div>
