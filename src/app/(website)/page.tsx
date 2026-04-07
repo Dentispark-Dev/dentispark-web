@@ -7,12 +7,16 @@ import { PricingSection } from "@/src/features/(website)/home/components/pricing
 import { JoinSection } from "@/src/features/(website)/home/components/subscribe";
 import { Testimonials } from "@/src/features/(website)/home/components/testimonials";
 import WhyChooseUs from "@/src/features/(website)/home/components/why-choose-us";
+import { DashboardPreview } from "@/src/features/(website)/home/components/dashboard-preview";
+import { WorkExperienceSection } from "@/src/features/(website)/home/components/work-experience-section";
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <DashboardPreview />
       <FreeTools />
+      <WorkExperienceSection />
       <HowItWorks />
       <MeetOurMentors />
       <WhyChooseUs />
@@ -23,3 +27,4 @@ export default function Home() {
     </>
   );
 }
+

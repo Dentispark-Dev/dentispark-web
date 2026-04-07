@@ -7,6 +7,7 @@ import PopularResources from "@/src/features/(dashboard)/overview/components/pop
 import { PerformanceGrid } from "@/src/features/analytics/components/performance-grid";
 import { DeadlineCountdown } from "@/src/features/automation/components/deadline-countdown";
 import { MissionControl } from "@/src/features/(dashboard)/overview/components/mission-control";
+import { ShadowingLog } from "@/src/features/(dashboard)/overview/components/shadowing-log";
 import { useAuth } from "@/src/providers/auth-provider";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -82,6 +83,11 @@ export default function OverviewPage() {
 
             {/* Cinematic Mission Control */}
             <MissionControl />
+
+            {/* Placement & Experience Logging */}
+            <div className="max-w-5xl mx-auto pt-8">
+                <ShadowingLog />
+            </div>
 
             <div className="space-y-24">
                 <AIToolsGrid />

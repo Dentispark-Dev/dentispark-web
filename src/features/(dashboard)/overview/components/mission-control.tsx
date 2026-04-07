@@ -24,7 +24,8 @@ import {
   Target,
   Layout,
   Compass,
-  ArrowUpRight
+  ArrowUpRight,
+  Activity
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
@@ -218,6 +219,50 @@ export function MissionControl() {
         <p className="text-slate-500 font-medium max-w-2xl text-lg">
           Your step-by-step intelligence checklist for the UK 2026/27 cycle. Expand a stage to view critical tasks and access DentiSpark tools.
         </p>
+      </div>
+
+      {/* Clinical Readiness Progress Bar & Placement Unlock */}
+      <div className="bg-white p-8 lg:p-10 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-5">
+          <Trophy className="w-48 h-48 text-emerald-900" />
+        </div>
+        
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
+              <Activity className="w-3.5 h-3.5" />
+              Outcome-Oriented Protocol
+            </div>
+            <h3 className="text-2xl font-jakarta font-black text-slate-900">Your Clinical Readiness</h3>
+          </div>
+          
+          <div className="flex flex-col items-end">
+            <span className="text-4xl font-jakarta font-black text-emerald-600 leading-none">
+              {Math.round((stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100)}%
+            </span>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Ready for Clinic</span>
+          </div>
+        </div>
+
+        <div className="relative z-10 space-y-4">
+          <div className="h-4 bg-slate-100 rounded-full overflow-hidden w-full relative">
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${(stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100}%` }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="h-full bg-emerald-500 rounded-full" 
+            />
+          </div>
+          
+          <div className="flex justify-between items-center text-xs font-bold text-slate-500">
+            <span>Foundation</span>
+            <div className="flex items-center gap-1.5 text-amber-500">
+              <Lock className="w-3.5 h-3.5" />
+              <span>Placement Unlocks at 80%</span>
+            </div>
+            <span>Clinical Milestone</span>
+          </div>
+        </div>
       </div>
 
       {/* Accordion Timeline */}
