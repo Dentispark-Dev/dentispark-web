@@ -61,7 +61,7 @@ export default function MentorMatchingPage() {
       setShowResults(true);
     } catch (error: any) {
       console.error(error);
-      setError(error.message || "Failed to generate AI insights. Using standard matchmaking profiles.");
+      setError("AI Insight Layer Unavailable. We've retrieved our top primary mentor matches for your profile.");
       setShowResults(true); 
     } finally {
       setIsMatching(false);
