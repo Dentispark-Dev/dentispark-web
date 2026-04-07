@@ -324,10 +324,12 @@ export default function MentorMatchingPage() {
                 </div>
                 
                 <div className="relative z-10 shrink-0">
-                    <Button className="bg-white text-emerald-900 hover:bg-gray-50 px-12 h-16 rounded-xl font-jakarta font-black text-lg hover:-translate-y-1 transition-all flex items-center gap-4 group">
-                        Live Briefing
-                        <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                    <Link href="/mentorship">
+                        <Button className="bg-white text-emerald-900 hover:bg-gray-50 px-12 h-16 rounded-xl font-jakarta font-black text-lg hover:-translate-y-1 transition-all flex items-center gap-4 group">
+                            Live Briefing
+                            <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </Link>
                 </div>
             </div>
 

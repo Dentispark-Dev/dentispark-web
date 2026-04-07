@@ -39,7 +39,7 @@ export function MentorMatchCard({
         <div className="flex justify-between items-start p-6 pb-2">
             <div className="flex gap-4 items-center">
                 <div className="relative">
-                    <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-sora font-bold text-2xl shadow-sm border-2 border-white overflow-hidden">
+                    <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-800 font-jakarta font-bold text-2xl shadow-sm border-2 border-white overflow-hidden">
                         {image ? (
                             <Image src={image} alt={name} fill className="object-cover" />
                         ) : (
@@ -53,7 +53,7 @@ export function MentorMatchCard({
                     </div>
                 </div>
                 <div>
-                    <h4 className="text-xl font-sora font-bold text-gray-900 group-hover:text-emerald-700 transition-colors tracking-tight">{name}</h4>
+                    <h4 className="text-xl font-jakarta font-black text-gray-900 group-hover:text-emerald-700 transition-colors tracking-tight">{name}</h4>
                     <div className="flex items-center gap-1.5 text-gray-500 mt-1 uppercase text-[10px] font-semibold tracking-wider">
                         <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />
                         {university}
@@ -63,7 +63,7 @@ export function MentorMatchCard({
 
             <div className="flex flex-col items-end pt-1">
                 <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-sora font-bold text-emerald-600 leading-none">{compatibility}%</span>
+                    <span className="text-3xl font-jakarta font-black text-emerald-600 leading-none">{compatibility}%</span>
                 </div>
                 <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Match Index</span>
             </div>
@@ -93,8 +93,8 @@ export function MentorMatchCard({
 
             <div className="pt-2 flex gap-3">
                 <div className="flex-1">
-                    <Link href={`/dashboard/mentor/${slug}`} className="block w-full">
-                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-sora font-semibold transition-all flex items-center justify-center gap-2 shadow-sm group/btn">
+                    <Link href={`/mentorship/${slug}`} className="block w-full">
+                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-jakarta font-bold transition-all flex items-center justify-center gap-2 shadow-sm group/btn">
                             Secure Partnership
                             <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                         </Button>
