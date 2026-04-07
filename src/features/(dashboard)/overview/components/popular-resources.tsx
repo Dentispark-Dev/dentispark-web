@@ -22,58 +22,52 @@ interface Resource {
 
 const mockResources: Resource[] = [
   {
-    id: "1",
-    title: "M7 MBA Programs - What They Are & How to Get In",
-    description:
-      "An expert admissions coach details how to get into an elite M7 business school with ways to stand out in your application and showcase leadership potential.",
-    date: "May 23, 2023",
+    id: "ucat-guide",
+    title: "DentiSpark UCAT Prep Guide",
+    description: "Master all five UCAT subtests with our proprietary strategic roadmap.",
+    date: "March 15, 2024",
     image: "/images/resource-1.png",
-    category: "MBA",
-  },
-  {
-    id: "2",
-    title: "Mastering the GMAT: Strategies for Success",
-    description:
-      "Discover effective study techniques and time management tips to ace the GMAT, enhancing your chances of admission to top business schools.",
-    date: "June 15, 2023",
-    image: "/images/resource-2.png",
-    category: "GMAT",
-  },
-  {
-    id: "3",
-    title: "Medical School Application Timeline",
-    description:
-      "A comprehensive guide to planning your medical school application process from start to finish, including key deadlines and requirements.",
-    date: "July 8, 2023",
-    image: "/images/resource-3.png",
-    category: "Medical",
-  },
-  {
-    id: "4",
-    title: "Dental School Interview Preparation",
-    description:
-      "Essential tips and practice questions to help you excel in dental school interviews and make a lasting impression on admissions committees.",
-    date: "August 12, 2023",
-    image: "/images/resource-4.png",
-    category: "Dental",
-  },
-  {
-    id: "5",
-    title: "UCAT Exam Guide: Complete Preparation",
-    description:
-      "Master the UCAT exam with comprehensive study materials, practice tests, and proven strategies from successful medical students.",
-    date: "September 5, 2023",
-    image: "/images/resource-5.png",
     category: "UCAT",
   },
   {
-    id: "6",
-    title: "Personal Statement Writing Masterclass",
-    description:
-      "Learn how to craft compelling personal statements that showcase your passion, experience, and commitment to your chosen field.",
-    date: "October 18, 2023",
-    image: "/images/resource-6.png",
+    id: "dental-booklet",
+    title: "Dental Schools Council Yearbook",
+    description: "Official entry requirements for all UK dental schools, A-level targets, and UCAT thresholds.",
+    date: "January 10, 2024",
+    image: "/images/resource-2.png",
+    category: "Admissions",
+  },
+  {
+    id: "ps-template",
+    title: "Personal Statement Template",
+    description: "Structure your clinical observations, volunteering, and manual dexterity evidence.",
+    date: "February 20, 2024",
+    image: "/images/resource-3.png",
     category: "Application",
+  },
+  {
+    id: "financial-guide",
+    title: "Financial Support Guide",
+    description: "NHS bursaries, Student Finance, and regional scholarships for dental students.",
+    date: "April 05, 2024",
+    image: "/images/resource-4.png",
+    category: "Finance",
+  },
+  {
+    id: "nursing-guide",
+    title: "Dental Nursing Apprenticeship Guide",
+    description: "Level 3 Diploma, apprenticeship standards, and career progression routes.",
+    date: "May 12, 2024",
+    image: "/images/resource-5.png",
+    category: "Career Paths",
+  },
+  {
+    id: "interview-guide",
+    title: "MMI Interview Survival Guide",
+    description: "Ethical scenarios, communication stations, and roleplay tips aligned with GDC Standards.",
+    date: "June 01, 2024",
+    image: "/images/resource-1.png",
+    category: "Interviews",
   },
 ];
 
@@ -193,6 +187,7 @@ export default function PopularResources({
                 key={resource.id}
                 className="basis-full pl-4 sm:basis-[70%] md:basis-1/2 lg:basis-full xl:basis-full"
               >
+                <Link href={`/resources/${resource.id}`}>
                 <motion.div
                   className="flex h-full flex-col group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
@@ -222,6 +217,7 @@ export default function PopularResources({
                     </h3>
                   </div>
                 </motion.div>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
