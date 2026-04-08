@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Calendar, AlertTriangle, Zap, Clock } from "lucide-react";
+import Link from "next/link";
 import { useDeadlineManager } from "@/src/features/automation/hooks/use-deadline-manager";
 import { cn } from "@/src/lib/utils";
 
@@ -77,15 +78,17 @@ export function DeadlineCountdown() {
 
         {/* Right Section: Action */}
         <div className="shrink-0 flex justify-end mt-4 xl:mt-0">
-            <button className={cn(
-                "w-full xl:w-auto h-14 px-8 rounded-xl font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2",
-                isCritical 
-                    ? "bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20" 
-                    : "bg-slate-900 hover:bg-slate-800 text-white"
-            )}>
-                {isCritical ? "Complete Registration" : "Review Checklist"}
-                {isCritical ? <Zap className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
-            </button>
+            <Link href="/applications/checklist" className="w-full xl:w-auto">
+                <button className={cn(
+                    "w-full xl:w-auto h-14 px-8 rounded-xl font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                    isCritical 
+                        ? "bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/20" 
+                        : "bg-slate-900 hover:bg-slate-800 text-white"
+                )}>
+                    {isCritical ? "Complete Registration" : "Review Checklist"}
+                    {isCritical ? <Zap className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
+                </button>
+            </Link>
         </div>
     </div>
   );
