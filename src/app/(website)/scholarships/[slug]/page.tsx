@@ -69,16 +69,16 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-8">
             <div className="max-w-3xl">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg shadow-primary-600/20">
+                <div className="bg-primary-600 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg shadow-primary-600/20">
                   Global Award
                 </div>
                 {scholarship.isSponsored && (
-                  <div className="bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-amber-200">
+                  <div className="bg-amber-100 text-amber-700 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full border border-amber-200">
                     Featured
                   </div>
                 )}
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-4">
                 {scholarship.title}
               </h1>
               <p className="text-xl text-slate-500 font-medium leading-relaxed">
@@ -87,7 +87,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
             </div>
             
             <div className="flex flex-col gap-4 min-w-[280px]">
-              <Button size="lg" className="h-16 px-10 rounded-2xl shadow-2xl shadow-primary-600/30 text-lg font-black bg-primary-600 hover:bg-primary-700 transition-all hover:scale-[1.02]" asChild>
+              <Button size="lg" className="h-16 px-10 rounded-2xl shadow-2xl shadow-primary-600/30 text-lg font-extrabold bg-primary-600 hover:bg-primary-700 transition-all hover:scale-[1.02]" asChild>
                 <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
                   Apply on Official Website
                   <ExternalLink className="h-5 w-5" />
@@ -106,17 +106,17 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
             <div className="py-8 px-6 first:pl-0">
               <div className="flex items-center gap-3 mb-2">
                 <Target className="h-5 w-5 text-primary-600" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Award Value</span>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Award Value</span>
               </div>
-              <p className="text-2xl font-black text-slate-900">{scholarship.amountCurrency}{scholarship.amountValue > 0 ? scholarship.amountValue.toLocaleString() : "Varies"}</p>
+              <p className="text-2xl font-extrabold text-slate-900">{scholarship.amountCurrency}{scholarship.amountValue > 0 ? scholarship.amountValue.toLocaleString() : "Varies"}</p>
               <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).fundingType || "Contribution to fees"}</p>
             </div>
             <div className="py-8 px-6">
               <div className="flex items-center gap-3 mb-2">
                 <Clock className="h-5 w-5 text-primary-600" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Deadline</span>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Deadline</span>
               </div>
-              <p className="text-2xl font-black text-slate-900">
+              <p className="text-2xl font-extrabold text-slate-900">
                 {scholarship.deadline}
               </p>
               <p className="text-xs text-slate-500 font-bold mt-1">Intake: {(scholarship as any).intakeYear || "2026 Entry"}</p>
@@ -124,17 +124,17 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
             <div className="py-8 px-6">
               <div className="flex items-center gap-3 mb-2">
                 <GraduationCap className="h-5 w-5 text-primary-600" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Study Level</span>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Study Level</span>
               </div>
-              <p className="text-2xl font-black text-slate-900 truncate">{scholarship.targetDegreeLevel}</p>
+              <p className="text-2xl font-extrabold text-slate-900 truncate">{scholarship.targetDegreeLevel}</p>
               <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).numberOfAwards || "Multiple awards"}</p>
             </div>
             <div className="py-8 px-6 last:pr-0">
               <div className="flex items-center gap-3 mb-2">
                 <Globe className="h-5 w-5 text-primary-600" />
-                <span className="text-[11px] font-black uppercase tracking-widest text-slate-400">Target Location</span>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Target Location</span>
               </div>
-              <p className="text-2xl font-black text-slate-900">{scholarship.targetLocation || "United Kingdom"}</p>
+              <p className="text-2xl font-extrabold text-slate-900">{scholarship.targetLocation || "United Kingdom"}</p>
               <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).nationality || "All Eligible"}</p>
             </div>
           </div>
@@ -152,14 +152,14 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                         <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white">
                             <Info className="h-6 w-6" />
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tight">About this scholarship</h2>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">About this scholarship</h2>
                     </div>
                     
                     <div className="prose prose-lg max-w-none text-slate-600 leading-relaxed font-medium">
                         <p className="mb-8">{scholarship.description}</p>
                         
                         <div className="mt-12">
-                          <h3 className="text-xl font-black text-slate-900 mb-6">What does this scholarship cover?</h3>
+                          <h3 className="text-xl font-extrabold text-slate-900 mb-6">What does this scholarship cover?</h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {covers.map((item: string, i: number) => (
                               <div key={i} className="flex items-center gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
@@ -178,22 +178,22 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                         <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white">
                             <GraduationCap className="h-6 w-6" />
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tight">Eligibility Criteria</h2>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Eligibility Criteria</h2>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Study Level</span>
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Study Level</span>
                             <p className="text-lg font-bold text-slate-900">{scholarship.targetDegreeLevel}</p>
                         </div>
                         <div className="space-y-2">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Location</span>
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Location</span>
                             <p className="text-lg font-bold text-slate-900">{scholarship.targetLocation || "United Kingdom"}</p>
                         </div>
                     </div>
 
                     <div className="mt-10 pt-10 border-t border-gray-100">
-                      <h4 className="text-sm font-black text-slate-900 mb-4">Detailed Requirements</h4>
+                      <h4 className="text-sm font-extrabold text-slate-900 mb-4">Detailed Requirements</h4>
                       <p className="text-slate-600 font-medium leading-[1.8]">
                         {scholarship.eligibilityCriteriaJson && scholarship.eligibilityCriteriaJson !== "{}" 
                           ? (JSON.parse(scholarship.eligibilityCriteriaJson).notes || "Candidates must meet the specific criteria set by the provider. Please visit the official website for full details.") 
@@ -208,7 +208,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                         <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white">
                             <ExternalLink className="h-6 w-6" />
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tight">How to apply</h2>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">How to apply</h2>
                     </div>
                     <div className="space-y-8">
                         <div className="space-y-4 text-slate-600 font-medium leading-relaxed">
@@ -220,7 +220,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                               "Submit any required forms or evidence before the specified deadline."
                             ].map((step, i) => (
                               <div key={i} className="flex gap-4">
-                                <div className="w-6 h-6 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center text-xs font-black flex-shrink-0">
+                                <div className="w-6 h-6 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center text-xs font-extrabold flex-shrink-0">
                                   {i + 1}
                                 </div>
                                 <p className="text-slate-700 font-bold">{step}</p>
@@ -235,7 +235,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                           </p>
                           <p className="text-xs text-primary-600 mt-1 font-medium">Please note that DentiSpark does not process applications for this award directly.</p>
                         </div>
-                        <Button className="h-14 px-10 rounded-2xl font-black text-lg bg-slate-900 hover:bg-slate-800" asChild>
+                        <Button className="h-14 px-10 rounded-2xl font-extrabold text-lg bg-slate-900 hover:bg-slate-800" asChild>
                             <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer">Visit Provider Website</a>
                         </Button>
                     </div>
@@ -247,9 +247,9 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <div className="bg-emerald-600 p-10 rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
                     <div className="relative z-10">
                         <LifeBuoy className="w-12 h-12 mb-8 text-emerald-100" />
-                        <h3 className="text-3xl font-black tracking-tight mb-4">Maximize Your Chances</h3>
+                        <h3 className="text-3xl font-extrabold tracking-tight mb-4">Maximize Your Chances</h3>
                         <p className="text-emerald-50 font-medium mb-10 text-lg leading-relaxed">Our clinical mentors help you craft a standout <span className="underline decoration-emerald-400 underline-offset-4">Personal Statement</span> that captures your potential.</p>
-                        <Button variant="secondary" className="w-full h-16 rounded-2xl font-black text-emerald-700 bg-white hover:bg-emerald-50 border-none transition-all shadow-xl text-lg hover:scale-[1.02]" asChild>
+                        <Button variant="secondary" className="w-full h-16 rounded-2xl font-extrabold text-emerald-700 bg-white hover:bg-emerald-50 border-none transition-all shadow-xl text-lg hover:scale-[1.02]" asChild>
                             <Link href="/services">Book Statement Review</Link>
                         </Button>
                     </div>
@@ -257,12 +257,12 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 </div>
 
                 <div className="p-10 rounded-[2.5rem] border border-gray-100 bg-white shadow-sm sticky top-8">
-                    <h4 className="font-black text-slate-900 tracking-tight mb-8 text-xl">Institution Contact</h4>
+                    <h4 className="font-extrabold text-slate-900 tracking-tight mb-8 text-xl">Institution Contact</h4>
                     <div className="space-y-6">
                         <div className="flex items-start gap-4">
                           <MapPin className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-sm font-black text-gray-900">{providerName}</p>
+                            <p className="text-sm font-extrabold text-gray-900">{providerName}</p>
                             <p className="text-xs text-gray-500 font-bold">{scholarship.targetLocation || "United Kingdom"}</p>
                           </div>
                         </div>

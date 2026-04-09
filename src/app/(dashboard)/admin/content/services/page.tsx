@@ -26,7 +26,7 @@ export default function AdminServicesPage() {
         <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
                 <div className="space-y-1">
-                    <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+                    <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-3">
                         <LayoutGrid className="h-8 w-8 text-green-600" />
                         Service Marketplace
                     </h1>
@@ -65,7 +65,7 @@ export default function AdminServicesPage() {
                         Filter
                     </Button>
                     <div className="h-8 w-[1px] bg-gray-200 mx-2 hidden md:block" />
-                    <p className="text-xs font-black text-gray-400 uppercase tracking-widest hidden md:block">
+                    <p className="text-xs font-extrabold text-gray-400 uppercase tracking-widest hidden md:block">
                         Platform Marketplace Hub
                     </p>
                 </div>

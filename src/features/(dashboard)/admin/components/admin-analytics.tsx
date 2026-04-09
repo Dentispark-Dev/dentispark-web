@@ -135,7 +135,7 @@ export function AdminDashboardAnalytics() {
                         <Activity className="w-3 h-3" />
                         Platform Pulse
                     </div>
-                    <h1 className="text-4xl font-black text-gray-900 tracking-tight">Admin Hub Overview</h1>
+                    <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Admin Hub Overview</h1>
                     <p className="text-gray-500 font-medium">Real-time health and registration trajectory for the DentiSpark ecosystem.</p>
                 </div>
                 
@@ -197,7 +197,7 @@ export function AdminDashboardAnalytics() {
                         <div className="space-y-1.5 relative z-10">
                             <h3 className="text-gray-400 text-xs font-bold tracking-[0.1em] uppercase">{stat.title}</h3>
                             <div className="flex items-baseline gap-2">
-                                <p className="text-4xl font-black text-gray-900 tracking-tighter leading-none">{stat.value}</p>
+                                <p className="text-4xl font-extrabold text-gray-900 tracking-tighter leading-none">{stat.value}</p>
                             </div>
                         </div>
                     </motion.div>
@@ -216,13 +216,13 @@ export function AdminDashboardAnalytics() {
                         <div>
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                                <h3 className="text-2xl font-black text-gray-900 tracking-tight">Registration Pulse</h3>
+                                <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight">Registration Pulse</h3>
                             </div>
                             <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">Global platform trajectory</p>
                         </div>
                         <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-2xl border border-gray-100 shadow-inner">
                             {['7D', '30D', '90D', 'ALL'].map((p) => (
-                                <button key={p} className={`px-5 py-2 text-xs font-black rounded-xl transition-all ${p === '7D' ? 'bg-white text-primary-600 shadow-xl ring-1 ring-black/5' : 'text-gray-400 hover:text-gray-600 hover:bg-white/50'}`}>
+                                <button key={p} className={`px-5 py-2 text-xs font-extrabold rounded-xl transition-all ${p === '7D' ? 'bg-white text-primary-600 shadow-xl ring-1 ring-black/5' : 'text-gray-400 hover:text-gray-600 hover:bg-white/50'}`}>
                                     {p}
                                 </button>
                             ))}
@@ -287,14 +287,14 @@ export function AdminDashboardAnalytics() {
                         <div className="flex gap-10">
                             <div className="flex items-center gap-3">
                                 <div className="h-4 w-4 bg-emerald-500 rounded-lg shadow-lg shadow-emerald-500/30" />
-                                <span className="text-xs font-black text-gray-500 uppercase tracking-widest">Qualified Students</span>
+                                <span className="text-xs font-extrabold text-gray-500 uppercase tracking-widest">Qualified Students</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <div className="h-4 w-4 bg-blue-500 rounded-lg shadow-lg shadow-blue-500/30" />
-                                <span className="text-xs font-black text-gray-500 uppercase tracking-widest">Verified Mentors</span>
+                                <span className="text-xs font-extrabold text-gray-500 uppercase tracking-widest">Verified Mentors</span>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2 text-[10px] font-black text-primary-600 bg-primary-50 px-4 py-1.5 rounded-full uppercase tracking-widest">
+                        <div className="flex items-center gap-2 text-[10px] font-extrabold text-primary-600 bg-primary-50 px-4 py-1.5 rounded-full uppercase tracking-widest">
                             <Clock className="w-3 h-3" />
                             Live Telemetry Active
                         </div>
@@ -312,8 +312,8 @@ export function AdminDashboardAnalytics() {
                     >
                         <div className="absolute top-0 right-0 h-64 w-64 bg-primary-500/10 rounded-full blur-[80px] -mr-32 -mt-32" />
                         <div className="flex items-center justify-between mb-8 relative z-10">
-                            <h3 className="text-xl font-black tracking-tight">Live Activity</h3>
-                            <Badge className="bg-emerald-500/20 border-emerald-500/30 text-emerald-400 font-black text-[10px] uppercase">Now</Badge>
+                            <h3 className="text-xl font-extrabold tracking-tight">Live Activity</h3>
+                            <Badge className="bg-emerald-500/20 border-emerald-500/30 text-emerald-400 font-extrabold text-[10px] uppercase">Now</Badge>
                         </div>
                         
                         <div className="space-y-6 relative z-10">
@@ -340,7 +340,7 @@ export function AdminDashboardAnalytics() {
                         className="bg-white p-10 rounded-[3rem] shadow-2xl shadow-gray-200/40 border border-gray-50"
                     >
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-2xl font-black text-gray-900 tracking-tight">Origins</h3>
+                            <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight">Origins</h3>
                             {isTrafficLoading && <div className="h-5 w-5 border-2 border-primary-600 border-t-transparent animate-spin rounded-full shadow-lg" />}
                         </div>
                         
@@ -371,8 +371,8 @@ export function AdminDashboardAnalytics() {
                                             >
                                                 <Icon className={cn("h-5 w-5", isActive ? "text-primary-500" : "text-gray-400")} />
                                                 <div className="text-center">
-                                                    <p className={cn("text-[9px] font-black uppercase tracking-widest", isActive ? "text-white/50" : "text-gray-400")}>{device.label}</p>
-                                                    <p className={cn("text-lg font-black", isActive ? "text-white" : "text-gray-900")}>{device.percentage}%</p>
+                                                    <p className={cn("text-[9px] font-extrabold uppercase tracking-widest", isActive ? "text-white/50" : "text-gray-400")}>{device.label}</p>
+                                                    <p className={cn("text-lg font-extrabold", isActive ? "text-white" : "text-gray-900")}>{device.percentage}%</p>
                                                 </div>
                                             </button>
                                         );
@@ -399,7 +399,7 @@ export function AdminDashboardAnalytics() {
                                                 onClick={() => setSelectedLocation(isActive ? undefined : loc.label)}
                                                 className="w-full group space-y-2 text-left"
                                             >
-                                                <div className="flex items-center justify-between text-xs font-black">
+                                                <div className="flex items-center justify-between text-xs font-extrabold">
                                                     <span className={cn(isActive ? "text-primary-600" : "text-gray-700")}>{loc.label}</span>
                                                     <span className="text-gray-400 font-bold">{loc.percentage}%</span>
                                                 </div>

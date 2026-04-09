@@ -72,7 +72,7 @@ export function PerformanceGrid() {
           
           <div className="flex justify-between items-start mb-8">
             <div className="space-y-1">
-              <h3 className="text-xl font-black text-slate-900 leading-tight tracking-tight">Success Probability</h3>
+              <h3 className="text-xl font-extrabold text-slate-900 leading-tight tracking-tight">Success Probability</h3>
               <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-[200px]">Based on dynamic enrollment readiness</p>
             </div>
             <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-600 transition-transform duration-300 group-hover:rotate-12">
@@ -108,8 +108,8 @@ export function PerformanceGrid() {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-3xl font-black text-slate-900">{score}%</span>
-                  <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">{data?.rank || "Evaluating"}</span>
+                  <span className="text-3xl font-extrabold text-slate-900">{score}%</span>
+                  <span className="text-[8px] font-extrabold uppercase tracking-widest text-emerald-500">{data?.rank || "Evaluating"}</span>
               </div>
             </div>
 
@@ -132,7 +132,7 @@ export function PerformanceGrid() {
 
           <div className="flex justify-between items-start mb-8">
               <div className="space-y-1">
-                <h3 className="text-xl font-black text-slate-900 leading-tight tracking-tight">Active Streak</h3>
+                <h3 className="text-xl font-extrabold text-slate-900 leading-tight tracking-tight">Active Streak</h3>
                 <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-[200px]">Consecutive days logging progress</p>
               </div>
               <div className="p-3 bg-orange-50 rounded-2xl text-orange-600 transition-transform duration-300 group-hover:-rotate-12">
@@ -142,8 +142,8 @@ export function PerformanceGrid() {
 
           <div className="space-y-6">
               <div className="flex items-baseline gap-2">
-                  <p className="text-5xl font-black text-slate-900 tracking-tighter">12</p>
-                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Days</span>
+                  <p className="text-5xl font-extrabold text-slate-900 tracking-tighter">12</p>
+                  <span className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">Days</span>
               </div>
 
               <div className="flex gap-1.5 overflow-hidden">
@@ -160,7 +160,7 @@ export function PerformanceGrid() {
                       />
                   ))}
               </div>
-              <div className="flex justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              <div className="flex justify-between items-center text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
                   <span>Continuity Score</span>
                   <span className="text-orange-600">LEGENDARY</span>
               </div>
@@ -173,7 +173,7 @@ export function PerformanceGrid() {
 
           <div className="flex justify-between items-start mb-8">
               <div className="space-y-1">
-                <h3 className="text-xl font-black text-slate-900 leading-tight tracking-tight">Competency</h3>
+                <h3 className="text-xl font-extrabold text-slate-900 leading-tight tracking-tight">Competency</h3>
                 <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-[200px]">Profile sector breakdown</p>
               </div>
               <div className="p-3 bg-blue-50 rounded-2xl text-blue-600 transition-transform duration-300 group-hover:rotate-12">
@@ -188,7 +188,7 @@ export function PerformanceGrid() {
                   { label: "Interview", score: breakdown.interview, color: "bg-purple-500", text: "text-purple-700" }
               ].map((stat) => (
                   <div key={stat.label} className="flex items-center gap-4">
-                      <span className="w-20 text-[10px] font-black uppercase tracking-widest text-slate-500 shrink-0">
+                      <span className="w-20 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 shrink-0">
                           {stat.label}
                       </span>
                       <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -199,7 +199,7 @@ export function PerformanceGrid() {
                               className={cn("h-full rounded-full", stat.color)} 
                           />
                       </div>
-                      <span className={cn("w-10 text-right text-xs font-black", stat.text)}>
+                      <span className={cn("w-10 text-right text-xs font-extrabold", stat.text)}>
                           {stat.score}%
                       </span>
                   </div>

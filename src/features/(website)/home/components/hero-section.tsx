@@ -67,7 +67,7 @@ export function Hero() {
           Empowering
           <span className="relative inline-block px-2">
             <span className="border-emerald-500 bg-emerald-50 pointer-events-none absolute inset-0 -rotate-[1.5deg] transform rounded-full border-2 border-dotted" />
-            <span className="text-emerald-600 relative inline-block px-5 py-2 italic font-black">
+            <span className="text-emerald-600 relative inline-block px-5 py-2 italic font-extrabold">
               underprivileged
             </span>
           </span>{" "}
@@ -84,7 +84,7 @@ export function Hero() {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              className="bg-slate-900 font-jakarta hover:bg-slate-800 inline-flex w-full cursor-pointer items-center justify-center gap-4 rounded-2xl px-10 py-5 text-sm font-black uppercase tracking-[0.2em] text-white shadow-2xl transition"
+              className="bg-slate-900 font-jakarta hover:bg-slate-800 inline-flex w-full cursor-pointer items-center justify-center gap-4 rounded-2xl px-10 py-5 text-sm font-extrabold uppercase tracking-[0.2em] text-white shadow-2xl transition"
             >
               <span>Get Started Free</span>
               <motion.span variants={bounceX} className="flex">
@@ -98,7 +98,7 @@ export function Hero() {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              className="bg-white border-2 border-slate-100 font-jakarta text-slate-900 inline-flex cursor-pointer items-center justify-center gap-4 rounded-2xl px-10 py-5 text-sm font-black uppercase tracking-[0.2em] transition hover:bg-slate-50 shadow-sm"
+              className="bg-white border-2 border-slate-100 font-jakarta text-slate-900 inline-flex cursor-pointer items-center justify-center gap-4 rounded-2xl px-10 py-5 text-sm font-extrabold uppercase tracking-[0.2em] transition hover:bg-slate-50 shadow-sm"
             >
               <span>Explore Tools</span>
               <motion.span variants={bounceY} className="flex">

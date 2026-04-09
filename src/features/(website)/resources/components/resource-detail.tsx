@@ -77,7 +77,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-black-700 mb-4 text-3xl leading-[120%] font-black sm:text-4xl tracking-tight"
+              className="text-black-700 mb-4 text-3xl leading-[120%] font-extrabold sm:text-4xl tracking-tight"
             >
               {resource.title}
             </motion.h1>
@@ -123,7 +123,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                 {/* Table of Contents */}
                 <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8">
                   <div className="mb-6 flex items-center justify-between">
-                    <h3 className="text-slate-900 text-sm font-black uppercase tracking-widest">
+                    <h3 className="text-slate-900 text-sm font-extrabold uppercase tracking-widest">
                       On This Page
                     </h3>
                     <button
@@ -178,7 +178,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
 
                 {/* Share Section */}
                 <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8">
-                  <h3 className="text-slate-400 mb-4 text-[10px] font-black uppercase tracking-widest">
+                  <h3 className="text-slate-400 mb-4 text-[10px] font-extrabold uppercase tracking-widest">
                     Share Insight
                   </h3>
                   <div className="flex items-center gap-3">
@@ -219,7 +219,7 @@ export function ResourceDetail({ resource }: ResourceDetailProps) {
                 <div key={index} className="space-y-6" id={`section-${index}`}>
                   <h2
                     className={cn(
-                      "text-2xl font-black transition-colors lg:text-3xl tracking-tight leading-tight",
+                      "text-2xl font-extrabold transition-colors lg:text-3xl tracking-tight leading-tight",
                       activeSection === `section-${index}`
                         ? "text-emerald-600"
                         : "text-slate-900",

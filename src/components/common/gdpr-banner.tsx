@@ -37,7 +37,7 @@ export function GDPRBanner() {
               
               <div className="space-y-4">
                 <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-black tracking-tight leading-tight">Privacy First.</h3>
+                  <h3 className="text-xl font-extrabold tracking-tight leading-tight">Privacy First.</h3>
                   <button onClick={() => setIsVisible(false)} className="p-1 hover:bg-white/10 rounded-full transition-colors">
                     <X className="w-5 h-5 text-white/50" />
                   </button>
@@ -50,14 +50,14 @@ export function GDPRBanner() {
                 <div className="flex items-center gap-3 pt-2">
                   <button 
                     onClick={handleAccept}
-                    className="flex-1 h-14 bg-white text-black-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-primary-50 transition-all flex items-center justify-center gap-2"
+                    className="flex-1 h-14 bg-white text-black-900 rounded-2xl font-extrabold uppercase tracking-widest text-xs hover:bg-primary-50 transition-all flex items-center justify-center gap-2"
                   >
                     Accept All
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={() => setIsVisible(false)}
-                    className="px-6 h-14 border border-white/20 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+                    className="px-6 h-14 border border-white/20 rounded-2xl font-extrabold uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
                   >
                     Settings
                   </button>

@@ -135,7 +135,7 @@ export default function SuccessStoriesPage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-black uppercase tracking-widest mb-8"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-extrabold uppercase tracking-widest mb-8"
                     >
                         <Trophy className="w-3.5 h-3.5 fill-emerald-600" />
                         Student Spotlight
@@ -143,7 +143,7 @@ export default function SuccessStoriesPage() {
                     <motion.h1 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1] mb-8"
+                        className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1] mb-8"
                     >
                         Real Stories. <br />
                         <span className="text-emerald-600">Real Success.</span>
@@ -174,7 +174,7 @@ export default function SuccessStoriesPage() {
                                     {stat.icon}
                                 </div>
                                 <div className="text-left">
-                                    <p className="text-2xl font-black text-slate-900 leading-none">{stat.value}</p>
+                                    <p className="text-2xl font-extrabold text-slate-900 leading-none">{stat.value}</p>
                                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">{stat.label}</p>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@ export default function SuccessStoriesPage() {
                         <button
                             key={f}
                             onClick={() => setActiveFilter(f)}
-                            className={`px-8 py-3 rounded-2xl text-sm font-black transition-all whitespace-nowrap ${
+                            className={`px-8 py-3 rounded-2xl text-sm font-extrabold transition-all whitespace-nowrap ${
                                 activeFilter === f 
                                     ? "bg-slate-900 text-white shadow-xl shadow-slate-900/20 scale-105" 
                                     : "bg-white text-slate-500 hover:text-slate-900 border border-slate-100"
@@ -216,11 +216,11 @@ export default function SuccessStoriesPage() {
                         
                         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                             <div className="space-y-8">
-                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-emerald-400 text-xs font-black uppercase tracking-widest">
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-emerald-400 text-xs font-extrabold uppercase tracking-widest">
                                     <Star className="w-3.5 h-3.5 fill-emerald-500" />
                                     Featured Spotlight
                                 </div>
-                                <h2 className="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight">
+                                <h2 className="text-4xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
                                     How David got into <br />
                                     <span className="text-emerald-500">Harvard Med.</span>
                                 </h2>
@@ -229,16 +229,16 @@ export default function SuccessStoriesPage() {
                                 </p>
                                 <div className="flex flex-wrap gap-8 pt-4">
                                     <div>
-                                        <p className="text-3xl font-black text-emerald-500">522</p>
-                                        <p className="text-xs font-black text-slate-500 uppercase tracking-widest">MCAT Score</p>
+                                        <p className="text-3xl font-extrabold text-emerald-500">522</p>
+                                        <p className="text-xs font-extrabold text-slate-500 uppercase tracking-widest">MCAT Score</p>
                                     </div>
                                     <div className="w-px h-12 bg-white/10" />
                                     <div>
-                                        <p className="text-3xl font-black text-emerald-500">Top 1%</p>
-                                        <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Globally</p>
+                                        <p className="text-3xl font-extrabold text-emerald-500">Top 1%</p>
+                                        <p className="text-xs font-extrabold text-slate-500 uppercase tracking-widest">Globally</p>
                                     </div>
                                 </div>
-                                <Button size="lg" className="h-14 px-10 rounded-2xl bg-white hover:bg-slate-100 text-slate-950 font-black text-lg group">
+                                <Button size="lg" className="h-14 px-10 rounded-2xl bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-lg group">
                                     Read David's Story <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </div>
@@ -253,7 +253,7 @@ export default function SuccessStoriesPage() {
                                     <div className="w-16 h-16 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center mb-4 cursor-pointer hover:bg-emerald-500 transition-colors group/play">
                                         <Play className="w-6 h-6 text-white group-hover/play:scale-110 transition-transform" />
                                     </div>
-                                    <p className="text-2xl font-black leading-tight">David Chen</p>
+                                    <p className="text-2xl font-extrabold leading-tight">David Chen</p>
                                     <p className="text-sm font-bold text-slate-400">MD Candidate, Harvard Medical School</p>
                                 </div>
                             </div>
@@ -276,7 +276,7 @@ export default function SuccessStoriesPage() {
                             className="bg-white rounded-[3rem] border border-slate-100 p-10 flex flex-col h-full hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500 group relative"
                         >
                             <div className="mb-8 relative flex items-center justify-between">
-                                <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 flex items-center justify-center text-2xl font-black text-slate-900 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 flex items-center justify-center text-2xl font-extrabold text-slate-900 group-hover:bg-emerald-500 group-hover:text-white transition-all">
                                     {story.name.charAt(0)}
                                 </div>
                                 <div className="flex gap-0.5">
@@ -287,7 +287,7 @@ export default function SuccessStoriesPage() {
                             <Quote className="w-10 h-10 text-emerald-500/10 absolute top-10 right-10 group-hover:text-emerald-500/20 transition-colors" />
 
                             <div className="flex-1 space-y-4">
-                                <h3 className="text-xl font-black text-slate-900 group-hover:text-emerald-600 transition-colors leading-tight">
+                                <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors leading-tight">
                                     {story.achievement}
                                 </h3>
                                 <p className="text-slate-500 font-medium leading-relaxed italic">
@@ -297,10 +297,10 @@ export default function SuccessStoriesPage() {
 
                             <div className="mt-10 pt-8 border-t border-slate-50 flex items-center justify-between">
                                 <div>
-                                    <p className="text-lg font-black text-slate-900 leading-none">{story.name}</p>
-                                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest mt-2">{story.university}</p>
+                                    <p className="text-lg font-extrabold text-slate-900 leading-none">{story.name}</p>
+                                    <p className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mt-2">{story.university}</p>
                                 </div>
-                                <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                                <div className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest ${
                                     story.category === 'dental' ? 'bg-emerald-50 text-emerald-700' : 
                                     story.category === 'medicine' ? 'bg-blue-50 text-blue-700' : 
                                     'bg-purple-50 text-purple-700'
@@ -325,7 +325,7 @@ export default function SuccessStoriesPage() {
                     </div>
                     
                     <div className="relative z-10 max-w-3xl mx-auto space-y-10">
-                        <h2 className="text-4xl md:text-6xl font-black leading-[1.1]">
+                        <h2 className="text-4xl md:text-6xl font-extrabold leading-[1.1]">
                             Ready to be our next <br />
                             <span className="text-slate-900">success story?</span>
                         </h2>
@@ -333,10 +333,10 @@ export default function SuccessStoriesPage() {
                             Join over 10,000 students already preparing for your dream medical or dental school offer.
                         </p>
                         <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-                            <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-black text-xl border-none transition-all hover:scale-105 shadow-2xl" asChild>
+                            <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold text-xl border-none transition-all hover:scale-105 shadow-2xl" asChild>
                                 <Link href="/sign-up">Start for Free</Link>
                             </Button>
-                            <Button variant="ghost" className="h-16 px-10 rounded-2xl font-black text-xl text-white hover:bg-white/10" asChild>
+                            <Button variant="ghost" className="h-16 px-10 rounded-2xl font-extrabold text-xl text-white hover:bg-white/10" asChild>
                                 <Link href="/mentors" className="flex items-center gap-2">Browse Mentors <ArrowRight className="w-5 h-5" /></Link>
                             </Button>
                         </div>

@@ -80,7 +80,7 @@ export default function JourneyPage() {
                         <GraduationCap className="w-3.5 h-3.5" />
                         The DentiSpark Protocol
                     </div>
-                    <h1 className="text-4xl lg:text-6xl font-jakarta font-black text-slate-900 tracking-tight leading-[1.1]">
+                    <h1 className="text-4xl lg:text-6xl font-jakarta font-extrabold text-slate-900 tracking-tight leading-[1.1]">
                         Your Journey to <span className="text-emerald-600">Dental School</span>
                     </h1>
                     <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">
@@ -118,10 +118,10 @@ export default function JourneyPage() {
                             {/* Content */}
                             <div className="flex-1 bg-slate-50 hover:bg-white p-8 rounded-3xl border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
                                 <div className="flex items-center gap-3 mb-3">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Phase {phase.phase}</span>
+                                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Phase {phase.phase}</span>
                                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{phase.timeframe}</span>
                                 </div>
-                                <h3 className="text-2xl font-jakarta font-black text-slate-900 mb-3 tracking-tight">{phase.title}</h3>
+                                <h3 className="text-2xl font-jakarta font-extrabold text-slate-900 mb-3 tracking-tight">{phase.title}</h3>
                                 <p className="text-slate-500 font-medium leading-relaxed mb-6">{phase.description}</p>
                                 <div className="space-y-2">
                                     {phase.milestones.map((m, j) => (

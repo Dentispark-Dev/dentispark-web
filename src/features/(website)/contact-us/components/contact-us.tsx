@@ -47,11 +47,11 @@ export function ContactUs() {
         >
           {/* Centered Header */}
           <div className="flex flex-col items-center text-center space-y-6 mb-20">
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-black uppercase tracking-widest">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-extrabold uppercase tracking-widest">
               <MessageSquare className="w-3.5 h-3.5 fill-emerald-600" />
               Admissions Support
             </motion.div>
-            <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1]">
+            <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1]">
               Get in <span className="text-emerald-600">Touch.</span>
             </motion.h1>
             <motion.p variants={itemVariants} className="text-lg md:text-xl text-slate-500 font-medium max-w-2xl leading-relaxed">
@@ -95,8 +95,8 @@ export function ContactUs() {
                 <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                   {info.icon}
                 </div>
-                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">{info.title}</h3>
-                <p className="text-lg font-black text-slate-900 mb-1">{info.value}</p>
+                <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-2">{info.title}</h3>
+                <p className="text-lg font-extrabold text-slate-900 mb-1">{info.value}</p>
                 <p className="text-xs font-bold text-slate-400">{info.sub}</p>
               </a>
             ))}
@@ -111,7 +111,7 @@ export function ContactUs() {
             <div className="relative bg-white rounded-[3.5rem] border border-slate-100 shadow-2xl shadow-slate-200 p-10 md:p-14 overflow-hidden">
                {/* Internal Header for Form */}
                <div className="mb-12">
-                  <h2 className="text-2xl font-black text-slate-900 mb-2">Send us a message</h2>
+                  <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Send us a message</h2>
                   <p className="text-slate-500 font-medium">Fill out the form below and we&apos;ll get back to you shortly.</p>
                </div>
                
@@ -122,7 +122,7 @@ export function ContactUs() {
           {/* FAQ Hook */}
           <motion.div variants={itemVariants} className="mt-32 w-full">
              <div className="flex flex-col items-center text-center mb-16">
-                <h2 className="text-3xl font-black text-slate-900 mb-4 tracking-tight">Common Questions</h2>
+                <h2 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">Common Questions</h2>
                 <div className="w-16 h-1 bg-emerald-500 rounded-full" />
              </div>
              <FAQ />

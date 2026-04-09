@@ -32,8 +32,8 @@ export function ProgressPipeline() {
       <div className="relative z-10 space-y-10">
         <div className="flex justify-between items-end">
             <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary-500">Application Journey</span>
-                <h3 className="text-3xl font-black text-black-900 leading-tight">Your Progress Pipeline</h3>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary-500">Application Journey</span>
+                <h3 className="text-3xl font-extrabold text-black-900 leading-tight">Your Progress Pipeline</h3>
             </div>
             <div className="flex gap-2 text-xs font-bold text-black-500 bg-greys-50 px-4 py-2 rounded-full border border-greys-100">
                 Next Step: {steps.find(s => s.status === "current")?.description || "Continue"}
@@ -80,7 +80,7 @@ export function ProgressPipeline() {
                     
                     <div className="space-y-1">
                         <p className={cn(
-                            "text-[10px] font-black uppercase tracking-tight",
+                            "text-[10px] font-extrabold uppercase tracking-tight",
                             step.status === "upcoming" ? "text-black-300" : "text-black-800"
                         )}>{step.title}</p>
                         <p className="text-[10px] text-black-400 font-medium leading-tight">{step.description}</p>

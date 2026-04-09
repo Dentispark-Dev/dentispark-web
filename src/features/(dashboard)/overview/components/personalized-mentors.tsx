@@ -34,8 +34,8 @@ export default function PersonalizedMentors({
     >
       <div className="mb-8 flex items-end justify-between">
         <div className="space-y-1">
-            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600">Expert Guidance</h3>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+            <h3 className="text-[10px] font-extrabold uppercase tracking-[0.4em] text-emerald-600">Expert Guidance</h3>
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
               Personalized Mentors
             </h2>
         </div>
@@ -98,7 +98,7 @@ export default function PersonalizedMentors({
                     </div>
 
                     <div className="flex flex-col flex-1 min-w-0">
-                      <h3 className="text-slate-900 font-black text-lg truncate pr-2">
+                      <h3 className="text-slate-900 font-extrabold text-lg truncate pr-2">
                         {mentor.name}
                       </h3>
                       <p className="text-slate-500 text-xs font-bold mb-3 truncate">
@@ -109,11 +109,11 @@ export default function PersonalizedMentors({
                           <div className="flex items-center gap-3">
                               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 text-amber-600">
                                 <Star className="h-3 w-3 fill-amber-500" />
-                                <span className="text-xs font-black">
+                                <span className="text-xs font-extrabold">
                                   {mentor.rating}
                                 </span>
                               </div>
-                              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 truncate">
+                              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 truncate">
                                 {mentor.reviewCount} Reviews
                               </span>
                           </div>

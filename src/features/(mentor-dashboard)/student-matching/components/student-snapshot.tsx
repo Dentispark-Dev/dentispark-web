@@ -53,7 +53,7 @@ function ScoreRing({ score, label, color }: { score: number; label: string; colo
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-sm font-black text-slate-900">{score}</span>
+          <span className="text-sm font-extrabold text-slate-900">{score}</span>
         </div>
       </div>
       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 text-center leading-tight">{label}</span>
@@ -85,10 +85,10 @@ export function StudentSnapshot({
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="font-black text-slate-900 text-lg">Student Intelligence</h3>
+          <h3 className="font-extrabold text-slate-900 text-lg">Student Intelligence</h3>
           <p className="text-slate-400 text-xs font-medium mt-0.5">AI-generated profile for {studentName}</p>
         </div>
-        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+        <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
           Pre-Session Brief
         </span>
       </div>
@@ -99,21 +99,21 @@ export function StudentSnapshot({
           <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-xl mx-auto mb-2">
             <BarChart3 className="w-4 h-4 text-blue-600" />
           </div>
-          <p className="text-xl font-black text-slate-900">{ucatScore ?? "—"}</p>
+          <p className="text-xl font-extrabold text-slate-900">{ucatScore ?? "—"}</p>
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">UCAT Score</p>
         </div>
         <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center">
           <div className="flex items-center justify-center w-8 h-8 bg-indigo-100 rounded-xl mx-auto mb-2">
             <TrendingUp className="w-4 h-4 text-indigo-600" />
           </div>
-          <p className="text-xl font-black text-slate-900">{aLevelScore ?? "—"}</p>
+          <p className="text-xl font-extrabold text-slate-900">{aLevelScore ?? "—"}</p>
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">A-Levels</p>
         </div>
         <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center">
           <div className="flex items-center justify-center w-8 h-8 bg-amber-100 rounded-xl mx-auto mb-2">
             <Target className="w-4 h-4 text-amber-600" />
           </div>
-          <p className="text-xl font-black text-slate-900">{sessionCount}</p>
+          <p className="text-xl font-extrabold text-slate-900">{sessionCount}</p>
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">Sessions Done</p>
         </div>
       </div>
@@ -125,7 +125,7 @@ export function StudentSnapshot({
             <Target className="w-4 h-4 text-emerald-700" />
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Target School</p>
+            <p className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Target School</p>
             <p className="font-bold text-slate-900 text-sm">{targetSchool}</p>
           </div>
         </div>
@@ -165,7 +165,7 @@ export function StudentSnapshot({
                   Stage {stage.id}: {stage.label}
                 </span>
                 {stage.status === "in_progress" && (
-                  <span className="ml-auto text-[10px] font-black uppercase tracking-wider text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">
+                  <span className="ml-auto text-[10px] font-extrabold uppercase tracking-wider text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">
                     Current
                   </span>
                 )}
@@ -195,7 +195,7 @@ export function StudentSnapshot({
           {/* Strengths */}
           {psScore.strengths.length > 0 && (
             <div className="space-y-1.5">
-              <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Strengths</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600">Strengths</p>
               {psScore.strengths.map((s, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
@@ -208,7 +208,7 @@ export function StudentSnapshot({
           {/* Weaknesses */}
           {psScore.weaknesses.length > 0 && (
             <div className="space-y-1.5">
-              <p className="text-[10px] font-black uppercase tracking-widest text-red-500">Areas to Improve</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-widest text-red-500">Areas to Improve</p>
               {psScore.weaknesses.map((w, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <AlertTriangle className="w-3 h-3 text-amber-500 shrink-0 mt-0.5" />

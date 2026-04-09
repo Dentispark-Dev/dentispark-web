@@ -17,11 +17,11 @@ export function CohortManager() {
           />
         </div>
         <div className="flex gap-2">
-            <button className="h-12 px-6 border border-greys-100 rounded-2xl flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black-400 hover:bg-greys-50">
+            <button className="h-12 px-6 border border-greys-100 rounded-2xl flex items-center gap-2 text-sm font-extrabold uppercase tracking-widest text-black-400 hover:bg-greys-50">
                 <Filter className="w-4 h-4" />
                 Filter
             </button>
-            <button className="h-12 px-6 bg-black-900 text-white rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-primary-600 transition-all">
+            <button className="h-12 px-6 bg-black-900 text-white rounded-2xl text-sm font-extrabold uppercase tracking-widest hover:bg-primary-600 transition-all">
                 Create Cohort
             </button>
         </div>
@@ -35,31 +35,31 @@ export function CohortManager() {
                 <Users className="w-7 h-7" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-black text-black-900">{cohort.name}</h4>
+                <h4 className="font-extrabold text-black-900">{cohort.name}</h4>
                 <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-black tracking-widest text-black-400 uppercase">{cohort.institution}</span>
+                    <span className="text-[10px] font-extrabold tracking-widest text-black-400 uppercase">{cohort.institution}</span>
                     <span className="w-1 h-1 bg-greys-200 rounded-full" />
-                    <span className="text-[10px] font-black tracking-widest text-primary-600 uppercase italic">Active {cohort.lastActive}</span>
+                    <span className="text-[10px] font-extrabold tracking-widest text-primary-600 uppercase italic">Active {cohort.lastActive}</span>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-12">
                 <div className="text-right space-y-1">
-                    <p className="text-[10px] font-black text-black-300 uppercase tracking-widest">Aggregate Progress</p>
+                    <p className="text-[10px] font-extrabold text-black-300 uppercase tracking-widest">Aggregate Progress</p>
                     <div className="flex items-center gap-2 justify-end">
-                        <span className="text-lg font-black text-black-900">{cohort.averageProgress}%</span>
+                        <span className="text-lg font-extrabold text-black-900">{cohort.averageProgress}%</span>
                         <TrendingUp className="w-4 h-4 text-green-500" />
                     </div>
                 </div>
                 
                 <div className="flex -space-x-3">
                     {[1,2,3].map(i => (
-                        <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-greys-100 flex items-center justify-center text-[10px] font-black text-black-400">
+                        <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-greys-100 flex items-center justify-center text-[10px] font-extrabold text-black-400">
                              #{i}
                         </div>
                     ))}
-                    <div className="w-10 h-10 rounded-full border-2 border-white bg-primary-600 flex items-center justify-center text-[10px] font-black text-white">
+                    <div className="w-10 h-10 rounded-full border-2 border-white bg-primary-600 flex items-center justify-center text-[10px] font-extrabold text-white">
                         +{cohort.studentCount - 3}
                     </div>
                 </div>

@@ -75,7 +75,7 @@ export function ShadowingLog() {
             <FileText className="w-3.5 h-3.5" />
             Clinical Placement
           </div>
-          <h3 className="text-2xl font-jakarta font-black text-slate-900">Digital Shadowing Log</h3>
+          <h3 className="text-2xl font-jakarta font-extrabold text-slate-900">Digital Shadowing Log</h3>
         </div>
         <div className="flex bg-slate-50 p-1 rounded-xl border border-slate-200">
           <button 

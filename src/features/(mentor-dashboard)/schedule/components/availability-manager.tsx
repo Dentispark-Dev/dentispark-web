@@ -131,7 +131,7 @@ export function AvailabilityManager() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h2 className="text-2xl font-black text-slate-900">Weekly Availability</h2>
+          <h2 className="text-2xl font-extrabold text-slate-900">Weekly Availability</h2>
           <p className="text-slate-500 text-sm mt-1">
             Set the recurring hours you're available each week. Students will book from these slots.
           </p>
@@ -155,17 +155,17 @@ export function AvailabilityManager() {
       {/* Stats Strip */}
       <div className="flex items-center gap-6 p-5 bg-slate-50 rounded-2xl border border-slate-100">
         <div className="text-center">
-          <p className="text-2xl font-black text-slate-900">{enabledDaysCount}</p>
+          <p className="text-2xl font-extrabold text-slate-900">{enabledDaysCount}</p>
           <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Days Active</p>
         </div>
         <div className="w-px h-10 bg-slate-200" />
         <div className="text-center">
-          <p className="text-2xl font-black text-slate-900">{totalSlots}</p>
+          <p className="text-2xl font-extrabold text-slate-900">{totalSlots}</p>
           <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Weekly Slots</p>
         </div>
         <div className="w-px h-10 bg-slate-200" />
         <div className="text-center">
-          <p className="text-2xl font-black text-slate-900">{totalSlots * 60}</p>
+          <p className="text-2xl font-extrabold text-slate-900">{totalSlots * 60}</p>
           <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Total Minutes</p>
         </div>
         <div className="ml-auto">
@@ -178,7 +178,7 @@ export function AvailabilityManager() {
 
       {/* Session Type Picker */}
       <div>
-        <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Default Session Type for New Slots</p>
+        <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-3">Default Session Type for New Slots</p>
         <div className="flex gap-2 flex-wrap">
           {Object.keys(SESSION_COLORS).map(type => (
             <button
@@ -223,7 +223,7 @@ export function AvailabilityManager() {
                     }
                   </button>
                   <span className={cn(
-                    "font-black text-base",
+                    "font-extrabold text-base",
                     dayData.enabled ? "text-slate-900" : "text-slate-400"
                   )}>
                     {day}

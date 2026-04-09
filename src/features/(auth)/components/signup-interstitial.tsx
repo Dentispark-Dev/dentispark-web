@@ -69,7 +69,7 @@ export function SignUpInterstitial({ onContinue }: SignUpInterstitialProps) {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-widest">
               <Sparkles size={12} /> Platform Preview
             </div>
-            <h2 className="font-jakarta text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+            <h2 className="font-jakarta text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
               Unlock your <br /><span className="text-emerald-400">Dental Future.</span>
             </h2>
           </div>
@@ -110,7 +110,7 @@ export function SignUpInterstitial({ onContinue }: SignUpInterstitialProps) {
                     </div>
                     <div className="flex flex-col pr-4">
                         <span className="text-slate-900 font-bold text-[10px] uppercase tracking-wider">Readiness</span>
-                        <span className="text-emerald-600 font-black text-xs">88% Complete</span>
+                        <span className="text-emerald-600 font-extrabold text-xs">88% Complete</span>
                     </div>
                 </motion.div>
             </div>

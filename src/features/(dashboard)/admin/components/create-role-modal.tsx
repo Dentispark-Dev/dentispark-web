@@ -132,7 +132,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                                 <ShieldCheck className="h-7 w-7" />
                             </div>
                             <div className="text-left">
-                                <DialogTitle className="text-3xl font-black text-slate-900 tracking-tight">
+                                <DialogTitle className="text-3xl font-extrabold text-slate-900 tracking-tight">
                                     {editRole ? "Modify Node" : "Deploy Architecture"}
                                 </DialogTitle>
                                 <DialogDescription className="text-slate-400 font-bold text-[11px] uppercase tracking-[0.2em] mt-1">
@@ -149,7 +149,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                         {/* Core Details */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <Label htmlFor="roleName" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Architectural Node Name</Label>
+                                <Label htmlFor="roleName" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Architectural Node Name</Label>
                                 <div className="relative group">
                                     <Fingerprint className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
                                     <Input
@@ -165,7 +165,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="description" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Node Objective</Label>
+                                <Label htmlFor="description" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Node Objective</Label>
                                 <div className="relative group">
                                     <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
                                     <Input
@@ -183,9 +183,9 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                         {/* Permissions Registry */}
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Permission Registry</Label>
+                                <Label className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Permission Registry</Label>
                                 <span className={cn(
-                                    "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest",
+                                    "px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-widest",
                                     formData.permissionEnums.length > 0 ? "bg-teal-50 text-teal-600" : "bg-slate-50 text-slate-400"
                                 )}>
                                     {formData.permissionEnums.length} Selected
@@ -233,7 +233,7 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                                             <div className="flex-1 space-y-1">
                                                 <Label
                                                     htmlFor={`perm-${permission.guid}`}
-                                                    className="text-sm font-black text-slate-900 cursor-pointer group-hover/item:text-teal-600 transition-colors"
+                                                    className="text-sm font-extrabold text-slate-900 cursor-pointer group-hover/item:text-teal-600 transition-colors"
                                                 >
                                                     {permission.name}
                                                 </Label>
@@ -256,13 +256,13 @@ export function CreateRoleModal({ isOpen, onClose, onSuccess, editRole }: Create
                                 variant="ghost" 
                                 onClick={onClose} 
                                 disabled={isSubmitting}
-                                className="h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 hover:bg-white transition-all"
+                                className="h-14 px-8 rounded-2xl font-extrabold text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 hover:bg-white transition-all"
                             >
                                 Abort Operation
                             </Button>
                             <Button 
                                 type="submit" 
-                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-black text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[180px]" 
+                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[180px]" 
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <ShieldCheck className="h-5 w-5" />}

@@ -35,7 +35,7 @@ export default function StudentPurchasesPage() {
     return (
         <div className="p-6 space-y-8 max-w-5xl mx-auto">
             <div className="flex flex-col gap-1">
-                <h1 className="text-3xl font-black text-gray-900">My Purchases</h1>
+                <h1 className="text-3xl font-extrabold text-gray-900">My Purchases</h1>
                 <p className="text-gray-500 font-medium">Track and manage your service orders and mentoring packages.</p>
             </div>
 

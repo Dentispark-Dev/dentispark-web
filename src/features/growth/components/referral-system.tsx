@@ -29,7 +29,7 @@ export function ReferralSystem() {
             <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center">
               <Gift className="w-6 h-6 text-white" />
             </div>
-            <h2 className="text-3xl font-black tracking-tight">Refer & Unlock Premium</h2>
+            <h2 className="text-3xl font-extrabold tracking-tight">Refer & Unlock Premium</h2>
           </div>
           
           <p className="text-white/80 font-medium max-w-lg leading-relaxed">
@@ -38,7 +38,7 @@ export function ReferralSystem() {
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <div className="flex-1 h-16 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-6 flex items-center justify-between group">
-              <span className="font-black tracking-widest text-sm text-white/90 truncate">{referralLink}</span>
+              <span className="font-extrabold tracking-widest text-sm text-white/90 truncate">{referralLink}</span>
               <button 
                 onClick={handleCopy}
                 className="p-2 hover:bg-white/20 rounded-xl transition-all"
@@ -46,7 +46,7 @@ export function ReferralSystem() {
                 {copied ? <CheckCircle2 className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5 text-white/60 group-hover:text-white" />}
               </button>
             </div>
-            <button className="h-16 px-8 bg-white text-primary-700 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-xl shadow-black/20 flex items-center gap-2">
+            <button className="h-16 px-8 bg-white text-primary-700 rounded-2xl font-extrabold uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-xl shadow-black/20 flex items-center gap-2">
               Invite Peers
               <Users className="w-4 h-4" />
             </button>
@@ -65,10 +65,10 @@ export function ReferralSystem() {
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${m.unlocked ? 'bg-primary-100 text-primary-600' : 'bg-greys-50 text-greys-400'}`}>
                 <Star className="w-6 h-6" fill={m.unlocked ? "currentColor" : "none"} />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-black-400">{m.referrals} Referral{m.referrals > 1 ? 's' : ''}</span>
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-black-400">{m.referrals} Referral{m.referrals > 1 ? 's' : ''}</span>
             </div>
             
-            <h4 className="font-black text-black-900 leading-tight mb-2">{m.reward}</h4>
+            <h4 className="font-extrabold text-black-900 leading-tight mb-2">{m.reward}</h4>
             <p className="text-xs text-black-400 font-medium">Earn credit when a friend creates an account using your link.</p>
 
             <AnimatePresence>

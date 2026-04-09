@@ -180,11 +180,11 @@
 
   /* Global Heading Styles */
   .h1 {
-    @apply font-jakarta font-black text-4xl lg:text-7xl tracking-tighter leading-[1.1] text-slate-900 antialiased;
+    @apply font-jakarta font-extrabold text-4xl lg:text-7xl tracking-tighter leading-[1.1] text-slate-900 antialiased;
   }
   
   .h2 {
-    @apply font-jakarta font-black text-3xl lg:text-5xl tracking-tight leading-tight text-slate-900 antialiased;
+    @apply font-jakarta font-extrabold text-3xl lg:text-5xl tracking-tight leading-tight text-slate-900 antialiased;
   }
   
   .h3 {
@@ -196,7 +196,7 @@
   }
 
   .caption-caps {
-    @apply font-jakarta font-black text-[10px] uppercase tracking-[0.3em] text-emerald-600;
+    @apply font-jakarta font-extrabold text-[10px] uppercase tracking-[0.3em] text-emerald-600;
   }
 
   /* Line clamp utilities for dashboard */

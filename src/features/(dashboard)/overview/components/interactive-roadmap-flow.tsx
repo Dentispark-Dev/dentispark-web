@@ -103,8 +103,8 @@ export function InteractiveRoadmapFlow() {
       {/* Header */}
       <div className="mb-0 flex items-center justify-between relative z-10 text-center mx-auto md:text-left">
         <div>
-            <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-emerald-600">Applicant Roadmap</h3>
-            <h4 className="text-4xl font-black text-slate-900 tracking-tight mt-1">11 Steps Interactive Hub</h4>
+            <h3 className="text-[12px] font-extrabold uppercase tracking-[0.4em] text-emerald-600">Applicant Roadmap</h3>
+            <h4 className="text-4xl font-extrabold text-slate-900 tracking-tight mt-1">11 Steps Interactive Hub</h4>
             <p className="text-slate-500 font-medium text-sm mt-3">
                Hover any stage to launch your specialized toolkit and track your journey in real-time.
             </p>
@@ -235,10 +235,10 @@ export function InteractiveRoadmapFlow() {
                      <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center mb-4 shadow-sm animate-pulse">
                         <displayStage.icon className="w-8 h-8" />
                      </div>
-                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">
+                     <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-400 mb-1">
                         STAGE {displayStage.id}
                      </span>
-                     <h3 className="text-xl font-black text-slate-900 leading-tight mb-2 max-w-[180px]">
+                     <h3 className="text-xl font-extrabold text-slate-900 leading-tight mb-2 max-w-[180px]">
                         {displayStage.title}
                      </h3>
                      <span className="text-[10px] font-bold text-slate-500 bg-slate-100 rounded-md px-2 py-1 mb-5 flex items-center gap-1.5 leading-none">
@@ -247,7 +247,7 @@ export function InteractiveRoadmapFlow() {
                      
                      <button 
                         onClick={() => router.push(displayStage.url)}
-                        className="group flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-xl hover:shadow-emerald-500/20 active:scale-95"
+                        className="group flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-extrabold uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-xl hover:shadow-emerald-500/20 active:scale-95"
                      >
                         Open Tool <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                      </button>
@@ -298,20 +298,20 @@ export function InteractiveRoadmapFlow() {
                      <div className="flex flex-col justify-center overflow-hidden">
                         <div className="flex items-center gap-1.5 mb-1 text-[14px]">
                             <span className={cn(
-                                "font-black",
+                                "font-extrabold",
                                 isActive ? `text-${themeColor}-600` : "text-slate-400"
                             )}>
                                 {stage.id < 10 ? `0${stage.id}` : stage.id}
                             </span>
                             <span className={cn(
-                                "text-[9px] font-black uppercase tracking-widest leading-none",
+                                "text-[9px] font-extrabold uppercase tracking-widest leading-none",
                                 isActive ? "text-slate-800" : "text-slate-300"
                             )}>
                                 {stage.phase.split(' • ')[1]}
                             </span>
                         </div>
                         <h5 className={cn(
-                            "text-[15px] font-black leading-tight truncate",
+                            "text-[15px] font-extrabold leading-tight truncate",
                             isActive ? "text-slate-900" : "text-slate-600"
                         )}>
                             {stage.title}
@@ -320,7 +320,7 @@ export function InteractiveRoadmapFlow() {
                         <motion.div 
                           initial={false}
                           animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -5 }}
-                          className={cn("text-[9px] font-black uppercase tracking-tighter mt-1 flex items-center gap-1", `text-${themeColor}-500`)}
+                          className={cn("text-[9px] font-extrabold uppercase tracking-tighter mt-1 flex items-center gap-1", `text-${themeColor}-500`)}
                         >
                           <Zap className="w-3 h-3 fill-current" /> Initialize Station
                         </motion.div>

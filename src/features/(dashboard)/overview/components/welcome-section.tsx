@@ -34,7 +34,7 @@ export default function WelcomeSection({
     >
       <div className="flex flex-col gap-1">
         <span className="caption-caps">{getGreeting()}</span>
-        <h1 className="text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
           {displayUserName}
         </h1>
         <p className="text-slate-500 font-bold text-sm">

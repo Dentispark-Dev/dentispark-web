@@ -13,7 +13,7 @@ export function DashboardPreview() {
             <LayoutDashboard className="w-3.5 h-3.5 text-emerald-600" />
             Outcome-Oriented UI
           </div>
-          <h2 className="text-4xl lg:text-6xl font-jakarta font-black text-slate-900 tracking-tight leading-[1.1]">
+          <h2 className="text-4xl lg:text-6xl font-jakarta font-extrabold text-slate-900 tracking-tight leading-[1.1]">
             Your entire dental school journey, <span className="text-emerald-600">in one place.</span>
           </h2>
           <p className="text-lg text-slate-500 font-medium">

@@ -103,7 +103,7 @@ export function CreateServicePackageModal({ isOpen, onClose }: CreateServicePack
                         <Package className="h-24 w-24" />
                     </div>
                     <DialogHeader className="relative z-10">
-                        <DialogTitle className="text-2xl font-black flex items-center gap-2 text-white">
+                        <DialogTitle className="text-2xl font-extrabold flex items-center gap-2 text-white">
                             <Plus className="h-7 w-7" />
                             New Service Package
                         </DialogTitle>
@@ -225,7 +225,7 @@ export function CreateServicePackageModal({ isOpen, onClose }: CreateServicePack
                                 {features.map((feature, idx) => (
                                     <div key={idx} className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 border border-green-100 rounded-lg text-xs font-bold">
                                         {feature}
-                                        <button onClick={() => removeFeature(idx)} className="text-green-300 hover:text-green-600 font-black">×</button>
+                                        <button onClick={() => removeFeature(idx)} className="text-green-300 hover:text-green-600 font-extrabold">×</button>
                                     </div>
                                 ))}
                             </div>
@@ -240,7 +240,7 @@ export function CreateServicePackageModal({ isOpen, onClose }: CreateServicePack
                                 type="button"
                                 variant={formData.isActive ? "default" : "outline"}
                                 onClick={() => setFormData({...formData, isActive: !formData.isActive})}
-                                className={`rounded-xl font-black text-xs h-10 px-6 ${formData.isActive ? "bg-green-600 hover:bg-green-700" : "bg-white text-gray-400 border-gray-200"}`}
+                                className={`rounded-xl font-extrabold text-xs h-10 px-6 ${formData.isActive ? "bg-green-600 hover:bg-green-700" : "bg-white text-gray-400 border-gray-200"}`}
                             >
                                 {formData.isActive ? "ACTIVE" : "INACTIVE"}
                             </Button>
@@ -255,7 +255,7 @@ export function CreateServicePackageModal({ isOpen, onClose }: CreateServicePack
                     <Button 
                         onClick={() => createMutation.mutate()}
                         disabled={!formData.title || !formData.price || !formData.mentorEmail || createMutation.isPending}
-                        className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-black h-12 px-8 shadow-lg shadow-green-200 flex items-center gap-2"
+                        className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-extrabold h-12 px-8 shadow-lg shadow-green-200 flex items-center gap-2"
                     >
                         {createMutation.isPending ? "Creating..." : "Create Service"}
                         {!createMutation.isPending && <ChevronRight className="h-4 w-4" />}

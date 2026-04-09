@@ -53,7 +53,7 @@ export function MentorMatchCard({
                     </div>
                 </div>
                 <div>
-                    <h4 className="text-xl font-jakarta font-black text-gray-900 group-hover:text-emerald-700 transition-colors tracking-tight">{name}</h4>
+                    <h4 className="text-xl font-jakarta font-extrabold text-gray-900 group-hover:text-emerald-700 transition-colors tracking-tight">{name}</h4>
                     <div className="flex items-center gap-1.5 text-gray-500 mt-1 uppercase text-[10px] font-semibold tracking-wider">
                         <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />
                         {university}
@@ -63,7 +63,7 @@ export function MentorMatchCard({
 
             <div className="flex flex-col items-end pt-1">
                 <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-jakarta font-black text-emerald-600 leading-none">{compatibility}%</span>
+                    <span className="text-3xl font-jakarta font-extrabold text-emerald-600 leading-none">{compatibility}%</span>
                 </div>
                 <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Match Index</span>
             </div>

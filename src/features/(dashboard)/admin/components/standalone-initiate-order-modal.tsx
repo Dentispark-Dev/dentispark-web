@@ -90,7 +90,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                         <Send className="h-24 w-24" />
                     </div>
                     <DialogHeader className="relative z-10">
-                        <DialogTitle className="text-2xl font-black flex items-center gap-2 text-white">
+                        <DialogTitle className="text-2xl font-extrabold flex items-center gap-2 text-white">
                             <ShoppingCart className="h-6 w-6" />
                             Direct Order Placement
                         </DialogTitle>
@@ -118,7 +118,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                                 Step 1: Assign Student
                             </h3>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Student Email</label>
+                                <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Student Email</label>
                                 <Input 
                                     placeholder="Enter student email address..."
                                     value={studentEmail}
@@ -136,7 +136,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                                 Step 2: Select Service Package
                             </h3>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Available Services</label>
+                                <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Available Services</label>
                                 <Select 
                                     onValueChange={(val) => {
                                         const pkg = pkgResponse?.content.find((p: any) => p.externalId === val);
@@ -177,12 +177,12 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                                     <span className="font-bold text-indigo-900">{selectedPackage?.mentorUsername}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm border-t border-indigo-100 pt-3">
-                                    <span className="font-black text-indigo-700">{selectedPackage?.title}</span>
-                                    <span className="font-black text-indigo-900">{selectedPackage?.currency} {selectedPackage?.price}</span>
+                                    <span className="font-extrabold text-indigo-700">{selectedPackage?.title}</span>
+                                    <span className="font-extrabold text-indigo-900">{selectedPackage?.currency} {selectedPackage?.price}</span>
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Order Notes</label>
+                                <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Order Notes</label>
                                 <Textarea 
                                     placeholder="Add any internal notes or instructions for the student..."
                                     value={notes}
@@ -204,7 +204,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                         <Button 
                             onClick={nextStep}
                             disabled={(step === 1 && !studentEmail) || (step === 2 && !selectedPackage)}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-black h-12 px-8 flex items-center gap-2"
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-extrabold h-12 px-8 flex items-center gap-2"
                         >
                             Next Step
                             <ArrowRight className="h-4 w-4" />
@@ -213,7 +213,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                         <Button 
                             onClick={() => initiateMutation.mutate()}
                             disabled={initiateMutation.isPending}
-                            className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-black h-12 px-8 flex items-center gap-2 shadow-lg shadow-green-100"
+                            className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-extrabold h-12 px-8 flex items-center gap-2 shadow-lg shadow-green-100"
                         >
                             {initiateMutation.isPending ? "Placing Order..." : "Confirm & Send Order"}
                             <Send className="h-4 w-4" />

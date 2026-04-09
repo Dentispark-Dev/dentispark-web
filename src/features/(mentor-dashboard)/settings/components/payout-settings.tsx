@@ -27,7 +27,7 @@ export function PayoutSettings({ isStripeConnected = false, onConnect }: PayoutS
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-black text-slate-900 font-jakarta tracking-tight">Payout Settings</h2>
+        <h2 className="text-2xl font-extrabold text-slate-900 font-jakarta tracking-tight">Payout Settings</h2>
         <p className="text-slate-500 font-medium">Manage how you receive your earnings from mentorship sessions.</p>
       </div>
 
@@ -50,7 +50,7 @@ export function PayoutSettings({ isStripeConnected = false, onConnect }: PayoutS
                 Payment Provider
               </CardTitle>
               {isStripeConnected && (
-                <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-black uppercase tracking-widest">
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-extrabold uppercase tracking-widest">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Connected
                 </div>
@@ -103,16 +103,16 @@ export function PayoutSettings({ isStripeConnected = false, onConnect }: PayoutS
               <div className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Available to Payout</p>
-                    <p className="text-2xl font-black text-slate-900">£425.00</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">Available to Payout</p>
+                    <p className="text-2xl font-extrabold text-slate-900">£425.00</p>
                   </div>
                   <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Pending Balance</p>
-                    <p className="text-2xl font-black text-slate-900">£120.00</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">Pending Balance</p>
+                    <p className="text-2xl font-extrabold text-slate-900">£120.00</p>
                   </div>
                   <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Total Lifetime</p>
-                    <p className="text-2xl font-black text-slate-900">£2,840.00</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">Total Lifetime</p>
+                    <p className="text-2xl font-extrabold text-slate-900">£2,840.00</p>
                   </div>
                 </div>
 

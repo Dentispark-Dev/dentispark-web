@@ -52,7 +52,7 @@ export function ActivityFeed() {
         <div className="group bg-white/60 backdrop-blur-xl p-8 rounded-3xl shadow-2xl shadow-gray-200/40 border border-white/50 h-full overflow-hidden flex flex-col">
             <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h3 className="text-xl font-black text-gray-900 tracking-tight">Global Activity</h3>
+                    <h3 className="text-xl font-extrabold text-gray-900 tracking-tight">Global Activity</h3>
                     <p className="text-sm text-gray-500 font-medium">Real-time platform events</p>
                 </div>
                 <button className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-primary-600 hover:bg-primary-50 rounded-2xl transition-all duration-300">

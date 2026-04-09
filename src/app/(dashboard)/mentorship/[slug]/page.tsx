@@ -87,7 +87,7 @@ function StatChip({ label, value, icon }: { label: string; value: string | numbe
   return (
     <div className="flex flex-col items-center gap-1 px-6 py-4 bg-slate-50 rounded-2xl border border-slate-100">
       <div className="text-slate-400">{icon}</div>
-      <span className="text-2xl font-black text-slate-900">{value}</span>
+      <span className="text-2xl font-extrabold text-slate-900">{value}</span>
       <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{label}</span>
     </div>
   );
@@ -103,7 +103,7 @@ export default function MentorProfilePage() {
   if (!mentor) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <p className="text-2xl font-black text-slate-900">Mentor not found.</p>
+        <p className="text-2xl font-extrabold text-slate-900">Mentor not found.</p>
         <Link href="/mentorship">
           <Button variant="outline">← Back to Mentors</Button>
         </Link>
@@ -154,7 +154,7 @@ export default function MentorProfilePage() {
           {/* Avatar + name row */}
           <div className="flex flex-col sm:flex-row sm:items-end gap-5 -mt-12 mb-6">
             <div className="relative shrink-0">
-              <div className="w-24 h-24 rounded-[1.5rem] border-4 border-white shadow-xl overflow-hidden bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-black text-3xl">
+              <div className="w-24 h-24 rounded-[1.5rem] border-4 border-white shadow-xl overflow-hidden bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-extrabold text-3xl">
                 {mentor.image ? (
                   <Image src={mentor.image} alt={mentor.name} width={96} height={96} className="object-cover w-full h-full" />
                 ) : (
@@ -171,12 +171,12 @@ export default function MentorProfilePage() {
             <div className="flex-1">
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div>
-                  <h1 className="text-3xl font-black text-slate-900 leading-tight">{mentor.name}</h1>
+                  <h1 className="text-3xl font-extrabold text-slate-900 leading-tight">{mentor.name}</h1>
                   <p className="text-slate-500 font-semibold mt-1">{mentor.title}</p>
                   <p className="text-slate-400 text-sm font-medium">{mentor.credentials}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-3xl font-black text-slate-900">
+                  <p className="text-3xl font-extrabold text-slate-900">
                     {mentor.currency}{mentor.hourlyRate}
                     <span className="text-sm font-medium text-slate-400">/hr</span>
                   </p>
@@ -192,7 +192,7 @@ export default function MentorProfilePage() {
           <div className="flex items-center gap-4 mb-6 flex-wrap">
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 rounded-xl">
               <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-              <span className="font-black text-slate-900 text-sm">{mentor.rating.toFixed(1)}</span>
+              <span className="font-extrabold text-slate-900 text-sm">{mentor.rating.toFixed(1)}</span>
               <span className="text-slate-400 text-xs">({mentor.reviewCount} reviews)</span>
             </div>
             <span className="text-xs font-bold uppercase tracking-widest text-slate-400 px-3 py-1.5 bg-slate-50 rounded-xl">
@@ -226,7 +226,7 @@ export default function MentorProfilePage() {
         {/* Services */}
         <div className="lg:col-span-2 space-y-6">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 mb-4">Services Offered</h2>
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-4">Services Offered</h2>
             {mentor.services?.map(svc => (
               <div key={svc.name} className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 mb-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
@@ -240,12 +240,12 @@ export default function MentorProfilePage() {
 
           {/* Reviews */}
           <div>
-            <h2 className="text-2xl font-black text-slate-900 mb-4">Student Reviews</h2>
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-4">Student Reviews</h2>
             {MOCK_REVIEWS.map(review => (
               <div key={review.id} className="p-6 bg-white rounded-2xl border border-slate-100 mb-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-black text-sm">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-extrabold text-sm">
                       {review.name[0]}
                     </div>
                     <span className="font-bold text-slate-900 text-sm">{review.name}</span>
@@ -266,7 +266,7 @@ export default function MentorProfilePage() {
         {/* Booking Sidebar */}
         <div className="space-y-5 lg:sticky lg:top-8 lg:self-start">
           <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-6">
-            <h2 className="text-lg font-black text-slate-900 mb-4">Book a Session</h2>
+            <h2 className="text-lg font-extrabold text-slate-900 mb-4">Book a Session</h2>
 
             <div className="space-y-3">
               {SESSION_TYPES.map(session => {
@@ -290,7 +290,7 @@ export default function MentorProfilePage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
                         <p className="font-bold text-slate-900 text-sm">{session.label}</p>
-                        <span className={cn("font-black text-sm shrink-0", session.price === 0 ? "text-emerald-600" : "text-slate-900")}>
+                        <span className={cn("font-extrabold text-sm shrink-0", session.price === 0 ? "text-emerald-600" : "text-slate-900")}>
                           {price}
                         </span>
                       </div>
@@ -309,7 +309,7 @@ export default function MentorProfilePage() {
             <Button
               onClick={handleBookSession}
               disabled={!selectedSession}
-              className="w-full mt-5 h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black tracking-wide shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full mt-5 h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold tracking-wide shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {selectedSession ? "Continue to Book" : "Select a Session"}
               {selectedSession && <ChevronRight className="w-4 h-4" />}

@@ -88,7 +88,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
         const s = status?.toUpperCase() || "PENDING";
         return (
             <div className={cn(
-                "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border shrink-0",
+                "px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest border shrink-0",
                 s === "ACTIVE" ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
                 s === "INACTIVE" ? "bg-slate-50 text-slate-400 border-slate-100" :
                 "bg-rose-50 text-rose-600 border-rose-100"
@@ -109,7 +109,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                         <div className="p-3 bg-blue-600 rounded-2xl text-white shadow-xl shadow-blue-200">
                             <Users className="h-6 w-6" />
                         </div>
-                        <h2 className="text-4xl font-black text-slate-900 tracking-tight">Moderator <span className="text-blue-600">Hub</span></h2>
+                        <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">Moderator <span className="text-blue-600">Hub</span></h2>
                     </div>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.3em] max-w-md">
                         Platform Ethics & Community Integrity Oversight
@@ -127,7 +127,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                         />
                     </div>
                     <Button
-                        className="bg-blue-600 hover:bg-blue-700 text-white h-14 px-8 rounded-2xl shadow-xl shadow-blue-900/10 gap-3 font-black text-xs uppercase tracking-widest active:scale-95 transition-all group"
+                        className="bg-blue-600 hover:bg-blue-700 text-white h-14 px-8 rounded-2xl shadow-xl shadow-blue-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group"
                         onClick={onInviteClick}
                     >
                         <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
@@ -142,11 +142,11 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-100">
-                                <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Moderator Entity</th>
-                                <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Namespace</th>
-                                <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Permission Set</th>
-                                <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Status</th>
-                                <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] text-right">Actions</th>
+                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Moderator Entity</th>
+                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Namespace</th>
+                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Permission Set</th>
+                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Status</th>
+                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50">
@@ -173,7 +173,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                                                     <Users className="h-10 w-10" />
                                                 </div>
                                                 <div className="space-y-1">
-                                                    <p className="text-xl font-black text-slate-900 tracking-tight">Zero Moderator Hits</p>
+                                                    <p className="text-xl font-extrabold text-slate-900 tracking-tight">Zero Moderator Hits</p>
                                                     <p className="text-slate-400 font-bold text-sm">No moderator entities matching your query.</p>
                                                 </div>
                                             </div>
@@ -192,7 +192,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                                             <td className="px-10 py-6">
                                                 <div className="flex items-center gap-5">
                                                     <div className="relative">
-                                                        <div className="h-14 w-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 font-black shadow-sm group-hover:scale-105 group-hover:rotate-3 transition-transform">
+                                                        <div className="h-14 w-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 font-extrabold shadow-sm group-hover:scale-105 group-hover:rotate-3 transition-transform">
                                                             {(moderator.firstName || moderator.username)[0].toUpperCase()}
                                                         </div>
                                                         <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-white border-2 border-white shadow-sm flex items-center justify-center">
@@ -203,7 +203,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <div className="font-black text-slate-900 group-hover:text-blue-600 transition-colors">{moderator.fullName || moderator.username}</div>
+                                                        <div className="font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors">{moderator.fullName || moderator.username}</div>
                                                         <div className="text-[11px] font-bold text-slate-400 mt-0.5">{moderator.emailAddress}</div>
                                                     </div>
                                                 </div>
@@ -214,7 +214,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                                             <td className="px-10 py-6">
                                                 <div className="flex flex-wrap gap-1.5">
                                                     {moderator.rolesAndPermissions?.map((rp) => (
-                                                        <span key={rp.guid} className="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest bg-white text-slate-600 rounded-md border border-slate-200 shadow-sm">
+                                                        <span key={rp.guid} className="px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-widest bg-white text-slate-600 rounded-md border border-slate-200 shadow-sm">
                                                             {rp.name}
                                                         </span>
                                                     )) || <span className="text-xs text-slate-400 font-bold">Standard Monitor</span>}
@@ -231,7 +231,7 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                                                         </Button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-100 shadow-2xl">
-                                                        <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-3 py-2">Ethics Terminal</DropdownMenuLabel>
+                                                        <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-3 py-2">Ethics Terminal</DropdownMenuLabel>
                                                         <DropdownMenuSeparator className="bg-slate-50" />
                                                         <DropdownMenuItem className="rounded-xl font-bold text-sm gap-3 py-3 px-3 transition-colors cursor-pointer">
                                                             <ShieldAlert className="h-4 w-4 text-blue-600" /> Adjust Permissions

@@ -133,7 +133,7 @@ export default function AdminOrderDetailPage() {
                                 <span>Subtotal</span>
                                 <span>{order.currency} {order.totalAmount?.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-base font-black text-gray-900 pt-2 border-t border-gray-200">
+                            <div className="flex justify-between text-base font-extrabold text-gray-900 pt-2 border-t border-gray-200">
                                 <span>Order Total</span>
                                 <span>{order.currency} {order.totalAmount?.toFixed(2)}</span>
                             </div>
@@ -241,7 +241,7 @@ export default function AdminOrderDetailPage() {
                             <div className="flex justify-between text-gray-600">
                                 <span>Via</span><span className="font-semibold">Stripe</span>
                             </div>
-                            <div className="flex justify-between text-gray-900 font-black">
+                            <div className="flex justify-between text-gray-900 font-extrabold">
                                 <span>Total</span>
                                 <span className="flex items-center gap-1">
                                     <DollarSign className="h-3.5 w-3.5 text-gray-400" />

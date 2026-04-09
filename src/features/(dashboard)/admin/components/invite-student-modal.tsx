@@ -79,7 +79,7 @@ export function InviteStudentModal({ isOpen, onClose }: InviteStudentModalProps)
                                 <UserPlus className="h-7 w-7" />
                             </div>
                             <div className="text-left">
-                                <DialogTitle className="text-3xl font-black text-slate-900 tracking-tight">
+                                <DialogTitle className="text-3xl font-extrabold text-slate-900 tracking-tight">
                                     Invite <span className="text-primary-600">Student</span>
                                 </DialogTitle>
                                 <DialogDescription className="text-slate-400 font-bold text-[11px] uppercase tracking-[0.2em] mt-1">
@@ -96,7 +96,7 @@ export function InviteStudentModal({ isOpen, onClose }: InviteStudentModalProps)
                         {/* Identity Details */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <Label htmlFor="firstName" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">First Name</Label>
+                                <Label htmlFor="firstName" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">First Name</Label>
                                 <div className="relative group">
                                     <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary-600 transition-colors" />
                                     <Input
@@ -110,7 +110,7 @@ export function InviteStudentModal({ isOpen, onClose }: InviteStudentModalProps)
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="lastName" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Last Name</Label>
+                                <Label htmlFor="lastName" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Last Name</Label>
                                 <div className="relative group">
                                     <Fingerprint className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary-600 transition-colors" />
                                     <Input
@@ -127,7 +127,7 @@ export function InviteStudentModal({ isOpen, onClose }: InviteStudentModalProps)
 
                         {/* Network Endpoint */}
                         <div className="space-y-2">
-                            <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Network Endpoint (Email)</Label>
+                            <Label htmlFor="email" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Network Endpoint (Email)</Label>
                             <div className="relative group">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary-600 transition-colors" />
                                 <Input
@@ -144,7 +144,7 @@ export function InviteStudentModal({ isOpen, onClose }: InviteStudentModalProps)
 
                         {/* Pathway Selection */}
                         <div className="space-y-2">
-                            <Label htmlFor="category" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Academic Pathway</Label>
+                            <Label htmlFor="category" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Academic Pathway</Label>
                             <div className="relative group">
                                 <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary-600 transition-colors z-10" />
                                 <Select
@@ -171,13 +171,13 @@ export function InviteStudentModal({ isOpen, onClose }: InviteStudentModalProps)
                                 variant="ghost" 
                                 onClick={onClose} 
                                 disabled={inviteMutation.isPending}
-                                className="h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all"
+                                className="h-14 px-8 rounded-2xl font-extrabold text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all"
                             >
                                 Abort
                             </Button>
                             <Button 
                                 type="submit" 
-                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-black text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[200px]" 
+                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[200px]" 
                                 disabled={inviteMutation.isPending}
                             >
                                 {inviteMutation.isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : <ShieldCheck className="h-5 w-5" />}

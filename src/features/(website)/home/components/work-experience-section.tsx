@@ -21,7 +21,7 @@ export function WorkExperienceSection() {
               Omnipark Partnership • Rainham, Kent
             </div>
             
-            <h2 className="text-4xl lg:text-6xl font-jakarta font-black text-white tracking-tight leading-[1.1]">
+            <h2 className="text-4xl lg:text-6xl font-jakarta font-extrabold text-white tracking-tight leading-[1.1]">
               Earn Your Place in a <span className="text-emerald-400">Real Dental Practice.</span>
             </h2>
             

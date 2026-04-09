@@ -55,7 +55,7 @@ export default function UniversityRepPage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-black uppercase tracking-widest mb-8"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-extrabold uppercase tracking-widest mb-8"
                     >
                         <Sparkles className="w-3.5 h-3.5 fill-emerald-600" />
                         Ambassador Program
@@ -63,7 +63,7 @@ export default function UniversityRepPage() {
                     <motion.h1 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1] mb-8"
+                        className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1] mb-8"
                     >
                         Represent the future of <br />
                         <span className="text-emerald-600">Dental Education.</span>
@@ -82,7 +82,7 @@ export default function UniversityRepPage() {
                         transition={{ delay: 0.2 }}
                         className="flex flex-wrap items-center justify-center gap-4"
                     >
-                        <Button size="lg" className="h-16 px-10 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-lg shadow-xl shadow-slate-200" onClick={() => document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth' })}>
+                        <Button size="lg" className="h-16 px-10 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-lg shadow-xl shadow-slate-200" onClick={() => document.getElementById('apply-form')?.scrollIntoView({ behavior: 'smooth' })}>
                             Apply Now
                         </Button>
                         <Button variant="ghost" size="lg" className="h-16 px-10 rounded-2xl font-bold text-lg text-slate-600" onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -96,7 +96,7 @@ export default function UniversityRepPage() {
             <div id="benefits" className="bg-[#fcfcfd] py-32">
                 <Container>
                     <div className="text-center mb-20">
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">Why join our program?</h2>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">Why join our program?</h2>
                         <p className="text-slate-500 font-medium text-lg">Unmatched perks designed for the leaders of tomorrow.</p>
                     </div>
 
@@ -141,7 +141,7 @@ export default function UniversityRepPage() {
                                 <div className={`w-16 h-16 ${benefit.color} rounded-[1.5rem] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500`}>
                                     {benefit.icon}
                                 </div>
-                                <h3 className="text-xl font-black text-slate-900 mb-4 group-hover:text-emerald-600 transition-colors">{benefit.title}</h3>
+                                <h3 className="text-xl font-extrabold text-slate-900 mb-4 group-hover:text-emerald-600 transition-colors">{benefit.title}</h3>
                                 <p className="text-slate-500 font-medium leading-relaxed">{benefit.desc}</p>
                             </motion.div>
                         ))}
@@ -159,7 +159,7 @@ export default function UniversityRepPage() {
                             viewport={{ once: true }}
                             className="space-y-8"
                         >
-                            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1]">
+                            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
                                 What does a <br />
                                 <span className="text-emerald-600 text-gradient bg-clip-text">Campus Rep do?</span>
                             </h2>
@@ -178,7 +178,7 @@ export default function UniversityRepPage() {
                                             <CheckCircle2 className="w-4 h-4 text-white" />
                                         </div>
                                         <div>
-                                            <h4 className="font-black text-slate-900 text-lg">{item.title}</h4>
+                                            <h4 className="font-extrabold text-slate-900 text-lg">{item.title}</h4>
                                             <p className="text-slate-500 font-medium">{item.desc}</p>
                                         </div>
                                     </div>
@@ -207,8 +207,8 @@ export default function UniversityRepPage() {
                                         <Users className="w-7 h-7" />
                                     </div>
                                     <div>
-                                        <p className="text-2xl font-black text-slate-900 leading-none">500+</p>
-                                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest mt-1">Global Reps</p>
+                                        <p className="text-2xl font-extrabold text-slate-900 leading-none">500+</p>
+                                        <p className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mt-1">Global Reps</p>
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +227,7 @@ export default function UniversityRepPage() {
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                             <div className="space-y-8">
-                                <h2 className="text-4xl md:text-6xl font-black leading-[1.1]">
+                                <h2 className="text-4xl md:text-6xl font-extrabold leading-[1.1]">
                                     Become a <br />
                                     <span className="text-emerald-500">Leader Today.</span>
                                 </h2>
@@ -250,7 +250,7 @@ export default function UniversityRepPage() {
                                         <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-emerald-500/20">
                                             <CheckCircle2 className="w-10 h-10 text-white" />
                                         </div>
-                                        <h3 className="text-3xl font-black mb-4">Application Sent!</h3>
+                                        <h3 className="text-3xl font-extrabold mb-4">Application Sent!</h3>
                                         <p className="text-slate-400 font-medium text-lg leading-relaxed">
                                             Thank you for expressing interest. Our team will review your application and get back to you shortly.
                                         </p>
@@ -259,7 +259,7 @@ export default function UniversityRepPage() {
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 ml-4">Full Name</label>
+                                                <label className="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400 ml-4">Full Name</label>
                                                 <Input 
                                                     className="h-14 rounded-2xl bg-white/5 border-white/10 focus:border-emerald-500 focus:bg-white/10 text-white font-medium"
                                                     required
@@ -268,7 +268,7 @@ export default function UniversityRepPage() {
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 ml-4">Email Address</label>
+                                                <label className="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400 ml-4">Email Address</label>
                                                 <Input 
                                                     type="email"
                                                     className="h-14 rounded-2xl bg-white/5 border-white/10 focus:border-emerald-500 focus:bg-white/10 text-white font-medium"
@@ -280,7 +280,7 @@ export default function UniversityRepPage() {
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 ml-4">University</label>
+                                                <label className="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400 ml-4">University</label>
                                                 <Input 
                                                     className="h-14 rounded-2xl bg-white/5 border-white/10 focus:border-emerald-500 focus:bg-white/10 text-white font-medium"
                                                     required
@@ -289,7 +289,7 @@ export default function UniversityRepPage() {
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 ml-4">Year of Study</label>
+                                                <label className="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400 ml-4">Year of Study</label>
                                                 <select 
                                                     className="w-full h-14 px-6 rounded-2xl bg-white/5 border-white/10 focus:border-emerald-500 focus:bg-white/10 text-white font-medium outline-none occurrence-none"
                                                     required
@@ -305,7 +305,7 @@ export default function UniversityRepPage() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 ml-4">Why do you want to join?</label>
+                                            <label className="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400 ml-4">Why do you want to join?</label>
                                             <Textarea 
                                                 className="min-h-[120px] rounded-[2rem] bg-white/5 border-white/10 focus:border-emerald-500 focus:bg-white/10 text-white font-medium p-6"
                                                 required
@@ -313,7 +313,7 @@ export default function UniversityRepPage() {
                                                 onChange={e => setFormState({...formState, message: e.target.value})}
                                             />
                                         </div>
-                                        <Button type="submit" className="w-full h-16 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02]">
+                                        <Button type="submit" className="w-full h-16 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xl shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02]">
                                             Submit Application
                                         </Button>
                                     </form>

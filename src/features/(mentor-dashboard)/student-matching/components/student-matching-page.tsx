@@ -74,7 +74,7 @@ export function StudentMatchingPage({ className }: StudentMatchingPageProps) {
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id as any)}
                 className={cn(
-                  "font-jakarta rounded-lg px-6 py-2.5 text-xs font-black uppercase tracking-widest transition-all",
+                  "font-jakarta rounded-lg px-6 py-2.5 text-xs font-extrabold uppercase tracking-widest transition-all",
                   activeFilter === tab.id
                     ? "bg-white text-emerald-600 shadow-sm"
                     : "text-slate-400 hover:text-slate-600",

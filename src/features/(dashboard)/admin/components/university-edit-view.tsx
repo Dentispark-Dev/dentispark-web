@@ -58,7 +58,7 @@ function UniversityLogo({ src, name }: { src?: string; name: string }) {
                     {src ? (
                         <Image src={src} alt={name} fill className="object-contain p-4 transition-transform group-hover:scale-110" />
                     ) : (
-                        <div className="text-4xl font-black text-primary-200 uppercase font-jakarta">{name.slice(0, 2)}</div>
+                        <div className="text-4xl font-extrabold text-primary-200 uppercase font-jakarta">{name.slice(0, 2)}</div>
                     )}
                 </div>
             </div>

@@ -21,7 +21,7 @@ export function PlanSelector({ onSelect }: PlanSelectorProps) {
     <div className="space-y-12">
       {/* Factor Toggle - Adaptive Showcase */}
       <div className="flex flex-wrap items-center justify-center gap-4 bg-greys-50 p-6 rounded-[2.5rem] border border-greys-100">
-        <span className="text-sm font-black text-black-400 uppercase tracking-widest mr-4">Apply Discounts</span>
+        <span className="text-sm font-extrabold text-black-400 uppercase tracking-widest mr-4">Apply Discounts</span>
         {[
           { id: "low-ses", label: "Low SES Support", icon: ShieldCheck },
           { id: "early-bird", label: "Early Bird", icon: Zap },
@@ -59,8 +59,8 @@ export function PlanSelector({ onSelect }: PlanSelectorProps) {
               <div className="space-y-6">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-2xl font-black text-black-900 leading-tight">{plan.name}</h3>
-                    {plan.id === "pro" && <span className="text-[10px] font-black text-primary-600 uppercase tracking-widest bg-primary-50 px-2 py-1 rounded-md">Recommended</span>}
+                    <h3 className="text-2xl font-extrabold text-black-900 leading-tight">{plan.name}</h3>
+                    {plan.id === "pro" && <span className="text-[10px] font-extrabold text-primary-600 uppercase tracking-widest bg-primary-50 px-2 py-1 rounded-md">Recommended</span>}
                   </div>
                   {plan.isPremium && <Sparkles className="w-6 h-6 text-primary-500" />}
                 </div>
@@ -72,7 +72,7 @@ export function PlanSelector({ onSelect }: PlanSelectorProps) {
                         key={pricing.discountedPrice}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="text-5xl font-black text-black-900"
+                        className="text-5xl font-extrabold text-black-900"
                       >
                         £{pricing.discountedPrice}
                       </motion.span>
@@ -107,7 +107,7 @@ export function PlanSelector({ onSelect }: PlanSelectorProps) {
                 onClick={() => onSelect(plan.id, pricing.discountedPrice)}
                 disabled={plan.basePrice === 0}
                 className={cn(
-                  "w-full h-16 rounded-[1.5rem] mt-10 font-black uppercase tracking-widest transition-all text-sm",
+                  "w-full h-16 rounded-[1.5rem] mt-10 font-extrabold uppercase tracking-widest transition-all text-sm",
                   plan.id === "pro" ? "bg-primary-600 text-white hover:bg-primary-700 shadow-xl shadow-primary-200" :
                   plan.basePrice === 0 ? "bg-greys-100 text-black-400 cursor-default" :
                   "bg-black-900 text-white hover:bg-black-800"

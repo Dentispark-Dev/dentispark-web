@@ -51,7 +51,7 @@ export function PrivacySettings() {
           <Shield className="w-6 h-6" />
         </div>
         <div>
-          <h2 className="text-2xl font-black text-black-900 tracking-tight">Privacy & Security</h2>
+          <h2 className="text-2xl font-extrabold text-black-900 tracking-tight">Privacy & Security</h2>
           <p className="text-black-400 font-medium text-sm">Manage your data and account transparency.</p>
         </div>
       </div>
@@ -61,14 +61,14 @@ export function PrivacySettings() {
           <div key={idx} className="glass-card p-8 rounded-[2.5rem] border-greys-100 space-y-6">
             <div className="flex items-center gap-3 pb-2 border-b border-greys-50">
               <section.icon className="w-5 h-5 text-primary-500" />
-              <h3 className="font-black text-black-900 uppercase tracking-widest text-xs">{section.title}</h3>
+              <h3 className="font-extrabold text-black-900 uppercase tracking-widest text-xs">{section.title}</h3>
             </div>
             
             <div className="space-y-6">
               {section.items.map((item, i) => (
                 <div key={i} className="flex items-center justify-between">
                   <div className="space-y-1">
-                    <p className="text-sm font-black text-black-800">{item.label}</p>
+                    <p className="text-sm font-extrabold text-black-800">{item.label}</p>
                     <p className="text-xs text-black-400 font-medium">{item.desc}</p>
                   </div>
                   <div className={cn(
@@ -90,7 +90,7 @@ export function PrivacySettings() {
       <div className="glass-card p-10 rounded-[3rem] border-greys-100 bg-black-900 text-white relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div className="space-y-2">
-            <h3 className="text-2xl font-black tracking-tight">Data Sovereignty</h3>
+            <h3 className="text-2xl font-extrabold tracking-tight">Data Sovereignty</h3>
             <p className="text-white/60 font-medium max-w-md">
               Download a complete copy of your DentiSpark data or permanently remove your account from our systems.
             </p>
@@ -100,12 +100,12 @@ export function PrivacySettings() {
             <button 
                 onClick={handleDownload}
                 disabled={downloading}
-                className="h-14 px-8 bg-white text-black-900 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-primary-50 transition-all disabled:opacity-50"
+                className="h-14 px-8 bg-white text-black-900 rounded-2xl font-extrabold uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-primary-50 transition-all disabled:opacity-50"
             >
               {downloading ? "Preparing..." : "Download Data"}
               <Download className="w-4 h-4" />
             </button>
-            <button className="h-14 px-8 bg-red-600/20 text-red-400 border border-red-500/30 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-red-600/30 transition-all">
+            <button className="h-14 px-8 bg-red-600/20 text-red-400 border border-red-500/30 rounded-2xl font-extrabold uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-red-600/30 transition-all">
               Delete Account
               <Trash2 className="w-4 h-4" />
             </button>

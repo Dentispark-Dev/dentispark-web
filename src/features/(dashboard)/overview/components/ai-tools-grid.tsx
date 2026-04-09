@@ -76,9 +76,9 @@ export default function AIToolsGrid() {
                 <Zap className="h-6 w-6" />
              </div>
              <div>
-                <h2 className="text-4xl font-black text-slate-900 tracking-tight">AI Application <span className="text-teal-600">Hub</span></h2>
+                <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">AI Application <span className="text-teal-600">Hub</span></h2>
                 <div className="flex items-center gap-4 mt-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] opacity-60">Neural Pathway Active</span>
+                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.2em] opacity-60">Neural Pathway Active</span>
                     <div className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
              </div>
@@ -91,12 +91,12 @@ export default function AIToolsGrid() {
         <div className="flex items-center gap-6 px-8 py-4 bg-slate-50 rounded-[1.5rem] border border-slate-100">
              <div className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-teal-600" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">GDPR SECURE</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">GDPR SECURE</span>
              </div>
              <div className="h-4 w-px bg-slate-200" />
              <div className="flex items-center gap-2">
                 <Search className="h-4 w-4 text-teal-600" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">VETTED NODES</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">VETTED NODES</span>
              </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function AIToolsGrid() {
                     {tool.icon}
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-teal-600 bg-teal-50 px-4 py-1.5 rounded-full border border-teal-100">
+                        <span className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-teal-600 bg-teal-50 px-4 py-1.5 rounded-full border border-teal-100">
                         {tool.status}
                         </span>
                         <div className="flex gap-1">
@@ -131,7 +131,7 @@ export default function AIToolsGrid() {
                 </div>
 
                 <div className="space-y-4 mb-10">
-                    <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-teal-600 transition-colors">{tool.title}</h3>
+                    <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-teal-600 transition-colors">{tool.title}</h3>
                     <p className="text-sm font-bold text-slate-500 leading-relaxed max-w-[90%]">
                         {tool.description}
                     </p>
@@ -139,7 +139,7 @@ export default function AIToolsGrid() {
             </div>
 
             <Link href={tool.href} className="relative z-10">
-              <button className="w-full h-14 rounded-2xl border border-slate-200 text-slate-900 font-black text-[10px] uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-xl active:scale-[0.98]">
+              <button className="w-full h-14 rounded-2xl border border-slate-200 text-slate-900 font-extrabold text-[10px] uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-xl active:scale-[0.98]">
                 Open Intelligence Terminal
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>

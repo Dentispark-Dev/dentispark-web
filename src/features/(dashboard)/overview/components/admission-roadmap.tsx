@@ -151,7 +151,7 @@ export function AdmissionRoadmap() {
                 />
                 <div className="flex flex-col">
                     <span className={cn(
-                        "text-[9px] font-black uppercase tracking-widest truncate",
+                        "text-[9px] font-extrabold uppercase tracking-widest truncate",
                         isCurrent ? "text-slate-900" : "text-slate-400"
                     )}>
                         Phase {phase.id}
@@ -190,15 +190,15 @@ export function AdmissionRoadmap() {
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
-                             <span className={cn("text-xs font-black uppercase tracking-widest", `text-${currentPhase.color}-600`)}>Current Phase</span>
+                             <span className={cn("text-xs font-extrabold uppercase tracking-widest", `text-${currentPhase.color}-600`)}>Current Phase</span>
                              <div className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 tracking-tight">{currentPhase.title}</h2>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{currentPhase.title}</h2>
                     </div>
                 </div>
 
                 <div className="space-y-4">
-                    <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">What to Do Now</h3>
+                    <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest ml-1">What to Do Now</h3>
                     <div className="space-y-3">
                         {currentPhase.tasks.map((task, i) => (
                             <div key={i} className="flex items-center gap-3 group/task">
@@ -216,7 +216,7 @@ export function AdmissionRoadmap() {
                         <Sparkles className="w-5 h-5 text-emerald-500 fill-emerald-500" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Key Tip</p>
+                        <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Key Tip</p>
                         <p className="text-sm font-bold text-slate-700 leading-tight">"{currentPhase.tip}"</p>
                     </div>
                 </div>
@@ -226,8 +226,8 @@ export function AdmissionRoadmap() {
             <div className="space-y-6 lg:border-l lg:border-slate-100 lg:pl-12">
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                         <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest">Recommended AI Tools</h3>
-                         <Link href="/ai-hub" className="text-[10px] font-black text-emerald-600 uppercase hover:underline">View All</Link>
+                         <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">Recommended AI Tools</h3>
+                         <Link href="/ai-hub" className="text-[10px] font-extrabold text-emerald-600 uppercase hover:underline">View All</Link>
                     </div>
                     <div className="grid grid-cols-1 gap-3">
                         {currentPhase.aiTools.map((tool, i) => (
@@ -237,7 +237,7 @@ export function AdmissionRoadmap() {
                                         <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
                                             <Zap className="w-4 h-4 text-emerald-600" />
                                         </div>
-                                        <span className="text-sm font-black text-slate-900">{tool.name}</span>
+                                        <span className="text-sm font-extrabold text-slate-900">{tool.name}</span>
                                     </div>
                                     <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
                                 </div>
@@ -247,15 +247,15 @@ export function AdmissionRoadmap() {
                 </div>
 
                 <div className="pt-4">
-                    <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Mentor Support</h3>
+                    <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-4">Mentor Support</h3>
                     <Link href={currentPhase.mentors.href}>
                         <div className="p-6 rounded-3xl bg-slate-900 text-white hover:bg-slate-800 transition-all group relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
                                 <MessageSquare className="w-12 h-12" />
                             </div>
                             <div className="relative z-10 flex flex-col gap-1">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Featured Service</span>
-                                <span className="text-lg font-black">{currentPhase.mentors.service} Coaching</span>
+                                <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">Featured Service</span>
+                                <span className="text-lg font-extrabold">{currentPhase.mentors.service} Coaching</span>
                                 <p className="text-xs text-slate-400 font-bold mt-2 flex items-center gap-2">
                                     Book a session <ArrowRight className="w-3 h-3" />
                                 </p>

@@ -20,18 +20,18 @@ export default function InstitutionalDashboard() {
         <div className="space-y-2">
             <div className="flex items-center gap-2 text-primary-600">
                 <Building2 className="w-5 h-5" />
-                <span className="text-xs font-black uppercase tracking-widest">Institutional Hub</span>
+                <span className="text-xs font-extrabold uppercase tracking-widest">Institutional Hub</span>
             </div>
-            <h1 className="text-4xl font-black text-black-900 tracking-tight">London Dental Academy</h1>
+            <h1 className="text-4xl font-extrabold text-black-900 tracking-tight">London Dental Academy</h1>
             <p className="text-black-400 font-medium text-lg">Managing elite cohorts of dental practitioners.</p>
         </div>
         
         <div className="flex gap-3">
-            <button className="h-14 px-8 border border-greys-100 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-greys-50 transition-all">
+            <button className="h-14 px-8 border border-greys-100 rounded-2xl font-extrabold uppercase tracking-widest text-[10px] flex items-center gap-2 hover:bg-greys-50 transition-all">
                 Export Audit Log
                 <ArrowUpRight className="w-4 h-4" />
             </button>
-            <button className="h-14 px-8 bg-black-900 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center gap-2 hover:scale-105 active:scale-95 transition-all">
+            <button className="h-14 px-8 bg-black-900 text-white rounded-2xl font-extrabold uppercase tracking-widest text-[10px] flex items-center gap-2 hover:scale-105 active:scale-95 transition-all">
                 Institutional Settings
             </button>
         </div>
@@ -52,10 +52,10 @@ export default function InstitutionalDashboard() {
                     </div>
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-black-400 uppercase tracking-widest">{stat.label}</p>
-                    <p className="text-3xl font-black text-black-900 italic">{stat.val}</p>
+                    <p className="text-[10px] font-extrabold text-black-400 uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-3xl font-extrabold text-black-900 italic">{stat.val}</p>
                 </div>
-                <p className="text-[9px] font-black text-green-600 uppercase tracking-widest italic">{stat.trend}</p>
+                <p className="text-[9px] font-extrabold text-green-600 uppercase tracking-widest italic">{stat.trend}</p>
             </motion.div>
         ))}
       </div>
@@ -63,7 +63,7 @@ export default function InstitutionalDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-8">
             <div className="flex items-center gap-2">
-                <h2 className="text-xl font-black text-black-900 uppercase tracking-widest text-xs">Active Cohorts</h2>
+                <h2 className="text-xl font-extrabold text-black-900 uppercase tracking-widest text-xs">Active Cohorts</h2>
                 <div className="h-px flex-1 bg-greys-100 ml-4" />
             </div>
             <CohortManager />
@@ -71,7 +71,7 @@ export default function InstitutionalDashboard() {
         
         <div className="space-y-8">
             <div className="flex items-center gap-2">
-                <h2 className="text-xl font-black text-black-900 uppercase tracking-widest text-xs">License Overview</h2>
+                <h2 className="text-xl font-extrabold text-black-900 uppercase tracking-widest text-xs">License Overview</h2>
                 <div className="h-px flex-1 bg-greys-100 ml-4" />
             </div>
             <LicenseViewer />

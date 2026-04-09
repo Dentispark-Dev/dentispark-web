@@ -119,7 +119,7 @@ export function MentorTable() {
             SUSPENDED: "bg-rose-50 text-rose-700 ring-1 ring-rose-500/20",
         };
         return (
-            <Badge className={cn("px-3 py-1 border-none font-black text-[10px] uppercase tracking-widest", config[s] || "bg-blue-50 text-blue-700 ring-1 ring-blue-500/20")}>
+            <Badge className={cn("px-3 py-1 border-none font-extrabold text-[10px] uppercase tracking-widest", config[s] || "bg-blue-50 text-blue-700 ring-1 ring-blue-500/20")}>
                 {status}
             </Badge>
         );
@@ -136,7 +136,7 @@ export function MentorTable() {
                 <div className="absolute top-0 right-0 h-32 w-32 bg-secondary-50 rounded-bl-full opacity-50" />
                 
                 <div className="relative z-10 space-y-1 w-full md:w-auto">
-                    <h2 className="text-2xl font-black text-gray-900 tracking-tight">Professional Mentors</h2>
+                    <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Professional Mentors</h2>
                     <p className="text-sm font-medium text-gray-400 uppercase tracking-widest flex items-center gap-2">
                         <Award className="w-3.5 h-3.5" />
                         Vetting Command
@@ -163,14 +163,14 @@ export function MentorTable() {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-3 py-2">Verification</DropdownMenuLabel>
+                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Verification</DropdownMenuLabel>
                                 <DropdownMenuSeparator className="bg-gray-50" />
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm" onClick={() => setQuery(prev => ({ ...prev, verified: undefined, page: 0 }))}>All Registries</DropdownMenuItem>
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm text-emerald-600" onClick={() => setQuery(prev => ({ ...prev, verified: true, page: 0 }))}>Verified Mentors</DropdownMenuItem>
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm text-amber-600" onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}>Pending Vetting</DropdownMenuItem>
                                 <DropdownMenuSeparator className="bg-gray-50" />
                                 <DropdownMenuItem 
-                                    className="rounded-xl font-black text-xs text-slate-900 bg-slate-50 uppercase tracking-widest"
+                                    className="rounded-xl font-extrabold text-xs text-slate-900 bg-slate-50 uppercase tracking-widest"
                                     onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", verified: false, page: 0 }))}
                                 >
                                     Action Required
@@ -195,12 +195,12 @@ export function MentorTable() {
                     <table className="w-full text-left border-separate border-spacing-0">
                         <thead>
                             <tr className="bg-gray-50/30">
-                                <th className="pl-10 pr-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Mentor Identity</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Handled ID</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Expertise</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Vetting</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Status</th>
-                                <th className="pr-10 pl-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100 text-right">Context</th>
+                                <th className="pl-10 pr-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Mentor Identity</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Handled ID</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Expertise</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Vetting</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Status</th>
+                                <th className="pr-10 pl-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100 text-right">Context</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
@@ -223,7 +223,7 @@ export function MentorTable() {
                                             <div className="p-4 bg-gray-50 rounded-full mb-2">
                                                 <Search className="h-8 w-8 text-gray-300" />
                                             </div>
-                                            <p className="text-gray-900 font-black tracking-tight text-xl">No Mentors Found</p>
+                                            <p className="text-gray-900 font-extrabold tracking-tight text-xl">No Mentors Found</p>
                                             <p className="text-gray-400 font-medium text-sm">Expand your search to find more professionals.</p>
                                         </div>
                                     </td>
@@ -237,11 +237,11 @@ export function MentorTable() {
                                     >
                                         <td className="pl-10 pr-6 py-6">
                                             <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-black text-sm shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-extrabold text-sm shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
                                                     {mentor.mentorName?.[0] || "?"}
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-black text-gray-900 group-hover:text-primary-600 transition-colors leading-tight mb-0.5">
+                                                    <p className="text-sm font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors leading-tight mb-0.5">
                                                         {mentor.mentorName}
                                                     </p>
                                                     <p className="text-[11px] font-bold text-gray-400 tracking-tight italic">Member since {new Date(mentor.dateStamped).toLocaleDateString("en-GB")}</p>
@@ -251,7 +251,7 @@ export function MentorTable() {
                                         <td className="px-6 py-6">
                                             <div className="flex items-center gap-2">
                                                 <Hash className="h-3 w-3 text-gray-300" />
-                                                <span className="text-xs font-black text-slate-500 font-mono tracking-tighter bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">{mentor.hid}</span>
+                                                <span className="text-xs font-extrabold text-slate-500 font-mono tracking-tighter bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">{mentor.hid}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-6 text-sm text-gray-600">
@@ -263,12 +263,12 @@ export function MentorTable() {
                                             {mentor.verified ? (
                                                 <div className="flex items-center gap-2 text-emerald-600 bg-emerald-50/50 px-3 py-1.5 rounded-full ring-1 ring-emerald-500/20 w-fit">
                                                     <ShieldCheck className="h-3.5 w-3.5 shadow-sm" />
-                                                    <span className="text-[10px] font-black uppercase tracking-widest">Verified Expert</span>
+                                                    <span className="text-[10px] font-extrabold uppercase tracking-widest">Verified Expert</span>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-2 text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full ring-1 ring-gray-500/10 w-fit italic">
                                                     <div className="h-1.5 w-1.5 rounded-full bg-gray-300 animate-pulse" />
-                                                    <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Pending Vetting</span>
+                                                    <span className="text-[10px] font-extrabold uppercase tracking-widest opacity-60">Pending Vetting</span>
                                                 </div>
                                             )}
                                         </td>
@@ -283,7 +283,7 @@ export function MentorTable() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-3 py-2">Management</DropdownMenuLabel>
+                                                    <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Management</DropdownMenuLabel>
                                                     <DropdownMenuSeparator className="bg-gray-50" />
                                                     <DropdownMenuItem className="rounded-xl font-bold text-sm gap-2" onClick={() => router.push(`/admin/mentors/${encodeURIComponent(mentor.hid)}`)}>
                                                         <ArrowRight className="w-4 h-4 text-emerald-500" />
@@ -314,7 +314,7 @@ export function MentorTable() {
                     <div className="px-10 py-8 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-6 bg-gray-50/10">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-50">
-                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                                <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
                                     Displaying <span className="text-gray-900">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> Professional Experts
                                 </p>
                             </div>
@@ -330,9 +330,9 @@ export function MentorTable() {
                                 <ChevronLeft className="h-4 w-4" />
                             </Button>
                             <div className="flex items-center gap-2 px-6 bg-slate-900 rounded-xl border border-slate-800 shadow-xl">
-                                <span className="text-xs font-black text-white">{currentPage + 1}</span>
-                                <span className="text-[10px] font-black text-white/30 uppercase tracking-widest px-1">/</span>
-                                <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">{totalPages}</span>
+                                <span className="text-xs font-extrabold text-white">{currentPage + 1}</span>
+                                <span className="text-[10px] font-extrabold text-white/30 uppercase tracking-widest px-1">/</span>
+                                <span className="text-[10px] font-extrabold text-white/40 uppercase tracking-widest">{totalPages}</span>
                             </div>
                             <Button
                                 variant="outline"

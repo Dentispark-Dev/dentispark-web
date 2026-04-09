@@ -242,7 +242,7 @@ export function MeetOurMentors() {
                            <div className="flex flex-col items-end">
                               <div className="flex items-center gap-1.5 bg-emerald-50 px-2 py-0.5 rounded-md">
                                  <Star size={10} fill="#10B981" className="text-emerald-500" />
-                                 <span className="text-[10px] font-black text-emerald-700">4.8 / 5.0</span>
+                                 <span className="text-[10px] font-extrabold text-emerald-700">4.8 / 5.0</span>
                               </div>
                               <span className="text-[9px] text-slate-400 font-bold uppercase tracking-tighter mt-1">(43 reviewed)</span>
                            </div>

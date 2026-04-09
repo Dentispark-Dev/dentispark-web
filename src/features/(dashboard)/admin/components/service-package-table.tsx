@@ -88,18 +88,18 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="text-sm font-black text-gray-900">
+                                        <div className="text-sm font-extrabold text-gray-900">
                                             {pkg.currency} {pkg.price.toLocaleString()}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         {pkg.isActive ? (
-                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-green-100 text-green-700 border border-green-200">
+                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-green-100 text-green-700 border border-green-200">
                                                 <CheckCircle2 className="h-3 w-3" />
                                                 ACTIVE
                                             </span>
                                         ) : (
-                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-gray-100 text-gray-600 border border-gray-200">
+                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gray-100 text-gray-600 border border-gray-200">
                                                 <XCircle className="h-3 w-3" />
                                                 INACTIVE
                                             </span>

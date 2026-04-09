@@ -14,7 +14,7 @@ export default function InstitutionalDeveloperPage() {
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-10">
         <div className="xl:col-span-1 space-y-6">
             <div className="glass-card bg-white p-6 rounded-[2rem] border-primary-100 shadow-xl">
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-black-400 mb-6">Integration Status</h4>
+                <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-black-400 mb-6">Integration Status</h4>
                 <div className="space-y-6">
                     <StatusItem icon={<Terminal />} label="API Health" status="99.9%" />
                     <StatusItem icon={<Globe />} label="Webhook Load" status="Low" />
@@ -26,9 +26,9 @@ export default function InstitutionalDeveloperPage() {
                 <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-4">
                     <Code className="w-6 h-6" />
                 </div>
-                <h3 className="font-black italic uppercase text-lg tracking-tight mb-2">Need Help?</h3>
+                <h3 className="font-extrabold italic uppercase text-lg tracking-tight mb-2">Need Help?</h3>
                 <p className="text-white/70 text-xs mb-6 font-medium leading-relaxed">Our engineering team is available for custom LMS integration support.</p>
-                <button className="w-full h-10 bg-white text-primary-600 rounded-xl font-black uppercase tracking-widest text-[9px] hover:bg-white-50 transition-all">
+                <button className="w-full h-10 bg-white text-primary-600 rounded-xl font-extrabold uppercase tracking-widest text-[9px] hover:bg-white-50 transition-all">
                     Contact Support
                 </button>
             </div>
@@ -52,7 +52,7 @@ function StatusItem({ icon, label, status }: { icon: React.ReactElement, label: 
                 </div>
                 <span className="text-[11px] font-bold text-black-600 uppercase tracking-tight">{label}</span>
             </div>
-            <span className="text-[11px] font-black text-black-900">{status}</span>
+            <span className="text-[11px] font-extrabold text-black-900">{status}</span>
         </div>
     )
 }

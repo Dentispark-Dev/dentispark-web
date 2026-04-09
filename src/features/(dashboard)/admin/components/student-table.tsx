@@ -107,7 +107,7 @@ export function StudentTable() {
             PENDING: "bg-amber-50 text-amber-700 ring-1 ring-amber-500/20",
         };
         return (
-            <Badge className={cn("px-3 py-1 border-none font-black text-[10px] uppercase tracking-widest", config[s] || "bg-blue-50 text-blue-700 ring-1 ring-blue-500/20")}>
+            <Badge className={cn("px-3 py-1 border-none font-extrabold text-[10px] uppercase tracking-widest", config[s] || "bg-blue-50 text-blue-700 ring-1 ring-blue-500/20")}>
                 {status}
             </Badge>
         );
@@ -124,7 +124,7 @@ export function StudentTable() {
                 <div className="absolute top-0 right-0 h-32 w-32 bg-primary-50 rounded-bl-full opacity-50" />
                 
                 <div className="relative z-10 space-y-1 w-full md:w-auto">
-                    <h2 className="text-2xl font-black text-gray-900 tracking-tight">Student Community</h2>
+                    <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Student Community</h2>
                     <p className="text-sm font-medium text-gray-400 uppercase tracking-widest flex items-center gap-2">
                         <Layers className="w-3.5 h-3.5" />
                         Management Engine
@@ -151,13 +151,13 @@ export function StudentTable() {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-3 py-2">Account Status</DropdownMenuLabel>
+                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Account Status</DropdownMenuLabel>
                                 <DropdownMenuSeparator className="bg-gray-50" />
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm" onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "", page: 0 }))}>All Residents</DropdownMenuItem>
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm text-emerald-600" onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "ACTIVE", page: 0 }))}>Active Members</DropdownMenuItem>
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm text-rose-600" onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", page: 0 }))}>Inactive Accounts</DropdownMenuItem>
                                 <DropdownMenuSeparator className="bg-gray-50" />
-                                <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-3 py-2">Billing State</DropdownMenuLabel>
+                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Billing State</DropdownMenuLabel>
                                 <DropdownMenuSeparator className="bg-gray-50" />
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm" onClick={() => setQuery(prev => ({ ...prev, paymentStatus: undefined, page: 0 }))}>All Billing</DropdownMenuItem>
                                 <DropdownMenuItem className="rounded-xl font-bold text-sm text-blue-600" onClick={() => setQuery(prev => ({ ...prev, paymentStatus: "PAID", page: 0 }))}>Paid Licenses</DropdownMenuItem>
@@ -182,13 +182,13 @@ export function StudentTable() {
                     <table className="w-full text-left border-separate border-spacing-0">
                         <thead>
                             <tr className="bg-gray-50/30">
-                                <th className="pl-10 pr-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Student Identity</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">System ID</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Gateway</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Billing</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Status</th>
-                                <th className="px-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Registered</th>
-                                <th className="pr-10 pl-6 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100 text-right">Context</th>
+                                <th className="pl-10 pr-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Student Identity</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">System ID</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Gateway</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Billing</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Status</th>
+                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Registered</th>
+                                <th className="pr-10 pl-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100 text-right">Context</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
@@ -211,7 +211,7 @@ export function StudentTable() {
                                             <div className="p-4 bg-gray-50 rounded-full mb-2">
                                                 <Search className="h-8 w-8 text-gray-300" />
                                             </div>
-                                            <p className="text-gray-900 font-black tracking-tight text-xl">No Members Found</p>
+                                            <p className="text-gray-900 font-extrabold tracking-tight text-xl">No Members Found</p>
                                             <p className="text-gray-400 font-medium text-sm">Adjust your filters to see more of the community.</p>
                                         </div>
                                     </td>
@@ -225,11 +225,11 @@ export function StudentTable() {
                                     >
                                         <td className="pl-10 pr-6 py-6">
                                             <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-black text-sm shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-extrabold text-sm shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                                                     {(student.firstName?.[0] || "")}{(student.lastName?.[0] || "")}
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-black text-gray-900 group-hover:text-primary-600 transition-colors leading-tight mb-0.5">
+                                                    <p className="text-sm font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors leading-tight mb-0.5">
                                                         {student.firstName} {student.lastName}
                                                     </p>
                                                     <p className="text-[11px] font-bold text-gray-400 truncate tracking-tight">{student.emailAddress}</p>
@@ -239,7 +239,7 @@ export function StudentTable() {
                                         <td className="px-6 py-6">
                                             <div className="flex items-center gap-2">
                                                 <Hash className="h-3 w-3 text-gray-300" />
-                                                <span className="text-xs font-black text-slate-500 font-mono tracking-tighter bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">{student.sid}</span>
+                                                <span className="text-xs font-extrabold text-slate-500 font-mono tracking-tighter bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">{student.sid}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-6">
@@ -252,12 +252,12 @@ export function StudentTable() {
                                                 {student.paymentStatus === "PAID" ? (
                                                     <div className="flex items-center gap-2 text-blue-600">
                                                         <div className="h-1.5 w-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                                                        <span className="text-[10px] font-black uppercase tracking-widest italic">Tier 1 Elite</span>
+                                                        <span className="text-[10px] font-extrabold uppercase tracking-widest italic">Tier 1 Elite</span>
                                                     </div>
                                                 ) : (
                                                     <div className="flex items-center gap-2 text-gray-400">
                                                         <div className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-                                                        <span className="text-[10px] font-black uppercase tracking-widest italic">Community</span>
+                                                        <span className="text-[10px] font-extrabold uppercase tracking-widest italic">Community</span>
                                                     </div>
                                                 )}
                                             </div>
@@ -279,7 +279,7 @@ export function StudentTable() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-gray-400 px-3 py-2">Quick Commands</DropdownMenuLabel>
+                                                    <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Quick Commands</DropdownMenuLabel>
                                                     <DropdownMenuSeparator className="bg-gray-50" />
                                                     <DropdownMenuItem className="rounded-xl font-bold text-sm gap-2" onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}>
                                                         <ArrowRight className="w-4 h-4 text-primary-500" />
@@ -310,7 +310,7 @@ export function StudentTable() {
                     <div className="px-10 py-8 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-6 bg-gray-50/20">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                                <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
                                     Displaying <span className="text-gray-900">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> of <span className="text-gray-900">{data?.totalElements}</span> Elite Members
                                 </p>
                             </div>
@@ -327,8 +327,8 @@ export function StudentTable() {
                                 Previous
                             </Button>
                             <div className="flex items-center gap-2 px-4 bg-white rounded-xl border border-gray-100 shadow-sm">
-                                <span className="text-xs font-black text-primary-600">{currentPage + 1}</span>
-                                <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">of {totalPages}</span>
+                                <span className="text-xs font-extrabold text-primary-600">{currentPage + 1}</span>
+                                <span className="text-[10px] font-extrabold text-gray-300 uppercase tracking-widest">of {totalPages}</span>
                             </div>
                             <Button
                                 variant="outline"

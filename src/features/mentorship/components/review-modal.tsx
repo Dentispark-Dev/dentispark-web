@@ -82,7 +82,7 @@ export function ReviewModal({ bookingId, mentorName, onClose, onSuccess }: Revie
                   <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Star className="w-8 h-8 fill-emerald-600" />
                   </div>
-                  <h2 className="text-2xl font-black text-slate-900 tracking-tight font-jakarta">
+                  <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight font-jakarta">
                     Rate your session with {mentorName}
                   </h2>
                   <p className="text-slate-500 mt-2 font-medium">
@@ -158,7 +158,7 @@ export function ReviewModal({ bookingId, mentorName, onClose, onSuccess }: Revie
                   <CheckCircle2 className="w-12 h-12" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black text-slate-900 font-jakarta">Thank You!</h3>
+                  <h3 className="text-3xl font-extrabold text-slate-900 font-jakarta">Thank You!</h3>
                   <p className="text-slate-500 font-medium mt-2">
                     Your review has been submitted successfully.
                   </p>

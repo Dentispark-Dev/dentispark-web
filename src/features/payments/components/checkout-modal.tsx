@@ -50,7 +50,7 @@ export function CheckoutModal({ isOpen, onClose, planName, price }: CheckoutModa
                 </div>
 
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-black text-black-900 tracking-tight">Complete Upgrade</h2>
+                  <h2 className="text-3xl font-extrabold text-black-900 tracking-tight">Complete Upgrade</h2>
                   <p className="text-black-500 font-medium">Safe & secure checkout via Stripe layer.</p>
                 </div>
 
@@ -59,7 +59,7 @@ export function CheckoutModal({ isOpen, onClose, planName, price }: CheckoutModa
                         <span>Plan</span>
                         <span>Amount</span>
                     </div>
-                    <div className="flex justify-between items-center text-xl font-black text-black-900">
+                    <div className="flex justify-between items-center text-xl font-extrabold text-black-900">
                         <span>{planName}</span>
                         <span>£{price}</span>
                     </div>
@@ -81,7 +81,7 @@ export function CheckoutModal({ isOpen, onClose, planName, price }: CheckoutModa
                   <button
                     onClick={handleCheckout}
                     disabled={status === "loading"}
-                    className="w-full h-16 bg-primary-600 text-white rounded-[1.5rem] font-black uppercase tracking-widest hover:bg-primary-700 shadow-xl shadow-primary-200 transition-all flex items-center justify-center gap-2"
+                    className="w-full h-16 bg-primary-600 text-white rounded-[1.5rem] font-extrabold uppercase tracking-widest hover:bg-primary-700 shadow-xl shadow-primary-200 transition-all flex items-center justify-center gap-2"
                   >
                     {status === "loading" ? (
                         <Loader2 className="w-6 h-6 animate-spin" />
@@ -93,7 +93,7 @@ export function CheckoutModal({ isOpen, onClose, planName, price }: CheckoutModa
                     )}
                   </button>
 
-                  <div className="flex items-center justify-center gap-3 text-[10px] font-black text-black-400 uppercase tracking-widest">
+                  <div className="flex items-center justify-center gap-3 text-[10px] font-extrabold text-black-400 uppercase tracking-widest">
                     <ShieldCheck className="w-4 h-4 text-primary-500" />
                     Stripe Secure • 256-bit Encryption
                   </div>
@@ -109,12 +109,12 @@ export function CheckoutModal({ isOpen, onClose, planName, price }: CheckoutModa
                     <CheckCircle2 className="w-12 h-12" />
                 </div>
                 <div className="space-y-2">
-                    <h2 className="text-3xl font-black text-black-900 tracking-tight">Upgrade Successful!</h2>
+                    <h2 className="text-3xl font-extrabold text-black-900 tracking-tight">Upgrade Successful!</h2>
                     <p className="text-black-500 font-medium">Your premium features have been unlocked.</p>
                 </div>
                 <button 
                     onClick={onClose}
-                    className="w-full h-16 bg-black-900 text-white rounded-[1.5rem] font-black uppercase tracking-widest"
+                    className="w-full h-16 bg-black-900 text-white rounded-[1.5rem] font-extrabold uppercase tracking-widest"
                 >
                     Go back to Dashboard
                 </button>

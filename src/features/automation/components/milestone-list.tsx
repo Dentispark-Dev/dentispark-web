@@ -12,7 +12,7 @@ export function MilestoneList() {
     <div className="glass-card p-8 rounded-[2.5rem] border-greys-100 bg-white space-y-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-            <h4 className="text-lg font-black text-black-900">Upcoming Milestones</h4>
+            <h4 className="text-lg font-extrabold text-black-900">Upcoming Milestones</h4>
             <div className="flex items-center gap-2 text-xs font-bold text-black-400 uppercase tracking-widest">
                 <Bell className="w-3 h-3" />
                 Smart Reminders Active

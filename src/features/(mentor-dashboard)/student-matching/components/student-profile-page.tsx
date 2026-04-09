@@ -203,8 +203,8 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                     { label: "A-Level Predicted", value: student.aLevelScore }
                  ].map(stat => (
                     <div key={stat.label} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 min-w-[160px]">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{stat.label}</p>
-                        <p className="text-sm font-black text-slate-900">{stat.value}</p>
+                        <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">{stat.label}</p>
+                        <p className="text-sm font-extrabold text-slate-900">{stat.value}</p>
                     </div>
                  ))}
               </div>
@@ -216,7 +216,7 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
                 {showFullGoals ? student.goals : `${student.goals?.substring(0, 300)}...`}
               </p>
               {!showFullGoals && (
-                <Button variant="link" onClick={() => setShowFullGoals(true)} className="text-emerald-600 font-black p-0 h-auto">Read Full Narrative</Button>
+                <Button variant="link" onClick={() => setShowFullGoals(true)} className="text-emerald-600 font-extrabold p-0 h-auto">Read Full Narrative</Button>
               )}
             </div>
 
@@ -230,11 +230,11 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
 
           <div className="space-y-8 lg:col-span-1">
              <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-slate-900/20">
-                <h3 className="text-xl font-black mb-2">{student.booking?.title || "Mentoring Session"}</h3>
+                <h3 className="text-xl font-extrabold mb-2">{student.booking?.title || "Mentoring Session"}</h3>
                 <p className="text-slate-400 font-bold mb-8">{student.booking?.date || "Schedule Pending"}</p>
                 
                 <div className="space-y-4">
-                    <Button onClick={handleAcceptBooking} className="w-full h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all">
+                    <Button onClick={handleAcceptBooking} className="w-full h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-extrabold text-xs uppercase tracking-widest transition-all">
                         Initialize Session
                     </Button>
                     <Button onClick={handleSuggestNewSlot} variant="ghost" className="w-full h-14 text-slate-400 hover:text-white rounded-2xl font-bold">

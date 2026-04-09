@@ -141,13 +141,13 @@ export function StudentMessagingPage({
           <div className="flex items-center gap-4">
             <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl border border-slate-100 shadow-sm bg-slate-50">
               {studentId && (
-                <div className="w-full h-full flex items-center justify-center font-black text-slate-400">
+                <div className="w-full h-full flex items-center justify-center font-extrabold text-slate-400">
                   {studentId.slice(0, 2).toUpperCase()}
                 </div>
               )}
             </div>
             <div className="flex items-center gap-4">
-              <h1 className="text-xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
                 Protocol Session
               </h1>
               <div className="caption-caps bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-100 flex items-center gap-2">

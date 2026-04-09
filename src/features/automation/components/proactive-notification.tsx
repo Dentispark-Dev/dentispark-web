@@ -55,9 +55,9 @@ export function ProactiveNotification() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-primary-400">Co-pilot Suggestion</span>
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary-400">Co-pilot Suggestion</span>
                     <div className={cn(
-                        "px-2 py-0.5 rounded-full text-[8px] font-black uppercase",
+                        "px-2 py-0.5 rounded-full text-[8px] font-extrabold uppercase",
                         recommendation.priority === "high" ? "bg-red-500/20 text-red-400" : "bg-primary-500/20 text-primary-400"
                     )}>
                         {recommendation.priority} Priority
@@ -71,7 +71,7 @@ export function ProactiveNotification() {
             <div className="flex items-center gap-3 relative z-10">
               <Link 
                 href="/ai-hub"
-                className="h-10 px-6 bg-white rounded-xl text-black-900 text-xs font-black flex items-center gap-2 hover:bg-primary-50 transition-all active:scale-95 shadow-xl"
+                className="h-10 px-6 bg-white rounded-xl text-black-900 text-xs font-extrabold flex items-center gap-2 hover:bg-primary-50 transition-all active:scale-95 shadow-xl"
               >
                 Go to Hub <ArrowRight className="w-3 h-3" />
               </Link>

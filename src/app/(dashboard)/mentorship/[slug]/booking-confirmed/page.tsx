@@ -56,7 +56,7 @@ function BookingConfirmedContent() {
 
         {/* Text */}
         <div>
-          <h1 className="text-3xl font-black text-slate-900">Booking Confirmed!</h1>
+          <h1 className="text-3xl font-extrabold text-slate-900">Booking Confirmed!</h1>
           <p className="text-slate-500 mt-3 leading-relaxed">
             {isFree
               ? `Your free intro call has been requested. Your mentor will reach out within 24 hours to confirm the time.`
@@ -83,7 +83,7 @@ function BookingConfirmedContent() {
 
         {/* CTAs */}
         <div className="flex flex-col gap-3">
-          <Button asChild className="h-12 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black">
+          <Button asChild className="h-12 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold">
             <Link href="/overview">
               Go to My Dashboard <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

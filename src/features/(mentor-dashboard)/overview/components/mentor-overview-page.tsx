@@ -140,8 +140,8 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
         {/* NEW: AI Class Intelligence Summary Card */}
         <div className="md:col-span-3 lg:col-span-4 glass-card p-6 rounded-3xl border-primary-100 bg-white shadow-sm flex flex-col md:flex-row items-center gap-8 border-l-8 border-l-primary-600">
             <div className="flex flex-col items-center">
-                <div className="text-[10px] font-black text-black-400 uppercase tracking-widest mb-1">Avg Spark Index</div>
-                <div className="text-4xl font-black text-primary-600">84.2%</div>
+                <div className="text-[10px] font-extrabold text-black-400 uppercase tracking-widest mb-1">Avg Spark Index</div>
+                <div className="text-4xl font-extrabold text-primary-600">84.2%</div>
                 <div className="text-[10px] font-bold text-green-500 uppercase flex items-center gap-1 mt-1">
                     <TrendingUp className="w-3 h-3" /> +2.4% this week
                 </div>
@@ -150,7 +150,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
             <div className="h-12 w-px bg-greys-100 hidden md:block" />
             
             <div className="flex-1 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-black text-black-800 uppercase tracking-widest">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-black-800 uppercase tracking-widest">
                     <BrainCircuit className="w-4 h-4 text-primary-600" /> AI Cohort Insights
                 </div>
                 <p className="text-sm text-black-500 leading-relaxed font-medium">

@@ -50,7 +50,7 @@ export function NotificationPrompt() {
               
               <div className="space-y-3">
                 <div className="flex justify-between items-start">
-                  <h3 className="font-black text-black-900 tracking-tight">Stay Competitive.</h3>
+                  <h3 className="font-extrabold text-black-900 tracking-tight">Stay Competitive.</h3>
                   <button onClick={() => setIsVisible(false)} className="p-1 hover:bg-greys-100 rounded-full transition-colors">
                     <X className="w-4 h-4 text-black-400" />
                   </button>
@@ -63,14 +63,14 @@ export function NotificationPrompt() {
                 <div className="flex items-center gap-2 pt-1">
                   <button 
                     onClick={handleEnable}
-                    className="flex-1 h-12 bg-primary-600 text-white rounded-xl font-black uppercase tracking-widest text-[9px] hover:bg-primary-700 transition-all flex items-center justify-center gap-2"
+                    className="flex-1 h-12 bg-primary-600 text-white rounded-xl font-extrabold uppercase tracking-widest text-[9px] hover:bg-primary-700 transition-all flex items-center justify-center gap-2"
                   >
                     Enable Alerts
                     <ArrowRight className="w-3 h-3" />
                   </button>
                   <button 
                     onClick={() => setIsVisible(false)}
-                    className="px-4 h-12 border border-greys-100 rounded-xl font-black uppercase tracking-widest text-[9px] text-black-400 hover:bg-greys-50 transition-all"
+                    className="px-4 h-12 border border-greys-100 rounded-xl font-extrabold uppercase tracking-widest text-[9px] text-black-400 hover:bg-greys-50 transition-all"
                   >
                     Later
                   </button>

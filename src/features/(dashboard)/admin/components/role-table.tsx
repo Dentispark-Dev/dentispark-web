@@ -67,7 +67,7 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
                         <div className="p-3 bg-slate-900 rounded-2xl text-white shadow-xl shadow-slate-200">
                             <ShieldAlert className="h-6 w-6" />
                         </div>
-                        <h2 className="text-4xl font-black text-slate-900 tracking-tight">Role <span className="text-teal-600">Permissions</span></h2>
+                        <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">Role <span className="text-teal-600">Permissions</span></h2>
                     </div>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.3em] max-w-md">
                         System Architecture & Institutional Access Controls
@@ -76,7 +76,7 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
 
                 <div className="flex gap-4 w-full md:w-auto relative z-10">
                     <Button
-                        className="bg-slate-900 hover:bg-black text-white h-14 px-8 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-black text-xs uppercase tracking-widest active:scale-95 transition-all group w-full md:w-auto"
+                        className="bg-slate-900 hover:bg-black text-white h-14 px-8 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group w-full md:w-auto"
                         onClick={onCreateClick}
                     >
                         <ShieldCheck className="h-5 w-5 group-hover:scale-110 transition-transform" />
@@ -110,7 +110,7 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
                                 <Lock className="h-10 w-10" />
                             </div>
                             <div className="space-y-1">
-                                <p className="text-xl font-black text-slate-900 tracking-tight">Access Registry Empty</p>
+                                <p className="text-xl font-extrabold text-slate-900 tracking-tight">Access Registry Empty</p>
                                 <p className="text-slate-400 font-bold text-sm">Deploy the first role to establish access protocols.</p>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-100 shadow-2xl">
-                                            <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-3 py-2 text-center border-b border-slate-50 mb-1">Architecture Node</DropdownMenuLabel>
+                                            <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-3 py-2 text-center border-b border-slate-50 mb-1">Architecture Node</DropdownMenuLabel>
                                             <DropdownMenuItem className="rounded-xl font-bold text-sm gap-3 py-3 px-3 transition-colors cursor-pointer" onClick={() => onEditClick(role)}>
                                                 <Edit2 className="h-4 w-4 text-teal-600" /> Modify Permissions
                                             </DropdownMenuItem>
@@ -148,10 +148,10 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
                                         <ShieldCheck className="h-8 w-8" />
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-teal-600 transition-colors">
+                                        <h4 className="text-xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-teal-600 transition-colors">
                                             {role.name}
                                         </h4>
-                                        <p className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black mt-1">Platform Architecture</p>
+                                        <p className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-extrabold mt-1">Platform Architecture</p>
                                     </div>
                                 </div>
 
@@ -162,11 +162,11 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
                                 <div className="pt-8 border-t border-slate-50 flex items-center justify-between">
                                     <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-2xl border border-slate-100 text-slate-600">
                                         <Users className="h-4 w-4 text-slate-400" />
-                                        <span className="text-[11px] font-black uppercase tracking-tight">{role.users || 0} Entities</span>
+                                        <span className="text-[11px] font-extrabold uppercase tracking-tight">{role.users || 0} Entities</span>
                                     </div>
                                     <Button
                                         variant="link"
-                                        className="text-teal-600 p-0 h-auto text-[11px] font-black uppercase tracking-widest gap-2 flex hover:no-underline group/btn"
+                                        className="text-teal-600 p-0 h-auto text-[11px] font-extrabold uppercase tracking-widest gap-2 flex hover:no-underline group/btn"
                                         onClick={() => onEditClick(role)}
                                     >
                                         Inspect Registry

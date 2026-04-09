@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
         className="h-10 px-4 glass-card border-greys-100 rounded-xl flex items-center gap-2 hover:bg-greys-50 transition-all group"
       >
         <Globe className="w-4 h-4 text-black-400 group-hover:text-primary-600 transition-colors" />
-        <span className="text-[10px] font-black uppercase tracking-widest text-black-600">
+        <span className="text-[10px] font-extrabold uppercase tracking-widest text-black-600">
           {languages.find(l => l.code === locale)?.name}
         </span>
       </button>

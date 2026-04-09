@@ -227,7 +227,7 @@ export default function MentorMatchingPage() {
                     <Sparkles className="w-4 h-4" />
                     Deep Match Analysis Complete
                 </div>
-                <h2 className="text-5xl lg:text-6xl font-jakarta font-black text-gray-900 tracking-tight leading-[1.1]">
+                <h2 className="text-5xl lg:text-6xl font-jakarta font-extrabold text-gray-900 tracking-tight leading-[1.1]">
                     Your High-Proximity <br /> <span className="text-emerald-600">Mentor Match.</span>
                 </h2>
                 <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed">We've audited our entire network to identify the mentors uniquely architected for your specific dental application roadmap.</p>
@@ -252,8 +252,8 @@ export default function MentorMatchingPage() {
                             <BrainCircuit className="w-7 h-7" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-jakarta font-black text-slate-900 tracking-tight">Strategic Architecture</h3>
-                            <p className="text-[10px] text-emerald-600 uppercase tracking-widest font-black">AI Match Synthesis</p>
+                            <h3 className="text-xl font-jakarta font-extrabold text-slate-900 tracking-tight">Strategic Architecture</h3>
+                            <p className="text-[10px] text-emerald-600 uppercase tracking-widest font-extrabold">AI Match Synthesis</p>
                         </div>
                     </div>
                     
@@ -294,8 +294,8 @@ export default function MentorMatchingPage() {
             <div className="space-y-12">
                 <div className="flex items-center justify-between border-b border-gray-200 pb-8">
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-3xl font-jakarta font-black text-slate-900 tracking-tight">Elite Specialists</h3>
-                        <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Matched for your specific mission profile</p>
+                        <h3 className="text-3xl font-jakarta font-extrabold text-slate-900 tracking-tight">Elite Specialists</h3>
+                        <p className="text-slate-400 text-[10px] font-extrabold uppercase tracking-[0.2em]">Matched for your specific mission profile</p>
                     </div>
                     <div className="flex gap-4">
                         <div className="p-3 bg-white border border-gray-200 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer">
@@ -319,13 +319,13 @@ export default function MentorMatchingPage() {
                 <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] bg-white/10 blur-[80px] rotate-45 pointer-events-none" />
                 
                 <div className="space-y-6 relative z-10 max-w-xl text-center lg:text-left">
-                    <h3 className="text-4xl lg:text-5xl font-jakarta font-black text-white tracking-tight leading-[1.1]">Accelerate Your Admissions</h3>
+                    <h3 className="text-4xl lg:text-5xl font-jakarta font-extrabold text-white tracking-tight leading-[1.1]">Accelerate Your Admissions</h3>
                     <p className="text-emerald-50 text-lg font-medium">Unsure which elite specialist fits your mission? Secure a strategic briefing with our lead advisor.</p>
                 </div>
                 
                 <div className="relative z-10 shrink-0">
                     <Link href="/mentorship">
-                        <Button className="bg-white text-emerald-900 hover:bg-gray-50 px-12 h-16 rounded-xl font-jakarta font-black text-lg hover:-translate-y-1 transition-all flex items-center gap-4 group">
+                        <Button className="bg-white text-emerald-900 hover:bg-gray-50 px-12 h-16 rounded-xl font-jakarta font-extrabold text-lg hover:-translate-y-1 transition-all flex items-center gap-4 group">
                             Live Briefing
                             <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform" />
                         </Button>

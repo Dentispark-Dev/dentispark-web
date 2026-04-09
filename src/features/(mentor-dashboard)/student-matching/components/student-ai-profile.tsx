@@ -78,7 +78,7 @@ export function StudentAIProfile({ studentId }: StudentAIProfileProps) {
         {/* Left Col: Spark Index & Metrics */}
         <div className="lg:col-span-1 space-y-8">
             <div className="glass-card p-8 rounded-[2.5rem] border-primary-100 bg-white shadow-sm flex flex-col items-center text-center">
-                <h3 className="text-xs font-black text-black-400 uppercase tracking-widest mb-6">Spark Index (Readiness)</h3>
+                <h3 className="text-xs font-extrabold text-black-400 uppercase tracking-widest mb-6">Spark Index (Readiness)</h3>
                 <ScoreGauge score={insights?.predictedAcceptanceOdds || 85} />
                 <div className="grid grid-cols-3 gap-4 w-full mt-8 pt-8 border-t border-greys-100">
                     {[
@@ -87,15 +87,15 @@ export function StudentAIProfile({ studentId }: StudentAIProfileProps) {
                         { label: "Int", val: 65, color: "text-orange-500" }
                     ].map(stat => (
                         <div key={stat.label} className="space-y-1">
-                            <span className="text-[10px] font-black text-black-400 uppercase">{stat.label}</span>
-                            <p className={cn("text-lg font-black", stat.color)}>{stat.val}%</p>
+                            <span className="text-[10px] font-extrabold text-black-400 uppercase">{stat.label}</span>
+                            <p className={cn("text-lg font-extrabold", stat.color)}>{stat.val}%</p>
                         </div>
                     ))}
                 </div>
             </div>
 
             <div className="glass-card p-6 rounded-3xl bg-black-900 text-white space-y-4">
-                <div className="flex items-center gap-2 text-primary-400 text-[10px] font-black uppercase tracking-widest">
+                <div className="flex items-center gap-2 text-primary-400 text-[10px] font-extrabold uppercase tracking-widest">
                     <Zap className="w-4 h-4" /> Priority Action Items
                 </div>
                 <div className="space-y-3">
@@ -129,7 +129,7 @@ export function StudentAIProfile({ studentId }: StudentAIProfileProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                         <div className="space-y-4">
-                            <h4 className="flex items-center gap-2 text-xs font-black text-green-600 uppercase tracking-widest">
+                            <h4 className="flex items-center gap-2 text-xs font-extrabold text-green-600 uppercase tracking-widest">
                                 <CheckCircle2 className="w-4 h-4" /> Cognitive Strengths
                             </h4>
                             <ul className="space-y-2">
@@ -142,7 +142,7 @@ export function StudentAIProfile({ studentId }: StudentAIProfileProps) {
                             </ul>
                         </div>
                         <div className="space-y-4">
-                            <h4 className="flex items-center gap-2 text-xs font-black text-amber-600 uppercase tracking-widest">
+                            <h4 className="flex items-center gap-2 text-xs font-extrabold text-amber-600 uppercase tracking-widest">
                                 <AlertCircle className="w-4 h-4" /> Growth Opportunity
                             </h4>
                             <ul className="space-y-2">
@@ -187,7 +187,7 @@ export function StudentAIProfile({ studentId }: StudentAIProfileProps) {
                             </div>
                             <div className="text-right">
                                 <p className="text-xs font-bold text-black-700">{item.res}</p>
-                                <p className="text-[10px] font-black text-primary-600 italic">{item.impact}</p>
+                                <p className="text-[10px] font-extrabold text-primary-600 italic">{item.impact}</p>
                             </div>
                         </div>
                     ))}

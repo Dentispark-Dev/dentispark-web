@@ -182,13 +182,13 @@ export function HowItWorks() {
                     {/* Phase Badge */}
                     <div className="flex items-center justify-between mb-10 w-full">
                         <div className="flex flex-col">
-                            <span className={cn("text-[10px] font-black uppercase tracking-[0.3em] mb-1", step.accent)}>
+                            <span className={cn("text-[10px] font-extrabold uppercase tracking-[0.3em] mb-1", step.accent)}>
                                 Phase 0{step.id}
                             </span>
                             <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">{step.phase}</span>
                         </div>
                         <div className={cn(
-                            "w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg transition-transform duration-500 group-hover:scale-110",
+                            "w-12 h-12 rounded-2xl flex items-center justify-center text-white font-extrabold text-xl shadow-lg transition-transform duration-500 group-hover:scale-110",
                             `bg-gradient-to-br ${step.color}`
                         )}>
                             {step.id}
@@ -209,7 +209,7 @@ export function HowItWorks() {
 
                     {/* Step Content */}
                     <div className="space-y-4 flex-1 relative z-10">
-                        <h3 className="font-jakarta text-2xl font-black text-slate-900 tracking-tighter leading-none group-hover:text-emerald-600 transition-colors">
+                        <h3 className="font-jakarta text-2xl font-extrabold text-slate-900 tracking-tighter leading-none group-hover:text-emerald-600 transition-colors">
                             {step.title}
                         </h3>
                         <div className="relative overflow-hidden">

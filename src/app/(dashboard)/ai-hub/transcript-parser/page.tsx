@@ -284,7 +284,7 @@ export default function TranscriptParserPage() {
 
                 {parsedData?.missingInfo?.length > 0 && (
                     <div className="p-6 bg-amber-50 rounded-[2rem] border border-amber-100 space-y-3">
-                        <div className="flex items-center gap-2 text-amber-700 text-[10px] font-black uppercase tracking-widest">
+                        <div className="flex items-center gap-2 text-amber-700 text-[10px] font-extrabold uppercase tracking-widest">
                             <Target className="w-4 h-4" /> Missing Data Found
                         </div>
                         <ul className="space-y-1">

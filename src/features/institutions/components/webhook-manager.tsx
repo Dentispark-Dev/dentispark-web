@@ -53,7 +53,7 @@ export function WebhookManager() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-sm font-bold text-black-900 truncate">{hook.url}</span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${hook.status === "active" ? "bg-emerald-100 text-emerald-600" : "bg-greys-200 text-black-400"}`}>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${hook.status === "active" ? "bg-emerald-100 text-emerald-600" : "bg-greys-200 text-black-400"}`}>
                   {hook.status}
                 </span>
               </div>

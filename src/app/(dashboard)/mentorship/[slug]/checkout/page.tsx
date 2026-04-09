@@ -113,7 +113,7 @@ function CheckoutContent() {
       >
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Confirm Your Booking</h1>
+          <h1 className="text-2xl font-extrabold text-slate-900">Confirm Your Booking</h1>
           <p className="text-slate-500 mt-1">Review the details and select your preferred slot.</p>
         </div>
 
@@ -131,11 +131,11 @@ function CheckoutContent() {
         <div className="bg-slate-50 rounded-2xl border border-slate-100 p-6 space-y-5">
           {/* Mentor */}
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-black">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-extrabold">
               {mentor.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
             </div>
             <div>
-              <p className="font-black text-slate-900">{mentor.name}</p>
+              <p className="font-extrabold text-slate-900">{mentor.name}</p>
               <p className="text-slate-500 text-sm">{mentor.title}</p>
             </div>
           </div>
@@ -165,7 +165,7 @@ function CheckoutContent() {
           {/* Price */}
           <div className="flex items-center justify-between">
             <span className="font-bold text-slate-600">Total Due</span>
-            <span className="text-2xl font-black text-slate-900">
+            <span className="text-2xl font-extrabold text-slate-900">
               {price === 0 ? "Free" : `${mentor.currency}${price}`}
             </span>
           </div>
@@ -182,7 +182,7 @@ function CheckoutContent() {
         <button
           onClick={handleConfirmBooking}
           disabled={loading || !selectedDate || !selectedTime}
-          className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black tracking-wide shadow-md transition-all active:scale-95 disabled:opacity-40 flex items-center justify-center gap-2"
+          className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold tracking-wide shadow-md transition-all active:scale-95 disabled:opacity-40 flex items-center justify-center gap-2"
         >
           {loading ? (
             <><Loader2 className="w-5 h-5 animate-spin" /> Processing…</>

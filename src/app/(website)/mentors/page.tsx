@@ -36,11 +36,11 @@ export default function PublicMentorsPage() {
                 </div>
                 
                 <Container className="relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-black uppercase tracking-widest mb-8">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-extrabold uppercase tracking-widest mb-8">
                         <Star className="w-3.5 h-3.5 fill-emerald-600" />
                         Verified Experts
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1] mb-6">
+                    <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1] mb-6">
                         Learn from the best <br />
                         <span className="text-emerald-600">in the field.</span>
                     </h1>
@@ -48,7 +48,7 @@ export default function PublicMentorsPage() {
                         Book 1-on-1 sessions with clinical mentors, admissions committee members, and specialists who have been exactly where you are.
                     </p>
                     <div className="flex flex-wrap items-center justify-center gap-4">
-                        <Button size="lg" className="h-14 px-8 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-lg" asChild>
+                        <Button size="lg" className="h-14 px-8 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-lg" asChild>
                             <Link href="/become-a-mentor">Become a Mentor</Link>
                         </Button>
                         <Button variant="outline" size="lg" className="h-14 px-8 rounded-2xl border-gray-200 font-bold text-lg text-slate-600" onClick={() => document.getElementById('mentor-list')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -100,7 +100,7 @@ export default function PublicMentorsPage() {
             {/* Mentor Grid */}
             <Container id="mentor-list" className="py-16">
                 <div className="mb-10 flex items-center justify-between">
-                    <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+                    <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                         {filtered.length} Experts {activeCategory !== 'all' ? `in ${MENTOR_CATEGORIES.find(c => c.key === activeCategory)?.label}` : ''}
                     </h2>
                     <div className="flex items-center gap-2 text-sm font-bold text-slate-400">
@@ -129,7 +129,7 @@ export default function PublicMentorsPage() {
                         <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
                             <Search className="w-8 h-8 text-slate-300" />
                         </div>
-                        <h3 className="text-xl font-black text-slate-900 mb-2">No experts found</h3>
+                        <h3 className="text-xl font-extrabold text-slate-900 mb-2">No experts found</h3>
                         <p className="text-slate-500 font-medium max-w-sm mx-auto">
                             We couldn't find any experts matching your current search or filters. 
                             Try broadening your criteria.
@@ -140,13 +140,13 @@ export default function PublicMentorsPage() {
                 {/* CTA Block */}
                 <div className="mt-20 bg-emerald-600 rounded-[3rem] p-10 md:p-16 text-white relative overflow-hidden group shadow-2xl shadow-emerald-600/20">
                     <div className="relative z-10 max-w-2xl">
-                        <h3 className="text-3xl md:text-5xl font-black leading-[1.1] mb-6">
+                        <h3 className="text-3xl md:text-5xl font-extrabold leading-[1.1] mb-6">
                             Want to become a mentor?
                         </h3>
                         <p className="text-emerald-50 text-lg md:text-xl font-medium mb-10 leading-relaxed">
                             Join our community of elite dentistry professionals and help the next generation of students succeed.
                         </p>
-                        <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-black text-xl border-none transition-all hover:scale-[1.02]" asChild>
+                        <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold text-xl border-none transition-all hover:scale-[1.02]" asChild>
                             <Link href="/become-a-mentor" className="flex items-center gap-2">
                                 Apply Now <ArrowRight className="w-6 h-6" />
                             </Link>
@@ -178,7 +178,7 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
                                 {mentor.image ? (
                                     <img src={mentor.image} alt={mentor.name} className="w-full h-full object-cover" />
                                 ) : (
-                                    <span className="text-2xl font-black text-emerald-600">
+                                    <span className="text-2xl font-extrabold text-emerald-600">
                                         {mentor.name.split(" ").map(n => n[0]).join("")}
                                     </span>
                                 )}
@@ -193,16 +193,16 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
                     <div className="text-right">
                         <div className="flex items-center gap-1 justify-end text-amber-500 mb-1">
                             <Star className="w-4 h-4 fill-current" />
-                            <span className="text-sm font-black text-slate-900">{mentor.rating.toFixed(1)}</span>
+                            <span className="text-sm font-extrabold text-slate-900">{mentor.rating.toFixed(1)}</span>
                         </div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                        <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
                             {mentor.reviewCount} Reviews
                         </p>
                     </div>
                 </div>
 
                 <div className="space-y-2">
-                    <h3 className="text-2xl font-black text-slate-900 tracking-tight group-hover:text-emerald-600 transition-colors">
+                    <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight group-hover:text-emerald-600 transition-colors">
                         {mentor.name}
                     </h3>
                     <p className="text-sm font-bold text-slate-500 leading-tight">
@@ -225,8 +225,8 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
                     
                     <div className="flex items-center justify-between pt-6 border-t border-slate-50">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Full Sessions</p>
-                            <p className="text-lg font-black text-slate-900">
+                            <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1">Full Sessions</p>
+                            <p className="text-lg font-extrabold text-slate-900">
                                 {mentor.currency}{mentor.hourlyRate}<span className="text-xs text-slate-400 font-bold">/hr</span>
                             </p>
                         </div>

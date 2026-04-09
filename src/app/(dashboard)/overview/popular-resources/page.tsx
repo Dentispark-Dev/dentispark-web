@@ -168,7 +168,7 @@ export default function PopularResourcesPage() {
                         <Star className="w-3.5 h-3.5 fill-emerald-500 text-emerald-500" />
                         Curated Library
                     </div>
-                    <h1 className="text-3xl lg:text-4xl font-jakarta font-black text-slate-900 tracking-tight">
+                    <h1 className="text-3xl lg:text-4xl font-jakarta font-extrabold text-slate-900 tracking-tight">
                         Popular Resources
                     </h1>
                     <p className="text-slate-500 font-medium max-w-2xl text-lg">
@@ -227,7 +227,7 @@ export default function PopularResourcesPage() {
                                         </div>
                                         <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">{resource.category}</span>
                                     </div>
-                                    <h3 className="text-xl font-jakarta font-black tracking-tight leading-tight group-hover:text-emerald-300 transition-colors">
+                                    <h3 className="text-xl font-jakarta font-extrabold tracking-tight leading-tight group-hover:text-emerald-300 transition-colors">
                                         {resource.title}
                                     </h3>
                                     <p className="text-emerald-100/70 text-sm font-medium leading-relaxed line-clamp-2">
@@ -274,7 +274,7 @@ export default function PopularResourcesPage() {
                                     </span>
                                 </div>
                                 <div className="flex-1 space-y-3">
-                                    <h3 className="text-lg font-jakarta font-black text-slate-900 tracking-tight group-hover:text-emerald-700 transition-colors leading-tight">
+                                    <h3 className="text-lg font-jakarta font-extrabold text-slate-900 tracking-tight group-hover:text-emerald-700 transition-colors leading-tight">
                                         {resource.title}
                                     </h3>
                                     <p className="text-sm text-slate-500 font-medium leading-relaxed line-clamp-3">

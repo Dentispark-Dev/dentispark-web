@@ -107,8 +107,8 @@ export default function OverviewPage() {
                     <div className="bg-white rounded-[3rem] border border-slate-100 p-10 lg:p-16 shadow-2xl shadow-slate-200/50">
                         <div className="flex items-center justify-between mb-12">
                             <div className="space-y-1">
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600">Performance Metrics</h3>
-                                <h4 className="text-3xl font-black text-slate-900 tracking-tight">Application Strength</h4>
+                                <h3 className="text-[10px] font-extrabold uppercase tracking-[0.4em] text-emerald-600">Performance Metrics</h3>
+                                <h4 className="text-3xl font-extrabold text-slate-900 tracking-tight">Application Strength</h4>
                             </div>
                             <div className="p-3 rounded-2xl bg-emerald-50 text-emerald-600 shadow-sm">
                                 <Star className="w-6 h-6 fill-emerald-600" />

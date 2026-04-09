@@ -57,7 +57,7 @@ export function InitiateOrderModal({ package: pkg, isOpen, onClose }: InitiateOr
                         <ShoppingCart className="h-24 w-24" />
                     </div>
                     <DialogHeader className="relative z-10">
-                        <DialogTitle className="text-2xl font-black flex items-center gap-2 text-white">
+                        <DialogTitle className="text-2xl font-extrabold flex items-center gap-2 text-white">
                             <Send className="h-6 w-6" />
                             Initiate Order
                         </DialogTitle>
@@ -72,12 +72,12 @@ export function InitiateOrderModal({ package: pkg, isOpen, onClose }: InitiateOr
                     <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
                         <div className="flex items-start justify-between">
                             <div>
-                                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Selected Service</p>
+                                <p className="text-xs font-extrabold text-gray-400 uppercase tracking-widest mb-1">Selected Service</p>
                                 <h4 className="font-bold text-gray-900">{pkg.title}</h4>
                                 <p className="text-xs text-gray-500 font-medium">By {pkg.mentorUsername}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-lg font-black text-green-700">{pkg.currency} {pkg.price.toLocaleString()}</p>
+                                <p className="text-lg font-extrabold text-green-700">{pkg.currency} {pkg.price.toLocaleString()}</p>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase italic">Admin Authorized</p>
                             </div>
                         </div>
@@ -119,7 +119,7 @@ export function InitiateOrderModal({ package: pkg, isOpen, onClose }: InitiateOr
                     <Button 
                         onClick={() => initiateMutation.mutate()}
                         disabled={!studentEmail || initiateMutation.isPending}
-                        className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-black h-12 px-8 shadow-lg shadow-green-200 flex items-center gap-2"
+                        className="bg-green-600 hover:bg-green-700 text-white rounded-xl font-extrabold h-12 px-8 shadow-lg shadow-green-200 flex items-center gap-2"
                     >
                         {initiateMutation.isPending ? "Sending..." : "Send Order Request"}
                         {!initiateMutation.isPending && <ChevronRight className="h-4 w-4" />}

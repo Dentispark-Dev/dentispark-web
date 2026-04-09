@@ -38,7 +38,7 @@ export default function AIAnalyticsPage() {
 
         <div className="xl:col-span-1 space-y-6">
             <div className="glass-card bg-white p-6 rounded-[2rem] border-primary-100 shadow-xl">
-                <h4 className="text-[10px] font-black uppercase tracking-widest text-black-400 mb-4">Recent Sessions</h4>
+                <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-black-400 mb-4">Recent Sessions</h4>
                 <div className="space-y-4">
                     <SessionItem title="General Interview Prep" date="2 hours ago" score={88} />
                     <SessionItem title="Manual Dexterity Talk" date="Yesterday" score={72} />
@@ -48,9 +48,9 @@ export default function AIAnalyticsPage() {
 
             <div className="glass-card bg-gradient-to-br from-primary-600 to-primary-700 p-8 rounded-[2rem] text-white shadow-2xl relative overflow-hidden">
                 <div className="relative z-10">
-                    <h3 className="font-black italic uppercase text-lg tracking-tight mb-2">Mentor Access</h3>
+                    <h3 className="font-extrabold italic uppercase text-lg tracking-tight mb-2">Mentor Access</h3>
                     <p className="text-white/70 text-xs mb-6 font-medium">Connect with current dental students for 1:1 strategy calls.</p>
-                    <Link href="/mentorship" className="w-full h-12 bg-white text-primary-600 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-white-50 transition-all flex items-center justify-center gap-2">
+                    <Link href="/mentorship" className="w-full h-12 bg-white text-primary-600 rounded-xl font-extrabold uppercase tracking-widest text-[10px] hover:bg-white-50 transition-all flex items-center justify-center gap-2">
                         Browse Mentors
                         <ArrowRight className="w-3 h-3" />
                     </Link>
@@ -70,7 +70,7 @@ function QuickAction({ title, desc, icon, color }: { title: string, desc: string
                 {icon}
             </div>
             <div>
-                <h4 className="font-black text-black-900 text-sm uppercase tracking-tight">{title}</h4>
+                <h4 className="font-extrabold text-black-900 text-sm uppercase tracking-tight">{title}</h4>
                 <p className="text-black-400 text-xs">{desc}</p>
             </div>
         </div>
@@ -90,8 +90,8 @@ function SessionItem({ title, date, score }: { title: string, date: string, scor
                 </div>
             </div>
             <div className="text-right">
-                <p className="text-[11px] font-black text-black-900 leading-none">{score}%</p>
-                <p className="text-[9px] text-emerald-600 font-black uppercase tracking-tighter">Pass</p>
+                <p className="text-[11px] font-extrabold text-black-900 leading-none">{score}%</p>
+                <p className="text-[9px] text-emerald-600 font-extrabold uppercase tracking-tighter">Pass</p>
             </div>
         </div>
     )

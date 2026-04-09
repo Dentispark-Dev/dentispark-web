@@ -204,15 +204,15 @@ export default function PopularResources({
                       priority
                       quality={90}
                     />
-                    <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[9px] font-black uppercase tracking-widest text-slate-800">
+                    <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[9px] font-extrabold uppercase tracking-widest text-slate-800">
                       {resource.category}
                     </div>
                   </div>
                   <div className="flex flex-1 flex-col pt-4 space-y-2">
-                    <p className="text-slate-400 font-black text-[9px] uppercase tracking-widest">
+                    <p className="text-slate-400 font-extrabold text-[9px] uppercase tracking-widest">
                       {resource.date}
                     </p>
-                    <h3 className="text-slate-900 line-clamp-2 text-sm font-black leading-tight group-hover:text-emerald-600 transition-colors">
+                    <h3 className="text-slate-900 line-clamp-2 text-sm font-extrabold leading-tight group-hover:text-emerald-600 transition-colors">
                       {resource.title}
                     </h3>
                   </div>

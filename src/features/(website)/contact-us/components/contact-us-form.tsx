@@ -126,7 +126,7 @@ export function ContactUsForm() {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
+                    <FormLabel className="text-xs font-extrabold uppercase tracking-widest text-slate-400 ml-1">
                       First Name
                     </FormLabel>
                     <FormControl>
@@ -150,7 +150,7 @@ export function ContactUsForm() {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
+                    <FormLabel className="text-xs font-extrabold uppercase tracking-widest text-slate-400 ml-1">
                       Last Name
                     </FormLabel>
                     <FormControl>
@@ -178,7 +178,7 @@ export function ContactUsForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
+                    <FormLabel className="text-xs font-extrabold uppercase tracking-widest text-slate-400 ml-1">
                       Email Address
                     </FormLabel>
                     <FormControl>
@@ -203,7 +203,7 @@ export function ContactUsForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
+                    <FormLabel className="text-xs font-extrabold uppercase tracking-widest text-slate-400 ml-1">
                       Phone Number
                     </FormLabel>
                     <FormControl>
@@ -232,10 +232,10 @@ export function ContactUsForm() {
               render={({ field }) => (
                 <FormItem className="space-y-2">
                    <div className="flex justify-between items-center ml-1">
-                      <FormLabel className="text-xs font-black uppercase tracking-widest text-slate-400">
+                      <FormLabel className="text-xs font-extrabold uppercase tracking-widest text-slate-400">
                         Your Message
                       </FormLabel>
-                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                      <span className="text-[10px] font-extrabold text-slate-300 uppercase tracking-widest">
                         {messageLength}/500
                       </span>
                    </div>
@@ -292,7 +292,7 @@ export function ContactUsForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-16 rounded-[2rem] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.01] flex items-center justify-center gap-2 group"
+              className="w-full h-16 rounded-[2rem] bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-lg transition-all duration-300 shadow-xl shadow-emerald-500/20 hover:scale-[1.01] flex items-center justify-center gap-2 group"
             >
               {isSubmitting ? (
                 <div className="flex items-center space-x-2">

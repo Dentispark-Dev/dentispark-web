@@ -128,7 +128,7 @@ export default function AIHubPage() {
 
             <Link href={tool.href} className="relative z-10">
               <button className={cn(
-                "w-full h-16 rounded-[1.25rem] border border-slate-200 text-slate-900 font-black text-xs uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-4",
+                "w-full h-16 rounded-[1.25rem] border border-slate-200 text-slate-900 font-extrabold text-xs uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-4",
                 "hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-2xl hover:shadow-slate-900/20 active:scale-95"
               )}>
                 Initialize Terminal
@@ -143,12 +143,12 @@ export default function AIHubPage() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-12 pt-12">
         <div className="flex items-center gap-4 text-slate-400 group cursor-default">
             <Cpu className="w-5 h-5 group-hover:text-teal-600 transition-colors" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em]">Quantum Intelligence Layer</span>
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.3em]">Quantum Intelligence Layer</span>
         </div>
         <div className="h-px w-24 bg-slate-100 hidden md:block" />
         <div className="flex items-center gap-4 text-slate-400 group cursor-default">
             <Fingerprint className="w-5 h-5 group-hover:text-teal-600 transition-colors" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em]">Biometric-Verified Access</span>
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.3em]">Biometric-Verified Access</span>
         </div>
       </div>
     </div>

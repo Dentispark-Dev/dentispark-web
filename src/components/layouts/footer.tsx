@@ -77,7 +77,7 @@ export function Footer() {
           <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-4 lg:ml-auto">
             {/* Welcome Column */}
             <div className="space-y-6">
-              <h4 className="text-white font-black text-sm uppercase tracking-widest">Resources</h4>
+              <h4 className="text-white font-extrabold text-sm uppercase tracking-widest">Resources</h4>
               <ul className="space-y-4">
                 {footerLinks.welcome.map(link => (
                   <li key={link.href}>
@@ -92,7 +92,7 @@ export function Footer() {
 
             {/* Company Column */}
             <div className="space-y-6">
-              <h4 className="text-white font-black text-sm uppercase tracking-widest">Company</h4>
+              <h4 className="text-white font-extrabold text-sm uppercase tracking-widest">Company</h4>
               <ul className="space-y-4">
                 {footerLinks.company.map(link => (
                   <li key={link.href}>
@@ -107,7 +107,7 @@ export function Footer() {
 
             {/* Support Column */}
             <div className="space-y-6">
-              <h4 className="text-white font-black text-sm uppercase tracking-widest">Opportunities</h4>
+              <h4 className="text-white font-extrabold text-sm uppercase tracking-widest">Opportunities</h4>
               <ul className="space-y-4">
                 {footerLinks.getInvolved.map(link => (
                   <li key={link.href}>
@@ -122,7 +122,7 @@ export function Footer() {
 
             {/* Contact Column */}
             <div className="space-y-6">
-              <h4 className="text-white font-black text-sm uppercase tracking-widest">Contact</h4>
+              <h4 className="text-white font-extrabold text-sm uppercase tracking-widest">Contact</h4>
               <ul className="space-y-5">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
@@ -159,7 +159,7 @@ export function Footer() {
               <Link 
                 key={link.href} 
                 href={link.href} 
-                className="text-xs font-black text-gray-600 hover:text-emerald-500 uppercase tracking-widest transition-colors flex items-center gap-1.5"
+                className="text-xs font-extrabold text-gray-600 hover:text-emerald-500 uppercase tracking-widest transition-colors flex items-center gap-1.5"
               >
                 {link.label}
                 <ExternalLink className="w-3 h-3" />

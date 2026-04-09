@@ -102,7 +102,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                                 <UserPlus className="h-7 w-7" />
                             </div>
                             <div className="text-left">
-                                <DialogTitle className="text-3xl font-black text-slate-900 tracking-tight">
+                                <DialogTitle className="text-3xl font-extrabold text-slate-900 tracking-tight">
                                     Authorize <span className="text-teal-600">Architect</span>
                                 </DialogTitle>
                                 <DialogDescription className="text-slate-400 font-bold text-[11px] uppercase tracking-[0.2em] mt-1">
@@ -120,7 +120,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <Label htmlFor="fullName" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Identity Name</Label>
+                                    <Label htmlFor="fullName" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Identity Name</Label>
                                     <div className="relative group">
                                         <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
                                         <Input
@@ -135,7 +135,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="username" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">System Handle</Label>
+                                    <Label htmlFor="username" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">System Handle</Label>
                                     <div className="relative group">
                                         <Fingerprint className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
                                         <Input
@@ -151,7 +151,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Network Endpoint (Email)</Label>
+                                <Label htmlFor="email" className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Network Endpoint (Email)</Label>
                                 <div className="relative group">
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
                                     <Input
@@ -169,12 +169,12 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
 
                         {/* Role Assignment */}
                         <div className="space-y-4">
-                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Clearance Protocol Assignment</Label>
+                            <Label className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 ml-1">Clearance Protocol Assignment</Label>
                             <div className="grid grid-cols-1 gap-3 border border-slate-100 rounded-3xl p-5 bg-slate-50/20 max-h-60 overflow-y-auto custom-scrollbar shadow-inner">
                                 {isLoadingRoles ? (
                                     <div className="flex flex-col items-center justify-center p-8 gap-3">
                                         <Loader2 className="h-6 w-6 animate-spin text-teal-500" />
-                                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Scanning Roles...</p>
+                                        <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">Scanning Roles...</p>
                                     </div>
                                 ) : roles.length === 0 ? (
                                     <div className="text-center p-8 space-y-3">
@@ -204,7 +204,7 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                                             <div className="flex-1 space-y-1">
                                                 <Label
                                                     htmlFor={`role-${role.guid}`}
-                                                    className="text-sm font-black text-slate-900 cursor-pointer group-hover/item:text-teal-600 transition-colors"
+                                                    className="text-sm font-extrabold text-slate-900 cursor-pointer group-hover/item:text-teal-600 transition-colors"
                                                 >
                                                     {role.name}
                                                 </Label>
@@ -226,13 +226,13 @@ export function InviteAdminModal({ isOpen, onClose, onSuccess }: InviteAdminModa
                                 variant="ghost" 
                                 onClick={onClose} 
                                 disabled={isSubmitting}
-                                className="h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all"
+                                className="h-14 px-8 rounded-2xl font-extrabold text-xs uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all"
                             >
                                 Cancel Deployment
                             </Button>
                             <Button 
                                 type="submit" 
-                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-black text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[200px]" 
+                                className="bg-slate-900 hover:bg-black text-white h-14 px-10 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all min-w-[200px]" 
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Key className="h-5 w-5" />}

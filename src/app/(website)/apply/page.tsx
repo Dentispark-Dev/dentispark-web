@@ -295,7 +295,7 @@ export default function ApplyPage() {
                                                     : "border-gray-200 bg-white text-gray-700 hover:border-emerald-300 hover:bg-emerald-50/30"
                                             }`}
                                         >
-                                            <span className={`shrink-0 h-6 w-6 rounded-sm border text-xs font-black flex items-center justify-center transition-colors ${
+                                            <span className={`shrink-0 h-6 w-6 rounded-sm border text-xs font-extrabold flex items-center justify-center transition-colors ${
                                                 isSelected 
                                                     ? "border-emerald-500 bg-emerald-500 text-white" 
                                                     : "border-gray-300 text-gray-400 bg-white"
@@ -374,7 +374,7 @@ export default function ApplyPage() {
                     )}
                     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-3">
                         <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-black text-sm shrink-0">
+                            <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-extrabold text-sm shrink-0">
                                 {proof.name.charAt(0)}
                             </div>
                             <div>
@@ -402,7 +402,7 @@ export default function ApplyPage() {
 
                     {currentStep === 4 && (
                         <div className="bg-emerald-600 text-white rounded-xl p-5 space-y-1">
-                            <p className="font-black text-lg">93%</p>
+                            <p className="font-extrabold text-lg">93%</p>
                             <p className="text-sm text-emerald-100">of users say that working with a DentiSpark mentor significantly increased their chances of getting accepted.</p>
                         </div>
                     )}

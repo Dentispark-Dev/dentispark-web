@@ -20,21 +20,21 @@ export function SuccessCard({ score, milestone, category }: SuccessCardProps) {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary-400" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">DentiSpark AI</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-white/60">DentiSpark AI</span>
               </div>
-              <h3 className="text-xl font-black tracking-tight">{category} Success</h3>
+              <h3 className="text-xl font-extrabold tracking-tight">{category} Success</h3>
             </div>
             <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center">
-                <span className="font-black text-xs text-primary-400">#DENTI</span>
+                <span className="font-extrabold text-xs text-primary-400">#DENTI</span>
             </div>
           </div>
 
           <div className="relative z-10 text-center space-y-4 py-8">
             <div className="relative inline-block">
-                <span className="text-8xl font-black tracking-tightest leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent italic">
+                <span className="text-8xl font-extrabold tracking-tightest leading-none bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent italic">
                     {score}%
                 </span>
-                <div className="absolute -top-4 -right-8 px-3 py-1 bg-primary-600 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary-500/20">
+                <div className="absolute -top-4 -right-8 px-3 py-1 bg-primary-600 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg shadow-primary-500/20">
                     Elite Tier
                 </div>
             </div>
@@ -45,12 +45,12 @@ export function SuccessCard({ score, milestone, category }: SuccessCardProps) {
 
           <div className="relative z-10 pt-6 border-t border-white/10 flex justify-between items-end">
             <div className="space-y-1 text-left">
-                <p className="text-[10px] font-black text-white uppercase tracking-widest">Student Beta 2024</p>
+                <p className="text-[10px] font-extrabold text-white uppercase tracking-widest">Student Beta 2024</p>
                 <div className="flex gap-1">
                     {[1,2,3,4,5].map(i => <div key={i} className="w-1 h-1 bg-primary-500 rounded-full" />)}
                 </div>
             </div>
-            <p className="text-[8px] font-black text-white/30 uppercase tracking-[0.3em]">www.dentispark.com</p>
+            <p className="text-[8px] font-extrabold text-white/30 uppercase tracking-[0.3em]">www.dentispark.com</p>
           </div>
 
           {/* Background FX */}

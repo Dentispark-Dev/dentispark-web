@@ -34,7 +34,7 @@ export default function AdminOrdersPage() {
                     </div>
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Orders</p>
-                        <p className="text-xl font-black text-gray-900">—</p>
+                        <p className="text-xl font-extrabold text-gray-900">—</p>
                     </div>
                 </div>
                 <div className="bg-white p-5 rounded-sm border border-gray-200 flex items-center gap-4">
@@ -43,7 +43,7 @@ export default function AdminOrdersPage() {
                     </div>
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Platform Revenue</p>
-                        <p className="text-xl font-black text-gray-900">—</p>
+                        <p className="text-xl font-extrabold text-gray-900">—</p>
                     </div>
                 </div>
                 <div className="bg-white p-5 rounded-sm border border-gray-200 flex items-center gap-4">
@@ -52,7 +52,7 @@ export default function AdminOrdersPage() {
                     </div>
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Escrow Balance</p>
-                        <p className="text-xl font-black text-gray-900">—</p>
+                        <p className="text-xl font-extrabold text-gray-900">—</p>
                     </div>
                 </div>
             </div>

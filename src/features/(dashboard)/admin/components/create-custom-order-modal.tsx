@@ -119,7 +119,7 @@ export function CreateCustomOrderModal({ isOpen, onClose }: CreateCustomOrderMod
                                         step === i + 1 ? "text-white bg-gray-700" : i + 1 < step ? "text-blue-600 hover:underline cursor-pointer" : "text-gray-400"
                                     }`}
                                 >
-                                    <span className={`h-4 w-4 rounded-full text-[10px] flex items-center justify-center font-black ${step === i + 1 ? "bg-white text-gray-700" : i + 1 < step ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}>
+                                    <span className={`h-4 w-4 rounded-full text-[10px] flex items-center justify-center font-extrabold ${step === i + 1 ? "bg-white text-gray-700" : i + 1 < step ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}>
                                         {i + 1}
                                     </span>
                                     {label}
@@ -274,8 +274,8 @@ export function CreateCustomOrderModal({ isOpen, onClose }: CreateCustomOrderMod
                                         </tbody>
                                         <tfoot>
                                             <tr className="border-t border-gray-200">
-                                                <td className="py-3 text-sm font-black text-gray-900">Total</td>
-                                                <td className="py-3 text-right text-sm font-black text-gray-900">{currency} {orderTotal.toFixed(2)}</td>
+                                                <td className="py-3 text-sm font-extrabold text-gray-900">Total</td>
+                                                <td className="py-3 text-right text-sm font-extrabold text-gray-900">{currency} {orderTotal.toFixed(2)}</td>
                                             </tr>
                                         </tfoot>
                                     </table>

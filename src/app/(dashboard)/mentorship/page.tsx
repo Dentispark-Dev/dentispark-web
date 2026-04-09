@@ -149,7 +149,7 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
         <div className="flex gap-5 p-5 bg-white border border-gray-100 rounded-xl hover:shadow-md transition-shadow group">
             {/* Avatar */}
             <div className="shrink-0">
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-black text-xl">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-extrabold text-xl">
                     {mentor.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
                 </div>
             </div>
@@ -166,7 +166,7 @@ function MentorCard({ mentor }: { mentor: Mentor }) {
                         </div>
                         {/* Rate */}
                         <div className="text-right shrink-0">
-                            <p className="font-black text-gray-900">{mentor.currency}{mentor.hourlyRate}<span className="text-xs font-medium text-gray-400">/hr</span></p>
+                            <p className="font-extrabold text-gray-900">{mentor.currency}{mentor.hourlyRate}<span className="text-xs font-medium text-gray-400">/hr</span></p>
                         </div>
                     </div>
                 </div>

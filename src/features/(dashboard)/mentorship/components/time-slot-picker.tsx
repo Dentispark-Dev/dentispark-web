@@ -75,7 +75,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="font-black text-slate-900 text-lg">Pick a Date & Time</h3>
+        <h3 className="font-extrabold text-slate-900 text-lg">Pick a Date & Time</h3>
         <div className="flex items-center gap-1">
           <button
             onClick={() => setWeekOffset(w => Math.max(0, w - 1))}
@@ -123,7 +123,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
                 {format(day, "EEE")}
               </span>
               <span className={cn(
-                "font-black text-base",
+                "font-extrabold text-base",
                 isToday(day) && "text-emerald-600",
                 isSelected ? "text-emerald-700" : "text-slate-800",
                 (!isAvailable || isPast) && "text-slate-400"

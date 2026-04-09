@@ -30,8 +30,8 @@ export function SentimentVisualizer() {
             <Brain className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="font-black text-black-900 tracking-tight text-lg italic uppercase">AI Sentiment Analysis</h3>
-            <p className="text-black-400 text-[10px] font-black uppercase tracking-widest">Real-time Emotional Intelligence HUD</p>
+            <h3 className="font-extrabold text-black-900 tracking-tight text-lg italic uppercase">AI Sentiment Analysis</h3>
+            <p className="text-black-400 text-[10px] font-extrabold uppercase tracking-widest">Real-time Emotional Intelligence HUD</p>
           </div>
         </div>
 
@@ -49,9 +49,9 @@ export function SentimentVisualizer() {
                   <span className={`p-1.5 rounded-lg ${metric.color} text-white`}>
                     {metric.icon}
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-black-600">{metric.label}</span>
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-black-600">{metric.label}</span>
                 </div>
-                <span className="text-lg font-black text-black-900 tracking-tighter">{metric.score}%</span>
+                <span className="text-lg font-extrabold text-black-900 tracking-tighter">{metric.score}%</span>
               </div>
               
               <div className="h-3 w-full bg-greys-100 rounded-full overflow-hidden border border-greys-200/50">
@@ -71,7 +71,7 @@ export function SentimentVisualizer() {
         <div className="mt-10 p-4 rounded-3xl bg-primary-50 border border-primary-100 flex items-start gap-3">
           <TrendingUp className="w-5 h-5 text-primary-600 mt-0.5" />
           <div>
-            <p className="text-xs font-black text-primary-900 uppercase tracking-tight">AI Insight</p>
+            <p className="text-xs font-extrabold text-primary-900 uppercase tracking-tight">AI Insight</p>
             <p className="text-[11px] text-primary-700 font-medium leading-relaxed mt-1">
               Your &quot;Clarity&quot; score dropped during technical questions. Focus on steady pacing and avoid &quot;filler&quot; words to increase professional presence by ~15%.
             </p>

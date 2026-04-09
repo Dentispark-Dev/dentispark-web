@@ -47,7 +47,7 @@ export default function AccessProjectPage() {
                         <Heart className="w-3.5 h-3.5" />
                         Widening Participation
                     </div>
-                    <h1 className="text-4xl lg:text-6xl font-jakarta font-black text-slate-900 tracking-tight leading-[1.1]">
+                    <h1 className="text-4xl lg:text-6xl font-jakarta font-extrabold text-slate-900 tracking-tight leading-[1.1]">
                         The DentiSpark <span className="text-purple-600">Access Project</span>
                     </h1>
                     <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">
@@ -69,7 +69,7 @@ export default function AccessProjectPage() {
                             <div className="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-all">
                                 {benefit.icon}
                             </div>
-                            <h3 className="text-xl font-jakarta font-black text-slate-900 mb-3">{benefit.title}</h3>
+                            <h3 className="text-xl font-jakarta font-extrabold text-slate-900 mb-3">{benefit.title}</h3>
                             <p className="text-slate-500 font-medium leading-relaxed">{benefit.description}</p>
                         </motion.div>
                     ))}
@@ -81,7 +81,7 @@ export default function AccessProjectPage() {
                         <div className="w-[400px] h-[400px] bg-purple-900/40 rounded-full blur-3xl" />
                     </div>
                     <div className="relative z-10">
-                        <h2 className="text-3xl font-jakarta font-black mb-8 tracking-tight">Who qualifies?</h2>
+                        <h2 className="text-3xl font-jakarta font-extrabold mb-8 tracking-tight">Who qualifies?</h2>
                         <div className="space-y-4">
                             {ELIGIBILITY.map((item, i) => (
                                 <div key={i} className="flex items-start gap-3">

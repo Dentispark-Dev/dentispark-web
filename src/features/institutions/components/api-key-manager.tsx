@@ -31,7 +31,7 @@ export function APIKeyManager() {
         {keys.map((key) => (
           <div key={key.id} className="p-5 rounded-2xl bg-white border border-greys-100 hover:border-primary-200 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h4 className="text-sm font-black text-black-900 uppercase tracking-tight mb-1">{key.name}</h4>
+              <h4 className="text-sm font-extrabold text-black-900 uppercase tracking-tight mb-1">{key.name}</h4>
               <div className="flex items-center gap-2 font-mono text-[11px] text-black-500">
                 <span className="text-primary-600 font-bold">{key.prefix}</span>
                 <span>{key.key}</span>
@@ -62,12 +62,12 @@ export function APIKeyManager() {
         <div className="relative z-10">
             <div className="flex items-center gap-2 mb-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Security Active</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">Security Active</span>
             </div>
             <h5 className="text-sm font-bold mb-1">Developer Documentation</h5>
             <p className="text-xs text-white/60">Explore our OpenAPI spec and SDKs for integration.</p>
         </div>
-        <button className="relative z-10 px-5 py-2.5 bg-white text-black-900 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white-50 transition-all">
+        <button className="relative z-10 px-5 py-2.5 bg-white text-black-900 rounded-xl text-[10px] font-extrabold uppercase tracking-widest hover:bg-white-50 transition-all">
             Open Docs
         </button>
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl -mr-16 -mt-16" />

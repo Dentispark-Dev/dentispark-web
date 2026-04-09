@@ -237,7 +237,7 @@ export function MissionControl() {
           </div>
           
           <div className="flex flex-col items-end">
-            <span className="text-4xl font-jakarta font-black text-emerald-600 leading-none">
+            <span className="text-4xl font-jakarta font-extrabold text-emerald-600 leading-none">
               {Math.round((stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100)}%
             </span>
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Ready for Clinic</span>
@@ -330,7 +330,7 @@ export function MissionControl() {
                   <div className="relative">
                      <div className="flex items-center gap-3 mb-1">
                         <span className={cn(
-                           "text-[10px] font-black uppercase tracking-widest",
+                           "text-[10px] font-extrabold uppercase tracking-widest",
                            isActive ? "text-emerald-600" : "text-slate-400"
                         )}>
                            Stage {mission.id} • {mission.category}
@@ -344,7 +344,7 @@ export function MissionControl() {
                       <motion.h3 
                         whileHover={{ x: 5 }}
                         className={cn(
-                        "text-xl lg:text-2xl font-black transition-colors duration-500",
+                        "text-xl lg:text-2xl font-extrabold transition-colors duration-500",
                         isActive ? "text-slate-900" : isCompleted ? "text-slate-700" : "text-slate-400 group-hover:text-slate-900"
                       )}>
                         {mission.title}
@@ -354,7 +354,7 @@ export function MissionControl() {
                       {!isExpanded && (
                         <div className="absolute top-1/2 -translate-y-1/2 right-12 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-500 hidden lg:flex items-center gap-2">
                            <span className={cn(
-                             "text-[9px] font-black uppercase tracking-[0.2em]",
+                             "text-[9px] font-extrabold uppercase tracking-[0.2em]",
                              isActive ? "text-emerald-600" : "text-slate-400"
                            )}>
                               Launch Station
@@ -398,7 +398,7 @@ export function MissionControl() {
                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                           {/* Tasks */}
                           <div className="space-y-4">
-                            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Required Actions</h4>
+                            <h4 className="text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.2em] mb-4">Required Actions</h4>
                             {mission.subtasks.map((task, i) => (
                               <div key={i} className="flex items-center gap-3">
                                 <div className="w-5 h-5 rounded border border-slate-200 flex items-center justify-center bg-white shadow-sm shrink-0">
@@ -413,7 +413,7 @@ export function MissionControl() {
                           <div className="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-100">
                              <div className="flex items-center gap-2 mb-3">
                                 <Star className="w-4 h-4 text-emerald-500 fill-emerald-500" />
-                                <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Expert Advice</span>
+                                <span className="text-[10px] font-extrabold text-emerald-600 uppercase tracking-widest">Expert Advice</span>
                              </div>
                              <p className="text-emerald-800 font-medium leading-relaxed italic">
                                "{mission.tip}"

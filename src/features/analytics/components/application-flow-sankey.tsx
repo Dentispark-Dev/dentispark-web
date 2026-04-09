@@ -103,8 +103,8 @@ export function ApplicationFlowSankey({ data, isLoading }: ApplicationFlowSankey
 
       <div className="mb-4 flex items-center justify-between">
         <div>
-            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600">Applicant Roadmap</h3>
-            <h4 className="text-3xl font-black text-slate-900 tracking-tight">Application Flow</h4>
+            <h3 className="text-[10px] font-extrabold uppercase tracking-[0.4em] text-emerald-600">Applicant Roadmap</h3>
+            <h4 className="text-3xl font-extrabold text-slate-900 tracking-tight">Application Flow</h4>
         </div>
         <div className="text-xs font-bold text-slate-400 bg-slate-50 px-4 py-2 rounded-full border border-slate-100">
             Hover over paths & points
@@ -210,7 +210,7 @@ export function ApplicationFlowSankey({ data, isLoading }: ApplicationFlowSankey
                         isZero ? "bg-slate-50 border-transparent" : node.bg, 
                         isHovered && !isZero ? "border-emerald-300 bg-white" : "border-transparent"
                       )}>
-                        <span className={cn("text-2xl font-black", isZero ? "text-slate-400" : node.color)}>{node.value}</span>
+                        <span className={cn("text-2xl font-extrabold", isZero ? "text-slate-400" : node.color)}>{node.value}</span>
                         <span className={cn("text-xs font-bold whitespace-nowrap", isZero ? "text-slate-400" : "text-slate-600")}>{node.label}</span>
                       </div>
                     </button>
