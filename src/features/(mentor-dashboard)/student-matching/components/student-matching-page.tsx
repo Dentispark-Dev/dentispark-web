@@ -132,7 +132,3 @@ export function StudentMatchingPage({ className }: StudentMatchingPageProps) {
     </div>
   );
 }
-      </motion.div>
-    </div>
-  );
-}
