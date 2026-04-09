@@ -12,6 +12,21 @@ declare const globalThis: {
 
 const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 
+/**
+ * Legacy query wrapper to support existing code using direct SQL.
+ * Wraps prisma.$queryRawUnsafe and returns an object with a 'rows' property
+ * to match the expected pg-client interface.
+ */
+export const query = async (text: string, params: any[] = []) => {
+  try {
+    const result = await prisma.$queryRawUnsafe(text, ...params) as any[];
+    return { rows: result };
+  } catch (error) {
+    console.error('Database Query Error:', error);
+    throw error;
+  }
+}
+
 // Connection Test
 async function testConnection() {
   try {

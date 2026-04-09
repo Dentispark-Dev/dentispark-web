@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@ai-sdk/groq": "^3.0.29",
