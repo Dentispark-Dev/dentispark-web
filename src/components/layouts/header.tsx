@@ -53,12 +53,13 @@ export default function Header() {
   }, []);
 
   const headerVariants = {
-    hidden: { y: -100, opacity: 0 },
+    hidden: { y: -20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
         staggerChildren: 0.1,
       },
     },
@@ -114,6 +115,7 @@ export default function Header() {
       variants={headerVariants}
       initial="hidden"
       animate="visible"
+      style={{ opacity: 1 }} // Foolproof opacity baseline
     >
       <Container className="flex items-center justify-between py-5">
         <motion.div
