@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Shield, Loader2, Calendar, Clock, Video, Zap, FileText, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
+import { useAuth } from "@/src/providers/auth-provider";
 import { MENTORS_BY_SLUG } from "@/src/features/(website)/mentors/data/mentors";
 import { TimeSlotPicker } from "@/src/features/(dashboard)/mentorship/components/time-slot-picker";
 import { format } from "date-fns";
@@ -39,6 +40,7 @@ function CheckoutContent() {
   const mentor = MENTORS_BY_SLUG[slug];
   const isLoading = false; // Will be driven by Stripe redirect
 
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
@@ -53,35 +55,43 @@ function CheckoutContent() {
 
   const price = sessionId === "intro" ? 0 : mentor.hourlyRate;
 
-  const handleProceedToStripe = async () => {
+  const handleConfirmBooking = async () => {
+    if (!selectedDate || !selectedTime) {
+        setError("Please select a date and time slot first.");
+        return;
+    }
+    if (!user?.guid) {
+        setError("You must be logged in to book a session.");
+        return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch("/api/checkout/session", {
+      const res = await fetch("/api/mentorship/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          mentorName: mentor.name,
-          sessionType: sessionMeta.label,
-          price,
+          studentId: user.guid,
           mentorSlug: slug,
           scheduledDate: selectedDate,
           scheduledTime: selectedTime,
+          sessionType: sessionMeta.label,
+          price
         }),
       });
 
       const data = await res.json();
 
-      if (!res.ok || !data.url) {
-        setError(data.error || "Failed to create payment session. Please try again.");
-        return;
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to confirm booking.");
       }
 
-      // Redirect to Stripe Checkout (or the confirmation page for free calls)
-      window.location.href = data.url;
-    } catch (err) {
-      setError("A network error occurred. Please check your connection and try again.");
+      // Redirect to confirmation page
+      router.push(data.url || `/mentorship/${slug}/booking-confirmed?id=${data.bookingId}`);
+    } catch (err: any) {
+      setError(err.message || "A network error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -104,7 +114,7 @@ function CheckoutContent() {
         {/* Header */}
         <div>
           <h1 className="text-2xl font-black text-slate-900">Confirm Your Booking</h1>
-          <p className="text-slate-500 mt-1">Review the details before proceeding to secure payment.</p>
+          <p className="text-slate-500 mt-1">Review the details and select your preferred slot.</p>
         </div>
 
       {/* Time Slot Picker */}
@@ -143,7 +153,9 @@ function CheckoutContent() {
                 <Clock className="w-3 h-3 text-slate-400" />
                 <span className="text-slate-400 text-xs">{sessionMeta.duration}</span>
                 <Calendar className="w-3 h-3 text-slate-400 ml-2" />
-                <span className="text-slate-400 text-xs">Date TBC after booking</span>
+                <span className="text-slate-400 text-xs">
+                  {selectedDate ? format(new Date(selectedDate), "MMM d, yyyy") : "Date TBC"}
+                </span>
               </div>
             </div>
           </div>
@@ -152,7 +164,7 @@ function CheckoutContent() {
 
           {/* Price */}
           <div className="flex items-center justify-between">
-            <span className="font-bold text-slate-600">Total</span>
+            <span className="font-bold text-slate-600">Total Due</span>
             <span className="text-2xl font-black text-slate-900">
               {price === 0 ? "Free" : `${mentor.currency}${price}`}
             </span>
@@ -168,16 +180,14 @@ function CheckoutContent() {
 
         {/* CTA */}
         <button
-          onClick={handleProceedToStripe}
-          disabled={loading}
-          className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black tracking-wide shadow-md transition-all active:scale-95 disabled:opacity-60 flex items-center justify-center gap-2"
+          onClick={handleConfirmBooking}
+          disabled={loading || !selectedDate || !selectedTime}
+          className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black tracking-wide shadow-md transition-all active:scale-95 disabled:opacity-40 flex items-center justify-center gap-2"
         >
           {loading ? (
             <><Loader2 className="w-5 h-5 animate-spin" /> Processing…</>
-          ) : price === 0 ? (
-            "Confirm Free Intro Call →"
           ) : (
-            `Pay ${mentor.currency}${price} Securely →`
+            "Complete Booking →"
           )}
         </button>
 

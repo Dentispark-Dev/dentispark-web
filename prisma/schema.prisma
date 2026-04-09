@@ -37,6 +37,7 @@ model MentorProfile {
   stripeAccountId String?
   isVerified      Boolean  @default(false)
   isAvailable     Boolean  @default(true)
+  availability    Json?
 
   bookings   Booking[] @relation("MentorBookings")
 }

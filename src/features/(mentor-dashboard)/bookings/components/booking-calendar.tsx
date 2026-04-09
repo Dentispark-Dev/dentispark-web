@@ -10,34 +10,71 @@ import { Button } from "@/src/components/ui/button";
 import { Card } from "@/src/components/ui/card";
 import { Badge } from "@/src/components/ui/badge";
 import { cn } from "@/src/lib/utils";
+import { useAuth } from "@/src/providers/auth-provider";
 import { BookingSession } from "../types";
 import {
   BOOKING_STATUS_COLORS,
   convertBookingsToEvents,
-  SAMPLE_BOOKINGS,
 } from "../constants";
 
 interface BookingCalendarProps {
   className?: string;
-  bookings?: BookingSession[];
   onEventClick?: (booking: BookingSession) => void;
   onDateClick?: (date: string) => void;
 }
 
 export function BookingCalendar({
   className,
-  bookings = SAMPLE_BOOKINGS,
   onEventClick,
   onDateClick,
 }: BookingCalendarProps) {
+  const { user } = useAuth();
   const calendarRef = useRef<FullCalendar>(null);
   const [currentView, setCurrentView] = useState<
     "dayGridMonth" | "timeGridWeek" | "timeGridDay"
   >("timeGridWeek");
+  const [bookings, setBookings] = useState<BookingSession[]>([]);
   const [selectedBooking, setSelectedBooking] = useState<BookingSession | null>(
     null,
   );
   const [calendarTitle, setCalendarTitle] = useState<string>("");
+
+  // Fetch real bookings from API
+  useEffect(() => {
+    async function fetchBookings() {
+      if (!user?.guid) return;
+      try {
+        const res = await fetch(`/api/mentorship/bookings?userId=${user.guid}&role=MENTOR`);
+        const data = await res.json();
+        
+        // Transform Prisma DB models to BookingSession frontend types
+        const transformed: BookingSession[] = data.bookings.map((b: any) => {
+          const start = b.scheduledAt ? new Date(b.scheduledAt) : new Date();
+          const end = new Date(start.getTime() + (b.durationMins || 60) * 60000);
+          
+          return {
+            id: b.id,
+            title: b.type || "Mentorship Session",
+            studentName: b.student?.name || "Student",
+            studentAvatar: b.student?.image || "/images/profile.png",
+            startTime: start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+            endTime: end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+            date: start.toISOString().split('T')[0],
+            type: "General Consultation", // Defaulting for now
+            status: b.status.toLowerCase(),
+            duration: b.durationMins || 60,
+            notes: b.notes || "",
+            studentEmail: b.student?.email || "",
+          };
+        });
+        
+        setBookings(transformed);
+      } catch (err) {
+        console.error("Failed to fetch bookings", err);
+      }
+    }
+    fetchBookings();
+  }, [user?.guid]);
 
   const events = convertBookingsToEvents(bookings);
 

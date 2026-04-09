@@ -8,15 +8,6 @@ import { addDays, format, startOfWeek, isSameDay, isToday } from "date-fns";
 
 // ─── Mock Availability ────────────────────────────────────────────
 // In production this would be fetched from /api/mentor/:slug/availability
-const MOCK_AVAILABILITY: Record<string, string[]> = {
-  // keyed by ISO date, values are available time slots
-  [format(addDays(new Date(), 1), "yyyy-MM-dd")]: ["09:00", "10:00", "14:00", "15:00", "16:00"],
-  [format(addDays(new Date(), 2), "yyyy-MM-dd")]: ["11:00", "13:00", "14:00"],
-  [format(addDays(new Date(), 3), "yyyy-MM-dd")]: ["09:00", "10:00", "11:00"],
-  [format(addDays(new Date(), 5), "yyyy-MM-dd")]: ["14:00", "15:00", "16:00", "17:00"],
-  [format(addDays(new Date(), 6), "yyyy-MM-dd")]: ["10:00", "11:00"],
-};
-
 interface TimeSlotPickerProps {
   mentorName: string;
   onSlotSelected: (date: string, time: string) => void;
@@ -24,16 +15,61 @@ interface TimeSlotPickerProps {
   selectedTime?: string;
 }
 
+// ─── Component ───────────────────────────────────────────────────
 export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selectedTime }: TimeSlotPickerProps) {
   const today = new Date();
   const [weekOffset, setWeekOffset] = useState(0);
   const [hoveredDate, setHoveredDate] = useState<string | null>(null);
+  
+  const [availability, setAvailability] = useState<any>(null);
+  const [bookedSlots, setBookedSlots] = useState<Array<{date: string, time: string}>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load availability from backend
+  useState(() => {
+    async function load() {
+      try {
+        const res = await fetch(`/api/mentorship/any-slug/availability`); // In real app use slug
+        const data = await res.json();
+        setAvailability(data.availability);
+        setBookedSlots(data.bookedSlots || []);
+      } catch (err) {
+        console.error("Failed to load availability", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, []);
 
   const weekStart = addDays(startOfWeek(today, { weekStartsOn: 1 }), weekOffset * 7);
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
   const pickedDate = hoveredDate || selectedDate;
-  const slotsForDay = pickedDate ? (MOCK_AVAILABILITY[pickedDate] || []) : [];
+  
+  // Calculate slots for the specific picked date based on weekly availability
+  const getSlotsForDate = (dateStr: string) => {
+    if (!availability) return [];
+    
+    // Parse date in a way that avoids timezone shifts (YYYY-MM-DD)
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const date = new Date(y, m-1, d);
+    
+    const dayName = format(date, "EEEE");
+    const dayData = availability[dayName];
+    
+    if (!dayData || !dayData.enabled) return [];
+    
+    // Extract all slots for this day
+    const slots = dayData.slots.map((s: any) => s.start);
+    
+    // Filter out booked slots
+    return slots.filter((time: string) => {
+        return !bookedSlots.some(b => b.date === dateStr && b.time === time);
+    });
+  };
+
+  const slotsForDay = pickedDate ? getSlotsForDate(pickedDate) : [];
 
   return (
     <div className="space-y-5">
@@ -64,7 +100,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
       <div className="grid grid-cols-7 gap-1.5">
         {weekDays.map((day) => {
           const dateStr = format(day, "yyyy-MM-dd");
-          const isAvailable = !!MOCK_AVAILABILITY[dateStr];
+          const isAvailable = getSlotsForDate(dateStr).length > 0;
           const isSelected = selectedDate === dateStr;
           const isPast = day < today && !isToday(day);
 

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
+import { useAuth } from "@/src/providers/auth-provider";
 
 // ─── Types ───────────────────────────────────────────────────────
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -37,9 +38,28 @@ const DEFAULT_WEEK: WeekAvailability = Object.fromEntries(
 
 // ─── Component ───────────────────────────────────────────────────
 export function AvailabilityManager() {
+  const { user } = useAuth();
   const [week, setWeek] = useState<WeekAvailability>(DEFAULT_WEEK);
   const [saved, setSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [selectedType, setSelectedType] = useState("General Consultation");
+
+  // Load existing availability
+  useState(() => {
+    async function load() {
+      if (!user?.guid) return;
+      try {
+        const res = await fetch(`/api/mentor/availability?userId=${user.guid}`);
+        const data = await res.json();
+        if (data.availability) {
+          setWeek(data.availability);
+        }
+      } catch (err) {
+        console.error("Failed to load availability", err);
+      }
+    }
+    load();
+  }, [user?.guid]);
 
   const toggleDay = (day: string) => {
     setWeek(prev => ({
@@ -84,10 +104,23 @@ export function AvailabilityManager() {
   };
 
   const handleSave = async () => {
-    // TODO: POST to /api/mentor/availability with week data
-    console.log("Saving availability:", week);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    if (!user?.guid) return;
+    setIsSaving(true);
+    try {
+      const res = await fetch("/api/mentor/availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.guid, availability: week }),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      }
+    } catch (err) {
+      console.error("Failed to save availability", err);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const enabledDaysCount = DAYS.filter(d => week[d].enabled).length;
