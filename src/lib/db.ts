@@ -1,13 +1,30 @@
-import { Pool } from 'pg';
+import { PrismaClient } from '@prisma/client'
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-});
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    log: ['query', 'error', 'warn'],
+  })
+}
 
-export const query = (text: string, params?: any[]) => pool.query(text, params);
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
 
-export default pool;
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+
+// Connection Test
+async function testConnection() {
+  try {
+    await prisma.$connect()
+    console.log('Successfully connected to the Contabo Database.')
+  } catch (error) {
+    console.error('Failed to connect to the database:', error)
+  }
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.prismaGlobal = prisma
+  testConnection()
+}
+
+export default prisma

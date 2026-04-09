@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relationships
+  mentorProfile MentorProfile?
+  bookings      Booking[]     @relation("StudentBookings")
+  aiHistory     AIHistory[]
+}
+
+model MentorProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title           String
+  credentials     String
+  bio             String   @db.Text
+  specialties     String[]
+  hourlyRate      Float
+  currency        String   @default("£")
+  stripeAccountId String?
+  isVerified      Boolean  @default(false)
+  isAvailable     Boolean  @default(true)
+
+  bookings   Booking[] @relation("MentorBookings")
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  studentId     String
+  mentorId      String
+  student       User          @relation("StudentBookings", fields: [studentId], references: [id])
+  mentor        MentorProfile @relation("MentorBookings", fields: [mentorId], references: [id])
+  scheduledAt   DateTime
+  durationMins  Int           @default(60)
+  status        BookingStatus @default(PENDING)
+  paymentIntent String?       // Stripe Payment reference
+  createdAt     DateTime      @default(now())
+}
+
+model AIHistory {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  toolIdentifier String
+  accomplishment String
+  metadata       Json?
+  timestamp      DateTime @default(now())
+}
+
+enum Role {
+  STUDENT
+  MENTOR
+  ADMIN
+  UNIVERSITY
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
