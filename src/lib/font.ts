@@ -15,7 +15,7 @@ export const bricolage = Bricolage_Grotesque({
 
 export const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-jakarta",
 });
 
