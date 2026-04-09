@@ -63,30 +63,30 @@ export function Hero() {
       />
 
       <Container className="relative z-10 flex flex-col items-center space-y-8 text-center">
-        <h1 className="text-black-700 max-w-5xl text-4xl leading-[120%] font-extrabold sm:text-5xl">
+        <h1 className="h1 max-w-5xl">
           Empowering
-          <span className="relative inline-block">
-            <span className="border-primary bg-primary-100 pointer-events-none absolute inset-0 -rotate-[1.5deg] transform rounded-full border-2 border-dotted" />
-            <span className="text-primary relative inline-block px-5 py-2">
+          <span className="relative inline-block px-2">
+            <span className="border-emerald-500 bg-emerald-50 pointer-events-none absolute inset-0 -rotate-[1.5deg] transform rounded-full border-2 border-dotted" />
+            <span className="text-emerald-600 relative inline-block px-5 py-2 italic font-black">
               underprivileged
             </span>
           </span>{" "}
-          students to achieve dental school dreams
+          students for dental school success
         </h1>
-        <p className="text-black-400 text-lg md:max-w-5xl">
-          Free guidance, expert mentorship, and AI-driven success for
-          underprivileged students.
+        <p className="text-slate-500 text-lg md:text-xl font-bold max-w-2xl leading-relaxed">
+          Free expert mentorship, elite clinical guidance, and AI-driven outcomes for 
+          the next generation of dental professionals.
         </p>
 
-        <div className="z-40 flex flex-col gap-6 sm:flex-row">
+        <div className="z-40 flex flex-col gap-6 sm:flex-row mt-6">
           <Link href="/sign-up" className="cursor-pointer">
             <motion.div
               initial="rest"
               whileHover="hover"
               animate="rest"
-              className="bg-primary font-jakarta hover:bg-primary/90 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-normal text-white shadow transition"
+              className="bg-slate-900 font-jakarta hover:bg-slate-800 inline-flex w-full cursor-pointer items-center justify-center gap-4 rounded-2xl px-10 py-5 text-sm font-black uppercase tracking-[0.2em] text-white shadow-2xl transition"
             >
-              <span>Start for Free</span>
+              <span>Get Started Free</span>
               <motion.span variants={bounceX} className="flex">
                 <ArrowRight size={20} />
               </motion.span>
@@ -98,9 +98,9 @@ export function Hero() {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              className="border-primary font-jakarta text-primary inline-flex cursor-pointer items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-normal transition hover:bg-green-50"
+              className="bg-white border-2 border-slate-100 font-jakarta text-slate-900 inline-flex cursor-pointer items-center justify-center gap-4 rounded-2xl px-10 py-5 text-sm font-black uppercase tracking-[0.2em] transition hover:bg-slate-50 shadow-sm"
             >
-              <span>Explore Free Resources</span>
+              <span>Explore Tools</span>
               <motion.span variants={bounceY} className="flex">
                 <ArrowDown size={20} />
               </motion.span>

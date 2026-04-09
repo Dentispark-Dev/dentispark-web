@@ -32,15 +32,14 @@ export default function WelcomeSection({
       transition={{ duration: 0.5 }}
       className="mb-8"
     >
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-jakarta text-black-800 mb-1 text-sm font-medium md:text-base">
-            {getGreeting()}, {displayUserName}
-          </h1>
-          <p className="text-black-300 font-jakarta text-xs md:text-sm">
-            {t("welcome_subtitle")}
-          </p>
-        </div>
+      <div className="flex flex-col gap-1">
+        <span className="caption-caps">{getGreeting()}</span>
+        <h1 className="text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+          {displayUserName}
+        </h1>
+        <p className="text-slate-500 font-bold text-sm">
+          {t("welcome_subtitle") || "Ready to secure your place in clinical excellence?"}
+        </p>
       </div>
     </motion.div>
   );

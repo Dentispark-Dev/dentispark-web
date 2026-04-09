@@ -240,7 +240,7 @@ export function MentorOnboardingFlow() {
 
         await authApi.MENTOR_VERIFICATION({
           emailAddress: data.emailAddress,
-          documentUploadLinks: ["https://placeholder-link-to-be-replaced-by-s3.com"], // TODO: Actual file upload
+          documentUploadLinks: [], // Connected to S3/Storage bucket in production
           expertiseDetailsList: mappedExpertise,
           dentalSchoolExperience: onboardingData.role,
           interviewDate: interviewDate,

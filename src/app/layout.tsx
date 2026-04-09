@@ -49,7 +49,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={cn(genralSans.className, robotoSlab.variable, bricolage.variable, jakarta.variable)}>
+    <html lang="en" className={cn(jakarta.className, jakarta.variable, robotoSlab.variable, bricolage.variable)}>
       <head>
         <script
           src="https://accounts.google.com/gsi/client"

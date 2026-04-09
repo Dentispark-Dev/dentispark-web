@@ -26,44 +26,30 @@ export default function AIHubPage() {
   const tools = [
     {
       title: "Personal Statement Reviewer",
-      description: "Upload your personal statement for an instant AI-powered analysis of tone, impact, and UCAS compatibility.",
+      description: "Neural analysis of tone, impact, and UCAS compatibility protocols.",
       icon: <FileText className="w-8 h-8" />,
-      status: "Ready",
+      status: "Verified",
       href: "/ai-hub/personal-statement"
     },
     {
-      title: "Smart Mentor Matching",
-      description: "Our algorithm matches you with the perfect mentor based on your target universities and academic specialty.",
-      icon: <Sparkles className="w-8 h-8" />,
-      status: "Ready",
-      href: "/ai-hub/mentor-matching"
-    },
-    {
-      title: "Interview Prep Bot",
-      description: "Practice MMI and panel interviews with our voice-responsive AI dental mentor.",
-      icon: <BrainCircuit className="w-8 h-8" />,
-      status: "Ready",
-      href: "/ai-hub/interview-prep"
-    },
-    {
       title: "Academic Transcript Parser",
-      description: "Automatically extract your grades and achievements from uploaded documents to boost your profile.",
+      description: "Extraction of high-trust data from institutional documents.",
       icon: <ClipboardCheck className="w-8 h-8" />,
-      status: "Ready",
+      status: "Verified",
       href: "/ai-hub/transcript-parser"
     },
     {
       title: "Admission Alpha Matchmaker",
-      description: "Analyze your academic profile and extracurriculars to determine school-specific likelihood of acceptance.",
+      description: "Probabilistic modeling of university-specific acceptance variables.",
       icon: <BarChart3 className="w-8 h-8" />,
-      status: "Ready",
+      status: "Beta 1.0",
       href: "/ai-hub/acceptance-odds"
     },
     {
       title: "90-Day Study Planner",
-      description: "Get a personalized, data-driven study schedule tailored to your exam dates and weak areas.",
+      description: "Personalized algorithmic scheduling for clinical qualification exams.",
       icon: <Clock className="w-8 h-8" />,
-      status: "Ready",
+      status: "Beta 1.0",
       href: "/ai-hub/study-planner"
     }
   ];
@@ -75,17 +61,17 @@ export default function AIHubPage() {
         <div className="absolute top-0 right-0 h-96 w-96 bg-teal-50/50 rounded-full blur-3xl -mr-48 -mt-48 pointer-events-none" />
         
         <div className="relative z-10 space-y-8">
-            <div className="flex items-center gap-3 px-5 py-2 bg-emerald-50 text-emerald-700 rounded-full w-fit text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100">
+            <div className="caption-caps bg-emerald-50 text-emerald-700 px-5 py-2 w-fit rounded-full border border-emerald-100 flex items-center gap-3">
                 <Zap className="w-4 h-4 fill-emerald-500 text-emerald-500" />
-                Neural Network Beta 1.0
+                Neural Network Deployment 2026.04
             </div>
             
             <div className="space-y-4">
-                <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1]">
+                <h1 className="h1">
                     AI Application <span className="text-teal-600">Hub</span>
                 </h1>
                 <p className="text-lg md:text-xl text-slate-500 max-w-3xl font-bold leading-relaxed">
-                    Deploy architectural intelligence designed specifically for international medical and dental students seeking high-trust institutional outcomes.
+                    Deploy architectural intelligence designed specifically for future doctors and dental surgeons seeking institutional precision.
                 </p>
             </div>
 
@@ -95,7 +81,7 @@ export default function AIHubPage() {
                         <ShieldCheck className="h-5 w-5" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Security State</p>
+                        <p className="caption-caps text-slate-400">Security State</p>
                         <p className="text-xs font-bold text-slate-900 leading-none mt-0.5">GDPR Protocol Verified</p>
                     </div>
                 </div>
@@ -104,7 +90,7 @@ export default function AIHubPage() {
                         <Target className="h-5 w-5" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Precision Rate</p>
+                        <p className="caption-caps text-slate-400">Precision Rate</p>
                         <p className="text-xs font-bold text-slate-900 leading-none mt-0.5">99.8% Academic Alignment</p>
                     </div>
                 </div>
@@ -127,13 +113,13 @@ export default function AIHubPage() {
                     <div className="h-20 w-20 rounded-[1.75rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 transition-all group-hover:bg-slate-900 group-hover:text-white group-hover:scale-110 group-hover:rotate-3">
                         {tool.icon}
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.25em] bg-teal-50 text-teal-600 px-5 py-2 rounded-full border border-teal-100 shadow-sm">
+                    <span className="caption-caps bg-teal-50 text-teal-600 px-5 py-2 border border-teal-100 shadow-sm rounded-full">
                         {tool.status}
                     </span>
                 </div>
 
                 <div className="space-y-4 mb-12">
-                    <h3 className="text-3xl font-black text-slate-900 tracking-tight group-hover:text-teal-600 transition-colors uppercase leading-none">{tool.title}</h3>
+                    <h3 className="h3 group-hover:text-teal-600 transition-colors uppercase leading-none">{tool.title}</h3>
                     <p className="text-[15px] font-bold text-slate-500 leading-relaxed max-w-[85%]">
                         {tool.description}
                     </p>
@@ -141,11 +127,11 @@ export default function AIHubPage() {
             </div>
 
             <Link href={tool.href} className="relative z-10">
-              <button disabled={tool.status === "Coming Soon"} className={cn(
+              <button className={cn(
                 "w-full h-16 rounded-[1.25rem] border border-slate-200 text-slate-900 font-black text-xs uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-4",
-                tool.status === "Coming Soon" ? "opacity-30 cursor-not-allowed" : "hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-2xl hover:shadow-slate-900/20 active:scale-95"
+                "hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-2xl hover:shadow-slate-900/20 active:scale-95"
               )}>
-                {tool.status === "Coming Soon" ? "Notify Network" : "Initialize Terminal"}
+                Initialize Terminal
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>

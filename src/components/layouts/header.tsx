@@ -165,7 +165,7 @@ export default function Header() {
                       : "text-gray-500 hover:text-emerald-500",
                   )}
                 >
-                  <span className="relative z-10 font-jakarta">{item.label}</span>
+                  <span className="relative z-10 font-jakarta font-black uppercase tracking-widest text-[11px]">{item.label}</span>
                   {pathname === item.href && (
                     <motion.div
                       className="absolute inset-0 -z-10 bg-emerald-50/50 blur-[2px] rounded-full"
@@ -191,13 +191,13 @@ export default function Header() {
           variants={itemVariants}
         >
           {isAuthenticated && user ? (
-            <Link href={dashboardHref} className="flex items-center gap-3 group">
-              <div className="bg-primary font-jakarta flex size-9 shrink-0 items-center justify-center rounded-full font-bold text-white uppercase ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
+            <Link href={dashboardHref} className="flex items-center gap-4 group">
+              <div className="bg-slate-900 font-jakarta flex size-10 shrink-0 items-center justify-center rounded-xl font-black text-white uppercase ring-4 ring-slate-100 group-hover:ring-emerald-100 transition-all">
                 {user.fullName?.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
               </div>
               <div className="font-jakarta">
-                <p className="text-sm font-semibold text-gray-900 leading-tight">{user.fullName}</p>
-                <p className="text-xs text-primary font-medium">Go to Dashboard →</p>
+                <p className="text-sm font-black text-slate-900 leading-tight">{user.fullName}</p>
+                <p className="text-[10px] text-emerald-600 font-black uppercase tracking-widest mt-0.5">Dashboard Intelligence →</p>
               </div>
             </Link>
           ) : (

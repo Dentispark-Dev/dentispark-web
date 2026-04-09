@@ -19,70 +19,9 @@ interface StudentMessagingPageProps {
   studentId?: string;
 }
 
-// Mock student data - will be replaced with API data later
-const MOCK_STUDENT = {
-  id: "1",
-  name: "Daniel Sarabia",
-  avatar: "/images/latest-booking.png",
-  isOnline: true,
-};
+// Student data state - transitioning to real-time socket/API data
 
-// Mock messages data
-const INITIAL_MESSAGES: Message[] = [
-  {
-    id: "1",
-    content: "Hey x! How are you?",
-    timestamp: "10:25",
-    isSent: false,
-    type: "text",
-  },
-  {
-    id: "2",
-    content: "Awesome. Simply awesome, my friend.",
-    timestamp: "11:25",
-    isSent: true,
-    type: "text",
-    isRead: true,
-  },
-  {
-    id: "3",
-    timestamp: "11:25",
-    isSent: true,
-    type: "file",
-    fileData: {
-      name: "Account_report.docx",
-      size: "2.5gb",
-      type: "docs",
-    },
-    isRead: true,
-  },
-  {
-    id: "4",
-    content: "Awesome. Simply awesome, my friend.",
-    timestamp: "11:25",
-    isSent: false,
-    type: "text",
-  },
-  {
-    id: "5",
-    timestamp: "11:25",
-    isSent: true,
-    type: "link",
-    linkData: {
-      title: "External Link Title",
-      description: "External link description",
-      url: "https://www.externallink.com",
-    },
-    isRead: true,
-  },
-  {
-    id: "6",
-    content: "Awesome. Simply awesome, my friend.",
-    timestamp: "11:25",
-    isSent: false,
-    type: "text",
-  },
-];
+const INITIAL_MESSAGES: Message[] = [];
 
 export function StudentMessagingPage({
   className,
@@ -111,9 +50,9 @@ export function StudentMessagingPage({
       modalTitleClassName: "font-jakarta text-center",
       bodyContent: (
         <RatingReviewModal
-          studentName={MOCK_STUDENT.name}
+          studentName="Student"
           onSubmit={(rating, review) => {
-            toast.success("Review submitted!", { description: `You gave ${MOCK_STUDENT.name} a ${rating}-star review.` });
+            toast.success("Protocol Protocol Verified", { description: `Advisory review for student ${studentId} has been logged.` });
             closeModal();
           }}
           onCancel={closeModal}
@@ -200,25 +139,21 @@ export function StudentMessagingPage({
           className="border-greys-300 flex items-center justify-between border-b pb-2"
         >
           <div className="flex items-center gap-4">
-            <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full">
-              <Image
-                src={MOCK_STUDENT.avatar}
-                alt={MOCK_STUDENT.name}
-                width={56}
-                height={56}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="flex items-center gap-4">
-              <h1 className="font-jakarta text-black-800 text-lg font-semibold">
-                {MOCK_STUDENT.name}
-              </h1>
-              {MOCK_STUDENT.isOnline && (
-                <div className="border-success-200 bg-success-50 bg-success-200/20 flex items-center gap-2 rounded-full border p-1.5">
-                  <div className="bg-primary h-1.5 w-1.5 rounded-full"></div>
-                  <span className="text-primary font-jakarta text-xs">Online</span>
+            <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl border border-slate-100 shadow-sm bg-slate-50">
+              {studentId && (
+                <div className="w-full h-full flex items-center justify-center font-black text-slate-400">
+                  {studentId.slice(0, 2).toUpperCase()}
                 </div>
               )}
+            </div>
+            <div className="flex items-center gap-4">
+              <h1 className="text-xl font-black text-slate-900 tracking-tight">
+                Protocol Session
+              </h1>
+              <div className="caption-caps bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-100 flex items-center gap-2">
+                <div className="bg-emerald-500 h-1.5 w-1.5 rounded-full animate-pulse"></div>
+                Secure Channel
+              </div>
             </div>
           </div>
 

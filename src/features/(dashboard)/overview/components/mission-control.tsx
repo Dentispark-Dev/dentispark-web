@@ -213,7 +213,7 @@ export function MissionControl() {
     <div className="w-full max-w-5xl mx-auto space-y-8">
       {/* Header */}
       <div className="flex flex-col items-center text-center space-y-4 mb-4">
-        <h2 className="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight">
+        <h2 className="h2 tracking-tighter">
           Applicant <span className="text-emerald-600">Roadmap</span>
         </h2>
         <p className="text-slate-500 font-medium max-w-2xl text-lg">
@@ -229,11 +229,11 @@ export function MissionControl() {
         
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
+            <div className="caption-caps mb-3">
               <Activity className="w-3.5 h-3.5" />
               Outcome-Oriented Protocol
             </div>
-            <h3 className="text-2xl font-jakarta font-black text-slate-900">Your Clinical Readiness</h3>
+            <h3 className="h3">Your Clinical Readiness</h3>
           </div>
           
           <div className="flex flex-col items-end">

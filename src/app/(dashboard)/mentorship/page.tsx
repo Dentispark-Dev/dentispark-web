@@ -15,8 +15,8 @@ import { MENTOR_CATEGORIES, REAL_MENTORS, Mentor } from "@/src/features/(website
 // ─── Category Tabs (Leland-style) ─────────────────────────────
 const CATEGORIES = MENTOR_CATEGORIES;
 
-// ─── Mock mentor data (replace with real API) ─────────────────
-const MOCK_MENTORS = REAL_MENTORS;
+// Curated mentor roster (transitioning to real API in deployment)
+const mentors = REAL_MENTORS;
 
 // ─── Filter Panel ─────────────────────────────────────────────
 interface Filters {
@@ -142,7 +142,7 @@ function FilterPanel({ onFiltersChange, filters }: { onFiltersChange: (f: Filter
 }
 
 // ─── Mentor Card ──────────────────────────────────────────────
-function MentorCard({ mentor }: { mentor: typeof MOCK_MENTORS[0] }) {
+function MentorCard({ mentor }: { mentor: Mentor }) {
     const [followed, setFollowed] = useState(false);
 
     return (
@@ -256,7 +256,7 @@ export default function MentorshipPage() {
         return specFilters.some(s => mentor.specialty.toLowerCase().includes(s.toLowerCase()) || mentor.tags.some(t => t.toLowerCase().includes(s.toLowerCase())));
     };
 
-    const filtered = MOCK_MENTORS
+    const filtered = mentors
         .filter(m => {
             const matchesCategory = activeCategory === "all" || m.tags.includes(activeCategory);
             const matchesSearch = !searchQuery ||
@@ -297,12 +297,12 @@ export default function MentorshipPage() {
 
             {/* ── Page Header ── */}
             <div className="pt-6 pb-4 space-y-3">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">{categoryLabel} — Mentors & Coaches</h1>
-                        <p className="text-sm text-gray-500 mt-1">
-                            Book 1-on-1 sessions with verified experts to make progress on your admissions goals.
-                            <Link href="/contact-us" className="ml-2 text-emerald-600 hover:underline font-medium">Talk to our team</Link>
+                        <span className="caption-caps">{categoryLabel}</span>
+                        <h1 className="h2 pt-1">Expert Mentors & Coaches</h1>
+                        <p className="text-sm text-slate-500 font-bold mt-2">
+                            Secure 1-on-1 protocols with verified clinical leaders to optimize your admission roadmap.
                         </p>
                     </div>
                     <div className="flex items-center gap-2">

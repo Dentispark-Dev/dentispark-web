@@ -148,8 +148,8 @@ export const menuItems: MenuItem[] = [
     icon: Icons.overview,
     children: [
       { id: "overview", label: "Overview", href: "/overview", allowedMemberTypes: ["STUDENT"], icon: Icons.overview },
-      { id: "applications", label: "Applications", href: "/applications", allowedMemberTypes: ["STUDENT"], icon: Icons.overview },
-      { id: "university-hub", label: "University Hub", href: "/university-hub", allowedMemberTypes: ["STUDENT"], icon: Icons.university },
+      { id: "applications", label: "My Applications", href: "/applications", allowedMemberTypes: ["STUDENT"], icon: Icons.overview },
+      // University Hub hidden for standard users as it's purely mock data for now
     ],
   },
   {
