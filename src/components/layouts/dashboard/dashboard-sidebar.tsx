@@ -35,7 +35,7 @@ export default function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "border-greys-300 bg-white-100 fixed inset-y-0 left-0 z-50 w-[300px] transform border-t border-r transition-transform duration-300 ease-in-out lg:top-18 lg:bottom-0 lg:translate-x-0",
+        "border-greys-300 bg-white-100 fixed inset-y-0 left-0 z-50 w-[300px] transform border-t transition-transform duration-300 ease-in-out lg:top-18 lg:bottom-0 lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full",
       )}
     >
@@ -97,7 +97,7 @@ export default function DashboardSidebar({
                 )}
 
                 {hasChildren && isExpanded && (
-                  <div className="ml-9 mt-1 space-y-1 border-l border-greys-200 pl-4">
+                  <div className="ml-9 mt-1 space-y-1 pl-4">
                     {item.children?.map((child) => {
                       const isChildActive = currentPath === child.href;
                       return (

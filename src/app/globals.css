@@ -31,6 +31,19 @@
   --color-slate-800: oklch(0.248 0 89.9);
   --color-slate-900: oklch(0.248 0.000 89.9);
 
+  /* Greys Alias for specific components */
+  --color-greys-50: var(--color-slate-50);
+  --color-greys-100: var(--color-slate-100);
+  --color-greys-200: var(--color-slate-200);
+  --color-greys-300: var(--color-slate-300);
+  --color-greys-400: var(--color-slate-400);
+  --color-greys-500: var(--color-slate-500);
+  --color-greys-600: var(--color-slate-600);
+  --color-greys-700: var(--color-slate-700);
+  --color-greys-800: var(--color-slate-800);
+  --color-greys-900: var(--color-slate-900);
+
+
   /* Brand Emerald Scale mapped from Success Tokens */
   --color-emerald-50:  oklch(0.968 0.021 158.6);
   --color-emerald-100: oklch(0.902 0.068 157.2);
