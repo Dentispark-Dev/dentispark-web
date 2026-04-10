@@ -63,8 +63,8 @@ function AvatarRing({ name }: { name: string }) {
         .slice(0, 2);
     return (
         <div className="relative group">
-            <div className="h-28 w-28 rounded-[2rem] bg-primary-600 p-[3px] shadow-xl shadow-primary-100 group-hover:rotate-2 transition-transform duration-500">
-                <div className="h-full w-full rounded-[1.8rem] bg-white flex items-center justify-center overflow-hidden relative">
+            <div className="h-28 w-10 rounded-xl bg-primary-600 p-[3px] shadow-xl shadow-primary-100 group-hover:rotate-2 transition-transform duration-500">
+                <div className="h-full w-full rounded-lg bg-white flex items-center justify-center overflow-hidden relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent" />
                     <span className="text-3xl font-bold text-primary-600 font-jakarta relative z-10">
                         {initials}
@@ -74,7 +74,7 @@ function AvatarRing({ name }: { name: string }) {
             <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="absolute -bottom-1 -right-1 h-8 w-8 rounded-2xl bg-success-500 border-4 border-white shadow-lg flex items-center justify-center"
+                className="absolute -bottom-1 -right-1 h-8 w-8 rounded-lg bg-success-500 border-4 border-white shadow-lg flex items-center justify-center"
             >
                 <CheckCircle className="h-4 w-4 text-white" />
             </motion.div>
@@ -84,12 +84,12 @@ function AvatarRing({ name }: { name: string }) {
 
 function StatPill({ label, value, color, icon: Icon }: { label: string; value: string | number | undefined; color: string; icon?: any }) {
     return (
-        <div className={cn("flex flex-col px-6 py-4 rounded-2xl border border-greys-300 bg-white shadow-sm transition-all hover:shadow-md", color)}>
+        <div className={cn("flex flex-col px-6 py-4 rounded-lg border border-greys-300 bg-white shadow-sm transition-all hover:shadow-md", color)}>
             <div className="flex items-center gap-2 mb-1">
                 {Icon && <Icon className="h-3.5 w-3.5 opacity-60" />}
                 <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 font-jakarta leading-none">{label}</span>
             </div>
-            <span className="text-xl font-bold text-text-heading tracking-tight font-jakarta">{value ?? "—"}</span>
+            <span className="text-xl font-bold text-slate-800 tracking-tight font-jakarta">{value ?? "—"}</span>
         </div>
     );
 }
@@ -133,9 +133,9 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[500px] gap-6 bg-white">
+            <div className="flex flex-col items-center justify-center min-h-[500px] gap-4 bg-white">
                 <div className="relative">
-                    <div className="h-16 w-16 rounded-full border-t-2 border-primary-600 animate-spin" />
+                    <div className="h-16 w-10 rounded-full border-t-2 border-primary-600 animate-spin" />
                     <User className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-primary-600 animate-pulse" />
                 </div>
                 <p className="text-greys-600 font-medium tracking-tight font-jakarta animate-pulse">Syncing Hub Data...</p>
@@ -145,12 +145,12 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
 
     if (error || !mentor) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[400px] space-y-6 text-center max-w-lg mx-auto bg-white p-12 rounded-3xl border border-greys-300">
+            <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4 text-center max-w-lg mx-auto bg-white p-4 rounded-lg border border-greys-300">
                 <div className="p-4 bg-error-50 rounded-full text-error-600">
                     <AlertCircle className="h-10 w-10" />
                 </div>
                 <div className="space-y-2">
-                    <h3 className="text-xl font-semibold text-text-heading">Registry Synchronisation Failure</h3>
+                    <h3 className="text-xl font-semibold text-slate-800">Registry Synchronisation Failure</h3>
                     <p className="text-greys-600 text-sm leading-relaxed">The administrative hub was unable to establish a secure handshake with the primary mentor database.</p>
                 </div>
                 <Button asChild variant="outline" className="rounded-xl px-10 h-12 border-greys-300 font-bold text-xs uppercase tracking-widest transition-all hover:bg-greys-100">
@@ -165,10 +165,10 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
     return (
         <div className="min-h-screen bg-white pb-20">
             {/* ── Professional Identity Header ── */}
-            <div className="bg-white p-8 md:p-12 border-b border-greys-300 flex flex-col md:flex-row gap-10 justify-between items-center relative overflow-hidden">
-                <div className="absolute top-0 right-0 h-64 w-64 bg-primary-50 rounded-bl-full opacity-40 pointer-events-none" />
+            <div className="bg-white p-4 md:p-6 border-b border-greys-300 flex flex-col md:flex-row gap-4 justify-between items-center relative overflow-hidden">
+                <div className="absolute top-0 right-0 h-32 w-32 bg-primary-50 rounded-bl-full opacity-40 pointer-events-none" />
                 
-                <div className="flex-1 flex flex-col md:flex-row items-center gap-8 relative z-10 w-full">
+                <div className="flex-1 flex flex-col md:flex-row items-center gap-4 relative z-10 w-full">
                     <AvatarRing name={fullName} />
                     <div className="space-y-4 text-center md:text-left flex-1 min-w-0">
                         <div>
@@ -183,10 +183,10 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                 )}
                                 <span className="text-[11px] font-bold text-greys-400 uppercase tracking-widest opacity-60 leading-none">HID: {mentor.hid}</span>
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-semibold text-text-heading tracking-tight leading-tight font-jakarta">
+                            <h1 className="text-3xl md:text-5xl font-semibold text-slate-800 tracking-tight leading-tight font-jakarta">
                                 {mentor.firstName} <span className="text-primary-600">{mentor.lastName}</span>
                             </h1>
-                            <div className="flex flex-wrap justify-center md:justify-start gap-6 mt-4 text-sm text-greys-600 font-medium font-jakarta">
+                            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4 text-sm text-greys-600 font-medium font-jakarta">
                                 <span className="flex items-center gap-2">
                                     <Mail className="h-4 w-4 text-primary-500 opacity-60" />
                                     {mentor.emailAddress}
@@ -210,7 +210,7 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                     <Button 
                         variant="outline" 
                         onClick={() => router.back()}
-                        className="h-12 px-6 rounded-xl border-greys-300 bg-white text-text-color font-bold text-xs gap-3 hover:bg-greys-100 transition-all active:scale-95 shadow-sm uppercase tracking-widest leading-none font-jakarta"
+                        className="h-12 px-6 rounded-xl border-greys-300 bg-white text-slate-600 font-bold text-xs gap-3 hover:bg-greys-100 transition-all active:scale-95 shadow-sm uppercase tracking-widest leading-none font-jakarta"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Back to Registry
@@ -222,8 +222,8 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
             </div>
 
             {/* ── Navigation Hub ── */}
-            <div className="container mx-auto px-6 mt-10">
-                <div className="flex flex-wrap gap-2 p-1.5 bg-greys-100 rounded-2xl w-fit border border-greys-300 mb-10">
+            <div className="container mx-auto px-6 mt-6">
+                <div className="flex flex-wrap gap-2 p-1.5 bg-greys-100 rounded-lg w-fit border border-greys-300 mb-6">
                     {tabs.map((tab) => (
                         <button
                             key={tab.key}
@@ -241,7 +241,7 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                     ))}
                 </div>
 
-                <div className="flex flex-col xl:flex-row gap-10">
+                <div className="flex flex-col xl:flex-row gap-4">
                     <div className="flex-1 min-w-0">
                         <AnimatePresence mode="wait">
                             {activeTab === "profile" && (
@@ -252,19 +252,19 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                     exit={{ opacity: 0, y: -10 }}
                                     className="space-y-10"
                                 >
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <Card className="bg-white rounded-3xl border border-greys-300 p-8 shadow-sm space-y-8 overflow-hidden group">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <Card className="bg-white rounded-lg border border-greys-300 p-4 shadow-sm space-y-4 overflow-hidden group">
                                             <div className="flex items-center gap-3 mb-2">
-                                                <div className="p-3 bg-primary-50 rounded-2xl text-primary-600">
+                                                <div className="p-3 bg-primary-50 rounded-lg text-primary-600">
                                                     <Briefcase className="h-5 w-5" />
                                                 </div>
-                                                <h3 className="text-xl font-semibold text-text-heading font-jakarta">Professional Narrative</h3>
+                                                <h3 className="text-xl font-semibold text-slate-800 font-jakarta">Professional Narrative</h3>
                                             </div>
                                             
                                             <div className="space-y-6">
-                                                <div className="p-6 bg-greys-100 rounded-2xl border border-greys-200">
+                                                <div className="p-6 bg-greys-100 rounded-lg border border-greys-200">
                                                     <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest mb-2 font-jakarta">Current Focus</p>
-                                                    <p className="text-lg font-semibold text-text-heading leading-tight font-jakarta">
+                                                    <p className="text-lg font-semibold text-slate-800 leading-tight font-jakarta">
                                                         {mentor.areaOfSpecialization || "General Dentistry Excellence"}
                                                     </p>
                                                 </div>
@@ -277,35 +277,35 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                             </div>
                                         </Card>
 
-                                        <Card className="bg-white rounded-3xl border border-greys-300 p-8 shadow-sm space-y-8 overflow-hidden group">
+                                        <Card className="bg-white rounded-lg border border-greys-300 p-4 shadow-sm space-y-4 overflow-hidden group">
                                             <div className="flex items-center gap-3 mb-2">
-                                                <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600">
+                                                <div className="p-3 bg-indigo-50 rounded-lg text-indigo-600">
                                                     <Star className="h-5 w-5" />
                                                 </div>
-                                                <h3 className="text-xl font-semibold text-text-heading font-jakarta">Mentorship Ethos</h3>
+                                                <h3 className="text-xl font-semibold text-slate-800 font-jakarta">Mentorship Ethos</h3>
                                             </div>
                                             
                                             <div className="space-y-8">
-                                                <div className="p-8 bg-indigo-50/30 rounded-3xl border border-indigo-100 relative overflow-hidden group-hover:bg-indigo-50 transition-colors duration-500">
-                                                    <Sparkles className="absolute -right-4 -bottom-4 h-24 w-24 text-indigo-200 opacity-20 rotate-12" />
-                                                    <blockquote className="text-indigo-900 font-semibold text-xl italic leading-relaxed font-jakarta relative z-10">
+                                                <div className="p-8 bg-indigo-50/30 rounded-lg border border-indigo-100 relative overflow-hidden group-hover:bg-indigo-50 transition-colors duration-500">
+                                                    <Sparkles className="absolute -right-4 -bottom-4 h-12 w-12 text-indigo-200 opacity-20 rotate-12" />
+                                                    <blockquote className="text-indigo-900 font-semibold text-base italic leading-relaxed font-jakarta relative z-10">
                                                         &ldquo;{mentor.whyMentor || "Empowering the next generation of dental professionals through structured guidance and clinical insight."}&rdquo;
                                                     </blockquote>
                                                 </div>
                                                 
                                                 <div className="grid grid-cols-2 gap-4">
-                                                    <div className="p-5 bg-greys-100 rounded-2xl border border-greys-200 flex items-center gap-4">
+                                                    <div className="p-5 bg-greys-100 rounded-lg border border-greys-200 flex items-center gap-4">
                                                         <div className="p-2.5 bg-white rounded-xl shadow-sm text-warning-500"><TrendingUp className="h-4 w-4" /></div>
                                                         <div>
                                                             <p className="text-[9px] font-bold text-greys-400 uppercase tracking-widest font-jakarta leading-none mb-1">Impact</p>
-                                                            <p className="text-sm font-bold text-text-heading font-jakarta">High Velocity</p>
+                                                            <p className="text-sm font-bold text-slate-800 font-jakarta">High Velocity</p>
                                                         </div>
                                                     </div>
-                                                    <div className="p-5 bg-greys-100 rounded-2xl border border-greys-200 flex items-center gap-4">
+                                                    <div className="p-5 bg-greys-100 rounded-lg border border-greys-200 flex items-center gap-4">
                                                         <div className="p-2.5 bg-white rounded-xl shadow-sm text-primary-500"><Target className="h-4 w-4" /></div>
                                                         <div>
                                                             <p className="text-[9px] font-bold text-greys-400 uppercase tracking-widest font-jakarta leading-none mb-1">Strategy</p>
-                                                            <p className="text-sm font-bold text-text-heading font-jakarta">Precision</p>
+                                                            <p className="text-sm font-bold text-slate-800 font-jakarta">Precision</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -321,32 +321,32 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                     initial={{ opacity: 0, scale: 0.98 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.98 }}
-                                    className="bg-white rounded-[2rem] border border-greys-300 p-12 shadow-sm"
+                                    className="bg-white rounded-xl border border-greys-300 p-4 shadow-sm"
                                 >
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                                         <div className="space-y-12">
                                             <div className="space-y-2">
-                                                <h3 className="text-2xl font-semibold text-text-heading tracking-tight font-jakarta">Impact Pulse Analysis</h3>
+                                                <h3 className="text-2xl font-semibold text-slate-800 tracking-tight font-jakarta">Impact Pulse Analysis</h3>
                                                 <p className="text-sm text-greys-500 font-medium font-jakarta">Algorithmic evaluation of mentorship efficacy across core pillars.</p>
                                             </div>
                                             
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                                <div className="p-10 bg-primary-50/50 rounded-[2.5rem] border border-primary-100 text-center space-y-4 group hover:bg-primary-600 hover:text-white transition-all duration-500">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <div className="p-10 bg-primary-50/50 rounded-xl border border-primary-100 text-center space-y-4 group hover:bg-primary-600 hover:text-white transition-all duration-500">
                                                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 font-jakarta leading-none">Success Velocity</p>
                                                     <p className="text-5xl font-bold font-jakarta tracking-tight">94%</p>
                                                     <Zap className="h-6 w-6 mx-auto opacity-20 group-hover:scale-125 transition-transform" />
                                                 </div>
-                                                <div className="p-10 bg-indigo-50/50 rounded-[2.5rem] border border-indigo-100 text-center space-y-4 group hover:bg-indigo-600 hover:text-white transition-all duration-500">
+                                                <div className="p-10 bg-indigo-50/50 rounded-xl border border-indigo-100 text-center space-y-4 group hover:bg-indigo-600 hover:text-white transition-all duration-500">
                                                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 font-jakarta leading-none">Review Density</p>
                                                     <p className="text-5xl font-bold font-jakarta tracking-tight">{mentor.totalReviews || 0}</p>
                                                     <Star className="h-6 w-6 mx-auto opacity-20 group-hover:scale-125 transition-transform" />
                                                 </div>
                                             </div>
 
-                                            <div className="p-8 bg-greys-900 rounded-[2.5rem] text-white overflow-hidden relative shadow-2xl">
-                                                <History className="absolute -right-8 -bottom-8 h-32 w-32 opacity-10" />
-                                                <div className="relative z-10 flex items-center gap-8">
-                                                    <div className="h-20 w-20 rounded-2xl bg-white/10 flex items-center justify-center font-bold text-3xl font-jakarta border border-white/10">
+                                            <div className="p-8 bg-greys-900 rounded-xl text-white overflow-hidden relative shadow-2xl">
+                                                <History className="absolute -right-8 -bottom-8 h-16 w-16 opacity-10" />
+                                                <div className="relative z-10 flex items-center gap-4">
+                                                    <div className="h-20 w-12 rounded-lg bg-white/10 flex items-center justify-center font-bold text-base font-jakarta border border-white/10">
                                                         {mentor.yearsInDentistry || 5}
                                                     </div>
                                                     <div className="space-y-1">
@@ -357,7 +357,7 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                             </div>
                                         </div>
                                         
-                                        <div className="bg-greys-100 rounded-[3rem] p-10 border border-greys-200 flex items-center justify-center group">
+                                        <div className="bg-greys-100 rounded-xl p-4 border border-greys-200 flex items-center justify-center group">
                                             <div className="transform group-hover:scale-105 transition-transform duration-700">
                                                 <MentorRadarChart data={{
                                                     ucat: 4.8,
@@ -380,10 +380,10 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                     exit={{ opacity: 0, y: -10 }}
                                     className="space-y-10"
                                 >
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                        <Card className="bg-white rounded-3xl border border-greys-300 p-10 shadow-sm">
-                                            <h3 className="text-xl font-semibold text-text-heading font-jakarta uppercase mb-10 flex items-center gap-3">
-                                                <div className="p-3 bg-primary-50 text-primary-600 rounded-2xl"><ShieldCheck className="h-5 w-5" /></div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <Card className="bg-white rounded-lg border border-greys-300 p-4 shadow-sm">
+                                            <h3 className="text-xl font-semibold text-slate-800 font-jakarta uppercase mb-6 flex items-center gap-3">
+                                                <div className="p-3 bg-primary-50 text-primary-600 rounded-lg"><ShieldCheck className="h-5 w-5" /></div>
                                                 Credential Audit
                                             </h3>
                                             <div className="space-y-4">
@@ -394,14 +394,14 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                                             href={link} 
                                                             target="_blank" 
                                                             rel="noopener noreferrer"
-                                                            className="flex items-center justify-between p-6 bg-greys-100 hover:bg-primary-50 border border-greys-200 rounded-2xl transition-all group"
+                                                            className="flex items-center justify-between p-4 bg-greys-100 hover:bg-primary-50 border border-greys-200 rounded-lg transition-all group"
                                                         >
                                                             <div className="flex items-center gap-5">
                                                                 <div className="p-3 bg-white rounded-xl shadow-sm text-greys-400 group-hover:text-primary-600 group-hover:rotate-6 transition-all">
                                                                     <FileText className="h-6 w-6" />
                                                                 </div>
                                                                 <div>
-                                                                    <p className="text-sm font-bold text-text-heading font-jakarta">
+                                                                    <p className="text-sm font-bold text-slate-800 font-jakarta">
                                                                         {link.includes("cv") ? "Official Resume / CV" : link.includes("cert") ? "Professional Certification" : `Credential Bundle ${idx + 1}`}
                                                                     </p>
                                                                     <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest mt-1 font-jakarta leading-none">Security Verified Node</p>
@@ -411,21 +411,21 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                                         </a>
                                                     ))
                                                 ) : (
-                                                    <div className="p-16 bg-greys-100 rounded-[2rem] border border-dashed border-greys-300 text-center">
+                                                    <div className="p-16 bg-greys-100 rounded-xl border border-dashed border-greys-300 text-center">
                                                         <p className="text-sm font-medium text-greys-400 italic font-jakarta">No credentials uploaded for review.</p>
                                                     </div>
                                                 )}
                                             </div>
                                         </Card>
 
-                                        <Card className="bg-white rounded-3xl border border-greys-300 p-10 shadow-sm">
-                                            <h3 className="text-xl font-semibold text-text-heading font-jakarta uppercase mb-10 flex items-center gap-3">
-                                                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl"><Clock3 className="h-5 w-5" /></div>
+                                        <Card className="bg-white rounded-lg border border-greys-300 p-4 shadow-sm">
+                                            <h3 className="text-xl font-semibold text-slate-800 font-jakarta uppercase mb-6 flex items-center gap-3">
+                                                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-lg"><Clock3 className="h-5 w-5" /></div>
                                                 Access Timeline
                                             </h3>
                                             <div className="space-y-6">
-                                                <div className="flex items-center gap-6 p-8 bg-indigo-50/30 rounded-3xl border border-indigo-100">
-                                                    <div className="h-16 w-16 rounded-2xl bg-white flex items-center justify-center shadow-sm text-indigo-600">
+                                                <div className="flex items-center gap-4 p-4 bg-indigo-50/30 rounded-lg border border-indigo-100">
+                                                    <div className="h-16 w-10 rounded-lg bg-white flex items-center justify-center shadow-sm text-indigo-600">
                                                         <Calendar className="h-7 w-7" />
                                                     </div>
                                                     <div>
@@ -433,13 +433,13 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                                         <p className="text-2xl font-bold text-indigo-900 font-jakarta tracking-tight">{new Date(mentor.dateStamped).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
                                                     </div>
                                                 </div>
-                                                <div className="flex items-center gap-6 p-8 bg-greys-100 rounded-3xl border border-greys-200">
-                                                    <div className="h-16 w-16 rounded-2xl bg-white flex items-center justify-center shadow-sm text-greys-400">
+                                                <div className="flex items-center gap-4 p-4 bg-greys-100 rounded-lg border border-greys-200">
+                                                    <div className="h-16 w-10 rounded-lg bg-white flex items-center justify-center shadow-sm text-greys-400">
                                                         <Clock3 className="h-7 w-7" />
                                                     </div>
                                                     <div>
                                                         <p className="text-[10px] font-bold text-greys-400 uppercase mb-1 tracking-widest font-jakarta">Last Registry Sync</p>
-                                                        <p className="text-2xl font-bold text-text-heading font-jakarta tracking-tight">Active Node</p>
+                                                        <p className="text-2xl font-bold text-slate-800 font-jakarta tracking-tight">Active Node</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -451,9 +451,9 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                     </div>
 
                     {/* ── Sidebar Actions & Intel ── */}
-                    <div className="w-full xl:w-[400px] space-y-10">
+                    <div className="w-full xl:w-[400px] space-y-4">
                         {/* Governance Actions */}
-                        <div className="bg-white rounded-[2.5rem] border border-greys-300 p-10 space-y-8 shadow-sm relative overflow-hidden">
+                        <div className="bg-white rounded-xl border border-greys-300 p-4 space-y-4 shadow-sm relative overflow-hidden">
                             <div className="absolute top-0 right-0 h-40 w-40 bg-greys-50 rounded-full opacity-40 -mr-20 -mt-20" />
                             <h3 className="text-[10px] font-bold text-greys-500 uppercase tracking-[0.3em] font-jakarta mb-2">Authority Protocol</h3>
                             <div className="space-y-4 relative z-10">
@@ -461,9 +461,9 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                     onClick={() => verifyMutation.mutate(!mentor.verified)}
                                     disabled={verifyMutation.isPending}
                                     className={cn(
-                                        "w-full h-14 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all active:scale-95 shadow-xl font-jakarta leading-none",
+                                        "w-full h-10 rounded-lg font-bold text-xs uppercase tracking-widest transition-all active:scale-95 shadow-xl font-jakarta leading-none",
                                         mentor.verified 
-                                            ? "bg-greys-200 text-text-heading hover:bg-greys-300" 
+                                            ? "bg-greys-200 text-slate-800 hover:bg-greys-300" 
                                             : "bg-primary-600 text-white hover:bg-primary-500 shadow-primary-200"
                                     )}
                                 >
@@ -473,7 +473,7 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                     onClick={() => updateStatusMutation.mutate(mentor.activationStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE")}
                                     disabled={updateStatusMutation.isPending}
                                     className={cn(
-                                        "w-full h-14 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg font-jakarta leading-none",
+                                        "w-full h-10 rounded-lg font-bold text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg font-jakarta leading-none",
                                         mentor.activationStatus === "ACTIVE" 
                                             ? "bg-error-50 text-error-600 border border-error-100 hover:bg-error-100" 
                                             : "bg-success-50 text-success-600 border border-success-100 hover:bg-success-100"
@@ -485,8 +485,8 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                         </div>
 
                         {/* LinkedIn Impact Intel */}
-                        <Card className="bg-greys-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden group shadow-2xl">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/20 rounded-full blur-3xl pointer-events-none group-hover:bg-primary-600/40 transition-colors duration-700" />
+                        <Card className="bg-greys-900 rounded-xl p-4 text-white relative overflow-hidden group shadow-2xl">
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-primary-600/20 rounded-full blur-3xl pointer-events-none group-hover:bg-primary-600/40 transition-colors duration-700" />
                             <CardHeader className="p-0 pb-10 flex flex-row items-center justify-between">
                                 <CardTitle className="text-lg font-semibold font-jakarta uppercase tracking-tight flex items-center gap-3">
                                     <Users className="h-5 w-5 text-primary-400" />
@@ -494,10 +494,10 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                 </CardTitle>
                                 <Badge className="bg-primary-600 text-white border-none font-bold px-4 py-1.5 rounded-full text-[9px] tracking-widest uppercase">12 Nodes</Badge>
                             </CardHeader>
-                            <CardContent className="p-0 space-y-8">
+                            <CardContent className="p-0 space-y-4">
                                 <div className="space-y-4">
                                     {[1, 2, 3].map((i) => (
-                                        <div key={i} className="flex items-center gap-4 p-5 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-all cursor-pointer group/item">
+                                        <div key={i} className="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-all cursor-pointer group/item">
                                             <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center font-bold text-sm shadow-lg group-hover/item:rotate-6 transition-transform">
                                                 C{i}
                                             </div>
@@ -512,7 +512,7 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                         </div>
                                     ))}
                                 </div>
-                                <Button asChild className="w-full h-14 bg-white text-greys-900 hover:bg-primary-50 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl shadow-black/40 transition-all active:scale-95 leading-none font-jakarta">
+                                <Button asChild className="w-full h-10 bg-white text-greys-900 hover:bg-primary-50 rounded-lg font-bold text-xs uppercase tracking-widest shadow-xl shadow-black/40 transition-all active:scale-95 leading-none font-jakarta">
                                     <Link href="/admin/users?role=STUDENT">Manage Mentee Intel</Link>
                                 </Button>
                             </CardContent>
