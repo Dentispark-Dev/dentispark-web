@@ -111,23 +111,23 @@ export function Hero() {
         </div>
 
         {/* Hero images grid */}
-        <div className="mt-16 w-full max-w-6xl grid grid-cols-1 gap-12 md:grid-cols-2">
-          <div className="overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50 aspect-video md:aspect-[4/3] relative">
+        <div className="mt-16 w-full max-w-6xl grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50">
             <Image
               src={heroImg1}
               alt="Student receiving mentorship online"
-              className="object-cover transition-transform duration-700 hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
               placeholder="blur"
             />
           </div>
-          <div className="overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50 aspect-video md:aspect-[4/3] relative">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50">
             <Image
               src={heroImg2}
               alt="One-on-one tutoring session"
-              className="object-cover transition-transform duration-700 hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority

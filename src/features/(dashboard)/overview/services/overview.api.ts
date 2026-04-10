@@ -44,16 +44,21 @@ class OverviewAPIService extends BaseAPI {
     super();
   }
 
-  async GET_STUDENT_PROFILE(): Promise<StudentProfile> {
-    return this.get<StudentProfile>("/student/profile");
+  async GET_STUDENT_PROFILE(): Promise<StudentProfile | null> {
+    try {
+      return await this.get<StudentProfile>("/student/profile");
+    } catch (error) {
+      console.warn("API Error: GET_STUDENT_PROFILE failed", error);
+      return null;
+    }
   }
 
   async GET_PERSONALIZED_MENTORS(): Promise<PersonalizedMentor[]> {
     try {
       const response = await this.get<{ mentors: PersonalizedMentor[] }>("/student/profile/matching-mentors");
-      return response.mentors || [];
+      return response?.mentors || [];
     } catch (error) {
-      console.error("Failed to fetch personalized mentors", error);
+      console.warn("API Error: GET_PERSONALIZED_MENTORS failed", error);
       return [];
     }
   }
