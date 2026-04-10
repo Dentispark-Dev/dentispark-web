@@ -62,23 +62,21 @@ export function Hero() {
         }}
       />
 
-      <Container className="relative z-20 flex flex-col items-center space-y-12 text-center">
-        <div className="space-y-6 max-w-4xl mx-auto">
-          <h1 className="h1">
-            Empowering
-            <span className="relative inline-block px-2">
-              <span className="border-emerald-500 bg-emerald-50 pointer-events-none absolute inset-0 -rotate-[1.5deg] transform rounded-full border-2 border-dotted" />
-              <span className="text-emerald-600 relative inline-block px-5 py-2 italic">
-                underprivileged
-              </span>
-            </span>{" "}
-            students for dental school success
-          </h1>
-          <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Free expert mentorship, elite clinical guidance, and AI-driven outcomes for 
-            the next generation of dental professionals.
-          </p>
-        </div>
+      <Container className="relative z-10 flex flex-col items-center space-y-8 text-center">
+        <h1 className="h1 max-w-5xl">
+          Empowering
+          <span className="relative inline-block px-2">
+            <span className="border-emerald-500 bg-emerald-50 pointer-events-none absolute inset-0 -rotate-[1.5deg] transform rounded-full border-2 border-dotted" />
+            <span className="text-emerald-600 relative inline-block px-5 py-2 italic font-extrabold">
+              underprivileged
+            </span>
+          </span>{" "}
+          students for dental school success
+        </h1>
+        <p className="text-slate-500 text-lg md:text-xl font-bold max-w-2xl leading-relaxed">
+          Free expert mentorship, elite clinical guidance, and AI-driven outcomes for 
+          the next generation of dental professionals.
+        </p>
 
         <div className="z-40 flex flex-col gap-6 sm:flex-row mt-6">
           <Link href="/sign-up" className="cursor-pointer">
@@ -111,23 +109,23 @@ export function Hero() {
         </div>
 
         {/* Hero images grid */}
-        <div className="mt-16 w-full max-w-6xl grid grid-cols-1 gap-8 md:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50">
+        <div className="mt-16 w-full max-w-6xl grid grid-cols-1 gap-12 md:grid-cols-2">
+          <div className="overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50 aspect-video md:aspect-[4/3] relative">
             <Image
               src={heroImg1}
               alt="Student receiving mentorship online"
-              className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              className="object-cover transition-transform duration-700 hover:scale-105"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
               placeholder="blur"
             />
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50">
+          <div className="overflow-hidden rounded-4xl shadow-2xl border border-slate-100 bg-slate-50 aspect-video md:aspect-[4/3] relative">
             <Image
               src={heroImg2}
               alt="One-on-one tutoring session"
-              className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              className="object-cover transition-transform duration-700 hover:scale-105"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
