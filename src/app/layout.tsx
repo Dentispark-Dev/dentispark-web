@@ -65,7 +65,7 @@ export default function RootLayout({
           {/* Components hidden at user request - can be toggled on later */}
           {/* <DentiBuddy /> */}
           <Toaster richColors />
-          {/* <GDPRBanner /> */}
+          <GDPRBanner />
           {/* <NotificationPrompt /> */}
         </PostHogProvider>
       </body>

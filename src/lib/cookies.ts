@@ -89,7 +89,7 @@ export const authCookies = {
     setCookie("accessToken", token, {
       expires: expiresDate,
       secure: true,
-      sameSite: "lax",
+      sameSite: "strict",
     });
   },
 
@@ -110,8 +110,6 @@ export const authCookies = {
 
   getUserData: (): object | null => {
     const userData = getCookie("userData");
-
-    console.log("userData", userData);
 
     if (userData) {
       try {
