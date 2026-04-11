@@ -80,6 +80,17 @@
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
   :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -92,6 +103,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 }
 

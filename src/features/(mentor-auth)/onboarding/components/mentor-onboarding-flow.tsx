@@ -1,7 +1,6 @@
-"use client";
-
 import { useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { 
   Stethoscope, 
   GraduationCap, 
@@ -160,6 +159,8 @@ const SOCIAL_PROOF = [
 export function MentorOnboardingFlow() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const [isSuccess, setIsSuccess] = useState(false);
   
   const [onboardingData, setOnboardingData] = useState({
     role: "",
@@ -204,21 +205,20 @@ export function MentorOnboardingFlow() {
       try {
         // Step 1: Account Registration
         const registrationResponse = await authApi.MENTOR_REGISTRATION({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          emailAddress: data.emailAddress,
+          firstName: data.firstName.trim(),
+          lastName: data.lastName.trim(),
+          emailAddress: data.emailAddress.trim().toLowerCase(),
           password: data.password,
-          phoneNumber: data.phoneNumber,
+          phoneNumber: data.phoneNumber.trim(),
           yearOfDentistry: onboardingData.experience,
           areaOfSpecialization: onboardingData.specialization,
         });
 
         if (registrationResponse.responseCode !== "00") {
-          throw new Error(registrationResponse.responseMessage || "Registration failed");
+          throw new Error(registrationResponse.responseMessage || "Registration failed. Please check your details and try again.");
         }
 
-        // Step 2: Profile Verification
-        // Mapping expertise areas to backend Enums
+        // Step 2: Profile Verification (best-effort — backend processes async)
         const expertiseMapping: Record<string, string> = {
           "ucat": "UCAT",
           "personal-statements": "PERSONAL_STATEMENT",
@@ -228,27 +228,42 @@ export function MentorOnboardingFlow() {
 
         const mappedExpertise = onboardingData.expertise.map(e => expertiseMapping[e] || e);
 
-        // Parsing interview slot (very basic parsing for demo/starter)
-        // Expected: "Tomorrow at 10:00 AM"
-        const [dayPart, , timePart, ampm] = onboardingData.interviewSlot.split(" ");
-        const today = new Date();
-        const interviewDate = dayPart.toLowerCase() === "tomorrow" 
-          ? new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0]
-          : today.toISOString().split('T')[0];
-        
-        const interviewTime = `${timePart} ${ampm}`;
+        // Safely parse interview slot — fallback to today if slot is missing/malformed
+        let interviewDate = new Date().toISOString().split('T')[0];
+        let interviewTime = "10:00 AM";
+        try {
+          if (onboardingData.interviewSlot) {
+            const parts = onboardingData.interviewSlot.split(" ");
+            const dayPart = parts[0];
+            const timePart = parts[2] || "10:00";
+            const ampm = parts[3] || "AM";
+            const today = new Date();
+            interviewDate = dayPart.toLowerCase() === "tomorrow" 
+              ? new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0]
+              : today.toISOString().split('T')[0];
+            interviewTime = `${timePart} ${ampm}`;
+          }
+        } catch (_) {
+          // Use defaults above if parsing fails
+        }
 
-        await authApi.MENTOR_VERIFICATION({
-          emailAddress: data.emailAddress,
-          documentUploadLinks: [], // Connected to S3/Storage bucket in production
+        // Fire verification — don't block on error as it's async on backend
+        authApi.MENTOR_VERIFICATION({
+          emailAddress: data.emailAddress.trim().toLowerCase(),
+          documentUploadLinks: [],
           expertiseDetailsList: mappedExpertise,
           dentalSchoolExperience: onboardingData.role,
-          interviewDate: interviewDate,
-          interviewTime: interviewTime,
-        });
+          interviewDate,
+          interviewTime,
+        }).catch(err => console.warn("Verification request failed (non-blocking):", err));
 
-        toast.success("Welcome to DentiSpark! Your application is being reviewed.");
-        // Redirect or show success state
+        // ✅ Show success and redirect to email verification
+        setIsSuccess(true);
+        toast.success("Account created! Check your email to verify and get started.");
+        setTimeout(() => {
+          router.push("/mentor/verify-email?email=" + encodeURIComponent(data.emailAddress.trim().toLowerCase()));
+        }, 1500);
+
       } catch (error: any) {
         toast.error(error.message || "Something went wrong. Please try again.");
       }
