@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "@/src/lib/db";
-import { parseISO } from "date-fns";
 
 export async function GET(req: Request) {
   try {
@@ -40,32 +39,58 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const { studentId, mentorSlug, scheduledDate, scheduledTime, sessionType, durationMins } = await req.json();
+    const { studentId, mentorSlug, scheduledDate, scheduledTime, sessionType, durationMins, price } = await req.json();
 
-    if (!studentId || !scheduledDate || !scheduledTime) {
+    if (!studentId || !scheduledDate || !scheduledTime || !mentorSlug) {
       return NextResponse.json({ error: "Missing required booking details" }, { status: 400 });
     }
 
-    // 1. Find MentorProfile by ID or slug (searching for any for now as slug bridge is missing)
-    // In a real app we'd search by Slug. 
+    // Look up mentor profile by their hid
     const mentorProfile = await prisma.mentorProfile.findFirst({
-        // where: { slug: mentorSlug }
+      where: {
+        OR: [
+          { hid: mentorSlug },
+          { user: { name: { contains: mentorSlug, mode: "insensitive" } } }
+        ]
+      },
+      include: { user: { select: { name: true, email: true } } }
     });
 
     if (!mentorProfile) {
-      return NextResponse.json({ error: "Mentor not found" }, { status: 404 });
+      console.warn(`Mentor not found for slug: ${mentorSlug}`);
+      return NextResponse.json({ error: "Mentor not found. Please try again or contact support." }, { status: 404 });
     }
 
-    // 2. Create the combined scheduledAt DateTime
+    // Create the combined scheduledAt DateTime
     const scheduledAt = new Date(`${scheduledDate}T${scheduledTime}:00`);
 
-    // 3. Create confirmed booking (bypassing stripe payment gate)
+    if (isNaN(scheduledAt.getTime())) {
+      return NextResponse.json({ error: "Invalid date or time format." }, { status: 400 });
+    }
+
+    // If paid session, route through Stripe Checkout
+    if (price && price > 0) {
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.dentispark.com";
+      return NextResponse.json({
+        requiresPayment: true,
+        stripeParams: {
+          mentorName: mentorProfile.user?.name || mentorSlug,
+          sessionType,
+          price,
+          mentorSlug,
+          successUrl: `${baseUrl}/mentorship/${mentorSlug}/booking-confirmed?session=${encodeURIComponent(sessionType)}`,
+          cancelUrl: `${baseUrl}/mentorship/${mentorSlug}/checkout?session=${sessionType}`,
+        }
+      });
+    }
+
+    // Free session — confirm immediately
     const booking = await prisma.booking.create({
       data: {
         studentId,
         mentorId: mentorProfile.id,
         scheduledAt,
-        durationMins: durationMins || 60,
+        durationMins: durationMins || 15,
         status: "CONFIRMED",
       }
     });
@@ -73,7 +98,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ 
       success: true, 
       bookingId: booking.id,
-      url: `/mentorship/${mentorSlug}/booking-confirmed?id=${booking.id}` // Frontend redirect URL
+      url: `/mentorship/${mentorSlug}/booking-confirmed?session=${encodeURIComponent(sessionType)}&free=true`
     });
   } catch (error: any) {
     console.error("Create Booking Error:", error);

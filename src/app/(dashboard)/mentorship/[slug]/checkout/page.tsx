@@ -78,7 +78,7 @@ function CheckoutContent() {
           scheduledDate: selectedDate,
           scheduledTime: selectedTime,
           sessionType: sessionMeta.label,
-          price
+          price,
         }),
       });
 
@@ -88,8 +88,23 @@ function CheckoutContent() {
         throw new Error(data.error || "Failed to confirm booking.");
       }
 
-      // Redirect to confirmation page
-      router.push(data.url || `/mentorship/${slug}/booking-confirmed?id=${data.bookingId}`);
+      // If paid session, redirect to Stripe Checkout
+      if (data.requiresPayment && data.stripeParams) {
+        const stripeRes = await fetch("/api/checkout/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data.stripeParams),
+        });
+        const stripeData = await stripeRes.json();
+        if (stripeData.url) {
+          window.location.href = stripeData.url;
+          return;
+        }
+        throw new Error(stripeData.error || "Failed to start payment.");
+      }
+
+      // Free session — redirect to confirmation
+      router.push(data.url || `/mentorship/${slug}/booking-confirmed?free=true`);
     } catch (err: any) {
       setError(err.message || "A network error occurred. Please try again.");
     } finally {

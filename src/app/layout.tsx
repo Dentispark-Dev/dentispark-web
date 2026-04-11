@@ -15,9 +15,16 @@ import { cn } from "@/src/lib/utils";
 import { PostHogProvider } from "@/src/providers/posthog-provider";
 
 export const metadata: Metadata = {
-  title: "Dentispark - Dental School Guidance & Mentorship",
+  metadataBase: new URL("https://www.dentispark.com"),
+  title: {
+    default: "Dentispark – Dental School Guidance & Mentorship",
+    template: "%s | Dentispark",
+  },
   description:
     "Get expert guidance and mentorship for dental school applications. Access tools, resources, and 1:1 support to achieve your dental career goals.",
+  keywords: ["dental school", "dentistry mentorship", "UCAT", "MMI prep", "personal statement", "dental applications", "UK dentistry"],
+  authors: [{ name: "Dentispark Team" }],
+  creator: "Dentispark",
   icons: {
     icon: [
       {
@@ -30,6 +37,32 @@ export const metadata: Metadata = {
         sizes: "16x16",
       },
     ],
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_GB",
+    url: "https://www.dentispark.com",
+    siteName: "Dentispark",
+    title: "Dentispark – The #1 Platform for Dental School Success",
+    description: "Free expert mentorship, elite clinical guidance, and AI-driven outcomes for the next generation of dental professionals.",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Dentispark – Dental School Guidance & Mentorship",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dentispark – The #1 Platform for Dental School Success",
+    description: "Free expert mentorship, elite clinical guidance, and AI-driven outcomes for the next generation of dental professionals.",
+    images: ["/images/og-image.png"],
+    creator: "@dentispark",
+  },
+  alternates: {
+    canonical: "https://www.dentispark.com",
   },
 };
 
