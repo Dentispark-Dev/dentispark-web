@@ -1,5 +1,4 @@
-"use client";
-
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
@@ -7,7 +6,8 @@ import { StatsCard } from "./stats-card";
 import { PayoutSection } from "./payout-section";
 import { LatestBookingsSection } from "./latest-bookings-section";
 import { WebinarsSection } from "./webinars-section";
-import { BrainCircuit, TrendingUp } from "lucide-react";
+import { BrainCircuit, TrendingUp, Loader2 } from "lucide-react";
+import { useAuth } from "@/src/providers/auth-provider";
 import {
   MentorOverviewPageProps,
   MentorOverviewStats,
@@ -16,11 +16,58 @@ import {
 import { SAMPLE_MENTOR_STATS, SAMPLE_PAYOUT_INFO } from "../constants";
 
 export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
-  const stats: MentorOverviewStats = SAMPLE_MENTOR_STATS;
+  const { user } = useAuth();
+  const [stats, setStats] = useState<MentorOverviewStats>(SAMPLE_MENTOR_STATS);
+  const [isLoading, setIsLoading] = useState(true);
   const payoutInfo: PayoutInfo = SAMPLE_PAYOUT_INFO;
+
+  useEffect(() => {
+    if (user?.id) {
+      fetchStats();
+    }
+  }, [user?.id]);
+
+  const fetchStats = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/mentor/stats?userId=${user!.id}`);
+      const data = await response.json();
+      if (response.ok) {
+        setStats({
+          totalEarnings: parseFloat(data.totalEarnings),
+          guidedStudents: data.guidedStudents,
+          averageRating: data.averageRating,
+          totalHours: parseFloat(data.totalHours),
+          currency: data.currency || "£"
+        });
+      }
+    } catch (error) {
+      console.error("Failed to fetch mentor stats:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleConnectBankAccount = () => {
     console.log("Connect bank account clicked");
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[60vh] items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-12 w-12 animate-spin text-primary-600" />
+          <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Loading Intelligence...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const getTimeGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 17) return "Good Afternoon";
+    return "Good Evening";
   };
 
   return (
@@ -31,10 +78,10 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
       className={cn("space-y-8 py-6", className)}
     >
       <div className="mb-8">
-        <h1 className="text-black-800 font-jakarta mb-2 text-xl">
-          Good Morning, Dr. Sarah
+        <h1 className="text-black-800 font-jakarta mb-2 text-xl font-bold">
+          {getTimeGreeting()}, {user?.fullName?.split(" ")[0] || "Mentor"}
         </h1>
-        <p className="text-black-300 font-jakarta">Ready to Guide Students?</p>
+        <p className="text-black-300 font-jakarta font-medium">Ready to Guide Students?</p>
       </div>
 
       <div className="font-jakarta grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
@@ -46,7 +93,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
           }
           title="Earnings"
           titleColor="text-secondary-500"
-          value={`${stats.currency}${stats.totalEarnings}`}
+          value={`${stats.currency}${stats.totalEarnings.toLocaleString()}`}
           subtitle="Total platform revenue"
           className="bg-white border-white/50 shadow-sm"
           borderColor="border-secondary-100"
@@ -60,7 +107,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
           }
           title="Guided"
           titleColor="text-orange-500"
-          value="14"
+          value={stats.guidedStudents.toString()}
           subtitle="Mentored Students"
           className="bg-white border-white/50 shadow-sm"
           borderColor="border-orange-100"
@@ -125,7 +172,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
           }
           title="hours"
           titleColor="text-warning-500"
-          value={stats.totalHours}
+          value={stats.totalHours.toString()}
           subtitle="Total hours mentored"
           className="bg-[#FDF0E6]"
           borderColor="border-warning-200"
@@ -165,7 +212,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
       </div>
 
       {/* Latest Bookings Section */}
-      <LatestBookingsSection />
+      <LatestBookingsSection bookings={recentBookings} />
 
       {/* Webinars Section */}
       <WebinarsSection />

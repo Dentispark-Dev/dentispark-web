@@ -56,14 +56,16 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               {[
-                { icon: <Twitter className="w-5 h-5" />, label: "Twitter" },
-                { icon: <Instagram className="w-5 h-5" />, label: "Instagram" },
-                { icon: <Facebook className="w-5 h-5" />, label: "Facebook" },
-                { icon: <Linkedin className="w-5 h-5" />, label: "LinkedIn" }
+                { icon: <Twitter className="w-5 h-5" />, label: "Twitter", href: "https://twitter.com/dentispark" },
+                { icon: <Instagram className="w-5 h-5" />, label: "Instagram", href: "https://instagram.com/dentispark" },
+                { icon: <Facebook className="w-5 h-5" />, label: "Facebook", href: "https://facebook.com/dentispark" },
+                { icon: <Linkedin className="w-5 h-5" />, label: "LinkedIn", href: "https://linkedin.com/company/dentispark" }
               ].map((social, i) => (
                 <Link 
                   key={i} 
-                  href="#" 
+                  href={social.href} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-gray-500 hover:text-emerald-500 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all group"
                 >
