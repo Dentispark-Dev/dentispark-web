@@ -1,20 +1,16 @@
 "use client";
 
-import React, { useState, useRef } from "react";
 import { 
   ArrowLeft, 
   Upload, 
   FileText, 
-  Sparkles, 
-  Zap, 
-  CheckCircle2, 
   AlertCircle,
   BrainCircuit,
   Loader2,
   ChevronRight,
-  Download
+  Download,
+  Zap
 } from "lucide-react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
