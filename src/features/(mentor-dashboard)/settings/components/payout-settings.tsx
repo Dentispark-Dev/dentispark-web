@@ -17,11 +17,21 @@ export function PayoutSettings({ isStripeConnected = false, onConnect }: PayoutS
 
   const handleConnect = async () => {
     setIsLoading(true);
-    // Simulate a redirect to Stripe Connect
-    setTimeout(() => {
-      if (onConnect) onConnect();
+    try {
+      const response = await fetch("/api/mentor/stripe/connect", {
+        method: "POST",
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("No redirect URL provided by Stripe");
+      }
+    } catch (error) {
+      console.error("Failed to initiate Stripe Connect:", error);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (

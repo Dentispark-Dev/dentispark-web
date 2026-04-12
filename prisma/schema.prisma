@@ -12,16 +12,19 @@ model User {
   name          String?
   email         String?   @unique
   emailVerified DateTime?
-  image         String?
-  password      String?
-  role          Role      @default(STUDENT)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  image            String?
+  password         String?
+  resetToken       String?   @unique
+  resetTokenExpiry DateTime?
+  role             Role      @default(STUDENT)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   // Relationships
   mentorProfile MentorProfile?
   bookings      Booking[]     @relation("StudentBookings")
   aiHistory     AIHistory[]
+  reviews       Review[]      @relation("StudentReviews")
 }
 
 model MentorProfile {
@@ -40,6 +43,7 @@ model MentorProfile {
   availability    Json?
 
   bookings   Booking[] @relation("MentorBookings")
+  reviews    Review[]  @relation("MentorReviews")
 }
 
 model Booking {
@@ -48,11 +52,13 @@ model Booking {
   mentorId      String
   student       User          @relation("StudentBookings", fields: [studentId], references: [id])
   mentor        MentorProfile @relation("MentorBookings", fields: [mentorId], references: [id])
-  scheduledAt   DateTime
-  durationMins  Int           @default(60)
-  status        BookingStatus @default(PENDING)
-  paymentIntent String?       // Stripe Payment reference
-  createdAt     DateTime      @default(now())
+  scheduledAt     DateTime
+  durationMins    Int           @default(60)
+  status          BookingStatus @default(PENDING)
+  paymentIntent   String?       // Stripe Payment reference
+  stripeSessionId String?       @unique
+  meetingLink     String?
+  createdAt       DateTime      @default(now())
 }
 
 model AIHistory {
@@ -63,6 +69,18 @@ model AIHistory {
   accomplishment String
   metadata       Json?
   timestamp      DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?  @db.Text
+  studentId String
+  mentorId  String
+  createdAt DateTime @default(now())
+
+  student   User          @relation("StudentReviews", fields: [studentId], references: [id], onDelete: Cascade)
+  mentor    MentorProfile @relation("MentorReviews", fields: [mentorId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

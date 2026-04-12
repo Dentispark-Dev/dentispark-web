@@ -7,7 +7,7 @@ import { ModalProvider } from "@/src/components/ui/modal-provider";
 import { AuthProvider } from "@/src/providers/auth-provider";
 import { FieldProvider } from "@/src/providers/field-provider";
 import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
-import { GDPRBanner } from "@/src/components/common/gdpr-banner";
+import { CookieConsent } from "@/src/components/molecules/cookie-consent";
 import { NotificationPrompt } from "@/src/features/automation/components/notification-prompt";
 import { I18nProvider } from "@/src/providers/i18n-provider";
 import { robotoSlab, bricolage, jakarta } from "@/src/lib/font";
@@ -98,7 +98,7 @@ export default function RootLayout({
           {/* Components hidden at user request - can be toggled on later */}
           {/* <DentiBuddy /> */}
           <Toaster richColors />
-          <GDPRBanner />
+          <CookieConsent />
           {/* <NotificationPrompt /> */}
         </PostHogProvider>
       </body>

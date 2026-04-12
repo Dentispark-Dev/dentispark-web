@@ -37,6 +37,25 @@ export default function StudyPlannerPage() {
   const [plan, setPlan] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    // Load persisted state
+    const saved = localStorage.getItem("dentispark_study_plan");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setPlan(parsed.plan || null);
+        setFormData(parsed.formData || { examDate: "", weakAreas: "", targetScore: "" });
+      } catch (e) {
+        console.error("Failed to parse saved study plan", e);
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
+    // Save state
+    localStorage.setItem("dentispark_study_plan", JSON.stringify({ plan, formData }));
+  }, [plan, formData]);
+
   const handleGenerate = async () => {
     setIsGenerating(true);
     setError(null);

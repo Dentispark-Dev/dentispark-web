@@ -1,6 +1,7 @@
 import { groq } from "@ai-sdk/groq";
 import { generateObject } from "ai";
 import { z } from "zod";
+import prisma from "@/src/lib/db";
 
 export const maxDuration = 45;
 
@@ -8,13 +9,22 @@ export async function POST(req: Request) {
   try {
     const { studentId, mentorId } = await req.json();
 
-    // In a real app, we would fetch the synced history from the DB/Intelligence Store
-    // For this prototype, we'll simulate the data that would be used to generate insights
-    const mockHistory = [
-      { toolId: "transcript-parser", accomplishment: "Extracted GPA 3.92", timestamp: "2024-03-15" },
-      { toolId: "personal-statement", accomplishment: "Achieved 82% Review Score", timestamp: "2024-03-14" },
-      { toolId: "interview-prep", accomplishment: "Completed Mock Session (78%)", timestamp: "2024-03-12" }
-    ];
+    // Fetch real AI history from the database for the student
+    const historyData = await prisma.aIHistory.findMany({
+      where: { userId: studentId },
+      orderBy: { timestamp: "desc" },
+      take: 10,
+    });
+
+    const mockHistory = historyData.length > 0 
+      ? historyData.map((h) => ({
+          toolId: h.toolIdentifier,
+          accomplishment: h.accomplishment,
+          timestamp: h.timestamp.toISOString(),
+        }))
+      : [
+          { toolId: "system", accomplishment: "Student has registered but no interaction history exists yet.", timestamp: new Date().toISOString() }
+        ];
 
     const result = await generateObject({
       model: groq("llama-3.3-70b-versatile"),

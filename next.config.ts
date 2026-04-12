@@ -11,16 +11,20 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
         hostname: "www.transparenttextures.com",
       },
     ],
   },
-
+  outputFileTracingRoot: path.resolve(__dirname),
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
 
   async headers() {
@@ -55,7 +59,7 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://accounts.google.com https://cdn.vercel-insights.com https://*.posthog.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https://images.unsplash.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
+              "img-src 'self' data: blob: https://images.unsplash.com https://res.cloudinary.com https://*.cloudinary.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
               "connect-src 'self' https://api.dentispark.com https://*.posthog.com https://accounts.google.com https://sentry.io",
               "frame-src 'self' https://accounts.google.com",
               "frame-ancestors 'self'",

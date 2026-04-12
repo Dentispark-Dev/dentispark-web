@@ -15,6 +15,9 @@ export async function GET(req: Request) {
       include: {
         bookings: {
           include: { student: { select: { name: true } } }
+        },
+        reviews: {
+          select: { rating: true }
         }
       }
     });
@@ -32,12 +35,21 @@ export async function GET(req: Request) {
     const studentIds = new Set(mentorProfile.bookings.map(b => b.studentId));
     const guidedStudents = studentIds.size;
 
+    // Calculate actual average rating
+    let averageRating = "0.0";
+    if (mentorProfile.reviews.length > 0) {
+      const sum = mentorProfile.reviews.reduce((acc, rev) => acc + rev.rating, 0);
+      averageRating = (sum / mentorProfile.reviews.length).toFixed(1);
+    }
+
     return NextResponse.json({
       totalEarnings: totalEarnings.toFixed(2),
       guidedStudents,
-      averageRating: "4.9", // Placeholder until Review model is added
+      averageRating,
       totalHours: totalHours.toFixed(1),
       currency: mentorProfile.currency,
+      isVerified: mentorProfile.isVerified,
+      isStripeConnected: !!mentorProfile.stripeAccountId,
       recentBookings: mentorProfile.bookings.slice(0, 5).map(b => ({
         id: b.id,
         studentName: b.student.name || "Student",

@@ -44,8 +44,13 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    const normalizedData = {
+      ...data,
+      emailAddress: data.emailAddress.trim().toLowerCase(),
+    };
+
     startTransition(() => {
-      loginMutation.mutate(data);
+      loginMutation.mutate(normalizedData);
     });
   };
 

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import prisma from "@/src/lib/db";
 
 const DAILY_API_KEY = process.env.DAILY_API_KEY;
 const DAILY_BASE_URL = "https://api.daily.co/v1";
@@ -54,8 +55,14 @@ export async function POST(req: Request) {
 
     const videoLink = room.url;
 
-    // TODO: Persist this videoLink to the BookingSession in your Contabo DB
-    // await db.bookingSessions.update({ where: { id: bookingId }, data: { meetingLink: videoLink } });
+    // Persist this videoLink to the Booking in PostgreSQL via Prisma
+    if (bookingId && bookingId !== "mock_booking_123") {
+        await prisma.booking.update({
+          where: { id: bookingId },
+          data: { meetingLink: videoLink }
+        });
+    }
+
     // TODO: Email the link to both the student and mentor (via Resend)
 
     return NextResponse.json({

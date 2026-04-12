@@ -35,6 +35,31 @@ export function ShadowingLog() {
     );
   };
 
+  useEffect(() => {
+    // Load persisted state from localStorage
+    const savedLog = localStorage.getItem("dentispark_shadowing_log");
+    if (savedLog) {
+      try {
+        const parsed = JSON.parse(savedLog);
+        setSelectedProcedures(parsed.selectedProcedures || []);
+        setReflection(parsed.reflection || "");
+        setGeneratedDraft(parsed.generatedDraft || null);
+        if (parsed.generatedDraft) setActiveTab("generate");
+      } catch (e) {
+        console.error("Failed to parse saved shadowing log", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save state to localStorage on changes
+    localStorage.setItem("dentispark_shadowing_log", JSON.stringify({
+      selectedProcedures,
+      reflection,
+      generatedDraft
+    }));
+  }, [selectedProcedures, reflection, generatedDraft]);
+
   const handleGenerate = async () => {
     if (selectedProcedures.length === 0 || reflection.length < 10) {
       toast.error("Please select at least one procedure and add a brief reflection.");

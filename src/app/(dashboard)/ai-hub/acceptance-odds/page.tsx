@@ -32,6 +32,25 @@ export default function AcceptanceOddsPage() {
   const [results, setResults] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    // Load persisted state
+    const saved = localStorage.getItem("dentispark_acceptance_odds");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setResults(parsed.results || null);
+        setProfile(parsed.profile || { gpa: "", entranceScore: "", clinicalHours: "", volunteering: "" });
+      } catch (e) {
+        console.error("Failed to parse saved odds data", e);
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
+    // Save state
+    localStorage.setItem("dentispark_acceptance_odds", JSON.stringify({ results, profile }));
+  }, [results, profile]);
+
   const handleCalculate = async () => {
     setIsCalculating(true);
     setError(null);

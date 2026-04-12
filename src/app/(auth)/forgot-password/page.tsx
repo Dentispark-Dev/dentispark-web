@@ -20,7 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-import { useForgotPassword } from "@/src/features/(auth)/services/mutation";
+import { useState } from "react";
 
 // Form validation schema
 const forgotPasswordSchema = z.object({
@@ -31,7 +31,7 @@ type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
-  const forgotPasswordMutation = useForgotPassword();
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -41,17 +41,34 @@ export default function ForgotPasswordPage() {
   });
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
-    //TODO: Add a delay before redirecting to verify-email page
+    setIsPending(true);
     try {
-      await forgotPasswordMutation.mutateAsync({
-        emailAddress: data.email,
+      const response = await fetch("/api/auth/recover", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email }),
       });
 
-      router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
-      toast.success("Verification code sent successfully!");
+      if (!response.ok) {
+        throw new Error("Failed to process request");
+      }
+      
+      const responseData = await response.json();
+
+      // Show security compliant toast and return to login wrapper after delay
+      toast.success(responseData.message || "If this email is registered, a recovery link has been sent.");
+      
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000);
+
     } catch (error) {
       console.error("Forgot password error:", error);
-      toast.error("Failed to send verification code. Please try again.");
+      toast.error("Failed to process request. Please try again later.");
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -137,9 +154,9 @@ export default function ForgotPasswordPage() {
               <Button
                 type="submit"
                 className="w-full py-5 text-sm font-medium"
-                disabled={forgotPasswordMutation.isPending}
+                disabled={isPending}
               >
-                {forgotPasswordMutation.isPending ? "Sending..." : "Continue"}
+                {isPending ? "Sending..." : "Continue"}
               </Button>
             </form>
           </Form>

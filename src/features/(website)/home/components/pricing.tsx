@@ -68,7 +68,7 @@ export function PricingSection() {
 
   const handleGetStarted = async () => {
     if (!user) {
-      router.push("/register");
+      router.push("/sign-up");
       return;
     }
     setIsLoadingCheckout(true);
@@ -150,7 +150,7 @@ export function PricingSection() {
                   />
 
                   <Button
-                    onClick={plan.highlighted ? handleGetStarted : undefined}
+                    onClick={plan.highlighted ? handleGetStarted : () => router.push("/sign-up")}
                     disabled={plan.highlighted && isLoadingCheckout}
                     className={cn(
                       "h-14 rounded-2xl font-jakarta font-extrabold text-sm uppercase tracking-widest transition-all duration-300",
