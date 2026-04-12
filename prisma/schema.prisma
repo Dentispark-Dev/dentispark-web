@@ -9,6 +9,9 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
+  sid           String?   @unique // System Identity ID (e.g., S-10023)
+  firstName     String?
+  lastName      String?
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -17,6 +20,13 @@ model User {
   resetToken       String?   @unique
   resetTokenExpiry DateTime?
   role             Role      @default(STUDENT)
+  
+  // Platform Status
+  activationStatus String?   @default("PENDING") // ACTIVE, INACTIVE, PENDING, SUSPENDED
+  memberCategory   String?   // DENTAL_HYGIENE, BDS, DENTAL_NURSING
+  gateway          String?   // e.g., BDS
+  paymentStatus    String?   @default("FREE")    // PAID, FREE
+  
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
@@ -25,6 +35,29 @@ model User {
   bookings      Booking[]     @relation("StudentBookings")
   aiHistory     AIHistory[]
   reviews       Review[]      @relation("StudentReviews")
+  activities    PlatformActivity[]
+}
+
+model PlatformActivity {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action         String   // e.g., "Updated Personal Statement", "Logged in"
+  details        String?
+  category       String?  // e.g., "AI", "AUTH", "CONTENT"
+  timestamp      DateTime @default(now())
+}
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  adminId        String
+  action         String   // CREATE, UPDATE, DELETE, LOGIN, LOGOUT
+  entity         String   // Admin, Post, Role, Student
+  entityId       String?
+  adminName      String?
+  details        Json?
+  ipAddress      String?
+  createdAt      DateTime @default(now())
 }
 
 model MentorProfile {
