@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/src/lib/db";
 import crypto from "crypto";
 // Need bcrypt, let's assume it's installed since it's NextAuth std. If not, we will just simulate for now, or use bcrypt.
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
