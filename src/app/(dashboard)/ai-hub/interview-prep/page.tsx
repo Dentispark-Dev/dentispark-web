@@ -458,7 +458,10 @@ export default function InterviewPrepPage() {
                 <Button 
                     onClick={async () => {
                         try {
-                            const avgScore = results?.metrics.reduce((acc, m) => acc + m.score, 0)! / results?.metrics.length!;
+                            const metrics = results?.metrics ?? [];
+                            const avgScore = metrics.length > 0 
+                                ? metrics.reduce((acc, m) => acc + m.score, 0) / metrics.length 
+                                : 0;
                             await fetch("/api/ai/sync", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },

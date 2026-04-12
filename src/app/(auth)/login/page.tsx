@@ -5,11 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Mail, Lock, Loader2, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
 
-import Logo from "@/src/components/icons/Logo";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -181,7 +179,7 @@ export default function LoginPage() {
           </Form>
 
           <p className="text-center text-sm font-medium text-gray-500">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline underline-offset-4">
               Sign up
             </Link>

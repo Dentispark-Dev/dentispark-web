@@ -5,11 +5,9 @@ import {
   ArrowLeft,
   Calendar,
   ChevronRight,
-  Loader2,
   Sparkles,
   BookOpen,
   Target,
-  Clock,
   CheckCircle2,
   AlertCircle
 } from "lucide-react";
@@ -34,7 +32,7 @@ export default function StudyPlannerPage() {
     weakAreas: "",
     targetScore: ""
   });
-  const [plan, setPlan] = useState<any>(null);
+  const [plan, setPlan] = useState<Record<string, any> | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {

@@ -15,7 +15,8 @@ import {
   FileCode,
   Zap,
   RefreshCcw,
-  Target
+  Target,
+  AlertCircle
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,16 +34,14 @@ export default function TranscriptParserPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [rawText, setRawText] = useState("");
-  const [parsedData, setParsedData] = useState<any>(null);
+  const [parsedData, setParsedData] = useState<Record<string, any> | null>(null);
   const [mode, setMode] = useState<"upload" | "paste">("upload");
   const [error, setError] = useState<string | null>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setUploadedFile(file);
       setIsUploading(true);
       setTimeout(() => {
         setIsUploading(false);
@@ -331,7 +330,7 @@ export default function TranscriptParserPage() {
                         </Button>
                         <Button 
                             variant="ghost" 
-                            onClick={() => {setShowResults(false); setUploadedFile(null); setRawText(""); setParsedData(null);}}
+                            onClick={() => {setShowResults(false); setRawText(""); setParsedData(null);}}
                             className="bg-gray-50 hover:bg-gray-100 text-gray-600 h-14 px-8 rounded-2xl font-jakarta font-bold flex items-center gap-2 transition-all"
                         >
                             <Trash2 className="w-5 h-5" />

@@ -6,7 +6,7 @@ import { Button } from "@/src/components/ui/button";
 import { 
     Calendar, Search, BookOpen, 
     FileText, MessageSquare, Trophy,
-    ArrowRight, CheckCircle2, Star,
+    ArrowRight, CheckCircle2,
     Sparkles, Clock, Globe
 } from "lucide-react";
 import { motion, useScroll, useSpring } from "framer-motion";
@@ -236,7 +236,7 @@ export default function AdmissionTimelinePage() {
                                         </div>
                                         <div className="space-y-1">
                                             <p className={`text-[10px] font-extrabold uppercase tracking-widest text-${phase.color}-600/70`}>Mentor Pro Tip</p>
-                                            <p className="text-sm font-bold text-slate-700 leading-relaxed italic">"{phase.tips}"</p>
+                                            <p className="text-sm font-bold text-slate-700 leading-relaxed italic">&quot;{phase.tips}&quot;</p>
                                         </div>
                                     </div>
 
@@ -275,7 +275,7 @@ export default function AdmissionTimelinePage() {
                             <span className="text-slate-900">your application?</span>
                         </h2>
                         <p className="text-xl text-emerald-50 font-medium leading-relaxed">
-                            Don't leave your future to chance. Join DentiSpark today and follow the proven roadmap to your white coat.
+                            Don&apos;t leave your future to chance. Join DentiSpark today and follow the proven roadmap to your white coat.
                         </p>
                         <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                             <Button size="lg" className="h-16 px-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 font-extrabold text-xl border-none transition-all hover:scale-105 shadow-2xl" asChild>
