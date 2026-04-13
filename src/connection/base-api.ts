@@ -94,10 +94,9 @@ export class BaseAPI {
   }
 
   private getStoredToken(): string | undefined {
-    if (typeof window !== "undefined") {
-      // Use our secure cookie implementation
-      return authCookies.getAccessToken() || undefined;
-    }
+    // NOTE: accessToken is HttpOnly for security, so JS cannot read it from cookies.
+    // The server-side Middleware handles token injection for all /api/backend requests.
+    // We return undefined here to let the Middleware take priority.
     return undefined;
   }
 

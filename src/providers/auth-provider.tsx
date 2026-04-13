@@ -88,10 +88,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const checkAuthState = useCallback(async () => {
     try {
-      const accessToken = authCookies.getAccessToken();
+      // NOTE: accessToken is HttpOnly for security, so JS cannot read it.
+      // We rely on the userData cookie (which is not HttpOnly) as the UI-side session indicator.
+      // The actual security is enforced by the Middleware which injects the real token into requests.
       const userData = authCookies.getUserData() as LoginResponseData | null;
 
-      if (accessToken && userData) {
+      if (userData) {
         const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
         const now = new Date();
 

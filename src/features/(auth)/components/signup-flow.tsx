@@ -18,7 +18,8 @@ import {
   MessageSquare,
   Search,
   Check,
-  Star
+  Star,
+  Sparkles
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
