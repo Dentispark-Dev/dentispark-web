@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useAuth } from "@/src/providers/auth-provider";
+import { Button } from "@/src/components/ui/button";
 
 interface MentorStats {
   rating: number;

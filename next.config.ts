@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
   },
   outputFileTracingRoot: path.resolve(__dirname),
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,

@@ -19,6 +19,7 @@ import {
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAuth } from "@/src/providers/auth-provider";
 import { BaseAPI } from "@/src/connection/base-api";
 import { toast } from "sonner";

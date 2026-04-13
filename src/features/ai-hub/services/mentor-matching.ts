@@ -18,7 +18,7 @@ export function rankMentors(
   return mentors
     .map((mentor) => {
       let score = 0;
-      let reasons: string[] = [];
+      const reasons: string[] = [];
 
       // 1. Specialty Match (High Weight)
       const specialtyMatch = prefs.preferredSpecialties.some(s => 

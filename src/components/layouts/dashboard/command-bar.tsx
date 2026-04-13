@@ -29,10 +29,6 @@ import {
   Rocket,
   Brain,
 } from "lucide-react";
-
-export function CommandBar({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-
 import { REAL_MENTORS } from "@/src/features/(website)/mentors/data/mentors";
 
 export function CommandBar({ children }: { children: React.ReactNode }) {

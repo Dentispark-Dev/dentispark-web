@@ -1,13 +1,13 @@
 "use client";
 
 import { Footer } from "@/src/components/layouts/footer";
-import { Navbar } from "@/src/components/layouts/navbar";
+import Header from "@/src/components/layouts/header";
 import PricingComparison from "@/src/features/payments/components/pricing-comparison";
 
 export default function PricingPage() {
   return (
     <main className="min-h-screen bg-white">
-      <Navbar />
+      <Header />
       
       {/* Spacer for navbar padding */}
       <div className="h-20 lg:h-32" />

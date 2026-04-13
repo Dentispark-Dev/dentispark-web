@@ -89,6 +89,13 @@ export default function DashboardSidebar({
                     )}
                   </button>
                 ) : (
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center space-x-3 rounded-xl px-3 py-2.5 font-medium transition-colors",
+                      isActive ? "bg-primary-50 text-primary-700 shadow-sm" : "text-black-600 hover:bg-greys-100",
+                    )}
+                  >
                     <div className="flex flex-1 items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <span className={cn(isActive ? "text-primary-600" : "text-black-400")}>
