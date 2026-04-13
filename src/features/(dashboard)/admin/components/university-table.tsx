@@ -183,8 +183,8 @@ export function UniversityTable() {
                                         <td className="pl-12 pr-6 py-8">
                                             <div className="flex items-center gap-6">
                                                 <div className="h-16 w-16 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
-                                                    {(uni as any).logoUrl ? (
-                                                        <img src={(uni as any).logoUrl} alt={uni.name} className="h-full w-full object-contain" />
+                                                    {uni.logoUrl ? (
+                                                        <img src={uni.logoUrl} alt={uni.name} className="h-full w-full object-contain" />
                                                     ) : (
                                                         <Globe className="h-6 w-6 text-greys-200" />
                                                     )}

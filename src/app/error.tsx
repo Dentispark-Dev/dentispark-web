@@ -26,7 +26,7 @@ export default function Error({
         
         <div className="space-y-2">
             <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight font-jakarta">
-                Something didn't load right
+                Something didn&apos;t load right
             </h2>
             <p className="text-slate-500 font-medium text-sm font-jakarta leading-relaxed">
                 We encountered a non-critical rendering issue. You can try refreshing this section or head back to the main overview.

@@ -49,12 +49,13 @@ export async function GET(req: Request) {
       },
       success: true
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Global Activity API Error]", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to retrieve global activity";
     return NextResponse.json({
       responseCode: "ERROR",
       responseMessage: "Failed to retrieve global activity",
-      errors: [error.message],
+      errors: [errorMessage],
       success: false
     }, { status: 500 });
   }

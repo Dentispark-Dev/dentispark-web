@@ -9,11 +9,35 @@ import {
     MoreHorizontal, CheckCircle2, Users, Video, Clock, 
     Award, ShieldCheck, ChevronRight, PlayCircle
 } from "lucide-react";
-import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
+import { useAuth } from "@/src/providers/auth-provider";
+
+interface MentorStats {
+  rating: number;
+  sessions: number;
+  mentees: number;
+}
+
+interface MentorService {
+  name: string;
+  desc: string;
+}
+
+interface MentorProfile {
+  name: string;
+  title: string;
+  image: string;
+  bio: string;
+  hourlyRate: number;
+  availability: string;
+  slug: string;
+  credentials: string;
+  stats: MentorStats;
+  services: (string | MentorService)[];
+}
 
 interface MentorProfileViewProps {
-  mentor: any;
+  mentor: MentorProfile;
   isDashboard?: boolean;
   onBack?: () => void;
 }
@@ -25,10 +49,10 @@ const AnimatedCounter = ({ value, duration = 2 }: { value: number, duration?: nu
         const end = value;
         if (start === end) return;
         
-        let totalMiliseconds = duration * 1000;
-        let incrementTime = (totalMiliseconds / end) > 10 ? (totalMiliseconds / end) : 10;
+        const totalMiliseconds = duration * 1000;
+        const incrementTime = (totalMiliseconds / end) > 10 ? (totalMiliseconds / end) : 10;
         
-        let timer = setInterval(() => {
+        const timer = setInterval(() => {
             start += Math.ceil(end / (totalMiliseconds / incrementTime));
             if (start >= end) {
                 setCount(end);
@@ -47,6 +71,7 @@ const AnimatedCounter = ({ value, duration = 2 }: { value: number, duration?: nu
 export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfileViewProps) {
   const [activeTab, setActiveTab] = useState<"overview" | "services" | "reviews">("overview");
   const [showStickyHeader, setShowStickyHeader] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -199,7 +224,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                 {["overview", "services", "reviews"].map((tab) => (
                     <button
                         key={tab}
-                        onClick={() => setActiveTab(tab as any)}
+                        onClick={() => setActiveTab(tab as "overview" | "services" | "reviews")}
                         className={cn(
                             "pb-4 text-sm font-jakarta font-bold uppercase tracking-[0.2em] transition-all relative whitespace-nowrap",
                             activeTab === tab ? "text-emerald-700" : "text-gray-400 hover:text-gray-600"
@@ -276,7 +301,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                 exit="hidden"
                                 className="grid grid-cols-1 gap-6"
                             >
-                                {mentor.services.map((service: any, i: number) => (
+                                {mentor.services.map((service, i) => (
                                     <motion.div 
                                         key={i}
                                         variants={itemVariants}
@@ -320,7 +345,7 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                             </div>
                                         </div>
                                         <p className="text-gray-600 leading-relaxed font-medium">
-                                            "Working with {mentor.name.split(" ")[1]} was a game changer. The insight provided was invaluable for my application journey."
+                                            &quot;Working with {mentor.name.split(" ")[1]} was a game changer. The insight provided was invaluable for my application journey.&quot;
                                         </p>
                                     </div>
                                 ))}
@@ -364,13 +389,15 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                     </div>
                                 </div>
 
-                                {isDashboard ? (
-                                    <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-jakarta font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
-                                        Request Partnership
-                                        <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
+                                {isAuthenticated ? (
+                                    <Link href={`/mentorship/${mentor.slug}`} className="block">
+                                        <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-jakarta font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
+                                            {isDashboard ? "Request Partnership" : "Secure This Slot"}
+                                            <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                                        </Button>
+                                    </Link>
                                 ) : (
-                                    <Link href={`/login?redirect=/mentor/${mentor.slug}`} className="block">
+                                    <Link href={`/login?redirect=/mentorship/${mentor.slug}`} className="block">
                                         <Button className="w-full h-16 bg-gray-950 hover:bg-emerald-700 text-white rounded-[1.5rem] font-jakarta font-extrabold text-lg transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 group">
                                             Secure This Slot
                                             <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

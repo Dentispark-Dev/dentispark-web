@@ -8,7 +8,7 @@ import { StatsCard } from "./stats-card";
 import { PayoutSection } from "./payout-section";
 import { LatestBookingsSection } from "./latest-bookings-section";
 import { WebinarsSection } from "./webinars-section";
-import { BrainCircuit, TrendingUp, Loader2, ShieldCheck, ShieldAlert } from "lucide-react";
+import { BrainCircuit, TrendingUp, Loader2, ShieldCheck, ShieldAlert, Clock } from "lucide-react";
 import { useAuth } from "@/src/providers/auth-provider";
 import {
   MentorOverviewPageProps,

@@ -27,6 +27,7 @@ import { useField } from "@/src/providers/field-provider";
 import { useAuth } from "@/src/providers/auth-provider";
 import { DocumentScanner } from "@/src/features/ai-hub/components/document-scanner";
 import { ExtractionPreview } from "@/src/features/ai-hub/components/extraction-preview";
+import { LooseRecord } from "@/src/types/loose";
 
 export default function TranscriptParserPage() {
   const { activeField } = useField();
@@ -35,7 +36,7 @@ export default function TranscriptParserPage() {
   const [isParsing, setIsParsing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [rawText, setRawText] = useState("");
-  const [parsedData, setParsedData] = useState<Record<string, any> | null>(null);
+  const [parsedData, setParsedData] = useState<unknown>(null);
   const [mode, setMode] = useState<"upload" | "paste">("upload");
   const [error, setError] = useState<string | null>(null);
 
@@ -72,22 +73,23 @@ export default function TranscriptParserPage() {
       const data = await response.json();
       setParsedData(data);
       setShowResults(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      setError(error.message || "Failed to parse transcript. Please try again.");
+      const message = error instanceof Error ? error.message : "Failed to parse transcript. Please try again.";
+      setError(message);
     } finally {
       setIsParsing(false);
     }
   };
 
-  const academicData = parsedData?.academics || [
+  const academicData = (parsedData as LooseRecord)?.academics || [
     { key: "Overall GPA", value: "3.92 / 4.0", confidence: 99 },
     { key: "Biology Grade", value: "A* (98%)", confidence: 98 },
     { key: "Chemistry Grade", value: "A (94%)", confidence: 97 },
     { key: "UCAT Score", value: "3120 (SJT Band 1)", confidence: 100 }
   ];
 
-  const clinicalData = parsedData?.clinical || [
+  const clinicalData = (parsedData as LooseRecord)?.clinical || [
     { key: "Placements", value: "St. Mary's General, Oral Surgery", confidence: 94 },
     { key: "Shadowing Hours", value: "120 Hours Verified", confidence: 92 },
     { key: "Patient Contact", value: "High (Assistive Role)", confidence: 88 }
@@ -274,20 +276,20 @@ export default function TranscriptParserPage() {
                 <div className="p-6 rounded-[2rem] bg-white border border-gray-100 shadow-sm space-y-4">
                     <h5 className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">Integrity Check</h5>
                     <p className="text-xs text-gray-500 leading-relaxed font-medium">All data has been cross-referenced with standard UK marking schemes.</p>
-                    {parsedData?.summary && (
+                    {parsedData && (parsedData as LooseRecord).summary && (
                         <div className="pt-4 border-t border-gray-50">
-                            <p className="text-[10px] text-gray-600 leading-relaxed italic">"{parsedData.summary}"</p>
+                            <p className="text-[10px] text-gray-600 leading-relaxed italic">&quot;{(parsedData as LooseRecord).summary}&quot;</p>
                         </div>
                     )}
                 </div>
 
-                {parsedData?.missingInfo?.length > 0 && (
+                {parsedData && (parsedData as LooseRecord).missingInfo?.length > 0 && (
                     <div className="p-6 bg-amber-50 rounded-[2rem] border border-amber-100 space-y-3">
                         <div className="flex items-center gap-2 text-amber-700 text-[10px] font-extrabold uppercase tracking-widest">
                             <Target className="w-4 h-4" /> Missing Data Found
                         </div>
                         <ul className="space-y-1">
-                            {parsedData.missingInfo.map((info: string, i: number) => (
+                            {(parsedData as LooseRecord).missingInfo.map((info: string, i: number) => (
                                 <li key={i} className="text-[10px] text-amber-600 font-bold flex items-center gap-2">
                                     <div className="w-1 h-1 rounded-full bg-amber-400" /> {info}
                                 </li>

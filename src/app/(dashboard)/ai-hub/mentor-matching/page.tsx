@@ -23,6 +23,7 @@ import { LelandSplitPane } from "@/src/features/ai-hub/components/split-pane-lay
 import { IntelligenceRadar } from "@/src/features/ai-hub/components/intelligence-radar";
 import { MatchingWizard } from "@/src/features/ai-hub/components/matching-wizard";
 import { MentorMatchCard } from "@/src/features/ai-hub/components/mentor-match-card";
+import { LooseRecord } from "@/src/types/loose";
 
 export default function MentorMatchingPage() {
   const { activeField } = useField();
@@ -30,7 +31,7 @@ export default function MentorMatchingPage() {
   const [showResults, setShowResults] = useState(false);
   const [selectedUnis, setSelectedUnis] = useState<string[]>([]);
   const [selectedFocus, setSelectedFocus] = useState<string[]>([]);
-  const [matchingInsights, setMatchingInsights] = useState<any>(null);
+  const [matchingInsights, setMatchingInsights] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -59,7 +60,7 @@ export default function MentorMatchingPage() {
       const data = await response.json();
       setMatchingInsights(data);
       setShowResults(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
       setError("AI Insight Layer Unavailable. We've retrieved our top primary mentor matches for your profile.");
       setShowResults(true); 
@@ -230,7 +231,7 @@ export default function MentorMatchingPage() {
                 <h2 className="text-5xl lg:text-6xl font-jakarta font-extrabold text-gray-900 tracking-tight leading-[1.1]">
                     Your High-Proximity <br /> <span className="text-emerald-600">Mentor Match.</span>
                 </h2>
-                <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed">We've audited our entire network to identify the mentors uniquely architected for your specific dental application roadmap.</p>
+                <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed">We&apos;ve audited our entire network to identify the mentors uniquely architected for your specific dental application roadmap.</p>
             </div>
 
             {error && (
@@ -259,10 +260,10 @@ export default function MentorMatchingPage() {
                     
                     <div className="space-y-6 relative z-10">
                         <p className="text-xl font-medium text-gray-800 leading-relaxed border-l-4 border-emerald-500 pl-6 py-1">
-                            "{matchingInsights?.matchingLogic || "We've prioritized mentors with clinical surgical backgrounds who align with your KCL and Manchester ambitions."}"
+                            &quot;{(matchingInsights as LooseRecord)?.matchingLogic as string || "We've prioritized mentors with clinical surgical backgrounds who align with your KCL and Manchester ambitions."}&quot;
                         </p>
                         <div className="flex flex-wrap gap-2 pt-4">
-                            {(matchingInsights?.idealMentorDNA || ["Clinical Specialist", "Interview Veteran", "Academic Excellence"]).map((dna: string, i: number) => (
+                            {((matchingInsights as LooseRecord)?.idealMentorDNA as string[] || ["Clinical Specialist", "Interview Veteran", "Academic Excellence"]).map((dna: string) => (
                                 <div key={dna} className="px-5 py-2.5 bg-gray-50 border border-gray-200 text-gray-700 rounded-xl text-[10px] font-semibold uppercase tracking-wider cursor-default flex items-center gap-2">
                                     <BarChart3 size={14} className="text-emerald-500" />
                                     {dna}
@@ -284,7 +285,7 @@ export default function MentorMatchingPage() {
                             <Sparkles className="w-5 h-5" /> Recommended Trajectory
                         </div>
                         <p className="text-lg text-slate-500 leading-relaxed font-medium relative z-10">
-                            {matchingInsights?.consultationFocus || "Focus your initial sessions on MMI scenario roleplay and refining the clinical empathy section of your personal statement."}
+                            {(matchingInsights as LooseRecord)?.consultationFocus as string || "Focus your initial sessions on MMI scenario roleplay and refining the clinical empathy section of your personal statement."}
                         </p>
                     </div>
                 </motion.div>

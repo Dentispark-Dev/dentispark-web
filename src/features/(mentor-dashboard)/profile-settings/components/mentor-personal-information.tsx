@@ -9,6 +9,7 @@ import { EditPersonalInfoModal } from "./edit-personal-info-modal";
 import { toast } from "sonner";
 import { Badge } from "@/src/components/ui/badge";
 import { cn } from "@/src/lib/utils";
+import { LooseRecord } from "@/src/types/loose";
 
 export function MentorPersonalInformation() {
   const { user } = useAuth();
@@ -55,7 +56,7 @@ I mentor students to bring clarity and purpose to the graduate application proce
     });
   };
 
-  const handleSave = (data: any) => {
+  const handleSave = (data: LooseRecord) => {
     setPersonalInfo({
       ...personalInfo,
       firstName: data.firstName || personalInfo.firstName,

@@ -127,7 +127,7 @@ export function SignUpInterstitial({ onContinue }: SignUpInterstitialProps) {
         <div className="space-y-12">
           <div className="space-y-4 text-center lg:text-left">
             <h3 className="font-jakarta text-3xl font-extrabold text-slate-900 tracking-tight">
-              What You're Getting
+              What You&apos;re Getting
             </h3>
             <p className="text-slate-500 font-medium capitalize">Everything you need to secure your seat in Dental School.</p>
           </div>

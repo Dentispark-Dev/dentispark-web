@@ -139,7 +139,7 @@ export function AIGuidanceAssistant() {
                                 ? "bg-black-800 text-white rounded-tr-none" 
                                 : "bg-white text-black-700 border border-primary-50 rounded-tl-none"
                         )}>
-                            {m.parts ? m.parts.map((part, i) => part.type === "text" ? part.text : null) : (m as any).content}
+                            {m.parts ? m.parts.map((part, i) => part.type === "text" ? part.text : null) : m.content}
                         </div>
                     </motion.div>
                 ))}

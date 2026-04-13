@@ -38,7 +38,7 @@ export function DailySessionRoom({ meetingLink, bookingId }: DailySessionRoomPro
     });
 
     const handleLeft = () => setStatus("left");
-    const handleError = (e: any) => {
+    const handleError = (e: unknown) => {
       console.error("Daily Client Error:", e);
       setStatus("error");
     };
@@ -92,7 +92,7 @@ export function DailySessionRoom({ meetingLink, bookingId }: DailySessionRoomPro
 
       {status === "left" && (
         <div className="absolute inset-0 z-40 bg-gray-50 flex flex-col items-center justify-center gap-4 p-6 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 font-jakarta">You've left the session</h2>
+            <h2 className="text-2xl font-bold text-gray-900 font-jakarta">You&apos;ve left the session</h2>
             <p className="text-gray-500 font-jakarta max-w-sm">Thank you for participating! The session logs and recordings (if applicable) are being finalized.</p>
             <Button onClick={() => router.push("/mentorship")} className="mt-4 bg-primary-600 hover:bg-primary-700 text-white font-bold tracking-widest uppercase rounded-xl">
                 Return to Directory
@@ -103,7 +103,7 @@ export function DailySessionRoom({ meetingLink, bookingId }: DailySessionRoomPro
       {status === "error" && (
         <div className="absolute inset-0 z-40 bg-rose-50 flex flex-col items-center justify-center gap-4 p-6 text-center">
             <h2 className="text-2xl font-bold text-rose-900 font-jakarta">Connection Dropped</h2>
-            <p className="text-rose-600 font-jakarta max-w-sm">We couldn't connect securely to the video server. This may be due to a strict corporate firewall or a dropped socket.</p>
+            <p className="text-rose-600 font-jakarta max-w-sm">We couldn&apos;t connect securely to the video server. This may be due to a strict corporate firewall or a dropped socket.</p>
             <Button onClick={() => window.location.reload()} variant="outline" className="mt-4 border-rose-200 text-rose-700 hover:bg-rose-100 font-bold tracking-widest uppercase rounded-xl">
                 Re-initialize
             </Button>

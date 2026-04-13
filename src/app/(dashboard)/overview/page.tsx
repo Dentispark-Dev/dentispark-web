@@ -12,8 +12,8 @@ import { useAuth } from "@/src/providers/auth-provider";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { overviewApi, type StudentProfile, type PersonalizedMentor, type ApplicationProgress } from "@/src/features/(dashboard)/overview/services/overview.api";
-import { toast } from "sonner";
 import { Star } from "lucide-react";
+import { useDashboardStore } from "@/src/store/dashboard-store";
 
 export default function OverviewPage() {
     const { isMentor, isStudent, isAdmin, isLoading: authLoading } = useAuth();
@@ -22,6 +22,7 @@ export default function OverviewPage() {
     const [mentors, setMentors] = useState<PersonalizedMentor[]>([]);
     const [progressData, setProgressData] = useState<ApplicationProgress | null>(null);
     const [isDataLoading, setIsDataLoading] = useState(true);
+    const { setStages } = useDashboardStore();
 
     useEffect(() => {
         if (!authLoading && isMentor && !isAdmin) {
@@ -58,7 +59,10 @@ export default function OverviewPage() {
 
                 if (profile) setStudentData(profile);
                 if (personalizedMentors) setMentors(personalizedMentors);
-                if (progress) setProgressData(progress);
+                if (progress) {
+                    setProgressData(progress);
+                    if (progress.roadmap) setStages(progress.roadmap);
+                }
             } catch (error) {
                 console.error("Critical dashboard load error:", error);
             } finally {

@@ -282,12 +282,43 @@ export function BookingList({
 
                   {/* Actions */}
                   <div className="flex items-center gap-3 pt-2">
-                    {booking.meetingLink && booking.status === "confirmed" && (
-                      <Button size="sm" variant="outline" className="text-xs">
-                        <Video className="mr-1 h-3 w-3" />
-                        Join Meeting
-                      </Button>
-                    )}
+                    {booking.status === "confirmed" && (() => {
+                      const now = new Date();
+                      const sessionStart = new Date(`${booking.date}T${booking.startTime}`);
+                      const sessionEnd = new Date(`${booking.date}T${booking.endTime}`);
+                      
+                      // Active 10 mins before start until end time
+                      const isActive = now >= new Date(sessionStart.getTime() - 10 * 60 * 1000) && now <= sessionEnd;
+                      const isUpcoming = now < sessionStart;
+                      
+                      if (isActive) {
+                        return (
+                          <Button 
+                            size="sm" 
+                            className="bg-[#12AC75] hover:bg-emerald-700 text-white font-extrabold animate-pulse"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (booking.meetingLink) window.open(booking.meetingLink, "_blank");
+                            }}
+                          >
+                            <Video className="mr-2 h-4 w-4" />
+                            JOIN LIVE SESSION
+                          </Button>
+                        );
+                      }
+                      
+                      if (isUpcoming && booking.meetingLink) {
+                        return (
+                          <Button size="sm" variant="outline" className="text-xs opacity-60 cursor-not-allowed">
+                            <Video className="mr-1 h-3 w-3" />
+                            Session in {Math.round((sessionStart.getTime() - now.getTime()) / (1000 * 60))}m
+                          </Button>
+                        );
+                      }
+
+                      return null;
+                    })()}
+
                     {booking.studentPhone && (
                       <Button size="sm" variant="ghost" className="text-xs">
                         <Phone className="mr-1 h-3 w-3" />

@@ -19,6 +19,7 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { useField } from "@/src/providers/field-provider";
 import { cn } from "@/src/lib/utils";
+import { LooseRecord } from "@/src/types/loose";
 
 export default function AcceptanceOddsPage() {
   const { activeField, activeFieldLabel } = useField();
@@ -29,7 +30,7 @@ export default function AcceptanceOddsPage() {
     clinicalHours: "",
     volunteering: ""
   });
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {
@@ -68,9 +69,10 @@ export default function AcceptanceOddsPage() {
 
       const data = await response.json();
       setResults(data);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      setError(error.message || "Failed to generate university matching data. Please try again.");
+      const message = error instanceof Error ? error.message : "Failed to generate university matching data. Please try again.";
+      setError(message);
     } finally {
       setIsCalculating(false);
     }
@@ -201,7 +203,7 @@ export default function AcceptanceOddsPage() {
                     <div className="space-y-3">
                         <h3 className="text-2xl font-jakarta font-bold tracking-tight text-white leading-tight">Strategic Match Directives</h3>
                         <p className="text-emerald-50 leading-relaxed font-medium">
-                            {results?.overallStrategy}
+                            {(results as LooseRecord)?.overallStrategy as string}
                         </p>
                     </div>
                 </div>
@@ -215,7 +217,7 @@ export default function AcceptanceOddsPage() {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {results?.universityPredictions?.map((univ: any, i: number) => (
+                    {(results as LooseRecord)?.universityPredictions && ((results as LooseRecord).universityPredictions as LooseRecord[]).map((univ: LooseRecord, i: number) => (
                         <div key={i} className="p-8 rounded-3xl bg-white border border-gray-100 hover:border-emerald-200 transition-all group overflow-hidden relative shadow-sm hover:shadow-md">
                             <div className={cn(
                                 "absolute top-0 right-0 px-6 py-2 rounded-bl-3xl text-[10px] font-bold uppercase tracking-wider",
@@ -223,7 +225,7 @@ export default function AcceptanceOddsPage() {
                                 univ.riskLevel === 'Moderate' ? 'bg-blue-50 text-blue-700' :
                                 'bg-amber-50 text-amber-700'
                             )}>
-                                {univ.riskLevel} Risk
+                                {univ.riskLevel as string} Risk
                             </div>
 
                             <div className="space-y-6 relative z-10">
@@ -238,7 +240,7 @@ export default function AcceptanceOddsPage() {
                                             <AlertCircle className="w-3.5 h-3.5 text-amber-500" /> Gap Analysis
                                         </h5>
                                         <ul className="space-y-2">
-                                            {univ.gapAnalysis.map((gap: string, j: number) => (
+                                            {(univ.gapAnalysis as string[]).map((gap: string, j: number) => (
                                                 <li key={j} className="text-xs text-gray-600 font-medium flex gap-2">
                                                     <div className="w-1 h-1 rounded-full bg-amber-400 mt-1.5 shrink-0" />
                                                     {gap}
@@ -252,7 +254,7 @@ export default function AcceptanceOddsPage() {
                                             <Sparkles className="w-3.5 h-3.5" /> Success Roadmap
                                         </h5>
                                         <ul className="space-y-2">
-                                            {univ.successSteps.map((step: string, j: number) => (
+                                            {(univ.successSteps as string[]).map((step: string, j: number) => (
                                                 <li key={j} className="text-xs text-gray-900 font-semibold flex gap-2 items-start">
                                                     <ChevronRight className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" />
                                                     {step}

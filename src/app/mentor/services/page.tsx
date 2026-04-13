@@ -24,7 +24,7 @@ export default function MentorServicesPage() {
             marketplaceApi.GET_MENTOR_PACKAGES(user.emailAddress)
                 .then((data) => {
                     // Extract data in case response wrapper is used, otherwise set directly
-                    setPackages(Array.isArray(data) ? data : (data as any).data || []);
+                    setPackages(Array.isArray(data) ? data : (data as { data: ServicePackage[] }).data || []);
                 })
                 .catch(console.error)
                 .finally(() => setLoading(false));

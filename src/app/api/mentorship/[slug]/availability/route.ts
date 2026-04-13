@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/src/lib/db";
 import { startOfDay, endOfDay, addDays, format, parseISO } from "date-fns";
+import { LooseRecord } from "@/src/types/loose";
 
 export async function GET(
   req: Request,
@@ -30,7 +31,7 @@ export async function GET(
     }
 
     // 2. Load their weekly availability
-    const availability = mentorProfile.availability as any;
+    const availability = mentorProfile.availability as LooseRecord;
 
     // 3. Load existing bookings for the next 30 days to hide taken slots
     const bookings = await prisma.booking.findMany({
@@ -51,7 +52,7 @@ export async function GET(
         time: format(b.scheduledAt, "HH:mm")
       }))
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Public Availability Error:", error);
     return NextResponse.json({ error: "Failed to fetch availability." }, { status: 500 });
   }

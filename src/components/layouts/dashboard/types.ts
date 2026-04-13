@@ -6,6 +6,8 @@ export interface MenuItem {
     active: React.ReactNode;
     inactive: React.ReactNode;
   };
+  badge?: number; // Numeric count (e.g., 5 unread messages)
+  dot?: boolean;  // Subtle pulse dot (e.g., activity in group)
   allowedMemberTypes?: (
     | "STUDENT"
     | "ACADEMIC_MENTOR"

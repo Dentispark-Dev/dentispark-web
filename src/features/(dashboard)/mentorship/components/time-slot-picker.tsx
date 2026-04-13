@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Clock, CheckCircle2, Calendar } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { addDays, format, startOfWeek, isSameDay, isToday } from "date-fns";
+import { LooseRecord } from "@/src/types/loose";
 
 // ─── Mock Availability ────────────────────────────────────────────
 // In production this would be fetched from /api/mentor/:slug/availability
@@ -21,7 +22,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
   const [weekOffset, setWeekOffset] = useState(0);
   const [hoveredDate, setHoveredDate] = useState<string | null>(null);
   
-  const [availability, setAvailability] = useState<any>(null);
+  const [availability, setAvailability] = useState<LooseRecord | null>(null);
   const [bookedSlots, setBookedSlots] = useState<Array<{date: string, time: string}>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -61,7 +62,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
     if (!dayData || !dayData.enabled) return [];
     
     // Extract all slots for this day
-    const slots = dayData.slots.map((s: any) => s.start);
+    const slots = dayData.slots.map((s: LooseRecord) => s.start);
     
     // Filter out booked slots
     return slots.filter((time: string) => {

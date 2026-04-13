@@ -1,8 +1,11 @@
 "use client";
+import { LooseRecord } from "@/src/types/loose";
+
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminService } from "@/src/connection/admin-service";
+import { chatService } from "@/src/connection/chat-service";
 import {
     Mail,
     Phone,
@@ -82,7 +85,7 @@ function AvatarRing({ name }: { name: string }) {
     );
 }
 
-function StatPill({ label, value, color, icon: Icon }: { label: string; value: string | number | undefined; color: string; icon?: any }) {
+function StatPill({ label, value, color, icon: Icon }: { label: string; value: string | number | undefined; color: string; icon?: LooseRecord }) {
     return (
         <div className={cn("flex flex-col px-6 py-4 rounded-lg border border-greys-300 bg-white shadow-sm transition-all hover:shadow-md", color)}>
             <div className="flex items-center gap-2 mb-1">
@@ -215,7 +218,22 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                         <ArrowLeft className="h-4 w-4" />
                         Back to Registry
                     </Button>
-                    <Button className="h-12 px-10 rounded-xl bg-primary-600 text-white font-bold text-xs hover:bg-primary-500 transition-all active:scale-95 shadow-lg shadow-primary-200 uppercase tracking-widest leading-none font-jakarta">
+                    <Button 
+                        onClick={async () => {
+                            try {
+                                const response = await chatService.upsertPeerConversation({
+                                    participantEmailAddresses: [mentor.emailAddress],
+                                    title: `${mentor.firstName} ${mentor.lastName}`
+                                });
+                                if (response.responseData) {
+                                    router.push(`/admin/messages?conversationId=${response.responseData.id}`);
+                                }
+                            } catch (err) {
+                                toast.error("Failed to initiate secure channel");
+                            }
+                        }}
+                        className="h-12 px-10 rounded-xl bg-primary-600 text-white font-bold text-xs hover:bg-primary-500 transition-all active:scale-95 shadow-lg shadow-primary-200 uppercase tracking-widest leading-none font-jakarta"
+                    >
                         Send Message
                     </Button>
                 </div>
@@ -402,9 +420,13 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                                                                 </div>
                                                                 <div>
                                                                     <p className="text-sm font-bold text-slate-800 font-jakarta">
-                                                                        {link.includes("cv") ? "Official Resume / CV" : link.includes("cert") ? "Professional Certification" : `Credential Bundle ${idx + 1}`}
+                                                                        {link.toLowerCase().includes("cv") || link.toLowerCase().includes("resume") 
+                                                                            ? "Official Resume / CV" 
+                                                                            : link.toLowerCase().includes("cert") || link.toLowerCase().includes("qualification")
+                                                                                ? "Professional Certification" 
+                                                                                : `Credential Bundle ${idx + 1}`}
                                                                     </p>
-                                                                    <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest mt-1 font-jakarta leading-none">Security Verified Node</p>
+                                                                    <p className="text-[10px] font-bold text-greys-400 opacity-60 uppercase tracking-widest mt-1 font-jakarta leading-none">Security Verified Node</p>
                                                                 </div>
                                                             </div>
                                                             <ArrowUpRight className="h-5 w-5 text-greys-300 group-hover:text-primary-500 transition-colors" />

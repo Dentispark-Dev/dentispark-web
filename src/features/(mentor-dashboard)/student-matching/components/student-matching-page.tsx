@@ -7,6 +7,9 @@ import { cn } from "@/src/lib/utils";
 import { StudentMatchingCard } from "@/src/components/molecules/student-matching-card";
 import { MOCK_STUDENTS } from "../constants";
 import { FilterTab } from "../types";
+import { Button } from "@/src/components/ui/button";
+import { useEffect } from "react";
+import { LooseRecord } from "@/src/types/loose";
 
 interface StudentMatchingPageProps {
   className?: string;
@@ -16,10 +19,10 @@ export function StudentMatchingPage({ className }: StudentMatchingPageProps) {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState<FilterTab>("all");
   const [isLoading, setIsLoading] = useState(false);
-  const [students, setStudents] = useState<any[]>([]);
+  const [students, setStudents] = useState<LooseRecord[]>([]);
 
   // Simulated fetch for real students
-  useState(() => {
+  useEffect(() => {
     async function load() {
         setIsLoading(true);
         try {
@@ -37,7 +40,7 @@ export function StudentMatchingPage({ className }: StudentMatchingPageProps) {
 
   const filteredStudents = students.filter((student) => {
     if (activeFilter === "all") return true;
-    return student.category === activeFilter;
+    return (student as LooseRecord).category === activeFilter;
   });
 
   const handleProceed = (studentId: string) => {
@@ -72,7 +75,7 @@ export function StudentMatchingPage({ className }: StudentMatchingPageProps) {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveFilter(tab.id as any)}
+                onClick={() => setActiveFilter(tab.id as FilterTab)}
                 className={cn(
                   "font-jakarta rounded-lg px-6 py-2.5 text-xs font-extrabold uppercase tracking-widest transition-all",
                   activeFilter === tab.id

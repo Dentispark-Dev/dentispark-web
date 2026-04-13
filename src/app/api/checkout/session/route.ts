@@ -92,10 +92,11 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ url: session.url, sessionId: session.id });
-  } catch (error: any) {
-    console.error("Stripe Checkout Error:", error?.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to create checkout session.";
+    console.error("Stripe Checkout Error:", errorMessage);
     return NextResponse.json(
-      { error: error?.message || "Failed to create checkout session." },
+      { error: errorMessage },
       { status: 500 }
     );
   }

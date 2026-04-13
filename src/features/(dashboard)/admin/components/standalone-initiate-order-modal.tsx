@@ -24,7 +24,8 @@ import {
     ArrowRight
 } from "lucide-react";
 import { toast } from "sonner";
-import { 
+import { LooseRecord } from "@/src/types/loose";
+import {
     Select,
     SelectContent,
     SelectItem,
@@ -41,7 +42,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
     const [step, setStep] = useState(1);
     const [studentEmail, setStudentEmail] = useState("");
     const [mentorEmail, setMentorEmail] = useState("");
-    const [selectedPackage, setSelectedPackage] = useState<any>(null);
+    const [selectedPackage, setSelectedPackage] = useState<LooseRecord | null>(null);
     const [notes, setNotes] = useState("");
 
     const queryClient = useQueryClient();
@@ -66,8 +67,9 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
             onClose();
             resetModal();
         },
-        onError: (error: any) => {
-            toast.error(error.message || "Failed to initiate order");
+        onError: (error: unknown) => {
+            const errorMessage = error instanceof Error ? error.message : "Failed to initiate order";
+            toast.error(errorMessage);
         }
     });
 
@@ -139,7 +141,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                                 <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Available Services</label>
                                 <Select 
                                     onValueChange={(val) => {
-                                        const pkg = pkgResponse?.content.find((p: any) => p.externalId === val);
+                                        const pkg = pkgResponse?.content.find((p: LooseRecord) => p.externalId === val);
                                         setSelectedPackage(pkg);
                                     }}
                                 >
@@ -147,7 +149,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                                         <SelectValue placeholder="Select a service package..." />
                                     </SelectTrigger>
                                     <SelectContent className="rounded-2xl border-gray-100 shadow-xl">
-                                        {pkgResponse?.content.map((pkg: any) => (
+                                        {pkgResponse?.content.map((pkg: LooseRecord) => (
                                             <SelectItem key={pkg.externalId} value={pkg.externalId} className="rounded-lg py-3">
                                                 <div className="flex flex-col">
                                                     <span className="font-bold text-gray-900">{pkg.title}</span>

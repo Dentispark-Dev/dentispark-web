@@ -57,7 +57,7 @@ export async function GET(req: Request) {
         status: b.status
       }))
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Fetch Mentor Stats Error:", error);
     return NextResponse.json({ error: "Failed to fetch mentor stats." }, { status: 500 });
   }

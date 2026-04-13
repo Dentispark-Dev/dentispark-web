@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       success: true,
       message: "Review submitted successfully"
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     try {
       await query("ROLLBACK");
     } catch (e) {

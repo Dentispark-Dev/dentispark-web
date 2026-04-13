@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useField } from "@/src/providers/field-provider";
+import { LooseRecord } from "@/src/types/loose";
 
 export default function StudyPlannerPage() {
   const { activeField, activeFieldLabel } = useField();
@@ -32,7 +33,7 @@ export default function StudyPlannerPage() {
     weakAreas: "",
     targetScore: ""
   });
-  const [plan, setPlan] = useState<Record<string, any> | null>(null);
+  const [plan, setPlan] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {
@@ -71,7 +72,7 @@ export default function StudyPlannerPage() {
 
       const data = await response.json();
       setPlan(data);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
       setError(error.message || "Failed to generate study plan. Please try again.");
     } finally {
@@ -103,7 +104,7 @@ export default function StudyPlannerPage() {
             <div className="text-center space-y-2">
               <Target className="w-12 h-12 text-emerald-600 mx-auto" />
               <h2 className="text-2xl font-jakarta font-bold text-gray-900">Map Your Success</h2>
-              <p className="text-gray-500 text-sm font-medium">Tell us your targets, and we'll build the road to get there.</p>
+              <p className="text-gray-500 text-sm font-medium">Tell us your targets, and we&apos;ll build the road to get there.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -193,19 +194,19 @@ export default function StudyPlannerPage() {
           >
             {/* Timeline Phases */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {plan?.phases?.map((phase: any, i: number) => (
+              {(plan as LooseRecord)?.phases && ((plan as LooseRecord).phases as LooseRecord[]).map((phase: LooseRecord, i: number) => (
                 <div key={i} className="p-6 rounded-3xl bg-white border border-gray-100 shadow-sm relative overflow-hidden group hover:border-emerald-200 transition-all">
                   <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                     <span className="text-6xl font-jakarta font-bold text-emerald-600">{i + 1}</span>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-bold text-emerald-600 uppercase tracking-widest text-[10px]">{phase.duration}</h4>
-                      <h3 className="text-lg font-jakarta font-bold text-gray-900">{phase.name}</h3>
+                      <h4 className="font-bold text-emerald-600 uppercase tracking-widest text-[10px]">{phase.duration as string}</h4>
+                      <h3 className="text-lg font-jakarta font-bold text-gray-900">{phase.name as string}</h3>
                     </div>
-                    <p className="text-xs text-gray-500 font-medium leading-relaxed">{phase.focus}</p>
+                    <p className="text-xs text-gray-500 font-medium leading-relaxed">{phase.focus as string}</p>
                     <div className="pt-2 flex items-center gap-2 text-[10px] font-bold text-emerald-600 uppercase">
-                      <CheckCircle2 className="w-3 h-3" /> {phase.milestone}
+                      <CheckCircle2 className="w-3 h-3" /> {phase.milestone as string}
                     </div>
                   </div>
                 </div>
@@ -217,13 +218,13 @@ export default function StudyPlannerPage() {
               <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-6">
                 <h3 className="text-xl font-jakarta font-bold text-gray-900">Representative Weekly Flow</h3>
                 <div className="space-y-3">
-                  {plan?.weeklySchedule?.map((day: any, i: number) => (
+                  {(plan as LooseRecord)?.weeklySchedule && ((plan as LooseRecord).weeklySchedule as LooseRecord[]).map((day: LooseRecord, i: number) => (
                     <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100 group">
-                      <div className="w-12 text-xs font-jakarta font-bold text-gray-300 uppercase group-hover:text-emerald-600 transition-colors">{day.day}</div>
+                      <div className="w-12 text-xs font-jakarta font-bold text-gray-300 uppercase group-hover:text-emerald-600 transition-colors">{day.day as string}</div>
                       <div className="flex-1">
-                        <p className="text-sm font-bold text-gray-700">{day.activity}</p>
+                        <p className="text-sm font-bold text-gray-700">{day.activity as string}</p>
                       </div>
-                      <div className="text-[10px] font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{day.duration}</div>
+                      <div className="text-[10px] font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{day.duration as string}</div>
                     </div>
                   ))}
                 </div>

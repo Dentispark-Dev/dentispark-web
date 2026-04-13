@@ -133,7 +133,7 @@ export function AvailabilityManager() {
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900">Weekly Availability</h2>
           <p className="text-slate-500 text-sm mt-1">
-            Set the recurring hours you're available each week. Students will book from these slots.
+            Set the recurring hours you&apos;re available each week. Students will book from these slots.
           </p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">

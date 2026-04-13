@@ -33,9 +33,9 @@ export async function GET(
       firstName: student.firstName || student.name?.split(' ')[0] || "Student",
       lastName: student.lastName || student.name?.split(' ').slice(1).join(' ') || "",
       emailAddress: student.email,
-      phoneNumber: (student as any).phoneNumber || "N/A",
-      activationStatus: (student as any).activationStatus || "ACTIVE",
-      paymentStatus: (student as any).paymentStatus || "FREE",
+      phoneNumber: (student as unknown as Record<string, string>).phoneNumber || "N/A",
+      activationStatus: (student as unknown as Record<string, string>).activationStatus || "ACTIVE",
+      paymentStatus: (student as unknown as Record<string, string>).paymentStatus || "FREE",
       dentalSchoolGateway: student.gateway || "BDS",
       dateStamped: student.createdAt.toISOString(),
       academicHistory: student.aiHistory.map(h => ({
@@ -52,12 +52,13 @@ export async function GET(
       responseData,
       success: true
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Student Detail API Error]", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to retrieve student profile";
     return NextResponse.json({
       responseCode: "ERROR",
       responseMessage: "Failed to retrieve student profile",
-      errors: [error.message],
+      errors: [errorMessage],
       success: false
     }, { status: 500 });
   }

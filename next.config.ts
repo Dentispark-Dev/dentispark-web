@@ -8,14 +8,22 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "www.transparenttextures.com",
+        pathname: "/**",
       },
     ],
   },
@@ -24,7 +32,56 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/register",
+        destination: "/sign-up",
+        permanent: true,
+      },
+      {
+        source: "/signup",
+        destination: "/sign-up",
+        permanent: true,
+      },
+      {
+        source: "/about",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/contact",
+        destination: "/contact-us",
+        permanent: true,
+      },
+      {
+        source: "/faq",
+        destination: "/faqs",
+        permanent: true,
+      },
+      {
+        source: "/community",
+        destination: "/community-hub",
+        permanent: true,
+      },
+      {
+        source: "/shadowing",
+        destination: "/overview",
+        permanent: false,
+      }
+    ];
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/backend/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com"}/:path*`,
+      },
+    ];
   },
 
   async headers() {

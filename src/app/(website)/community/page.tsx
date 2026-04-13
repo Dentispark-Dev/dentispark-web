@@ -22,7 +22,7 @@ export default function CommunityComingSoon() {
              The DentiSpark <span className="text-emerald-500 underline decoration-emerald-200 decoration-8 underline-offset-8">Circle.</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-            We're building a safe, elite space for dental students to mentor each other, share interview tips, and form study cohorts.
+            We&apos;re building a safe, elite space for dental students to mentor each other, share interview tips, and form study cohorts.
           </p>
         </div>
 

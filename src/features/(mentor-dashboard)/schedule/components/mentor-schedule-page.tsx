@@ -207,7 +207,7 @@ export function MentorSchedulePage({ className }: SchedulePageProps) {
             </div>
             <h3 className="text-2xl font-bold text-slate-900 mb-2">No availability set</h3>
             <p className="text-slate-500 font-medium max-w-sm mx-auto mb-8">
-               Clients can't book you until you set your working hours. Start by adding your first session slot.
+               Clients can&apos;t book you until you set your working hours. Start by adding your first session slot.
             </p>
             <Button onClick={handleCreateSchedule} size="lg" className="rounded-2xl gap-2 font-bold px-8 h-14 bg-emerald-600 hover:bg-emerald-700 shadow-xl shadow-emerald-500/20">
               <Plus className="h-5 w-5" />

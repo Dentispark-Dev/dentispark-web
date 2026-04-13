@@ -119,7 +119,7 @@ export function DentiBuddy() {
                     }`}
                   >
                     <div className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {msg.parts ? msg.parts.map((part, i) => part.type === "text" ? part.text : null) : (msg as any).content}
+                      {msg.parts ? msg.parts.map((part) => part.type === "text" ? (part as { text: string }).text : null) : msg.content}
                     </div>
                   </div>
                 </motion.div>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/src/lib/db";
+import { LooseRecord } from "@/src/types/loose";
 
 export async function GET(req: Request) {
   try {
@@ -10,7 +11,7 @@ export async function GET(req: Request) {
     const actor = searchParams.get("actor");
     const searchKey = searchParams.get("searchKey");
 
-    const where: any = {};
+    const where: LooseRecord = {};
     if (action) where.action = action;
     if (actor) where.adminName = { contains: actor, mode: 'insensitive' };
     if (searchKey) {
@@ -55,12 +56,13 @@ export async function GET(req: Request) {
       },
       success: true
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Audit API Error]", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to retrieve audit logs";
     return NextResponse.json({
       responseCode: "ERROR",
       responseMessage: "Failed to retrieve audit logs",
-      errors: [error.message],
+      errors: [errorMessage],
       success: false
     }, { status: 500 });
   }

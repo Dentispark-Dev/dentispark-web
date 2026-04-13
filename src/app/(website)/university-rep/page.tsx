@@ -164,7 +164,7 @@ export default function UniversityRepPage() {
                                 <span className="text-emerald-600 text-gradient bg-clip-text">Campus Rep do?</span>
                             </h2>
                             <p className="text-xl text-slate-500 font-medium leading-relaxed">
-                                You are our direct link to the students. You'll lead initiatives, build community, and help us improve the platform based on real feedback.
+                                You are our direct link to the students. You&apos;ll lead initiatives, build community, and help us improve the platform based on real feedback.
                             </p>
                             
                             <div className="space-y-6 pt-4">

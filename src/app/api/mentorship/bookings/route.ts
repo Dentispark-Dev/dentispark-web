@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     }
 
     return NextResponse.json({ bookings });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Fetch Bookings Error:", error);
     return NextResponse.json({ error: "Failed to fetch bookings." }, { status: 500 });
   }
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
       bookingId: booking.id,
       url: `/mentorship/${mentorSlug}/booking-confirmed?session=${encodeURIComponent(sessionType)}&free=true`
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Create Booking Error:", error);
     return NextResponse.json({ error: "Failed to create booking." }, { status: 500 });
   }

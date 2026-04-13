@@ -131,7 +131,7 @@ export default function PublicMentorsPage() {
                         </div>
                         <h3 className="text-xl font-extrabold text-slate-900 mb-2">No experts found</h3>
                         <p className="text-slate-500 font-medium max-w-sm mx-auto">
-                            We couldn't find any experts matching your current search or filters. 
+                            We couldn&apos;t find any experts matching your current search or filters. 
                             Try broadening your criteria.
                         </p>
                     </div>

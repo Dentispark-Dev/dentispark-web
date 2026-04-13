@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     // Acknowledge other event types (like participant.joined, participant.left) without throwing errors
     return NextResponse.json({ success: true, message: "Unhandled event type ignored." }, { status: 200 });
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Daily Webhook Error]", error);
     return NextResponse.json(
       { error: "Webhook processing failed" },

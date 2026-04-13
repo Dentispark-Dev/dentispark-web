@@ -4,6 +4,10 @@ import { useState } from "react";
 import { cn } from "@/src/lib/utils";
 import { StudentMatchingCard } from "@/src/components/molecules/student-matching-card";
 import { useRouter } from "next/navigation";
+import { TrendingUp } from "lucide-react";
+import { LooseRecord } from "@/src/types/loose";
+
+type FilterTab = "all" | "personal-statement" | "ucat";
 
 interface Student {
   id: string;
@@ -18,7 +22,7 @@ interface Student {
 
 interface LatestBookingsSectionProps {
   className?: string;
-  bookings?: any[];
+  bookings?: LooseRecord[];
 }
 
 export function LatestBookingsSection({

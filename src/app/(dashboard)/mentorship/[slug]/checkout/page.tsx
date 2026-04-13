@@ -105,8 +105,9 @@ function CheckoutContent() {
 
       // Free session — redirect to confirmation
       router.push(data.url || `/mentorship/${slug}/booking-confirmed?free=true`);
-    } catch (err: any) {
-      setError(err.message || "A network error occurred. Please try again.");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "A network error occurred. Please try again.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -118,7 +119,7 @@ function CheckoutContent() {
         href={`/mentorship/${slug}`}
         className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors mb-8"
       >
-        <ArrowLeft className="w-4 h-4" /> Back to {mentor.name}'s Profile
+        <ArrowLeft className="w-4 h-4" /> Back to {mentor.name}&apos;s Profile
       </Link>
 
       <motion.div

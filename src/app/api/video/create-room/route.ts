@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       videoLink,
       expiresAt: new Date(room.config.exp * 1000).toISOString(),
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Video Room API Error:", error);
     return NextResponse.json(
       { error: "An unexpected error occurred creating the video room." },

@@ -139,7 +139,7 @@ export default function JourneyPage() {
                 <div className="max-w-4xl mx-auto mt-16 text-center">
                     <Link href="/sign-up">
                         <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-jakarta font-bold px-10 h-14 rounded-2xl text-base transition-all group flex items-center gap-3 mx-auto">
-                            Start Your Journey — It's Free
+                            Start Your Journey — It&apos;s Free
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </Link>

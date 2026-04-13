@@ -9,8 +9,11 @@ import {
   Loader2,
   ChevronRight,
   Download,
-  Zap
+  Zap,
+  Sparkles
 } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
@@ -48,9 +51,10 @@ export default function PersonalStatementReviewer() {
 
       const data = await response.json();
       setResults(data);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      setError(error.message || "Failed to analyze personal statement. Please try again.");
+      const message = error instanceof Error ? error.message : "Failed to analyze personal statement. Please try again.";
+      setError(message);
     } finally {
       setIsAnalyzing(false);
     }

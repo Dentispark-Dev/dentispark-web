@@ -40,9 +40,10 @@ Return ONLY a valid raw JSON object matching this exact structure (no markdown b
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Study Planner Error:", error);
-    return new Response(JSON.stringify({ error: "Failed to generate study plan. Reason: " + (error.message || String(error)) }), {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: "Failed to generate study plan. Reason: " + errorMessage }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

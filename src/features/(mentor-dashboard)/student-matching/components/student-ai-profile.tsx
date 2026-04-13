@@ -18,13 +18,14 @@ import { motion } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 import { ScoreGauge } from "@/src/features/ai-hub/components/score-gauge";
+import { LooseRecord } from "@/src/types/loose";
 
 interface StudentAIProfileProps {
   studentId: string;
 }
 
 export function StudentAIProfile({ studentId }: StudentAIProfileProps) {
-  const [insights, setInsights] = useState<any>(null);
+  const [insights, setInsights] = useState<LooseRecord | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

@@ -50,8 +50,8 @@ export async function GET(req: Request) {
       lastName: s.lastName || s.name?.split(' ').slice(1).join(' ') || "",
       emailAddress: s.email,
       dentalSchoolGateway: s.gateway || "BDS", // Default to BDS for now
-      paymentStatus: (s as any).paymentStatus || "FREE",
-      activationStatus: (s as any).activationStatus || "ACTIVE",
+      paymentStatus: (s as unknown as Record<string, string>).paymentStatus || "FREE",
+      activationStatus: (s as unknown as Record<string, string>).activationStatus || "ACTIVE",
       dateStamped: s.createdAt.toISOString()
     }));
 
@@ -67,12 +67,13 @@ export async function GET(req: Request) {
       },
       success: true
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Student Records API Error]", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to retrieve student records";
     return NextResponse.json({
       responseCode: "ERROR",
       responseMessage: "Failed to retrieve student records",
-      errors: [error.message],
+      errors: [errorMessage],
       success: false
     }, { status: 500 });
   }

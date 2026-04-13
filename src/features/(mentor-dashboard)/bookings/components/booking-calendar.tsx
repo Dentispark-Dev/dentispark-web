@@ -12,6 +12,7 @@ import { Badge } from "@/src/components/ui/badge";
 import { cn } from "@/src/lib/utils";
 import { useAuth } from "@/src/providers/auth-provider";
 import { BookingSession } from "../types";
+import { LooseRecord } from "@/src/types/loose";
 import {
   BOOKING_STATUS_COLORS,
   convertBookingsToEvents,
@@ -48,7 +49,7 @@ export function BookingCalendar({
         const data = await res.json();
         
         // Transform Prisma DB models to BookingSession frontend types
-        const transformed: BookingSession[] = data.bookings.map((b: any) => {
+        const transformed: BookingSession[] = data.bookings.map((b: LooseRecord) => {
           const start = b.scheduledAt ? new Date(b.scheduledAt) : new Date();
           const end = new Date(start.getTime() + (b.durationMins || 60) * 60000);
           

@@ -15,7 +15,7 @@ export function SuccessStoryCard({ story }: SuccessStoryCardProps) {
             <Quote className="w-8 h-8 fill-blue-500/10" />
           </div>
           <p className="text-sm font-medium text-gray-600 leading-relaxed font-jakarta line-clamp-3 italic">
-            "{story.title}"
+            &quot;{story.title}&quot;
           </p>
         </div>
 

@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: "Password has been successfully updated." }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Reset API Error]", error);
     return NextResponse.json({ error: "Failed to process password reset." }, { status: 500 });
   }

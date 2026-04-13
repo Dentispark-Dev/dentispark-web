@@ -2,14 +2,20 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ArrowRight, X, Bell } from "lucide-react";
+import { ArrowRight, X, Bell } from "lucide-react";
 import { useField } from "@/src/providers/field-provider";
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
 
+interface AIRecommendation {
+  priority: "high" | "low" | "medium";
+  nextStep: string;
+  motivationPrompt: string;
+}
+
 export function ProactiveNotification() {
   const { activeField } = useField();
-  const [recommendation, setRecommendation] = useState<any>(null);
+  const [recommendation, setRecommendation] = useState<AIRecommendation | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

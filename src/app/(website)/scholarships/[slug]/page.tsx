@@ -1,3 +1,4 @@
+import { LooseRecord } from "@/src/types/loose";
 import { ResourceHubApi } from "@/src/connection/resource-hub-service";
 import Container from "@/src/components/layouts/container";
 import { Button } from "@/src/components/ui/button";
@@ -51,7 +52,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
   }
 
   const covers = scholarship.coversJson ? JSON.parse(scholarship.coversJson) : ["Tuition fees", "Living expenses support"];
-  const providerName = (scholarship as any).provider || "University Provider";
+  const providerName = (scholarship as LooseRecord).provider || "University Provider";
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen font-inter">
@@ -109,7 +110,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Award Value</span>
               </div>
               <p className="text-2xl font-extrabold text-slate-900">{scholarship.amountCurrency}{scholarship.amountValue > 0 ? scholarship.amountValue.toLocaleString() : "Varies"}</p>
-              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).fundingType || "Contribution to fees"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as LooseRecord).fundingType || "Contribution to fees"}</p>
             </div>
             <div className="py-8 px-6">
               <div className="flex items-center gap-3 mb-2">
@@ -119,7 +120,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
               <p className="text-2xl font-extrabold text-slate-900">
                 {scholarship.deadline}
               </p>
-              <p className="text-xs text-slate-500 font-bold mt-1">Intake: {(scholarship as any).intakeYear || "2026 Entry"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">Intake: {(scholarship as LooseRecord).intakeYear || "2026 Entry"}</p>
             </div>
             <div className="py-8 px-6">
               <div className="flex items-center gap-3 mb-2">
@@ -127,7 +128,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Study Level</span>
               </div>
               <p className="text-2xl font-extrabold text-slate-900 truncate">{scholarship.targetDegreeLevel}</p>
-              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).numberOfAwards || "Multiple awards"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as LooseRecord).numberOfAwards || "Multiple awards"}</p>
             </div>
             <div className="py-8 px-6 last:pr-0">
               <div className="flex items-center gap-3 mb-2">
@@ -135,7 +136,7 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                 <span className="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Target Location</span>
               </div>
               <p className="text-2xl font-extrabold text-slate-900">{scholarship.targetLocation || "United Kingdom"}</p>
-              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as any).nationality || "All Eligible"}</p>
+              <p className="text-xs text-slate-500 font-bold mt-1">{(scholarship as LooseRecord).nationality || "All Eligible"}</p>
             </div>
           </div>
         </Container>

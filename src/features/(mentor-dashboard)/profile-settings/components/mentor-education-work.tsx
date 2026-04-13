@@ -9,6 +9,7 @@ import { EditWorkModal } from "./edit-work-modal";
 import { toast } from "sonner";
 import Image from "next/image";
 import { Badge } from "@/src/components/ui/badge";
+import { LooseRecord } from "@/src/types/loose";
 
 export function MentorEducationWork() {
   const { showModal, hideModal } = useModal();
@@ -63,8 +64,8 @@ export function MentorEducationWork() {
     });
   };
 
-  const handleSaveEducation = (data: any) => {
-    const updatedEducation = data.schools.map((school: any) => ({
+  const handleSaveEducation = (data: { schools: LooseRecord[] }) => {
+    const updatedEducation = data.schools.map((school: LooseRecord) => ({
       university: school.school,
       degree: "BDS Dental Surgery",
       period: `${school.fromDate} - ${school.toDate}`,

@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { useParams } from "next/navigation";
+import { LooseRecord } from "@/src/types/loose";
 
 const STATUS_CONFIG: Record<string, { label: string; className: string; icon: React.ReactNode }> = {
     PENDING:        { label: "Pending Payment", className: "bg-yellow-100 text-yellow-800 border border-yellow-300", icon: <Clock className="h-4 w-4" /> },
@@ -32,7 +33,7 @@ export default function AdminOrderDetailPage() {
         enabled: !!orderId,
     });
 
-    const order = response?.content?.find((o: any) => o.externalId === orderId);
+    const order = response?.content?.find((o: LooseRecord) => o.externalId === orderId);
 
     if (isLoading) {
         return (

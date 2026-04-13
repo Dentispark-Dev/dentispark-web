@@ -1,4 +1,6 @@
 "use client";
+import { LooseRecord } from "@/src/types/loose";
+
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -395,7 +397,7 @@ function AvatarRing({ name }: { name: string }) {
     );
 }
 
-function StatPill({ label, value, color, icon: Icon }: { label: string; value: string | number | undefined; color: string; icon?: any }) {
+function StatPill({ label, value, color, icon: Icon }: { label: string; value: string | number | undefined; color: string; icon?: LooseRecord }) {
     return (
         <div className={cn("flex flex-col px-6 py-4 rounded-2xl border border-greys-300 bg-white shadow-sm transition-all hover:shadow-md", color)}>
             <div className="flex items-center gap-2 mb-1">

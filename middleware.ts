@@ -106,6 +106,28 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = hasValidToken(request);
   const profileStatus = getUserProfileStatus(request);
 
+  // Handle API Proxy Header Injection
+  if (pathname.startsWith("/api/backend")) {
+    const accessToken = request.cookies.get("accessToken")?.value;
+    const requestHeaders = new Headers(request.headers);
+    
+    if (accessToken) {
+      requestHeaders.set("Authorization", `Bearer ${accessToken}`);
+    }
+
+    // Pass through channel headers if they exist in standard places or env
+    const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
+    const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
+    if (channelId) requestHeaders.set("Channel-ID", channelId);
+    if (channelSecret) requestHeaders.set("Channel-Secret", channelSecret);
+
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
+
   const memberType = getUserMemberType(request);
   const isAdmin = memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM";
   const isMentor = memberType === "ACADEMIC_MENTOR";

@@ -57,13 +57,6 @@ const socialProofs: SocialProof[] = [
         coachedBy: "Dr. Natalie H."
     },
     {
-        stat: "It's never been easier to get help from an expert.",
-        quote: "I feel more confident in taking the next steps needed to achieve my admissions goals.",
-        name: "Jordan P.",
-        rating: 5,
-        coachedBy: "Dr. Omar F."
-    },
-    {
         stat: "Over 500 verified mentors. Zero guesswork.",
         quote: "I found my mentor on DentiSpark and got my acceptance letter 3 months later. 10/10.",
         name: "Amina W.",
@@ -227,7 +220,7 @@ export default function ApplyPage() {
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
-    }, [currentStep, selected, canProceed]);
+    }, [currentStep, selected, canProceed, next, step.options.length, step.type, toggle]);
 
     const filteredOptions = step.options.filter(o =>
         o.label.toLowerCase().includes(selectSearch.toLowerCase())
@@ -382,7 +375,7 @@ export default function ApplyPage() {
                                 <Stars count={proof.rating} />
                             </div>
                         </div>
-                        <p className="text-gray-600 text-sm italic leading-relaxed">"{proof.quote}"</p>
+                        <p className="text-gray-600 text-sm italic leading-relaxed">&quot;{proof.quote}&quot;</p>
                         {proof.coachedBy && (
                             <p className="text-xs text-gray-400">Mentored by {proof.coachedBy}</p>
                         )}

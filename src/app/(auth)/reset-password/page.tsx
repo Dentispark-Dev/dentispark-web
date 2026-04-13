@@ -76,9 +76,10 @@ function ResetPasswordForm() {
         router.push("/login");
       }, 2000);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Reset password error:", error);
-      toast.error(error.message || "Failed to reset password.");
+      const errorMessage = error instanceof Error ? error.message : "Failed to reset password.";
+      toast.error(errorMessage);
     } finally {
       setIsPending(false);
     }

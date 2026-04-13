@@ -7,6 +7,7 @@ import * as z from "zod";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -377,14 +378,14 @@ export function AccountRegistration({
                 <div className="space-y-1 leading-none">
                   <FormLabel className="font-jakarta text-sm font-normal">
                     I agree to data processing for vetting and{" "}
-                    <a
+                    <Link
                       href="/terms"
                       className="text-primary underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       DBS/PVG
-                    </a>{" "}
+                    </Link>{" "}
                     checks
                   </FormLabel>
                   <FormMessage />
@@ -408,22 +409,22 @@ export function AccountRegistration({
       <div className="mt-8 text-center">
         <p className="font-jakarta text-xs text-gray-600">
           Already have an account?{" "}
-          <a
+          <Link
             href="/mentor/login"
             className="text-primary font-jakarta cursor-pointer text-xs underline"
           >
             Log in
-          </a>
+          </Link>
         </p>
       </div>
 
       <div className="font-jakarta mt-4 flex justify-center space-x-6 text-xs text-gray-500 underline">
-        <a href="/terms" className="cursor-pointer hover:text-gray-700">
+        <Link href="/terms" className="cursor-pointer hover:text-gray-700">
           Terms & Conditions
-        </a>
-        <a href="/privacy" className="cursor-pointer hover:text-gray-700">
+        </Link>
+        <Link href="/privacy" className="cursor-pointer hover:text-gray-700">
           Privacy Policy
-        </a>
+        </Link>
       </div>
     </motion.div>
   );

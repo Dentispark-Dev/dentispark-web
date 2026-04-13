@@ -14,9 +14,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/src/components/ui/button";
+import { LooseRecord } from "@/src/types/loose";
 
 interface ServicePackageTableProps {
-    onInitiateOrder?: (pkg: any) => void;
+    onInitiateOrder?: (pkg: LooseRecord) => void;
 }
 
 export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProps) {

@@ -49,12 +49,38 @@ export function ChatWindow({ selectedConversation, currentUserEmail }: ChatWindo
     e.preventDefault();
     if (!newMessage.trim()) return;
 
-    // This is a placeholder since the current backend API only shows upsertPeerConversation.
-    // In a real app, you'd have a sendMessage endpoint or WebSocket connection.
-    // For now, we'll toast and clear input, assuming backend handles message flow via other means
-    // or we'll need to extend the chatService if a sendMessage endpoint is identified.
-    toast.info("Message sending logic to be finalized with WebSocket/API");
+    const messageContent = newMessage.trim();
     setNewMessage("");
+
+    // Optimistic UI Update
+    const temporaryId = `temp-${Date.now()}`;
+    const optimisticMessage: ChatMessage = {
+      id: temporaryId,
+      conversationId: selectedConversation.conversationId,
+      senderEmail: currentUserEmail,
+      senderName: "Me", // Will be replaced by real data on fetch
+      senderType: "USER",
+      message: messageContent,
+      attachmentUrls: [],
+      createdAt: new Date().toISOString(),
+    };
+
+    setMessages(prev => [...prev, optimisticMessage]);
+
+    try {
+      await chatService.sendMessage({
+        conversationId: selectedConversation.conversationId,
+        message: messageContent,
+      });
+      // Optionally re-fetch to get the real ID and server timestamp
+      fetchMessages();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send message. Please try again.");
+      // Rollback optimistic update
+      setMessages(prev => prev.filter(msg => msg.id !== temporaryId));
+      setNewMessage(messageContent); // Restore input
+    }
   };
 
   return (

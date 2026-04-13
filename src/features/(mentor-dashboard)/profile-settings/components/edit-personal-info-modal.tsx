@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
+import { LooseRecord } from "@/src/types/loose";
 import {
   Select,
   SelectContent,
@@ -40,7 +41,7 @@ type EditPersonalInfoFormData = z.infer<typeof editPersonalInfoSchema>;
 interface EditPersonalInfoModalProps {
   onSave: (data: EditPersonalInfoFormData) => void;
   onCancel: () => void;
-  initialData?: any; // Using any to handle the extended fields passed from view
+  initialData?: LooseRecord; // Using any to handle the extended fields passed from view
 }
 
 export function EditPersonalInfoModal({

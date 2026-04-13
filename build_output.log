@@ -1,0 +1,680 @@
+npm warn Unknown project config "frozen-lockfile". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> dentispark@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.12
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+   Creating an optimized production build ...
+[@sentry/nextjs] The Sentry SDK has enabled source map generation for your Next.js app. If you don't want to serve Source Maps to your users, either set the `sourcemaps.deleteSourcemapsAfterUpload` option to true, or manually delete the source maps after the build. In future Sentry SDK versions `sourcemaps.deleteSourcemapsAfterUpload` will default to `true`. If you do not want to generate and upload sourcemaps, set the `sourcemaps.disable` option in `withSentryConfig()`.
+ ✓ Compiled successfully in 11.9s
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/app/(auth)/sign-up/page.tsx
+6:8  Warning: 'Logo' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/admin/marketing/page.tsx
+5:10  Warning: 'marketingApi' is defined but never used.  @typescript-eslint/no-unused-vars
+97:18  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+186:44  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/(dashboard)/admin/sales/orders/[id]/page.tsx
+12:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/ai-hub/acceptance-odds/page.tsx
+6:3  Warning: 'BarChart3' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Calculator' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/ai-hub/interview-prep/page.tsx
+3:40  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'RefreshCcw' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'QuestionCarousel' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/ai-hub/mentor-matching/page.tsx
+8:3  Warning: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'AlertCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/ai-hub/page.tsx
+5:3  Warning: 'BrainCircuit' is defined but never used.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'ShieldAlert' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/ai-hub/personal-statement/page.tsx
+9:3  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Download' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/ai-hub/transcript-parser/page.tsx
+8:3  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+84:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+91:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+278:66  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+280:130  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+285:62  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+291:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(dashboard)/ai-hub/war-room/page.tsx
+8:3  Warning: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+19:18  Warning: 'AnimatePresence' is defined but never used.  @typescript-eslint/no-unused-vars
+127:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+127:83  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+145:73  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+192:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+207:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+207:78  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(dashboard)/ai-intelligence/page.tsx
+6:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/dashboard/purchases/page.tsx
+59:49  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(dashboard)/growth/page.tsx
+6:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/layout.tsx
+15:10  Warning: 'ProactiveNotification' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/mentorship/page.tsx
+4:10  Warning: 'useQuery' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'Input' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/mentorship/session/[bookingId]/components/daily-session-room.tsx
+14:49  Warning: 'bookingId' is defined but never used.  @typescript-eslint/no-unused-vars
+95:78  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+106:73  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/(dashboard)/mentorship/session/[bookingId]/page.tsx
+1:20  Warning: 'redirect' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/mentorship/[slug]/checkout/page.tsx
+3:10  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+41:9  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/mentorship/[slug]/page.tsx
+7:23  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(dashboard)/overview/page.tsx
+15:10  Warning: 'toast' is defined but never used.  @typescript-eslint/no-unused-vars
+23:12  Warning: 'progressData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(website)/admission-timeline/page.tsx
+9:17  Warning: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+10:22  Warning: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(website)/apply/page.tsx
+223:8  Warning: React Hook useEffect has a missing dependency: 'step.options'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(website)/blog/page.tsx
+4:52  Warning: 'BookOpen' is defined but never used.  @typescript-eslint/no-unused-vars
+57:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/(website)/community/page.tsx
+4:40  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(website)/mentors/page.tsx
+8:19  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+9:19  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+9:26  Warning: 'Phone' is defined but never used.  @typescript-eslint/no-unused-vars
+10:5  Warning: 'SlidersHorizontal' is defined but never used.  @typescript-eslint/no-unused-vars
+157:26  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+179:37  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/(website)/privacy/page.tsx
+4:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(website)/scholarships/[slug]/page.tsx
+14:3  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+42:12  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+54:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+112:85  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+122:93  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+130:85  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+138:85  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(website)/services/[slug]/page.tsx
+7:10  Warning: 'marketplaceApi' is defined but never used.  @typescript-eslint/no-unused-vars
+26:9  Warning: 'params' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+28:15  Warning: 'setPkg' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+54:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+66:12  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+106:28  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/(website)/success-stories/page.tsx
+7:18  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+10:5  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+246:33  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/(website)/terms/page.tsx
+4:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+5:49  Warning: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(website)/university-rep/page.tsx
+9:19  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+11:5  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+11:17  Warning: 'GraduationCap' is defined but never used.  @typescript-eslint/no-unused-vars
+12:5  Warning: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+196:33  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/api/ai/matchmaker/route.ts
+3:10  Warning: 'z' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/ai/study-planner/route.ts
+3:10  Warning: 'z' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/ai/war-room/route.ts
+33:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mentor/stats/route.ts
+29:11  Warning: 'totalBookings' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mentor/stripe/connect/route.ts
+11:28  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mentor/student-insights/route.ts
+10:24  Warning: 'mentorId' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mentor/student-matches/route.ts
+4:27  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mentorship/review/route.ts
+17:12  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+72:14  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mentorship/[slug]/availability/route.ts
+3:10  Warning: 'startOfDay' is defined but never used.  @typescript-eslint/no-unused-vars
+3:22  Warning: 'endOfDay' is defined but never used.  @typescript-eslint/no-unused-vars
+3:49  Warning: 'parseISO' is defined but never used.  @typescript-eslint/no-unused-vars
+10:11  Warning: 'slug' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/webhooks/daily/route.ts
+15:15  Warning: 'expectedSignature' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/layout.tsx
+5:8  Warning: 'genralSans' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'DentiBuddy' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'NotificationPrompt' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/mentor/services/page.tsx
+4:23  Warning: 'CheckCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+27:71  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+61:18  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/common/gdpr-banner.tsx
+5:10  Warning: 'ShieldCheck' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/layouts/dashboard/command-bar.tsx
+16:3  Warning: 'Home' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/layouts/dashboard/dashboard-sidebar.tsx
+18:3  Warning: 'onClose' is defined but never used.  @typescript-eslint/no-unused-vars
+24:11  Warning: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/layouts/footer.tsx
+8:5  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+8:17  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+8:27  Warning: 'Send' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/marketing/AdBanner.tsx
+4:10  Warning: 'marketingApi' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+79:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/features/(auth)/components/signup-flow.tsx
+7:3  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Lock' is defined but never used.  @typescript-eslint/no-unused-vars
+34:8  Warning: 'SignupRequest' is defined but never used.  @typescript-eslint/no-unused-vars
+117:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+426:19  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+426:88  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+471:57  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+505:53  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+521:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(auth)/components/signup-interstitial.tsx
+16:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(auth)/services/mutation.ts
+88:16  Warning: '_error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/admin-analytics.tsx
+13:5  Warning: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/admin-profile-view.tsx
+8:5  Warning: 'Phone' is defined but never used.  @typescript-eslint/no-unused-vars
+9:5  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+12:5  Warning: 'XCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+13:5  Warning: 'AlertCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+14:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+21:5  Warning: 'ChevronDown' is defined but never used.  @typescript-eslint/no-unused-vars
+22:5  Warning: 'ChevronUp' is defined but never used.  @typescript-eslint/no-unused-vars
+23:5  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+27:5  Warning: 'ExternalLink' is defined but never used.  @typescript-eslint/no-unused-vars
+34:10  Warning: 'Card' is defined but never used.  @typescript-eslint/no-unused-vars
+34:16  Warning: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
+34:29  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+34:41  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+36:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+318:72  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+350:89  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/admin/components/admin-table.tsx
+11:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+13:5  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+14:5  Warning: 'ExternalLink' is defined but never used.  @typescript-eslint/no-unused-vars
+17:5  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+18:5  Warning: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/create-custom-order-modal.tsx
+15:11  Warning: 'Trash2' is defined but never used.  @typescript-eslint/no-unused-vars
+15:40  Warning: 'DollarSign' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/create-role-modal.tsx
+19:40  Warning: 'ShieldAlert' is defined but never used.  @typescript-eslint/no-unused-vars
+19:63  Warning: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/create-service-modal.tsx
+23:5  Warning: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/initiate-order-modal.tsx
+21:29  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/admin/components/invite-admin-modal.tsx
+19:56  Warning: 'ShieldCheck' is defined but never used.  @typescript-eslint/no-unused-vars
+19:79  Warning: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/invite-mentor-modal.tsx
+25:25  Warning: 'UserCheck' is defined but never used.  @typescript-eslint/no-unused-vars
+25:87  Warning: 'UserPlus' is defined but never used.  @typescript-eslint/no-unused-vars
+26:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/invite-student-modal.tsx
+25:25  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+25:79  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+26:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/mentor-profile-view.tsx
+8:5  Warning: 'Phone' is defined but never used.  @typescript-eslint/no-unused-vars
+15:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+17:5  Warning: 'Stethoscope' is defined but never used.  @typescript-eslint/no-unused-vars
+21:5  Warning: 'ExternalLink' is defined but never used.  @typescript-eslint/no-unused-vars
+25:13  Warning: 'LinkIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+27:5  Warning: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+29:5  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+34:5  Warning: 'GraduationCap' is defined but never used.  @typescript-eslint/no-unused-vars
+35:5  Warning: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+36:5  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+85:131  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/admin/components/mentor-table.tsx
+12:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+14:5  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/moderator-table.tsx
+8:5  Warning: 'Shield' is defined but never used.  @typescript-eslint/no-unused-vars
+11:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+15:5  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+16:5  Warning: 'Trophy' is defined but never used.  @typescript-eslint/no-unused-vars
+17:5  Warning: 'Target' is defined but never used.  @typescript-eslint/no-unused-vars
+18:5  Warning: 'Lock' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/order-table.tsx
+15:5  Warning: 'ChevronDown' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/role-table.tsx
+6:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+7:5  Warning: 'Shield' is defined but never used.  @typescript-eslint/no-unused-vars
+12:5  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+15:5  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/service-package-table.tsx
+12:5  Warning: 'Plus' is defined but never used.  @typescript-eslint/no-unused-vars
+19:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/admin/components/standalone-initiate-order-modal.tsx
+21:5  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+22:5  Warning: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+43:12  Warning: 'mentorEmail' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+44:75  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+50:43  Warning: 'isLoadingPkgs' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+143:98  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:88  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/admin/components/student-profile-view.tsx
+8:5  Warning: 'Phone' is defined but never used.  @typescript-eslint/no-unused-vars
+12:5  Warning: 'XCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+14:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+17:5  Warning: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+22:5  Warning: 'ChevronDown' is defined but never used.  @typescript-eslint/no-unused-vars
+23:5  Warning: 'ChevronUp' is defined but never used.  @typescript-eslint/no-unused-vars
+24:5  Warning: 'ClipboardList' is defined but never used.  @typescript-eslint/no-unused-vars
+25:5  Warning: 'Lightbulb' is defined but never used.  @typescript-eslint/no-unused-vars
+30:5  Warning: 'Search' is defined but never used.  @typescript-eslint/no-unused-vars
+32:5  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+36:10  Warning: 'Card' is defined but never used.  @typescript-eslint/no-unused-vars
+36:16  Warning: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
+36:29  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+36:41  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+398:10  Warning: 'StatPill' is defined but never used.  @typescript-eslint/no-unused-vars
+398:131  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/admin/components/student-table.tsx
+12:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+17:5  Warning: 'CreditCard' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/admin/components/university-edit-view.tsx
+76:122  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+424:61  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/features/(dashboard)/admin/components/university-table.tsx
+12:5  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+38:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+38:18  Warning: 'AnimatePresence' is defined but never used.  @typescript-eslint/no-unused-vars
+39:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+44:12  Warning: 'viewMode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+187:57  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/features/(dashboard)/guidance-hub/components/ai-guidance-assistant.tsx
+12:3  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+28:42  Warning: 'clearError' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+142:59  Warning: 'i' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/mentorship/components/time-slot-picker.tsx
+7:40  Warning: 'isSameDay' is defined but never used.  @typescript-eslint/no-unused-vars
+19:34  Warning: 'mentorName' is defined but never used.  @typescript-eslint/no-unused-vars
+24:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+26:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+64:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(dashboard)/overview/components/admission-roadmap.tsx
+7:3  Warning: 'Circle' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Clock' is defined but never used.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/overview/components/ai-tools-grid.tsx
+9:3  Warning: 'BarChart3' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Key' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'Sparkle' is defined but never used.  @typescript-eslint/no-unused-vars
+21:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/overview/components/interactive-roadmap-flow.tsx
+8:3  Warning: 'Layers' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'LucideIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+86:19  Warning: 'toggleStage' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/overview/components/mission-control.tsx
+22:3  Warning: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'Target' is defined but never used.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'Layout' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'Compass' is defined but never used.  @typescript-eslint/no-unused-vars
+197:9  Warning: 'currentMonth' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/overview/components/personalized-mentors.tsx
+4:16  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/overview/components/welcome-section.tsx
+14:3  Warning: 'userYear' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/overview/services/overview.api.ts
+69:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/profile/components/academic-profile-modal.tsx
+29:3  Warning: 'gradeOptions' is defined but never used.  @typescript-eslint/no-unused-vars
+35:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/profile/components/academic-profile.tsx
+4:32  Warning: 'BookOpen' is defined but never used.  @typescript-eslint/no-unused-vars
+34:5  Warning: 'error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+35:5  Warning: 'refetch' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/profile/components/profile-settings.tsx
+64:6  Warning: React Hook useEffect has a missing dependency: 'defaultProfileData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+115:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/features/(dashboard)/university-hub/components/comparison-modal.tsx
+12:49  Warning: 'onClose' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/university-hub/components/university-hub-page.tsx
+6:18  Warning: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(dashboard)/university-hub/components/university-profile.tsx
+16:3  Warning: 'AlertCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+30:59  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-auth)/onboarding/components/mentor-onboarding-flow.tsx
+13:3  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+163:10  Warning: 'isSuccess' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+246:18  Warning: '_' is defined but never used.  @typescript-eslint/no-unused-vars
+470:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/features/(mentor-dashboard)/bookings/components/booking-calendar.tsx
+51:84  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/overview/components/latest-bookings-section.tsx
+11:11  Warning: 'Student' is defined but never used.  @typescript-eslint/no-unused-vars
+24:29  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/overview/components/mentor-overview-page.tsx
+9:10  Warning: 'LatestBookingsSection' is defined but never used.  @typescript-eslint/no-unused-vars
+42:6  Warning: React Hook useEffect has a missing dependency: 'fetchStats'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/features/(mentor-dashboard)/profile-settings/components/edit-personal-info-modal.tsx
+43:32  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/profile-settings/components/mentor-education-work.tsx
+8:10  Warning: 'EditWorkModal' is defined but never used.  @typescript-eslint/no-unused-vars
+16:23  Warning: 'setSpecialties' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+29:20  Warning: 'setWorkData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+66:64  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+67:71  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/profile-settings/components/mentor-personal-information.tsx
+58:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/schedule/components/availability-manager.tsx
+7:3  Warning: 'RefreshCcw' is defined but never used.  @typescript-eslint/no-unused-vars
+44:10  Warning: 'isSaving' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(mentor-dashboard)/schedule/components/mentor-schedule-page.tsx
+28:6  Warning: React Hook useEffect has a missing dependency: 'loadAvailability'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+37:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+55:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(mentor-dashboard)/settings/components/payout-settings.tsx
+4:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+15:61  Warning: 'onConnect' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(mentor-dashboard)/student-matching/components/student-ai-profile.tsx
+7:3  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Target' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+27:59  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/student-matching/components/student-matching-page.tsx
+8:10  Warning: 'MOCK_STUDENTS' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+21:59  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(mentor-dashboard)/student-matching/components/student-messaging-page.tsx
+6:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+54:22  Warning: 'rating' is defined but never used.  @typescript-eslint/no-unused-vars
+54:30  Warning: 'review' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(mentor-dashboard)/student-matching/components/student-profile-page.tsx
+9:10  Warning: 'FileText' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Warning: 'PracticeTestDetailModal' is defined but never used.  @typescript-eslint/no-unused-vars
+25:7  Warning: 'MOCK_STUDENT' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+55:57  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+58:10  Warning: 'showFullWhy' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+58:23  Warning: 'setShowFullWhy' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(mentor-dashboard)/student-matching/components/student-snapshot.tsx
+5:10  Warning: 'FileText' is defined but never used.  @typescript-eslint/no-unused-vars
+5:28  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(mentor-dashboard)/student-matching/constants.ts
+2:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/features/(website)/about-us/components/audience-section.tsx
+5:10  Warning: 'ArrowDown' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/about-us/components/hero-section.tsx
+5:10  Warning: 'Title' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/about-us/components/stats-strip.tsx
+4:8  Warning: 'Container' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/become-a-mentor/features-section.tsx
+10:3  Warning: 'Carousel' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'CarouselContent' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'CarouselItem' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+51:7  Warning: 'cardVariants' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/become-a-mentor/hero-section.tsx
+26:7  Warning: 'bounceX' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/blog/components/blog-grid.tsx
+4:29  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+4:35  Warning: 'Tag' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+78:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/features/(website)/contact-us/components/contact-us.tsx
+4:10  Warning: 'Title' is defined but never used.  @typescript-eslint/no-unused-vars
+8:46  Warning: 'Clock' is defined but never used.  @typescript-eslint/no-unused-vars
+8:53  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/contact-us/components/faq.tsx
+4:27  Warning: 'forwardRef' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/admission-probability-calculator.tsx
+24:3  Warning: 'Stethoscope' is defined but never used.  @typescript-eslint/no-unused-vars
+28:3  Warning: 'Brain' is defined but never used.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'Timer' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/dashboard-preview.tsx
+2:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/how-it-works.tsx
+3:17  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+6:29  Warning: 'useTransform' is defined but never used.  @typescript-eslint/no-unused-vars
+7:32  Warning: 'Zap' is defined but never used.  @typescript-eslint/no-unused-vars
+7:37  Warning: 'ShieldCheck' is defined but never used.  @typescript-eslint/no-unused-vars
+7:50  Warning: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+7:57  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/meet-our-mentors.tsx
+21:6  Warning: 'Mentor' is defined but never used.  @typescript-eslint/no-unused-vars
+110:18  Warning: 'useScroll' is defined but never used.  @typescript-eslint/no-unused-vars
+110:29  Warning: 'useTransform' is defined but never used.  @typescript-eslint/no-unused-vars
+110:43  Warning: 'useSpring' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/pricing.tsx
+7:10  Warning: 'Title' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/testimonials.tsx
+12:8  Warning: 'mTestimonial' is defined but never used.  @typescript-eslint/no-unused-vars
+17:8  Warning: 'smRadiousBg' is defined but never used.  @typescript-eslint/no-unused-vars
+19:10  Warning: 'Title' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/home/components/why-choose-us.tsx
+6:22  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+6:28  Warning: 'ShieldCheck' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/(website)/scholarships/components/scholarship-grid.tsx
+12:18  Warning: 'Variants' is defined but never used.  @typescript-eslint/no-unused-vars
+147:10  Warning: 'getMockScholarships' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/ai-assistant/components/DentiBuddy.tsx
+18:42  Warning: 'clearError' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/ai-hub/components/extraction-preview.tsx
+5:24  Warning: 'AlertCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/ai-hub/components/intelligence-radar.tsx
+13:37  Warning: 'step' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/ai-hub/components/mentor-match-card.tsx
+5:10  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/ai-hub/components/split-pane-layout.tsx
+4:18  Warning: 'AnimatePresence' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/automation/components/deadline-countdown.tsx
+4:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+5:20  Warning: 'AlertTriangle' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/automation/components/milestone-list.tsx
+6:30  Warning: 'Deadline' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/chat/components/chat-window.tsx
+4:18  Warning: 'AnimatePresence' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/chat/components/mentor-sidebar.tsx
+4:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+6:18  Warning: 'MoreHorizontal' is defined but never used.  @typescript-eslint/no-unused-vars
+6:34  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+6:40  Warning: 'Plus' is defined but never used.  @typescript-eslint/no-unused-vars
+6:46  Warning: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/chat/hooks/use-chat-socket.ts
+3:20  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+12:31  Warning: 'mentorId' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/growth/components/referral-system.tsx
+4:35  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/growth/components/success-card.tsx
+5:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/institutions/components/api-key-manager.tsx
+4:20  Warning: 'EyeOff' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/institutions/components/webhook-manager.tsx
+4:33  Warning: 'CheckCircle2' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+5:18  Warning: 'AnimatePresence' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/mentorship/components/document-sidebar.tsx
+6:21  Warning: 'Plus' is defined but never used.  @typescript-eslint/no-unused-vars
+7:40  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/mentorship/components/review-modal.tsx
+49:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/payments/components/checkout-modal.tsx
+6:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/payments/components/plan-selector.tsx
+5:45  Warning: 'CreditCard' is defined but never used.  @typescript-eslint/no-unused-vars
+5:57  Warning: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/profile/components/mentor-profile-view.tsx
+8:32  Warning: 'MessageSquare' is defined but never used.  @typescript-eslint/no-unused-vars
+9:5  Warning: 'MoreHorizontal' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/features/profile/components/privacy-settings.tsx
+4:46  Warning: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+4:53  Warning: 'Bell' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'motion' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

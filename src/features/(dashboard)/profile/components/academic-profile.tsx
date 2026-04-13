@@ -210,7 +210,7 @@ export function AcademicProfile({ initialData }: AcademicProfileProps) {
                       </div>
                       <Badge variant="outline" className="bg-white">Verified</Badge>
                     </div>
-                    <p className="text-slate-600 text-sm italic leading-relaxed">"{exp.reflection}"</p>
+                    <p className="text-slate-600 text-sm italic leading-relaxed">&quot;{exp.reflection}&quot;</p>
                   </div>
                 ))
               ) : (

@@ -1,4 +1,16 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /mentor/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /settings/
+Disallow: /applications/
+Disallow: /messages/
+Disallow: /mentorship/
+Disallow: /community-hub/
+Disallow: /university-hub/
+Disallow: /ai-intelligence/
 
-Sitemap: https://dentispark.com/sitemap.xml
+Sitemap: https://www.dentispark.com/sitemap.xml

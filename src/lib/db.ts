@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { LooseRecord } from "@/src/types/loose";
 
 const prismaClientSingleton = () => {
   return new PrismaClient({
@@ -17,9 +18,9 @@ const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
  * Wraps prisma.$queryRawUnsafe and returns an object with a 'rows' property
  * to match the expected pg-client interface.
  */
-export const query = async (text: string, params: any[] = []) => {
+export const query = async (text: string, params: unknown[] = []) => {
   try {
-    const result = await prisma.$queryRawUnsafe(text, ...params) as any[];
+    const result = await prisma.$queryRawUnsafe(text, ...params) as LooseRecord[];
     return { rows: result };
   } catch (error) {
     console.error('Database Query Error:', error);

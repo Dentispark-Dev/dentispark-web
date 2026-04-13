@@ -22,7 +22,7 @@ export function DashboardPreview() {
           <div className="pt-4">
             <Link href="/sign-up">
               <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-jakarta font-bold px-10 h-14 rounded-2xl text-base transition-all group flex items-center gap-3">
-                Get access — it's free
+                Get access — it&apos;s free
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

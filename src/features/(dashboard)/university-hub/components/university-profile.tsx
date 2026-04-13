@@ -19,6 +19,7 @@ import { Breadcrumb } from "@/src/components/ui/breadcrumb";
 import { Button } from "@/src/components/ui/button";
 import { useField } from "@/src/providers/field-provider";
 import { University } from "../types";
+import { LooseRecord } from "@/src/types/loose";
 
 interface UniversityProfileProps {
   university: University;
@@ -27,7 +28,7 @@ interface UniversityProfileProps {
 export function UniversityProfile({ university }: UniversityProfileProps) {
   const { activeField, activeFieldLabel } = useField();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [strategy, setStrategy] = useState<any>(null);
+  const [strategy, setStrategy] = useState<LooseRecord | null>(null);
 
   const handleGenerateStrategy = async () => {
     setIsAnalyzing(true);

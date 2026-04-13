@@ -29,11 +29,12 @@ Analyze the essay and return a structured assessment focusing on Academic Tone, 
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Personal Statement Review Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to analyze personal statement.";
     return new Response(JSON.stringify({ 
-      error: "Failed to analyze personal statement.",
-      details: error.message 
+      error: errorMessage,
+      details: errorMessage 
     }), {
       status: 500,
       headers: { "Content-Type": "application/json" },

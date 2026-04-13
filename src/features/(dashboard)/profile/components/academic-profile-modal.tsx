@@ -69,12 +69,12 @@ export function AcademicProfileModal({
 
   const { fields: expFields, append: appendExp, remove: removeExp } = useFieldArray({
     control: form.control,
-    name: "workExperience" as any,
+    name: "workExperience",
   });
 
   const { fields: uniFields, append: appendUni, remove: removeUni } = useFieldArray({
     control: form.control,
-    name: "universityShortlist" as any,
+    name: "universityShortlist",
   });
 
   const handleSubmit = async (data: AcademicModalFormData) => {
@@ -206,18 +206,18 @@ export function AcademicProfileModal({
                     { name: "ucatAbstract", label: "Abstract" },
                     { name: "ucatSituational", label: "SJT" },
                   ].map((sub) => (
-                    <FormField
-                      key={sub.name}
-                      control={form.control}
-                      name={sub.name as any}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-[9px] font-extrabold text-slate-500 uppercase flex justify-center mb-1">{sub.label}</FormLabel>
-                          <FormControl><Input {...field} className="h-10 text-center rounded-lg bg-white" placeholder="—" /></FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  ))}
+                      <FormField
+                        key={sub.name}
+                        control={form.control}
+                        name={sub.name as keyof AcademicModalFormData}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[9px] font-extrabold text-slate-500 uppercase flex justify-center mb-1">{sub.label}</FormLabel>
+                            <FormControl><Input {...field} className="h-10 text-center rounded-lg bg-white" placeholder="—" /></FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
@@ -234,7 +234,7 @@ export function AcademicProfileModal({
                 type="button" 
                 variant="outline" 
                 size="sm" 
-                onClick={() => appendExp({ id: Math.random().toString(), company: "", role: "", duration: "", reflection: "" } as any)}
+                onClick={() => appendExp({ id: Math.random().toString(), company: "", role: "", duration: "", reflection: "" })}
                 className="h-8 text-xs font-bold border-blue-100 text-blue-600 hover:bg-blue-50"
               >
                 <Plus className="h-3 w-3 mr-1" /> Add Experience
@@ -257,7 +257,7 @@ export function AcademicProfileModal({
                   <div className="grid gap-4 sm:grid-cols-2">
                     <FormField
                       control={form.control}
-                      name={`workExperience.${index}.company` as any}
+                      name={`workExperience.${index}.company`}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Hospital/Clinic</FormLabel>
@@ -268,7 +268,7 @@ export function AcademicProfileModal({
                     <div className="grid grid-cols-2 gap-2">
                       <FormField
                         control={form.control}
-                        name={`workExperience.${index}.role` as any}
+                        name={`workExperience.${index}.role`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Role</FormLabel>
@@ -278,7 +278,7 @@ export function AcademicProfileModal({
                       />
                       <FormField
                         control={form.control}
-                        name={`workExperience.${index}.duration` as any}
+                        name={`workExperience.${index}.duration`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Duration</FormLabel>
@@ -290,7 +290,7 @@ export function AcademicProfileModal({
                   </div>
                   <FormField
                     control={form.control}
-                    name={`workExperience.${index}.reflection` as any}
+                    name={`workExperience.${index}.reflection`}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-[10px] font-bold text-slate-400 uppercase">Personal Reflection (Critical for AI)</FormLabel>
@@ -319,7 +319,7 @@ export function AcademicProfileModal({
                 type="button" 
                 variant="outline" 
                 size="sm" 
-                onClick={() => appendUni({ id: Math.random().toString(), university: "", course: "Dental Science", status: "Interested" } as any)}
+                onClick={() => appendUni({ id: Math.random().toString(), university: "", course: "Dental Science", status: "Interested" })}
                 className="h-8 text-xs font-bold border-slate-200 text-slate-600 hover:bg-slate-50"
               >
                 <Plus className="h-3 w-3 mr-1" /> Add University
@@ -340,7 +340,7 @@ export function AcademicProfileModal({
                   </Button>
                   <FormField
                     control={form.control}
-                    name={`universityShortlist.${index}.university` as any}
+                    name={`universityShortlist.${index}.university`}
                     render={({ field }) => (
                       <Input {...field} placeholder="University Name" className="h-10 bg-white border-slate-200 rounded-xl" />
                     )}
@@ -348,14 +348,14 @@ export function AcademicProfileModal({
                   <div className="flex gap-2">
                     <FormField
                       control={form.control}
-                      name={`universityShortlist.${index}.course` as any}
+                      name={`universityShortlist.${index}.course`}
                       render={({ field }) => (
                         <Input {...field} placeholder="Course" className="h-9 bg-white border-slate-200 rounded-xl text-xs flex-1" />
                       )}
                     />
                     <FormField
                       control={form.control}
-                      name={`universityShortlist.${index}.status` as any}
+                      name={`universityShortlist.${index}.status`}
                       render={({ field }) => (
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>

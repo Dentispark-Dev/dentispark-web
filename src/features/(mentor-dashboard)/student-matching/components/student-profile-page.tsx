@@ -16,6 +16,7 @@ import { PracticeTestDetailModal } from "./practice-test-detail-modal";
 import { BaseAPI } from "@/src/connection/base-api";
 import { toast } from "sonner";
 import { StudentSnapshotDemo } from "./student-snapshot";
+import { LooseRecord } from "@/src/types/loose";
 
 interface StudentProfilePageProps {
   className?: string;
@@ -52,7 +53,7 @@ const MOCK_STUDENT = {
 
 export function StudentProfilePage({ className }: StudentProfilePageProps) {
   const router = useRouter();
-  const [student, setStudent] = useState<any>(null);
+  const [student, setStudent] = useState<LooseRecord | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showFullGoals, setShowFullGoals] = useState(false);
   const [showFullWhy, setShowFullWhy] = useState(false);

@@ -1,4 +1,5 @@
 import { PlatformField } from "../types/fields";
+import { LooseRecord } from "@/src/types/loose";
 
 // Common API response interfaces
 export interface BaseApiResponse<T = unknown> {
@@ -346,7 +347,7 @@ export interface Notification {
   | "system_announcement";
   title: string;
   message: string;
-  data?: Record<string, unknown>;
+  data?: LooseRecord;
   is_read: boolean;
   created_at: string;
   updated_at: string;
@@ -439,7 +440,7 @@ export interface StudentRecord {
 
 export interface StudentDetail extends StudentRecord {
   phoneNumber: string;
-  academicHistory?: Record<string, unknown>[];
+  academicHistory?: LooseRecord[];
   currentAcademicYear?: number;
   gcseResult?: string;
   ucatScore?: number;
@@ -526,6 +527,7 @@ export interface AdminUniversityRecord {
   name: string;
   location: string;
   ranking?: number;
+  logoUrl?: string;
   dentalSchoolPathway: string;
   createdAt: string;
 }

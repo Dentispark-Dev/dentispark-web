@@ -2,17 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ReactQueryProvider } from "@/src/lib/react-query";
 import { Toaster } from "sonner";
-import genralSans from "@/src/lib/font";
 import { ModalProvider } from "@/src/components/ui/modal-provider";
 import { AuthProvider } from "@/src/providers/auth-provider";
 import { FieldProvider } from "@/src/providers/field-provider";
-import { DentiBuddy } from "@/src/features/ai-assistant/components/DentiBuddy";
-import { CookieConsent } from "@/src/components/molecules/cookie-consent";
-import { NotificationPrompt } from "@/src/features/automation/components/notification-prompt";
 import { I18nProvider } from "@/src/providers/i18n-provider";
 import { robotoSlab, bricolage, jakarta } from "@/src/lib/font";
 import { cn } from "@/src/lib/utils";
 import { PostHogProvider } from "@/src/providers/posthog-provider";
+import { ThemeProvider } from "@/src/providers/theme-provider";
+import { CookieConsent } from "@/src/components/molecules/cookie-consent";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.dentispark.com"),
@@ -73,34 +71,36 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en" className={cn(jakarta.className, jakarta.variable, robotoSlab.variable, bricolage.variable)}>
+    <html lang="en" suppressHydrationWarning className={cn(jakarta.className, jakarta.variable, robotoSlab.variable, bricolage.variable)}>
       <head>
         <script
           src="https://accounts.google.com/gsi/client"
           async
           defer
         ></script>
-        {/* Performance Monitoring */}
-        <script async src="https://cdn.vercel-insights.com/v1/speed-insights.js"></script>
       </head>
       <body suppressHydrationWarning={true}>
-        <PostHogProvider>
-          <ReactQueryProvider>
-            <I18nProvider>
-              <AuthProvider>
-                <FieldProvider>
-                  {children}
-                </FieldProvider>
-              </AuthProvider>
-            </I18nProvider>
-          </ReactQueryProvider>
-          <ModalProvider />
-          {/* Components hidden at user request - can be toggled on later */}
-          {/* <DentiBuddy /> */}
-          <Toaster richColors />
-          <CookieConsent />
-          {/* <NotificationPrompt /> */}
-        </PostHogProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <PostHogProvider>
+            <ReactQueryProvider>
+              <I18nProvider>
+                <AuthProvider>
+                  <FieldProvider>
+                    {children}
+                  </FieldProvider>
+                </AuthProvider>
+              </I18nProvider>
+            </ReactQueryProvider>
+            <ModalProvider />
+            <Toaster richColors />
+            <CookieConsent />
+          </PostHogProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

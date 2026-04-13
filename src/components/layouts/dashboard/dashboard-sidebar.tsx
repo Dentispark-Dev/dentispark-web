@@ -10,7 +10,7 @@ import { useAuth } from "@/src/providers/auth-provider";
 import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "../../common/language-switcher";
 import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, X } from "lucide-react";
 import { FieldSwitcher } from "@/src/components/ui/field-switcher";
 
 export default function DashboardSidebar({
@@ -40,8 +40,15 @@ export default function DashboardSidebar({
       )}
     >
       <div className="flex h-full flex-col">
-        <div className="border-greys-300 flex items-center justify-between p-4 lg:hidden">
-          {/* Mobile close button space */}
+        <div className="flex items-center justify-between p-6 lg:hidden border-b border-greys-100 mb-2">
+          <WhiteLogo className="h-8 w-auto invert brightness-0" />
+          <button 
+            onClick={onClose} 
+            className="p-2 rounded-xl bg-greys-50 text-black-500 hover:bg-greys-100 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
         
         {/* Field Switcher */}
@@ -82,17 +89,26 @@ export default function DashboardSidebar({
                     )}
                   </button>
                 ) : (
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center space-x-3 rounded-xl px-3 py-2.5 font-medium transition-colors",
-                      isActive ? "bg-primary-50 text-primary-700 shadow-sm" : "text-black-600 hover:bg-greys-100",
-                    )}
-                  >
-                    <span className={cn(isActive ? "text-primary-600" : "text-black-400")}>
-                      {isActive ? item.icon.active : item.icon.inactive}
-                    </span>
-                    <span>{item.label}</span>
+                    <div className="flex flex-1 items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <span className={cn(isActive ? "text-primary-600" : "text-black-400")}>
+                          {isActive ? item.icon.active : item.icon.inactive}
+                        </span>
+                        <span>{item.label}</span>
+                      </div>
+                      
+                      {/* Notifications / Badges */}
+                      {(item.badge !== undefined && item.badge > 0) ? (
+                        <span className="bg-[#FE4648] text-white text-[10px] font-bold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+                          {item.badge}
+                        </span>
+                      ) : item.dot ? (
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#12AC75] opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#12AC75]"></span>
+                        </span>
+                      ) : null}
+                    </div>
                   </Link>
                 )}
 

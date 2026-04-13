@@ -217,7 +217,7 @@ export function AdmissionRoadmap() {
                     </div>
                     <div>
                         <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Key Tip</p>
-                        <p className="text-sm font-bold text-slate-700 leading-tight">"{currentPhase.tip}"</p>
+                        <p className="text-sm font-bold text-slate-700 leading-tight">&quot;{currentPhase.tip}&quot;</p>
                     </div>
                 </div>
             </div>

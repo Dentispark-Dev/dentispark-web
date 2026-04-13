@@ -80,7 +80,7 @@ export function StudentTable() {
             }
             return { previousData };
         },
-        onError: (_err, _newStatus, context) => {
+        onError: (_err, _newStatus, context: { previousData?: PaginatedResponse<StudentRecord> } | undefined) => {
             if (context?.previousData) {
                 queryClient.setQueryData(["admin-students", query], context.previousData);
             }

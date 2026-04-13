@@ -10,14 +10,15 @@ import { useState } from "react";
 import { Plus, LayoutGrid, Search, Filter, ShoppingCart } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
+import { LooseRecord } from "@/src/types/loose";
 
 export default function AdminServicesPage() {
-    const [selectedPackage, setSelectedPackage] = useState<any>(null);
+    const [selectedPackage, setSelectedPackage] = useState<LooseRecord | null>(null);
     const [isInitiateModalOpen, setIsInitiateModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isStandaloneOrderOpen, setIsStandaloneOrderOpen] = useState(false);
 
-    const handleInitiateOrder = (pkg: any) => {
+    const handleInitiateOrder = (pkg: LooseRecord) => {
         setSelectedPackage(pkg);
         setIsInitiateModalOpen(true);
     };

@@ -82,7 +82,10 @@ export function CreateCustomOrderModal({ isOpen, onClose }: CreateCustomOrderMod
             queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
             reset();
         },
-        onError: (e: any) => toast.error(e.message || "Failed to create order"),
+        onError: (e: unknown) => {
+            const errorMessage = e instanceof Error ? e.message : "Failed to create order";
+            toast.error(errorMessage);
+        },
     });
 
     const reset = () => {

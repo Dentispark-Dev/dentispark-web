@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronLeft, Sparkles, Command } from "lucide-react";
+import { ChevronRight, ChevronLeft, Command } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 
 interface Step {
@@ -19,19 +19,19 @@ interface MatchingWizardProps {
 }
 
 export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }: MatchingWizardProps) {
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentStep < steps.length - 1) {
       onStepChange(currentStep + 1);
     } else {
       onComplete();
     }
-  };
+  }, [currentStep, steps.length, onStepChange, onComplete]);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (currentStep > 0) {
       onStepChange(currentStep - 1);
     }
-  };
+  }, [currentStep, onStepChange]);
 
   // Keyboard support for "Enter" to continue
   useEffect(() => {
@@ -42,7 +42,7 @@ export function MatchingWizard({ steps, onComplete, currentStep, onStepChange }:
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentStep]);
+  }, [handleNext]);
 
   return (
     <div className="space-y-6">

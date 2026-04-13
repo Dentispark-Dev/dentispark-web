@@ -8,19 +8,28 @@ import {
   Flame, 
   Award, 
   Activity,
-  ArrowUpRight,
   ShieldCheck,
-  Zap
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
 import { useAuth } from "@/src/providers/auth-provider";
 import { useField } from "@/src/providers/field-provider";
 
+interface SparkIndexData {
+  overallScore: number;
+  rank: string;
+  recentImprovement: number;
+  breakdown: {
+    academics: number;
+    clinical: number;
+    interview: number;
+  };
+}
+
 export function PerformanceGrid() {
   const { user } = useAuth();
   const { activeField } = useField();
-  const [data, setData] = React.useState<any>(null);
+  const [data, setData] = React.useState<SparkIndexData | null>(null);
   const [lastSync, setLastSync] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
 

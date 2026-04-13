@@ -16,7 +16,7 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.json({ availability: mentorProfile?.availability || null });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Fetch Availability Error:", error);
     return NextResponse.json({ error: "Failed to fetch availability." }, { status: 500 });
   }
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, availability: mentorProfile.availability });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Save Availability Error:", error);
     return NextResponse.json({ error: "Failed to save availability." }, { status: 500 });
   }

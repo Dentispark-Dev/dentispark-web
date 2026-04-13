@@ -120,9 +120,10 @@ export default function InterviewPrepPage() {
 
       const data = await response.json();
       setResults(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || "Failed to analyze interview response. Please try again.");
+      const message = err instanceof Error ? err.message : "Failed to analyze interview response. Please try again.";
+      setError(message);
     } finally {
       setIsAnalyzing(false);
     }

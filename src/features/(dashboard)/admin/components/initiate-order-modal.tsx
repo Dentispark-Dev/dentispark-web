@@ -16,9 +16,10 @@ import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import { ShoppingCart, Send, User, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
+import { LooseRecord } from "@/src/types/loose";
 
 interface InitiateOrderModalProps {
-    package: any;
+    package: LooseRecord;
     isOpen: boolean;
     onClose: () => void;
 }
@@ -42,8 +43,9 @@ export function InitiateOrderModal({ package: pkg, isOpen, onClose }: InitiateOr
             setStudentEmail("");
             setNotes("");
         },
-        onError: (error: any) => {
-            toast.error(error.message || "Failed to initiate order");
+        onError: (error: unknown) => {
+            const errorMessage = error instanceof Error ? error.message : "Failed to initiate order";
+            toast.error(errorMessage);
         }
     });
 

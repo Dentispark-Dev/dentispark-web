@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { CheckCircle, Search, Star, Clock, Filter, ArrowRight } from "lucide-react";
+import { Search, Star, Clock, Filter, ArrowRight } from "lucide-react";
 import AdBanner from "@/src/components/marketing/AdBanner";
 import { motion, Variants } from "framer-motion";
 import Container from "@/src/components/layouts/container";
@@ -30,7 +30,20 @@ const itemVariants: Variants = {
   },
 };
 
-export function ServicesContent({ services }: { services: any[] }) {
+interface MarketplaceService {
+  externalId: string;
+  serviceType: string;
+  title: string;
+  description: string;
+  mentorName: string;
+  mentorRating: number;
+  reviews: number;
+  durationMinutes: number;
+  price: number;
+  slug: string;
+}
+
+export function ServicesContent({ services }: { services: MarketplaceService[] }) {
   return (
     <div className="flex min-h-screen flex-col bg-slate-50/30">
       {/* Hero Section - Compact & Powerful */}
@@ -111,7 +124,7 @@ export function ServicesContent({ services }: { services: any[] }) {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {services.map((service, index) => (
+              {services.map((service) => (
                 <motion.div 
                   key={service.externalId} 
                   variants={itemVariants}

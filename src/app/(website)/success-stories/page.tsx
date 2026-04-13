@@ -225,7 +225,7 @@ export default function SuccessStoriesPage() {
                                     <span className="text-emerald-500">Harvard Med.</span>
                                 </h2>
                                 <p className="text-xl text-slate-400 font-medium leading-relaxed">
-                                    "I came to DentiSpark with a strong background but zero knowledge of the MMI process. The mentors here didn't just teach me what to say—they taught me how to think like a professional."
+                                    &quot;I came to DentiSpark with a strong background but zero knowledge of the MMI process. The mentors here didn&apos;t just teach me what to say—they taught me how to think like a professional.&quot;
                                 </p>
                                 <div className="flex flex-wrap gap-8 pt-4">
                                     <div>
@@ -239,7 +239,7 @@ export default function SuccessStoriesPage() {
                                     </div>
                                 </div>
                                 <Button size="lg" className="h-14 px-10 rounded-2xl bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-lg group">
-                                    Read David's Story <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                                    Read David&apos;s Story <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </div>
                             <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white/5">
@@ -291,7 +291,7 @@ export default function SuccessStoriesPage() {
                                     {story.achievement}
                                 </h3>
                                 <p className="text-slate-500 font-medium leading-relaxed italic">
-                                    "{story.quote}"
+                                    &quot;{story.quote}&quot;
                                 </p>
                             </div>
 

@@ -27,11 +27,12 @@ export async function POST(req: Request) {
       recordId: record.id,
       timestamp: record.timestamp
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("AI Sync Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to sync intelligence data.";
     return NextResponse.json({ 
       error: "Failed to sync intelligence data.",
-      details: error.message 
+      details: errorMessage 
     }, { status: 500 });
   }
 }

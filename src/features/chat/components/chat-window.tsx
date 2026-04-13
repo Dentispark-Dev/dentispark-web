@@ -3,12 +3,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Send, Paperclip, Smile, MoreVertical, Phone, Video, Mic, CheckCheck } from "lucide-react";
+import { Send, Paperclip, MoreVertical, CheckCheck } from "lucide-react";
 import { useChatSocket } from "../hooks/use-chat-socket";
 import { cn } from "@/src/lib/utils";
 
 export function ChatWindow() {
-  const { messages, isTyping, isOnline, sendMessage } = useChatSocket("1");
+  const { messages, isTyping, sendMessage } = useChatSocket("1");
   const [inputText, setInputText] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +50,7 @@ export function ChatWindow() {
 
       {/* Messages */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 lg:p-8 space-y-2 relative z-10 custom-scrollbar">
-        {messages.map((msg: any, i: number) => {
+        {messages.map((msg, i) => {
           const isMe = msg.sender === "student";
           const isFirstFromSender = i === 0 || messages[i-1].sender !== msg.sender;
           

@@ -198,6 +198,7 @@ export function MissionControl() {
   
   const activeMissionId = useMemo(() => {
     // Priority: The first "Not Completed" stage is the focus
+    if (!stages || stages.length === 0) return 1;
     const firstIncomplete = stages.find(s => !s.isCompleted);
     if (firstIncomplete) return firstIncomplete.id;
     return 1;
@@ -238,7 +239,9 @@ export function MissionControl() {
           
           <div className="flex flex-col items-end">
             <span className="text-4xl font-jakarta font-extrabold text-emerald-600 leading-none">
-              {Math.round((stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100)}%
+              {stages && stages.length > 0 
+                ? Math.round((stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100) 
+                : 0}%
             </span>
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Ready for Clinic</span>
           </div>
@@ -248,7 +251,7 @@ export function MissionControl() {
           <div className="h-4 bg-slate-100 rounded-full overflow-hidden w-full relative">
             <motion.div 
               initial={{ width: 0 }}
-              animate={{ width: `${(stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100}%` }}
+              animate={{ width: `${stages && stages.length > 0 ? (stages.filter(s => s.isCompleted).length / MISSIONS.length) * 100 : 0}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
               className="h-full bg-emerald-500 rounded-full" 
             />
@@ -416,7 +419,7 @@ export function MissionControl() {
                                 <span className="text-[10px] font-extrabold text-emerald-600 uppercase tracking-widest">Expert Advice</span>
                              </div>
                              <p className="text-emerald-800 font-medium leading-relaxed italic">
-                               "{mission.tip}"
+                               &quot;{mission.tip}&quot;
                              </p>
                           </div>
                        </div>

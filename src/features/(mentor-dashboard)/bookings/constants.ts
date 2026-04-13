@@ -2,18 +2,18 @@ import { BookingSession, BookingStats, CalendarEvent } from "./types";
 
 export const SAMPLE_BOOKINGS: BookingSession[] = [
   {
-    id: "1",
-    title: "UCAT Mentoring",
+    id: "active-session-1",
+    title: "UCAT Final Strategy",
     studentName: "John Doe",
     studentAvatar: "/images/profile.png",
-    startTime: "08:00",
-    endTime: "10:00",
-    date: "2025-07-15",
+    startTime: "11:00", // Current hour block for smoke test
+    endTime: "13:00",
+    date: "2026-04-13", // Current date
     type: "UCAT Mentoring",
     status: "confirmed",
     duration: 120,
-    meetingLink: "https://zoom.us/j/123456789",
-    notes: "Focus on quantitative reasoning section",
+    meetingLink: "https://daily.co/dentispark-room-test",
+    notes: "Production Smoke Test - Verify JOIN button visibility.",
     studentEmail: "john.doe@email.com",
     studentPhone: "+44 7123 456789",
   },

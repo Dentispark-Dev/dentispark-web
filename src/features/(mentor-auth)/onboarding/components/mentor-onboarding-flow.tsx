@@ -87,7 +87,7 @@ const OptionCard = ({
   selected, 
   onClick 
 }: { 
-  icon: any; 
+  icon: React.ElementType; 
   label: string; 
   selected: boolean; 
   onClick: () => void 
@@ -218,7 +218,7 @@ export function MentorOnboardingFlow() {
           throw new Error(registrationResponse.responseMessage || "Registration failed. Please check your details and try again.");
         }
 
-        // Step 2: Profile Verification (best-effort — backend processes async)
+        // Step 2: Profile Verification
         const expertiseMapping: Record<string, string> = {
           "ucat": "UCAT",
           "personal-statements": "PERSONAL_STATEMENT",
@@ -228,7 +228,7 @@ export function MentorOnboardingFlow() {
 
         const mappedExpertise = onboardingData.expertise.map(e => expertiseMapping[e] || e);
 
-        // Safely parse interview slot — fallback to today if slot is missing/malformed
+        // Safely parse interview slot
         let interviewDate = new Date().toISOString().split('T')[0];
         let interviewTime = "10:00 AM";
         try {
@@ -244,28 +244,32 @@ export function MentorOnboardingFlow() {
             interviewTime = `${timePart} ${ampm}`;
           }
         } catch (_) {
-          // Use defaults above if parsing fails
+            // Defaults are fine
         }
 
-        // Fire verification — don't block on error as it's async on backend
-        authApi.MENTOR_VERIFICATION({
+        // Await verification to ensure account is fully ready
+        const documentNames = [
+          onboardingData.documents.cv?.name,
+          onboardingData.documents.certs?.name,
+        ].filter(Boolean) as string[];
+
+        await authApi.MENTOR_VERIFICATION({
           emailAddress: data.emailAddress.trim().toLowerCase(),
-          documentUploadLinks: [],
+          documentUploadLinks: documentNames,
           expertiseDetailsList: mappedExpertise,
           dentalSchoolExperience: onboardingData.role,
           interviewDate,
           interviewTime,
-        }).catch(err => console.warn("Verification request failed (non-blocking):", err));
+        });
 
-        // ✅ Show success and redirect to email verification
+        // ✅ Show success and redirect
         setIsSuccess(true);
-        toast.success("Account created! Check your email to verify and get started.");
-        setTimeout(() => {
-          router.push("/mentor/verify-email?email=" + encodeURIComponent(data.emailAddress.trim().toLowerCase()));
-        }, 1500);
+        toast.success("Account created! Redirecting to email verification...");
+        
+        router.push("/mentor/verify-email?email=" + encodeURIComponent(data.emailAddress.trim().toLowerCase()));
 
-      } catch (error: any) {
-        toast.error(error.message || "Something went wrong. Please try again.");
+      } catch (error: unknown) {
+        toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.");
       }
     });
   };
@@ -281,7 +285,7 @@ export function MentorOnboardingFlow() {
   }: { 
     title: string; 
     keyName: "cv" | "certs"; 
-    icon: any 
+    icon: React.ElementType 
   }) => {
     const file = onboardingData.documents[keyName];
     return (
@@ -491,7 +495,7 @@ export function MentorOnboardingFlow() {
                           }}
                           className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 h-12 rounded-2xl font-bold"
                         >
-                          I've Watched & Understand
+                          I&apos;ve Watched &amp; Understand
                         </Button>
                      </div>
                   </div>
@@ -726,7 +730,7 @@ export function MentorOnboardingFlow() {
                     {[1,2,3,4,5].map(i => <StarIcon key={i} size={16} fill="currentColor" />)}
                   </div>
                   <p className="text-xl font-medium leading-relaxed italic text-slate-200">
-                    "{currentProof.quote}"
+                    &quot;{currentProof.quote}&quot;
                   </p>
                   <div className="flex items-center gap-4">
                      <div className="size-10 rounded-full bg-emerald-500/20 flex items-center justify-center font-bold text-emerald-400">

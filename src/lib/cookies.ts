@@ -84,16 +84,31 @@ export const deleteCookie = (
 };
 
 export const authCookies = {
-  setAccessToken: (token: string, expiresAt: string) => {
+  setAccessToken: async (token: string, expiresAt: string, userData?: object) => {
     const expiresDate = new Date(expiresAt);
-    setCookie("accessToken", token, {
-      expires: expiresDate,
-      secure: true,
-      sameSite: "strict",
-    });
+    
+    // We call our internal API to set the HttpOnly cookie
+    try {
+      await fetch("/api/auth/cookie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessToken: token, expiresAt, userData }),
+      });
+    } catch (error) {
+      console.error("Failed to set secure cookie via API:", error);
+      
+      // Fallback for environment survival (not HttpOnly but preserves session)
+      setCookie("accessToken", token, {
+        expires: expiresDate,
+        secure: true,
+        sameSite: "strict",
+      });
+    }
   },
 
   getAccessToken: (): string | null => {
+    // Note: If HttpOnly is set, this will return null.
+    // The API client should be updated to rely on server proxy or withCredentials.
     return getCookie("accessToken");
   },
 
@@ -126,7 +141,12 @@ export const authCookies = {
     deleteCookie("userData");
   },
 
-  clearAll: () => {
+  clearAll: async () => {
+    try {
+      await fetch("/api/auth/cookie", { method: "DELETE" });
+    } catch (error) {
+      console.error("Failed to clear secure cookies via API:", error);
+    }
     authCookies.removeAccessToken();
     authCookies.removeUserData();
   },

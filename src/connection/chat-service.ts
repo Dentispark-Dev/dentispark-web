@@ -29,5 +29,9 @@ export const chatService = {
   // Admin monitoring endpoint (assumed path based on patterns)
   getAllConversations: (page = 0, size = 20) => {
     return api.get<ApiResponse<PaginatedResponse<Conversation>>>("/chats/admin/all?pageNumber=" + page + "&pageSize=" + size);
+  },
+
+  sendMessage: (payload: { conversationId: string; message: string; attachmentUrls?: string[] }) => {
+    return api.post<ApiResponse<ChatMessage>>("/chats/conversations/messages", payload);
   }
 };

@@ -64,8 +64,9 @@ export function CreateServicePackageModal({ isOpen, onClose }: CreateServicePack
             onClose();
             resetForm();
         },
-        onError: (error: any) => {
-            toast.error(error.message || "Failed to create service package");
+        onError: (error: unknown) => {
+            const errorMessage = error instanceof Error ? error.message : "Failed to create service package";
+            toast.error(errorMessage);
         }
     });
 

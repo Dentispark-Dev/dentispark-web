@@ -6,7 +6,9 @@ import axios, {
 } from "axios";
 import { authCookies } from "@/src/lib/cookies";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_HOST;
+const baseURL = typeof window !== "undefined" 
+  ? "/api/backend" 
+  : (process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_HOST);
 
 interface ErrorResponseData {
   message?: string;

@@ -1,4 +1,6 @@
 "use client";
+import { LooseRecord } from "@/src/types/loose";
+
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -347,7 +349,7 @@ export function AdminProfileView({ adminEmail }: AdminProfileViewProps) {
     );
 }
 
-function MetricPill({ label, value, icon: Icon }: { label: string; value: string; icon: any }) {
+function MetricPill({ label, value, icon: Icon }: { label: string; value: string; icon: LooseRecord }) {
     return (
         <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
             <div className="flex items-center gap-3 mb-2">

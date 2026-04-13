@@ -101,7 +101,7 @@ export default function AccessProjectPage() {
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </Link>
-                    <p className="text-sm text-slate-400 mt-4">No cost. No obligation. We'll review your eligibility within 48 hours.</p>
+                    <p className="text-sm text-slate-400 mt-4">No cost. No obligation. We&apos;ll review your eligibility within 48 hours.</p>
                 </div>
             </Container>
         </main>

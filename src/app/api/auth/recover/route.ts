@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: "If this email is registered, a recovery link has been sent." }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Recover API Error]", error);
     return NextResponse.json({ error: "Failed to process recovery request." }, { status: 500 });
   }

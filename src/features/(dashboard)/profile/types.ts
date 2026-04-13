@@ -127,6 +127,6 @@ export interface AcademicProfileResponse {
     subject: string;
     grade: string;
   }>;
-  workExperience?: any[];
-  universityShortlist?: any[];
+  workExperience?: AcademicData['workExperience'];
+  universityShortlist?: AcademicData['universityShortlist'];
 }

@@ -14,12 +14,24 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/src/components/ui/dropdown-menu";
-import { Bell, LogOut, User, Settings, CreditCard, Shield } from "lucide-react";
+import { Bell, LogOut, User, Settings, CreditCard, Shield, Moon, Sun } from "lucide-react";
+import { useNotificationStore } from "@/src/store/notification-store";
+import { cn } from "@/src/lib/utils";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
   const { user, isAdmin, isMentor, logout } = useAuth();
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { events, unreadCount, markAsRead, markAllAsRead } = useNotificationStore();
 
+  // Avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   return (
     <header className="fixed top-0 right-0 left-0 z-50 h-14 border-b border-white/5 bg-[#1d2327]">
       <div className="flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -37,30 +49,87 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
           <WhiteLogo className="h-10 w-24 md:h-12 md:w-32" />
         </Link>
 
-        {/* Right side: notification + user info + logout */}
+        {/* Right side: theme + notification + user info + logout */}
         <div className="flex items-center space-x-4 divide-x divide-white/10">
           <div className="flex items-center space-x-2 pr-4 sm:space-x-4">
+            
+            {/* Theme Toggle */}
+            {mounted && (
+              <button 
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="text-slate-300 rounded-md p-1.5 transition-all hover:bg-white/10 hover:text-white"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="size-5" />
+                ) : (
+                  <Moon className="size-5" />
+                )}
+              </button>
+            )}
+
             {/* Notification bell */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="text-slate-300 relative cursor-pointer rounded-md p-1.5 transition-colors hover:bg-white/10 focus:outline-none">
                   <Bell className="size-6" strokeWidth={1.5} />
-                  <span className="absolute top-1.5 right-1.5 size-2.5 rounded-full border-2 border-[#1d2327] bg-[#FE4648]"></span>
+                  {unreadCount > 0 && (
+                    <span className="absolute top-2 right-2 size-2.5 rounded-full border-2 border-[#1d2327] bg-[#FE4648] animate-pulse"></span>
+                  )}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 p-0 shadow-2xl border-slate-200">
-                <DropdownMenuLabel className="p-4 font-jakarta text-sm font-bold">Notifications</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
-                  <div className="bg-slate-50 p-3 rounded-full mb-3">
-                    <Bell className="h-6 w-6 text-slate-300" />
-                  </div>
-                  <p className="text-sm font-medium text-slate-900">No new notifications</p>
-                  <p className="text-xs text-slate-500 mt-1">We'll notify you when something important happens.</p>
+                <div className="flex items-center justify-between p-4 bg-slate-50/50">
+                  <DropdownMenuLabel className="p-0 font-jakarta text-sm font-bold">Notifications</DropdownMenuLabel>
+                  {unreadCount > 0 && (
+                    <button 
+                      onClick={markAllAsRead}
+                      className="text-[10px] uppercase tracking-wider font-extrabold text-[#12AC75] hover:text-emerald-700 transition-colors"
+                    >
+                      Mark all as read
+                    </button>
+                  )}
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="p-3 text-center justify-center text-xs font-bold text-[#12AC75] cursor-pointer hover:bg-slate-50 uppercase tracking-wider">
-                  View all
+                
+                <div className="max-h-[400px] overflow-y-auto">
+                  {events.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
+                      <div className="bg-slate-50 p-3 rounded-full mb-3">
+                        <Bell className="h-6 w-6 text-slate-300" />
+                      </div>
+                      <p className="text-sm font-medium text-slate-900">No new notifications</p>
+                      <p className="text-xs text-slate-500 mt-1">We&apos;ll notify you when something important happens.</p>
+                    </div>
+                  ) : (
+                    events.map((event) => (
+                      <DropdownMenuItem 
+                        key={event.id} 
+                        onClick={() => {
+                          markAsRead(event.id);
+                          if (event.link) router.push(event.link);
+                        }}
+                        className={cn(
+                          "flex flex-col items-start p-4 cursor-pointer border-b border-slate-100 last:border-0",
+                          !event.isRead && "bg-emerald-50/30"
+                        )}
+                      >
+                        <div className="flex w-full items-center justify-between mb-1">
+                          <span className="font-bold text-xs text-slate-900 line-clamp-1">{event.title}</span>
+                          {!event.isRead && <span className="size-1.5 rounded-full bg-[#12AC75]" />}
+                        </div>
+                        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{event.description}</p>
+                        <span className="text-[10px] text-slate-400 mt-2 font-medium">
+                          {new Date(event.timestamp).toLocaleDateString()} at {new Date(event.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </DropdownMenuItem>
+                    ))
+                  )}
+                </div>
+
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push("/profile/notifications")} className="p-3 text-center justify-center text-xs font-bold text-[#12AC75] cursor-pointer hover:bg-slate-50 uppercase tracking-wider">
+                  View all activity hub
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -124,7 +193,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                 {isAdmin && (
                   <>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push("/admin/settings")} className="cursor-pointer py-3 px-4 font-bold text-amber-600 bg-amber-50/30 hover:bg-amber-50 transition-colors">
+                    <DropdownMenuItem onClick={() => router.push("/admin/settings/admins")} className="cursor-pointer py-3 px-4 font-bold text-amber-600 bg-amber-50/30 hover:bg-amber-50 transition-colors">
                       <Shield className="mr-3 h-4 w-4" />
                       <span>Admin Controls</span>
                     </DropdownMenuItem>

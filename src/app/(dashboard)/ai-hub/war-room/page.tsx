@@ -20,9 +20,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import { ApplicationRadar } from "@/src/features/ai-hub/components/application-radar";
 import { cn } from "@/src/lib/utils";
+import { LooseRecord } from "@/src/types/loose";
 
 export default function WarRoomPage() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<unknown>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,9 +38,10 @@ export default function WarRoomPage() {
         }
         const json = await res.json();
         setData(json);
-      } catch (e: any) {
+      } catch (e: unknown) {
         console.error(e);
-        setError(e.message || "Failed to aggregate war-room intelligence. Please try again.");
+        const message = e instanceof Error ? e.message : "Failed to aggregate war-room intelligence. Please try again.";
+        setError(message);
       } finally {
         setIsLoading(false);
       }
@@ -123,16 +125,16 @@ export default function WarRoomPage() {
                             <p className="text-sm text-gray-500 font-medium">Visualization of your application balance across critical axes.</p>
                         </div>
                         <div className="space-y-4">
-                            {data?.radarData?.map((item: any) => (
-                                <div key={item.subject} className="space-y-1.5">
+                            {(data as LooseRecord)?.radarData?.map((item: LooseRecord) => (
+                                <div key={item.subject as string} className="space-y-1.5">
                                     <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest px-1">
-                                        <span className="text-gray-400">{item.subject}</span>
-                                        <span className="text-emerald-600 font-jakarta">{item.A}%</span>
+                                        <span className="text-gray-400">{item.subject as string}</span>
+                                        <span className="text-emerald-600 font-jakarta">{item.A as number}%</span>
                                     </div>
                                     <div className="h-1.5 w-full bg-gray-50 rounded-full overflow-hidden">
                                         <motion.div 
                                             initial={{ width: 0 }}
-                                            animate={{ width: `${item.A}%` }}
+                                            animate={{ width: `${item.A as number}%` }}
                                             className="h-full bg-emerald-500"
                                         />
                                     </div>
@@ -141,7 +143,7 @@ export default function WarRoomPage() {
                         </div>
                     </div>
                     <div className="flex-1 min-h-[300px] flex items-center justify-center bg-gray-50/30 rounded-[2.5rem] border border-gray-100">
-                        <ApplicationRadar data={data?.radarData || []} />
+                        <ApplicationRadar data={(data as LooseRecord)?.radarData || []} />
                     </div>
                 </div>
             </div>
@@ -167,7 +169,7 @@ export default function WarRoomPage() {
                     </div>
                     <div className="space-y-4 relative z-10">
                         <h4 className="text-xl font-jakarta font-bold tracking-tight">Interview Simulation</h4>
-                        <p className="text-white/80 text-sm leading-relaxed font-medium">Your **Vocal Command** is at 78%. Reach 90% to upgrade King's College odds to Low Risk.</p>
+                        <p className="text-white/80 text-sm leading-relaxed font-medium">Your **Vocal Command** is at 78%. Reach 90% to upgrade King&apos;s College odds to Low Risk.</p>
                         <Link href="/ai-hub/interview-prep" className="block w-full">
                             <Button className="w-full bg-white text-emerald-700 hover:bg-gray-50 rounded-2xl h-12 font-jakarta font-bold gap-2 transition-all active:scale-95">
                                 Start Session <ChevronRight className="w-4 h-4" />
@@ -188,7 +190,7 @@ export default function WarRoomPage() {
                     Strategic Directives
                 </h3>
                 <div className="space-y-4">
-                    {data?.topDirectives?.map((directive: string, i: number) => (
+                    {(data as LooseRecord)?.topDirectives?.map((directive: string, i: number) => (
                         <div key={i} className="p-4 rounded-2xl bg-gray-50/50 border border-gray-100 flex gap-4 items-start group hover:bg-white hover:shadow-md transition-all">
                             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-emerald-600 shadow-sm shrink-0 mt-1">
                                 0{i+1}
@@ -203,22 +205,22 @@ export default function WarRoomPage() {
 
             <div className="space-y-4">
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-2">Admissions Radar</h3>
-                {data?.schoolBriefings?.map((brief: any, i: number) => (
+                {(data as LooseRecord)?.schoolBriefings?.map((brief: LooseRecord, i: number) => (
                     <div key={i} className="p-6 rounded-[2rem] bg-white border border-gray-100 hover:border-emerald-300 hover:shadow-md transition-all flex items-center justify-between group shadow-sm">
                         <div className="space-y-0.5">
-                            <h5 className="font-jakarta font-bold text-gray-900 text-sm">{brief.name}</h5>
+                            <h5 className="font-jakarta font-bold text-gray-900 text-sm">{brief.name as string}</h5>
                             <div className="flex items-center gap-2">
                                 <span className={cn(
                                     "text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded",
                                     brief.risk === 'Low' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
                                 )}>
-                                    {brief.risk} Risk
+                                    {brief.risk as string} Risk
                                 </span>
-                                <span className="text-[8px] font-bold text-gray-400">Gap: {brief.gap}</span>
+                                <span className="text-[8px] font-bold text-gray-400">Gap: {brief.gap as string}</span>
                             </div>
                         </div>
                         <div className="text-right">
-                            <span className="block text-2xl font-jakarta font-bold text-emerald-600">{brief.probability}%</span>
+                            <span className="block text-2xl font-jakarta font-bold text-emerald-600">{brief.probability as number}%</span>
                             <span className="text-[8px] font-bold text-gray-300 uppercase tracking-tighter">Prob.</span>
                         </div>
                     </div>

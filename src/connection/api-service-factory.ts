@@ -1,5 +1,6 @@
 import { apiClient } from "./api-client";
 import type BaseAPI from "./base-api";
+import { LooseRecord } from "@/src/types/loose";
 
 /**
  * API Service Factory - Creates consistent API services with common patterns
@@ -19,7 +20,7 @@ export class ApiServiceFactory {
   ) {
     return {
       // Get all items with optional filters
-      getAll: async (params?: Record<string, unknown>): Promise<T[]> => {
+      getAll: async (params?: LooseRecord): Promise<T[]> => {
         const queryString = params
           ? new URLSearchParams(params as Record<string, string>).toString()
           : "";
@@ -30,7 +31,7 @@ export class ApiServiceFactory {
       },
 
       // Get paginated items
-      getPaginated: async (params?: Record<string, unknown>) => {
+      getPaginated: async (params?: LooseRecord) => {
         const queryString = params
           ? new URLSearchParams(params as Record<string, string>).toString()
           : "";
@@ -49,7 +50,7 @@ export class ApiServiceFactory {
       create: async (data: CreateT): Promise<T> => {
         return this.baseApi.post<T>(
           resourcePath,
-          data as Record<string, unknown>,
+          data as LooseRecord,
         );
       },
 
@@ -57,7 +58,7 @@ export class ApiServiceFactory {
       update: async (id: string, data: UpdateT): Promise<T> => {
         return this.baseApi.put<T>(
           `${resourcePath}/${id}`,
-          data as Record<string, unknown>,
+          data as LooseRecord,
         );
       },
 
@@ -215,7 +216,7 @@ export class ApiServiceFactory {
       search: async <T>(
         endpoint: string,
         query: string,
-        filters?: Record<string, unknown>,
+        filters?: LooseRecord,
       ): Promise<T[]> => {
         const params = new URLSearchParams({
           q: query,
@@ -227,7 +228,7 @@ export class ApiServiceFactory {
 
       advancedSearch: async <T>(
         endpoint: string,
-        searchCriteria: Record<string, unknown>,
+        searchCriteria: LooseRecord,
       ): Promise<T[]> => {
         return this.baseApi.post<T[]>(
           `${endpoint}/advanced-search`,

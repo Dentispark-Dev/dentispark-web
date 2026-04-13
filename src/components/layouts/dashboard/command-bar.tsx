@@ -33,7 +33,12 @@ import {
 export function CommandBar({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
-  const actions: Action[] = [
+import { REAL_MENTORS } from "@/src/features/(website)/mentors/data/mentors";
+
+export function CommandBar({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  const staticActions: Action[] = [
     {
       id: "dashboard",
       name: "Dashboard",
@@ -119,7 +124,7 @@ export function CommandBar({ children }: { children: React.ReactNode }) {
         name: "Engagement Analytics",
         shortcut: ["e"],
         keywords: "stats progress data",
-        perform: () => router.push("/admin/analytics"),
+        perform: () => router.push("/ai-intelligence"),
         icon: <PieChart className="w-5 h-5" />,
       },
     {
@@ -147,6 +152,23 @@ export function CommandBar({ children }: { children: React.ReactNode }) {
       icon: <Settings className="w-5 h-5" />,
     },
   ];
+
+  const mentorActions: Action[] = REAL_MENTORS.map(mentor => ({
+    id: `mentor-${mentor.slug}`,
+    name: `Mentor: ${mentor.name}`,
+    parent: "mentors",
+    keywords: `${mentor.name} ${mentor.specialty} ${mentor.title} mentor guidance`,
+    perform: () => router.push(`/mentorship/${mentor.slug}`),
+    icon: <User className="w-5 h-5 text-emerald-500" />,
+  }));
+
+  const universityActions: Action[] = [
+    { id: "mentors", name: "Search Mentors...", keywords: "find help guide", icon: <User className="w-5 h-5" /> },
+    { id: "uni-kcl", name: "King's College London", keywords: "kcl dental ucl london uni", perform: () => router.push("/university-hub/kcl"), icon: <Search className="w-5 h-5" /> },
+    { id: "uni-leeds", name: "University of Leeds", keywords: "leeds dental uni north", perform: () => router.push("/university-hub/leeds"), icon: <Search className="w-5 h-5" /> },
+  ];
+
+  const actions = [...staticActions, ...mentorActions, ...universityActions];
 
   return (
     <KBarProvider actions={actions}>

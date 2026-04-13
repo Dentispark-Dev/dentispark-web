@@ -1,4 +1,6 @@
 "use client";
+import { LooseRecord } from "@/src/types/loose";
+
 
 import { useQuery } from "@tanstack/react-query";
 import { marketplaceApi } from "@/src/features/marketplace/services/marketplace.api";
@@ -49,14 +51,14 @@ export default function StudentPurchasesPage() {
                         <ShoppingBag className="h-8 w-8 text-gray-300" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">No purchases yet</h3>
-                    <p className="text-gray-500 mb-8 max-w-sm mx-auto">You haven't purchased any mentoring services or packages yet. Explore our marketplace to get started!</p>
+                    <p className="text-gray-500 mb-8 max-w-sm mx-auto">You haven&apos;t purchased any mentoring services or packages yet. Explore our marketplace to get started!</p>
                     <Button asChild className="bg-green-600 hover:bg-green-700 h-12 px-8 rounded-xl font-bold">
                         <Link href="/mentorship">Explore Marketplace</Link>
                     </Button>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-4">
-                    {response?.data.map((order) => (
+                    {response?.data.map((order: LooseRecord) => (
                         <div key={order.externalId} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                 <div className="flex gap-4">

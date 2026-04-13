@@ -14,12 +14,8 @@ interface DashboardState {
   // UI Interaction States
   confettiTrigger: boolean;
   
-  // Actions
-  completeStage: (id: number) => void;
-  toggleStage: (id: number) => void;
-  setCurrentStage: (id: number) => void;
-  triggerConfetti: () => void;
   resetProgress: () => void;
+  setStages: (stages: StageProgress[]) => void;
 }
 
 // Initial 11-Step Setup
@@ -59,7 +55,9 @@ export const useDashboardStore = create<DashboardState>()(
 
       triggerConfetti: () => set({ confettiTrigger: true }),
       
-      resetProgress: () => set({ stages: INITIAL_STAGES })
+      resetProgress: () => set({ stages: INITIAL_STAGES }),
+      
+      setStages: (stages) => set({ stages })
     }),
     {
       name: "dentispark-dashboard-storage",
