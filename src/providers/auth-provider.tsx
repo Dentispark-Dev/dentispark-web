@@ -93,9 +93,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // The actual security is enforced by the Middleware which injects the real token into requests.
       const userData = authCookies.getUserData() as LoginResponseData | null;
       
-      if (userData && userData.auth?.tokenExpiredAt) {
+      if (userData) {
+        if (!userData.auth?.tokenExpiredAt) {
+          // If no explicit expiration, trust the active session until backend revokes
+          setUser(userData);
+          setIsAuthenticated(true);
+          return true;
+        }
+
         const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
         const now = new Date();
+
+        if (isNaN(tokenExpiredAt.getTime())) {
+          // If date formatting failed, trust the session
+          setUser(userData);
+          setIsAuthenticated(true);
+          return true;
+        }
 
         if (now < tokenExpiredAt) {
           setUser(userData);
@@ -103,6 +117,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setupTokenExpirationTimer(userData.auth.tokenExpiredAt);
           return true;
         } else {
+          console.log("AuthProvider: Token expired, clearing context.");
           authCookies.clearAll();
           setUser(null);
           setIsAuthenticated(false);
