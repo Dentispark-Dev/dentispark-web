@@ -57,9 +57,17 @@ function hasValidToken(request: NextRequest): boolean {
 
   try {
     const parsedUserData = JSON.parse(userData);
-    const tokenExpiredAt = new Date(parsedUserData.auth?.tokenExpiredAt);
-    const now = new Date();
+    
+    if (!parsedUserData.auth?.tokenExpiredAt) {
+      return true; // Fall back to true if no explicit expiration is provided
+    }
 
+    const tokenExpiredAt = new Date(parsedUserData.auth.tokenExpiredAt);
+    if (isNaN(tokenExpiredAt.getTime())) {
+      return true; // Fall back to true if the date string from backend is unparseable
+    }
+
+    const now = new Date();
     return now < tokenExpiredAt;
   } catch (error) {
     console.error("Error parsing user data:", error);

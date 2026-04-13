@@ -97,12 +97,18 @@ export const authCookies = {
     } catch (error) {
       console.error("Failed to set secure cookie via API:", error);
       
-      // Fallback for environment survival (not HttpOnly but preserves session)
-      setCookie("accessToken", token, {
-        expires: expiresDate,
+      const options: CookieOptions = {
         secure: true,
         sameSite: "strict",
-      });
+      };
+      if (expiresAt) {
+        const fallbackExpiresDate = new Date(expiresAt);
+        if (!isNaN(fallbackExpiresDate.getTime())) {
+            options.expires = fallbackExpiresDate;
+        }
+      }
+      // Fallback for environment survival (not HttpOnly but preserves session)
+      setCookie("accessToken", token, options);
     }
   },
 

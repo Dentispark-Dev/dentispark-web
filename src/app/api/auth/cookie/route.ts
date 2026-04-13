@@ -17,26 +17,39 @@ export async function POST(request: Request) {
     }
 
     const cookieStore = await cookies();
-    const expiresDate = new Date(expiresAt);
 
-    // Set the accessToken as HttpOnly and Secure
-    cookieStore.set("accessToken", accessToken, {
+    const options: any = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      expires: expiresDate,
       path: "/",
-    });
+    };
+
+    if (expiresAt) {
+      const expiresDate = new Date(expiresAt);
+      if (!isNaN(expiresDate.getTime())) {
+        options.expires = expiresDate;
+      }
+    }
+
+    // Set the accessToken as HttpOnly and Secure
+    cookieStore.set("accessToken", accessToken, options);
 
     // We can also set the userData as a JS-accessible cookie for the UI
     if (userData) {
-        cookieStore.set("userData", JSON.stringify(userData), {
+        const userOptions: any = {
             httpOnly: false,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
-            expires: expiresDate,
             path: "/",
-        });
+        };
+        if (expiresAt) {
+            const expiresDate = new Date(expiresAt);
+            if (!isNaN(expiresDate.getTime())) {
+                userOptions.expires = expiresDate;
+            }
+        }
+        cookieStore.set("userData", JSON.stringify(userData), userOptions);
     }
 
     return NextResponse.json({ success: true });
