@@ -151,7 +151,7 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                 <button className="flex items-center space-x-3 outline-none transition-all hover:bg-white/5 p-1 rounded-md active:scale-[0.98]">
                   <div className="hidden text-right font-jakarta lg:block">
                     <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold opacity-60">Howdy,</p>
-                    <p className="text-white text-sm font-semibold leading-tight">{user?.fullName?.split(' ')[0]}</p>
+                    <p className="text-white text-sm font-semibold leading-tight">{(user?.fullName || "Friend").split(' ')[0]}</p>
                   </div>
                   
                   {user?.profilePicture ? (
@@ -169,7 +169,9 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                       {user.fullName.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                     </div>
                   ) : (
-                    <div className="bg-white/10 size-9 rounded-full animate-pulse" />
+                    <div className="bg-primary-600 font-jakarta flex size-9 items-center justify-center rounded-full font-bold text-white uppercase shadow-lg ring-1 ring-white/20">
+                      DS
+                    </div>
                   )}
                 </button>
               </DropdownMenuTrigger>

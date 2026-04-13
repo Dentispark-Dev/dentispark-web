@@ -169,39 +169,42 @@ export function AdminDashboardAnalytics() {
 
             {/* Premium Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {stats.map((stat, index) => (
-                    <motion.div
-                        key={stat.title}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: index * 0.1, ease: "circOut" }}
-                        whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
-                        className={cn(
-                            "group relative overflow-hidden bg-white p-8 rounded-[2.5rem] shadow-2xl transition-shadow",
-                            stat.glow
-                        )}
-                    >
-                        <div className={`absolute top-0 right-0 h-40 w-40 bg-gradient-to-br ${stat.gradient} opacity-[0.04] rounded-bl-full group-hover:scale-125 transition-transform duration-1000`} />
-                        <div className={`absolute -bottom-10 -left-10 h-32 w-32 bg-gradient-to-tr ${stat.gradient} opacity-[0.02] rounded-tr-full group-hover:rotate-45 transition-transform duration-1000`} />
-                        
-                        <div className="flex items-center justify-between mb-8 relative z-10">
-                            <div className={`p-4 rounded-[1.25rem] ${stat.lightColor} ring-1 ring-white/50 shadow-inner flex items-center justify-center`}>
-                                <stat.icon className={`h-7 w-7 bg-clip-text text-transparent bg-gradient-to-br ${stat.gradient}`} />
+            {stats.map((stat, index) => {
+                    const Icon = stat.icon;
+                    return (
+                        <motion.div
+                            key={stat.title}
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: index * 0.1, ease: "circOut" }}
+                            whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
+                            className={cn(
+                                "group relative overflow-hidden bg-white p-8 rounded-[2.5rem] shadow-2xl transition-shadow",
+                                stat.glow
+                            )}
+                        >
+                            <div className={`absolute top-0 right-0 h-40 w-40 bg-gradient-to-br ${stat.gradient} opacity-[0.04] rounded-bl-full group-hover:scale-125 transition-transform duration-1000`} />
+                            <div className={`absolute -bottom-10 -left-10 h-32 w-32 bg-gradient-to-tr ${stat.gradient} opacity-[0.02] rounded-tr-full group-hover:rotate-45 transition-transform duration-1000`} />
+                            
+                            <div className="flex items-center justify-between mb-8 relative z-10">
+                                <div className={`p-4 rounded-[1.25rem] ${stat.lightColor} ring-1 ring-white/50 shadow-inner flex items-center justify-center`}>
+                                    <Icon className={`h-7 w-7 bg-clip-text text-transparent bg-gradient-to-br ${stat.gradient}`} />
+                                </div>
+                                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-extrabold shadow-sm ${stat.isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                                    {stat.isPositive ? <ArrowUpRight className="h-3.5 w-3.5" /> : <ArrowDownRight className="h-3.5 w-3.5" />}
+                                    {stat.change}
+                                </div>
                             </div>
-                            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-extrabold shadow-sm ${stat.isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
-                                {stat.isPositive ? <ArrowUpRight className="h-3.5 w-3.5" /> : <ArrowDownRight className="h-3.5 w-3.5" />}
-                                {stat.change}
+                            
+                            <div className="space-y-1.5 relative z-10">
+                                <h3 className="text-gray-400 text-xs font-bold tracking-[0.1em] uppercase">{stat.title}</h3>
+                                <div className="flex items-baseline gap-2">
+                                    <p className="text-4xl font-extrabold text-gray-900 tracking-tighter leading-none">{stat.value}</p>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div className="space-y-1.5 relative z-10">
-                            <h3 className="text-gray-400 text-xs font-bold tracking-[0.1em] uppercase">{stat.title}</h3>
-                            <div className="flex items-baseline gap-2">
-                                <p className="text-4xl font-extrabold text-gray-900 tracking-tighter leading-none">{stat.value}</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
+                        </motion.div>
+                    );
+                })}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">

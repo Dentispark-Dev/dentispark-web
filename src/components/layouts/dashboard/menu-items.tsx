@@ -385,7 +385,8 @@ const adminMenuItems: MenuItem[] = [
   },
 ];
 
-menuItems.push(...adminMenuItems);
+// Combined menu items to avoid global mutation issues during hydration
+const ALL_MENU_ITEMS = [...menuItems, ...adminMenuItems];
 
 // Helper function to filter menu items based on user memberType
 export function getFilteredMenuItems(
@@ -399,7 +400,7 @@ export function getFilteredMenuItems(
 ): MenuItem[] {
   if (!memberType) return [];
 
-  return menuItems.filter((item) => {
+  return ALL_MENU_ITEMS.filter((item) => {
     // If no allowedMemberTypes specified, show to everyone
     if (!item.allowedMemberTypes) return true;
 

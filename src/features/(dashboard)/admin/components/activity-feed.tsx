@@ -38,14 +38,22 @@ export function ActivityFeed() {
     };
 
     const getTimeAgo = (dateStr: string) => {
-        const date = new Date(dateStr);
-        const now = new Date();
-        const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-        
-        if (diffInSeconds < 60) return 'Just now';
-        if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
-        if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
-        return date.toLocaleDateString();
+        try {
+            if (!dateStr) return 'Pending...';
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) return 'Recently';
+            
+            const now = new Date();
+            const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+            return date.toLocaleDateString();
+        } catch (e) {
+            console.error("Date parsing error in ActivityFeed:", e);
+            return 'Recently';
+        }
     };
 
     return (
