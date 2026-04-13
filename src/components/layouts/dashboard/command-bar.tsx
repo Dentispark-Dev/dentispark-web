@@ -164,7 +164,7 @@ export function CommandBar({ children }: { children: React.ReactNode }) {
     { id: "uni-leeds", name: "University of Leeds", keywords: "leeds dental uni north", perform: () => router.push("/university-hub/leeds"), icon: <Search className="w-5 h-5" /> },
   ];
 
-  const actions = [...staticActions, ...mentorActions, ...universityActions];
+  const actions = [...staticActions, ...universityActions, ...mentorActions];
 
   return (
     <KBarProvider actions={actions}>
