@@ -26,7 +26,6 @@ export async function POST(request: Request) {
       sameSite: "lax",
       expires: expiresDate,
       path: "/",
-      domain: ".dentispark.com",
     });
 
     // We can also set the userData as a JS-accessible cookie for the UI
@@ -37,7 +36,6 @@ export async function POST(request: Request) {
             sameSite: "lax",
             expires: expiresDate,
             path: "/",
-            domain: ".dentispark.com",
         });
     }
 
@@ -56,8 +54,8 @@ export async function DELETE() {
     const cookieStore = await cookies();
     
     // Clear the secure cookies
-    cookieStore.delete({ name: "accessToken", path: "/", domain: ".dentispark.com" });
-    cookieStore.delete({ name: "userData", path: "/", domain: ".dentispark.com" });
+    cookieStore.delete({ name: "accessToken", path: "/" });
+    cookieStore.delete({ name: "userData", path: "/" });
 
     return NextResponse.json({ success: true });
   } catch (error) {

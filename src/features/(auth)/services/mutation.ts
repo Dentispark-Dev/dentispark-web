@@ -90,11 +90,11 @@ export const useUnifiedLogin = () => {
         return await authApi.LOGIN(data);
       }
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.responseCode === "00") {
         const { auth } = data.responseData;
 
-        authCookies.setAccessToken(auth.accessToken, auth.tokenExpiredAt);
+        await authCookies.setAccessToken(auth.accessToken, auth.tokenExpiredAt);
         authCookies.setUserData(data.responseData);
         login(data.responseData);
 
@@ -131,7 +131,7 @@ export const useProfileSetup = () => {
   return useMutation<ApiResponse<string>, Error, ProfileSetupRequest>({
     mutationKey: ["auth", "profile-setup"],
     mutationFn: authApi.PROFILE_SETUP,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.responseCode === "00") {
         const currentUserData = authCookies.getUserData() as LoginResponseData;
         if (currentUserData) {
@@ -141,6 +141,16 @@ export const useProfileSetup = () => {
           };
 
           authCookies.setUserData(updatedUserData);
+          
+          // Re-sync secure cookies if needed
+          if (updatedUserData.auth?.accessToken) {
+            await authCookies.setAccessToken(
+                updatedUserData.auth.accessToken, 
+                updatedUserData.auth.tokenExpiredAt,
+                updatedUserData
+            );
+          }
+
           login(updatedUserData);
         }
 
