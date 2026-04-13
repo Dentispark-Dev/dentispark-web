@@ -12,6 +12,7 @@ import { LanguageSwitcher } from "../../common/language-switcher";
 import { useState } from "react";
 import { ChevronDown, ChevronRight, X } from "lucide-react";
 import { FieldSwitcher } from "@/src/components/ui/field-switcher";
+import WhiteLogo from "@/src/components/icons/WhiteLogo";
 
 export default function DashboardSidebar({
   isOpen,
