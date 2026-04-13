@@ -3,8 +3,8 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import { motion, useScroll, useTransform, useSpring, Variants } from "framer-motion";
-import { ArrowRight, Sparkles, Zap, ShieldCheck, Globe, Star } from "lucide-react";
+import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Container from "@/src/components/layouts/container";
 import { cn } from "@/src/lib/utils";
 

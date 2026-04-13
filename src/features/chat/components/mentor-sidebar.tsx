@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Search, MoreHorizontal, User, Plus, Filter, CheckCheck } from "lucide-react";
+import { Search, CheckCheck } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
 const MOCK_MENTORS = [
