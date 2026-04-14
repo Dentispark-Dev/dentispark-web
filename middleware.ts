@@ -58,19 +58,16 @@ function hasValidToken(request: NextRequest): boolean {
   try {
     const parsedUserData = JSON.parse(userData);
     
-    if (!parsedUserData.auth?.tokenExpiredAt) {
-      return true; // Fall back to true if no explicit expiration is provided
+    // We completely bypass frontend expiration checking.
+    // The backend 401 response interceptor in base-api.ts handles actual expiration safely.
+    // This prevents instantaneous redirect loops if the backend accidentally issues a date in the past.
+    if (parsedUserData) {
+        return true;
     }
 
-    const tokenExpiredAt = new Date(parsedUserData.auth.tokenExpiredAt);
-    if (isNaN(tokenExpiredAt.getTime())) {
-      return true; // Fall back to true if the date string from backend is unparseable
-    }
-
-    const now = new Date();
-    return now < tokenExpiredAt;
+    return true;
   } catch (error) {
-    console.error("Error parsing user data:", error);
+    console.error("[hasValidToken] Error parsing user data:", error);
     return false;
   }
 }

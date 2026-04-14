@@ -94,35 +94,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const userData = authCookies.getUserData() as LoginResponseData | null;
       
       if (userData) {
-        if (!userData.auth?.tokenExpiredAt) {
-          // If no explicit expiration, trust the active session until backend revokes
-          setUser(userData);
-          setIsAuthenticated(true);
-          return true;
+        // We bypass frontend date validation entirely.
+        // If the backend hands us a session, we trust it unconditionally until a 401 proves otherwise.
+        setUser(userData);
+        setIsAuthenticated(true);
+        
+        // If date exists, we can still set the timer as a fallback, but we won't kick them out if it's currently invalid.
+        if (userData.auth?.tokenExpiredAt) {
+            const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
+            const now = new Date();
+            
+            // Only setup the timeout if the time is actually in the future, don't execute immediate logout otherwise!
+            if (!isNaN(tokenExpiredAt.getTime()) && now < tokenExpiredAt) {
+                setupTokenExpirationTimer(userData.auth.tokenExpiredAt);
+            }
         }
-
-        const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
-        const now = new Date();
-
-        if (isNaN(tokenExpiredAt.getTime())) {
-          // If date formatting failed, trust the session
-          setUser(userData);
-          setIsAuthenticated(true);
-          return true;
-        }
-
-        if (now < tokenExpiredAt) {
-          setUser(userData);
-          setIsAuthenticated(true);
-          setupTokenExpirationTimer(userData.auth.tokenExpiredAt);
-          return true;
-        } else {
-          console.log("AuthProvider: Token expired, clearing context.");
-          authCookies.clearAll();
-          setUser(null);
-          setIsAuthenticated(false);
-          return false;
-        }
+        
+        return true;
       } else {
         setUser(null);
         setIsAuthenticated(false);
