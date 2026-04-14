@@ -166,7 +166,12 @@ export class BaseAPI {
             if (typeof window !== "undefined") {
               window.dispatchEvent(new CustomEvent("auth-state-changed"));
               if (!window.location.pathname.includes("/login")) {
-                window.location.href = "/login";
+                if (window.location.pathname.startsWith("/admin")) {
+                   const failingUrl = response?.config?.url || "Unknown URL";
+                   alert(`[DEBUG] Backend API rejected Admin access with code ${responseCode} on URL: ${failingUrl}. Please screenshot this and send to AI!`);
+                } else {
+                   window.location.href = "/login";
+                }
               }
             }
           }
@@ -209,11 +214,16 @@ export class BaseAPI {
       // Clear token and redirect for non-public routes
       if (!isPublicRoute) {
         this.clearToken();
+        const failingUrl = error?.config?.url || "Unknown URL";
         console.log("Token expired or invalid - redirecting to login");
         if (typeof window !== "undefined") {
           // Notify other components about auth state change
           window.dispatchEvent(new CustomEvent("auth-state-changed"));
-          window.location.href = "/login";
+          if (window.location.pathname.startsWith("/admin")) {
+             alert(`[DEBUG] Backend API rejected Admin access with 401 Unauthorized on URL: ${failingUrl}.\nThis enforces a hard logout. Please send this URL to AI!`);
+          } else {
+             window.location.href = "/login";
+          }
         }
         throw new Error("Your session has expired. Please log in again.");
       }
