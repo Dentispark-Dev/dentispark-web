@@ -160,20 +160,19 @@ export class BaseAPI {
         if (response.data && response.data.responseCode) {
           const { responseCode } = response.data;
 
-          if (["93", "94", "95", "97", "98"].includes(responseCode)) {
+          if (["93", "94"].includes(responseCode)) {
             this.clearToken();
             // Notify other components about auth state change
             if (typeof window !== "undefined") {
               window.dispatchEvent(new CustomEvent("auth-state-changed"));
               if (!window.location.pathname.includes("/login")) {
-                if (window.location.pathname.startsWith("/admin")) {
-                   const failingUrl = response?.config?.url || "Unknown URL";
-                   alert(`[DEBUG] Backend API rejected Admin access with code ${responseCode} on URL: ${failingUrl}. Please screenshot this and send to AI!`);
-                } else {
-                   window.location.href = "/login";
-                }
+                window.location.href = "/login";
               }
             }
+          } else if (["95", "97", "98"].includes(responseCode)) {
+            // These are resource-specific security/permission issues.
+            // We log them but don't kick the user out of their entire session.
+            console.warn(`[API] Resource access rejected (Code ${responseCode}) for URL: ${response?.config?.url}`);
           }
         }
 
@@ -216,15 +215,7 @@ export class BaseAPI {
         this.clearToken();
         const failingUrl = error?.config?.url || "Unknown URL";
         console.log("Token expired or invalid - redirecting to login");
-        if (typeof window !== "undefined") {
-          // Notify other components about auth state change
-          window.dispatchEvent(new CustomEvent("auth-state-changed"));
-          if (window.location.pathname.startsWith("/admin")) {
-             alert(`[DEBUG] Backend API rejected Admin access with 401 Unauthorized on URL: ${failingUrl}.\nThis enforces a hard logout. Please send this URL to AI!`);
-          } else {
-             window.location.href = "/login";
-          }
-        }
+          window.location.href = "/login";
         throw new Error("Your session has expired. Please log in again.");
       }
     }

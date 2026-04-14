@@ -58,14 +58,9 @@ function hasValidToken(request: NextRequest): boolean {
   try {
     const parsedUserData = JSON.parse(userData);
     
-    // We completely bypass frontend expiration checking.
-    // The backend 401 response interceptor in base-api.ts handles actual expiration safely.
-    // This prevents instantaneous redirect loops if the backend accidentally issues a date in the past.
-    if (parsedUserData) {
-        return true;
-    }
-
-    return true;
+    // We bypass frontend-side date validation in the middleware to prevent false-positive session teardowns.
+    // Genuine expirations are caught by the 401 response interceptor in base-api.ts.
+    return !!parsedUserData;
   } catch (error) {
     console.error("[hasValidToken] Error parsing user data:", error);
     return false;
