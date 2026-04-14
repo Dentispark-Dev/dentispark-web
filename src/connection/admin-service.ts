@@ -198,13 +198,13 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     },
 
     // --- Dashboard & Analytics ---
-    getDashboardSummary: () => api.get<DashboardSummary>("/dashboard/summary"),
+    getDashboardSummary: () => api.get<DashboardSummary>("/dashboard/summary", { baseURL: "/api" }),
 
     getGrowthAnalytics: (days: number = 30) =>
         api.get<GrowthAnalytics[]>(`/dashboard/growth?days=${days}`),
 
     getGlobalActivity: (page: number = 0, size: number = 10) =>
-        api.get<PaginatedResponse<GlobalActivity>>(`/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`),
+        api.get<PaginatedResponse<GlobalActivity>>(`/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`, { baseURL: "/api" }),
 
     getTrafficAnalytics: (device?: string, location?: string) => {
         const params = new URLSearchParams();
