@@ -1,62 +1,47 @@
-import { NextResponse } from "next/server";
-import prisma from "@/src/lib/db";
-import { Role } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    // Current counts
-    const totalStudents = await prisma.user.count({ where: { role: "STUDENT" as Role } });
-    const totalMentors = await prisma.user.count({ where: { role: "MENTOR" as Role } });
-    // Assuming 'active' means logged in or updated in last 7 days for now
-    const activeUsers = await prisma.user.count({ 
-      where: { 
-        updatedAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } 
-      } 
-    });
+    const accessToken = request.cookies.get("accessToken")?.value;
+    const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
+    const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
 
-    // Mock trends for now since we don't have historical snapshots yet,
-    // but structure it as per PDF Section 9.1
-    const responseData = {
-      totalSummary: {
-        description: "Total platform wide active users",
-        currentTotalCount: totalStudents + totalMentors,
-        percentageChange: 12.5,
-        days: 30
-      },
-      studentSummary: {
-        description: "Total students registered",
-        currentTotalCount: totalStudents,
-        percentageChange: 8.2,
-        days: 30
-      },
-      mentorSummary: {
-        description: "Total academic mentors registered",
-        currentTotalCount: totalMentors,
-        percentageChange: 5.4,
-        days: 30
-      },
-      revenueSummary: {
-        description: "Platform revenue metrics",
-        currentTotalCount: 0,
-        percentageChange: 0,
-        days: 30
-      }
+    console.log("[Dashboard Proxy] Fetching summary with headers...");
+
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
     };
 
-    return NextResponse.json({
-      responseCode: "00",
-      responseMessage: "Dashboard summary retrieved successfully",
-      responseData,
-      success: true
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+
+    if (channelId) headers["Channel-ID"] = channelId;
+    if (channelSecret) headers["Channel-Secret"] = channelSecret;
+
+    // Direct server-to-server call bypasses the browser's origin/CORS context
+    const response = await fetch(`${apiUrl}/dashboard/summary`, {
+      method: "GET",
+      headers,
+      cache: 'no-store' // Ensure we get fresh data
     });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        console.error("[Dashboard Proxy] Backend responded with error:", response.status, data);
+        return NextResponse.json(data, { status: response.status });
+    }
+
+    return NextResponse.json(data);
   } catch (error: any) {
-    console.error("[Dashboard Summary API Error]", error);
+    console.error("[Dashboard Proxy Error]", error);
     return NextResponse.json({
       responseCode: "ERROR",
-      responseMessage: "Failed to retrieve dashboard summary locally",
+      responseMessage: "Failed to proxy dashboard summary",
       errors: [error.message || "Unknown error"],
-      stack: error.stack,
-      dbUrl: process.env.DATABASE_URL ? "SET (ends with " + process.env.DATABASE_URL.slice(-10) + ")" : "MISSING",
       success: false
     }, { status: 500 });
   }

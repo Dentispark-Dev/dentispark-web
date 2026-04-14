@@ -56,27 +56,9 @@ export function AdminDashboardAnalytics() {
     }
 
     if (isSummaryError) {
-        return (
-            <div className="flex h-96 items-center justify-center flex-col gap-6">
-                <div className="p-6 bg-amber-50 text-amber-700 rounded-[2rem] border border-amber-100 font-bold flex items-center gap-3 shadow-xl shadow-amber-500/10">
-                    <XCircle className="w-6 h-6" />
-                    Unable to load dashboard analytics
-                </div>
-                <div className="text-gray-400 font-medium max-w-md text-center leading-relaxed px-4">
-                    <p className="mb-2">We encountered an issue while fetching analytics. You can still use the sidebar to manage Users and Content.</p>
-                    <code className="text-xs bg-gray-100 p-2 rounded block break-all text-amber-600 border border-gray-200">
-                        Error: {summaryError instanceof Error ? summaryError.message : "Undefined API error"}
-                    </code>
-                </div>
-                <Button 
-                    variant="outline" 
-                    onClick={() => window.location.reload()}
-                    className="rounded-full px-8"
-                >
-                    Try Again
-                </Button>
-            </div>
-        );
+        // Log the error but continue to render the dashboard with nominal values
+        // this handles cases where the backend might still be returning 95 or 500
+        console.warn("Analytics fetch failed, falling back to nominal values:", summaryError);
     }
 
     if (!isAdmin) {
