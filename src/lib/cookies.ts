@@ -98,7 +98,6 @@ export const authCookies = {
       console.error("Failed to set secure cookie via API:", error);
       
       const options: CookieOptions = {
-        secure: true,
         sameSite: "strict",
       };
       if (expiresAt) {
@@ -124,7 +123,6 @@ export const authCookies = {
 
   setUserData: (userData: object) => {
     setCookie("userData", JSON.stringify(userData), {
-      secure: true,
       sameSite: "lax",
     });
   },
