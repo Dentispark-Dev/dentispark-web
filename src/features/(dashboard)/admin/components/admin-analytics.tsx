@@ -30,7 +30,7 @@ export function AdminDashboardAnalytics() {
     const [selectedDevice, setSelectedDevice] = useState<string | undefined>(undefined);
     const [selectedLocation, setSelectedLocation] = useState<string | undefined>(undefined);
 
-    const { data: summaryData, isLoading: isSummaryLoading, isError: isSummaryError } = useQuery({
+    const { data: summaryData, isLoading: isSummaryLoading, isError: isSummaryError, error: summaryError } = useQuery({
         queryKey: ["admin-dashboard-summary"],
         queryFn: () => adminService.getDashboardSummary(),
         retry: 1, // Don't hang forever on failures
@@ -62,9 +62,12 @@ export function AdminDashboardAnalytics() {
                     <XCircle className="w-6 h-6" />
                     Unable to load dashboard analytics
                 </div>
-                <p className="text-gray-400 font-medium max-w-xs text-center leading-relaxed">
-                    We encountered a security restriction or API error while fetching analytics. You can still use the sidebar to manage Users and Content.
-                </p>
+                <div className="text-gray-400 font-medium max-w-md text-center leading-relaxed px-4">
+                    <p className="mb-2">We encountered an issue while fetching analytics. You can still use the sidebar to manage Users and Content.</p>
+                    <code className="text-xs bg-gray-100 p-2 rounded block break-all text-amber-600 border border-gray-200">
+                        Error: {summaryError instanceof Error ? summaryError.message : "Undefined API error"}
+                    </code>
+                </div>
                 <Button 
                     variant="outline" 
                     onClick={() => window.location.reload()}
