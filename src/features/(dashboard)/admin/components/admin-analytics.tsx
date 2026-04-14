@@ -30,14 +30,16 @@ export function AdminDashboardAnalytics() {
     const [selectedDevice, setSelectedDevice] = useState<string | undefined>(undefined);
     const [selectedLocation, setSelectedLocation] = useState<string | undefined>(undefined);
 
-    const { data: summaryData, isLoading: isSummaryLoading } = useQuery({
+    const { data: summaryData, isLoading: isSummaryLoading, isError: isSummaryError } = useQuery({
         queryKey: ["admin-dashboard-summary"],
         queryFn: () => adminService.getDashboardSummary(),
+        retry: 1, // Don't hang forever on failures
     });
 
     const { data: trafficData, isLoading: isTrafficLoading } = useQuery({
         queryKey: ["admin-traffic-analytics", selectedDevice, selectedLocation],
         queryFn: () => adminService.getTrafficAnalytics(selectedDevice, selectedLocation),
+        retry: 1,
     });
 
     const { isAdmin, isLoading: isAuthLoading } = useAuth();
@@ -49,6 +51,27 @@ export function AdminDashboardAnalytics() {
                     <div className="h-20 w-20 rounded-full border-t-2 border-b-2 border-primary-600 animate-spin" />
                     <Zap className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 text-primary-600 animate-pulse" />
                 </div>
+            </div>
+        );
+    }
+
+    if (isSummaryError) {
+        return (
+            <div className="flex h-96 items-center justify-center flex-col gap-6">
+                <div className="p-6 bg-amber-50 text-amber-700 rounded-[2rem] border border-amber-100 font-bold flex items-center gap-3 shadow-xl shadow-amber-500/10">
+                    <XCircle className="w-6 h-6" />
+                    Unable to load dashboard analytics
+                </div>
+                <p className="text-gray-400 font-medium max-w-xs text-center leading-relaxed">
+                    We encountered a security restriction or API error while fetching analytics. You can still use the sidebar to manage Users and Content.
+                </p>
+                <Button 
+                    variant="outline" 
+                    onClick={() => window.location.reload()}
+                    className="rounded-full px-8"
+                >
+                    Try Again
+                </Button>
             </div>
         );
     }

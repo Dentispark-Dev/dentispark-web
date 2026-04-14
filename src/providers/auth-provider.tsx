@@ -65,6 +65,9 @@ const PROTECTED_ROUTES = [
   "/mentorship",
   "/community-hub",
   "/guidance-hub",
+  "/admin",
+  "/mentor",
+  "/ai-hub",
 ];
 
 export function AuthProvider({ children }: AuthProviderProps) {
