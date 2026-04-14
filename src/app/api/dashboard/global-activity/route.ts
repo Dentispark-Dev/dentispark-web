@@ -1,61 +1,49 @@
-import { NextResponse } from "next/server";
-import prisma from "@/src/lib/db";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const page = parseInt(searchParams.get("pageNumber") || "0");
-    const size = parseInt(searchParams.get("pageSize") || "10");
+    const { searchParams } = new URL(request.url);
+    const page = searchParams.get("pageNumber") || "0";
+    const size = searchParams.get("pageSize") || "10";
+    
+    const accessToken = request.cookies.get("accessToken")?.value;
+    const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
+    const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
 
-    const [activities, total] = await Promise.all([
-      prisma.platformActivity.findMany({
-        skip: page * size,
-        take: size,
-        orderBy: { timestamp: "desc" },
-        include: {
-          user: {
-            select: {
-              name: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-              role: true
-            }
-          }
-        }
-      }),
-      prisma.platformActivity.count()
-    ]);
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    };
 
-    // Map to frontend expected format
-    const content = activities.map(a => ({
-      userId: a.userId,
-      fullName: a.user.firstName ? `${a.user.firstName} ${a.user.lastName}` : (a.user.name || "Unknown User"),
-      action: a.action,
-      timeAndDate: a.timestamp.toISOString(),
-      memberType: a.user.role,
-      category: a.category || "GENERAL"
-    }));
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`;
+    }
 
-    return NextResponse.json({
-      responseCode: "00",
-      responseMessage: "Global activity retrieved successfully",
-      responseData: {
-        content,
-        totalElements: total,
-        totalPages: Math.ceil(total / size),
-        pageNumber: page,
-        pageSize: size
-      },
-      success: true
+    if (channelId) headers["Channel-ID"] = channelId;
+    if (channelSecret) headers["Channel-Secret"] = channelSecret;
+
+    // Proxy the request to the Java backend
+    const response = await fetch(`${apiUrl}/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`, {
+      method: "GET",
+      headers,
+      cache: 'no-store'
     });
-  } catch (error: unknown) {
-    console.error("[Global Activity API Error]", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to retrieve global activity";
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        console.error("[Global Activity Proxy] Backend error:", response.status, data);
+        return NextResponse.json(data, { status: response.status });
+    }
+
+    return NextResponse.json(data);
+  } catch (error: any) {
+    console.error("[Global Activity Proxy Error]", error);
     return NextResponse.json({
       responseCode: "ERROR",
-      responseMessage: "Failed to retrieve global activity",
-      errors: [errorMessage],
+      responseMessage: "Failed to proxy global activity",
+      errors: [error.message || "Unknown error"],
       success: false
     }, { status: 500 });
   }
