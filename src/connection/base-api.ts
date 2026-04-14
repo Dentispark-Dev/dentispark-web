@@ -160,19 +160,11 @@ export class BaseAPI {
         if (response.data && response.data.responseCode) {
           const { responseCode } = response.data;
 
-          if (["93", "94"].includes(responseCode)) {
-            this.clearToken();
-            // Notify other components about auth state change
-            if (typeof window !== "undefined") {
-              window.dispatchEvent(new CustomEvent("auth-state-changed"));
-              if (!window.location.pathname.includes("/login")) {
-                window.location.href = "/login";
-              }
-            }
-          } else if (["95", "97", "98"].includes(responseCode)) {
-            // These are resource-specific security/permission issues.
-            // We log them but don't kick the user out of their entire session.
-            console.warn(`[API] Resource access rejected (Code ${responseCode}) for URL: ${response?.config?.url}`);
+          if (["93", "94", "95", "97", "98"].includes(responseCode)) {
+            // Soft session/security issues (e.g., mismatch, restricted access, detected security threat)
+            // We log these but don't force a hard logout/redirect to prevent infinite refresh loops.
+            // The Middleware and AuthProvider will handle routing-level enforcement.
+            console.warn(`[API] Auth/Security issue (Code ${responseCode}) for URL: ${response?.config?.url}`);
           }
         }
 
