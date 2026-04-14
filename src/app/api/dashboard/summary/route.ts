@@ -49,13 +49,14 @@ export async function GET() {
       responseData,
       success: true
     });
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error("[Dashboard Summary API Error]", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to retrieve dashboard summary";
     return NextResponse.json({
       responseCode: "ERROR",
-      responseMessage: "Failed to retrieve dashboard summary",
-      errors: [errorMessage],
+      responseMessage: "Failed to retrieve dashboard summary locally",
+      errors: [error.message || "Unknown error"],
+      stack: error.stack,
+      dbUrl: process.env.DATABASE_URL ? "SET (ends with " + process.env.DATABASE_URL.slice(-10) + ")" : "MISSING",
       success: false
     }, { status: 500 });
   }
