@@ -106,27 +106,9 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = hasValidToken(request);
   const profileStatus = getUserProfileStatus(request);
 
-  // Handle API Proxy Header Injection
-  if (pathname.startsWith("/api/backend")) {
-    const accessToken = request.cookies.get("accessToken")?.value;
-    const requestHeaders = new Headers(request.headers);
-    
-    if (accessToken) {
-      requestHeaders.set("Authorization", `Bearer ${accessToken}`);
-    }
-
-    // Pass through channel headers if they exist in standard places or env
-    const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
-    const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
-    if (channelId) requestHeaders.set("Channel-ID", channelId);
-    if (channelSecret) requestHeaders.set("Channel-Secret", channelSecret);
-
-    return NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    });
-  }
+  // NOTE: /api/backend requests are now excluded by the matcher below.
+  // Header injection (Channel-ID, Channel-Secret, Authorization) is handled
+  // by the catch-all route at /api/backend/[...path]/route.ts.
 
   const memberType = getUserMemberType(request);
   const isAdmin = memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM";
@@ -213,6 +195,6 @@ export const config = {
    * - public folder files
    */
   matcher: [
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
+    "/((?!api/auth|api/backend|api/dashboard|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };

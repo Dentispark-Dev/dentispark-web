@@ -75,14 +75,9 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  async rewrites() {
-    return [
-      {
-        source: "/api/backend/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com"}/:path*`,
-      },
-    ];
-  },
+  // NOTE: The /api/backend rewrite was removed. All backend API requests are now
+  // handled by the catch-all route at /api/backend/[...path]/route.ts which
+  // properly injects Channel-ID, Channel-Secret, and Authorization headers.
 
   async headers() {
     return [
