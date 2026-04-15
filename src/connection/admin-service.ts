@@ -201,7 +201,7 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     getDashboardSummary: () => api.get<DashboardSummary>("/dashboard/summary", { baseURL: "/api" }),
 
     getGrowthAnalytics: (days: number = 30) =>
-        api.get<GrowthAnalytics[]>(`/dashboard/growth?days=${days}`),
+        api.get<GrowthAnalytics[]>(`/dashboard/growth?days=${days}`, { baseURL: "/api" }),
 
     getGlobalActivity: (page: number = 0, size: number = 10) =>
         api.get<PaginatedResponse<GlobalActivity>>(`/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`, { baseURL: "/api" }),
@@ -211,7 +211,7 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
         if (device) params.append("device", device);
         if (location) params.append("location", location);
         const query = params.toString();
-        return api.get<TrafficSummary>(`/dashboard/traffic${query ? `?${query}` : ""}`);
+        return api.get<TrafficSummary>(`/dashboard/traffic${query ? `?${query}` : ""}`, { baseURL: "/api" });
     },
 
     // --- Content Management: Resources ---

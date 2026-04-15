@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const page = searchParams.get("pageNumber") || "0";
-    const size = searchParams.get("pageSize") || "10";
+    const device = searchParams.get("device");
+    const location = searchParams.get("location");
     
     const accessToken = request.cookies.get("accessToken")?.value;
     const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
@@ -23,9 +23,14 @@ export async function GET(request: NextRequest) {
     if (channelId) headers["Channel-ID"] = channelId;
     if (channelSecret) headers["Channel-Secret"] = channelSecret;
 
-    const backendUrl = `${apiUrl}/dashboard/global-activity?pageNumber=${page}&pageSize=${size}`;
-    console.log(`[Global Activity Proxy] Fetching: ${backendUrl}`);
-    console.log(`[Global Activity Proxy] Auth Header Present: ${!!accessToken}`);
+    // Construct backend URL with query params
+    const params = new URLSearchParams();
+    if (device) params.append("device", device);
+    if (location) params.append("location", location);
+    const query = params.toString();
+    const backendUrl = `${apiUrl}/dashboard/traffic${query ? `?${query}` : ""}`;
+
+    console.log("[Traffic Proxy] Requesting:", backendUrl);
 
     // Proxy the request to the Java backend
     const response = await fetch(backendUrl, {
@@ -41,7 +46,7 @@ export async function GET(request: NextRequest) {
         data = await response.json();
     } else {
         const text = await response.text();
-        console.error("[Global Activity Proxy] Received non-JSON response:", text.substring(0, 100));
+        console.error("[Traffic Proxy] Received non-JSON response:", text.substring(0, 100));
         return NextResponse.json({
             responseCode: "ERROR",
             responseMessage: "Backend returned non-JSON response",
@@ -50,16 +55,16 @@ export async function GET(request: NextRequest) {
     }
 
     if (!response.ok) {
-        console.error("[Global Activity Proxy] Backend error:", response.status, data);
+        console.error("[Traffic Proxy] Backend error:", response.status, data);
         return NextResponse.json(data || { message: "Unknown backend error" }, { status: response.status });
     }
 
     return NextResponse.json(data);
   } catch (error: any) {
-    console.error("[Global Activity Proxy Error]", error);
+    console.error("[Traffic Proxy Error]", error);
     return NextResponse.json({
       responseCode: "ERROR",
-      responseMessage: "Failed to proxy global activity",
+      responseMessage: "Failed to proxy traffic analytics",
       errors: [error.message || "Unknown error"],
       success: false
     }, { status: 500 });

@@ -74,8 +74,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<LoginResponseData | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [tokenExpirationTimer, setTokenExpirationTimer] =
-    useState<NodeJS.Timeout | null>(null);
+  // const [tokenExpirationTimer, setTokenExpirationTimer] =
+  //   useState<NodeJS.Timeout | null>(null);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -102,16 +102,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(userData);
         setIsAuthenticated(true);
         
-        // If date exists, we can still set the timer as a fallback, but we won't kick them out if it's currently invalid.
-        if (userData.auth?.tokenExpiredAt) {
-            const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
-            const now = new Date();
-            
-            // Only setup the timeout if the time is actually in the future, don't execute immediate logout otherwise!
-            if (!isNaN(tokenExpiredAt.getTime()) && now < tokenExpiredAt) {
-                setupTokenExpirationTimer(userData.auth.tokenExpiredAt);
-            }
-        }
+        // NOTE: We no longer set a client-side expiration timer here.
+        // We rely on the BaseAPI interceptor (401) to handle session expiration.
+        // This prevents "infinite loops" caused by clock skew between client and server.
         
         return true;
       } else {
@@ -126,52 +119,52 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenExpirationTimer, router]);
+  }, [router]);
 
-  const setupTokenExpirationTimer = useCallback(
-    (expirationTime: string) => {
-      if (tokenExpirationTimer) {
-        clearTimeout(tokenExpirationTimer);
-      }
+  // const setupTokenExpirationTimer = useCallback(
+  //   (expirationTime: string) => {
+  //     if (tokenExpirationTimer) {
+  //       clearTimeout(tokenExpirationTimer);
+  //     }
 
-      const expirationDate = new Date(expirationTime);
-      const currentTime = new Date();
-      const timeUntilExpiration =
-        expirationDate.getTime() - currentTime.getTime();
+  //     const expirationDate = new Date(expirationTime);
+  //     const currentTime = new Date();
+  //     const timeUntilExpiration =
+  //       expirationDate.getTime() - currentTime.getTime();
 
-      if (timeUntilExpiration > 0) {
-        // Capture user type before the timeout to determine redirect path
-        const isMentor = user?.memberType === "ACADEMIC_MENTOR";
+  //     if (timeUntilExpiration > 0) {
+  //       // Capture user type before the timeout to determine redirect path
+  //       const isMentor = user?.memberType === "ACADEMIC_MENTOR";
 
-        const timer = setTimeout(() => {
-          console.log("Token expired, logging out automatically");
-          authCookies.clearAll();
-          setUser(null);
-          setIsAuthenticated(false);
-          // Redirect to appropriate login page based on user type
-          router.push(isMentor ? "/mentor/login" : "/login");
-        }, timeUntilExpiration);
+  //       const timer = setTimeout(() => {
+  //         console.log("Token expired, logging out automatically");
+  //         authCookies.clearAll();
+  //         setUser(null);
+  //         setIsAuthenticated(false);
+  //         // Redirect to appropriate login page based on user type
+  //         router.push(isMentor ? "/mentor/login" : "/login");
+  //       }, timeUntilExpiration);
 
-        setTokenExpirationTimer(timer);
-      }
-    },
-    [tokenExpirationTimer, router, user?.memberType],
-  );
+  //       setTokenExpirationTimer(timer);
+  //     }
+  //   },
+  //   [tokenExpirationTimer, router, user?.memberType],
+  // );
 
   const login = useCallback(
     (userData: LoginResponseData) => {
       setUser(userData);
       setIsAuthenticated(true);
 
-      if (userData.auth?.tokenExpiredAt) {
-        setupTokenExpirationTimer(userData.auth.tokenExpiredAt);
-      }
+      // if (userData.auth?.tokenExpiredAt) {
+      //   setupTokenExpirationTimer(userData.auth.tokenExpiredAt);
+      // }
 
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("auth-state-changed"));
       }
     },
-    [setupTokenExpirationTimer],
+    [],
   );
 
   const updateUser = useCallback((userData: LoginResponseData) => {
@@ -182,10 +175,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // Check if user is a mentor before clearing state
     const isMentor = user?.memberType === "ACADEMIC_MENTOR";
 
-    if (tokenExpirationTimer) {
-      clearTimeout(tokenExpirationTimer);
-      setTokenExpirationTimer(null);
-    }
+    // if (tokenExpirationTimer) {
+    //   clearTimeout(tokenExpirationTimer);
+    //   setTokenExpirationTimer(null);
+    // }
 
     authCookies.clearAll();
     setUser(null);
@@ -197,7 +190,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Redirect to appropriate login page based on user type
     router.push(isMentor ? "/mentor/login" : "/login");
-  }, [tokenExpirationTimer, router, user?.memberType]);
+  }, [router, user?.memberType]);
 
   const refreshAuth = useCallback(async () => {
     setIsLoading(true);
@@ -306,13 +299,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [refreshAuth]);
 
-  useEffect(() => {
-    return () => {
-      if (tokenExpirationTimer) {
-        clearTimeout(tokenExpirationTimer);
-      }
-    };
-  }, [tokenExpirationTimer]);
+  // useEffect(() => {
+  //   return () => {
+  //     if (tokenExpirationTimer) {
+  //       clearTimeout(tokenExpirationTimer);
+  //     }
+  //   };
+  // }, [tokenExpirationTimer]);
 
   const roles = useMemo(() => user?.roles || [], [user?.roles]);
 

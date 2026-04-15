@@ -206,8 +206,10 @@ export class BaseAPI {
       if (!isPublicRoute) {
         this.clearToken();
         const failingUrl = error?.config?.url || "Unknown URL";
-        console.log("Token expired or invalid - redirecting to login");
-          window.location.href = "/login";
+        console.log(`[API] Unauthorized (401) for ${failingUrl} - state cleared`);
+        // We no longer force a hard window.location redirect here to prevent loops.
+        // The AuthProvider and Middleware will handle routing based on the cleared cookie state.
+        // window.location.href = "/login";
         throw new Error("Your session has expired. Please log in again.");
       }
     }

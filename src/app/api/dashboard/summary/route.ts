@@ -28,11 +28,24 @@ export async function GET(request: NextRequest) {
       cache: 'no-store' // Ensure we get fresh data
     });
 
-    const data = await response.json();
+    const contentType = response.headers.get("content-type");
+    let data;
+    
+    if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+    } else {
+        const text = await response.text();
+        console.error("[Dashboard Proxy] Received non-JSON response:", text.substring(0, 100));
+        return NextResponse.json({
+            responseCode: "ERROR",
+            responseMessage: "Backend returned non-JSON response",
+            success: false
+        }, { status: response.status === 200 ? 502 : response.status });
+    }
 
     if (!response.ok) {
-        console.error("[Dashboard Proxy] Backend responded with error:", response.status, data);
-        return NextResponse.json(data, { status: response.status });
+        console.error("[Dashboard Proxy] Backend error:", response.status, data);
+        return NextResponse.json(data || { message: "Unknown backend error" }, { status: response.status });
     }
 
     return NextResponse.json(data);
