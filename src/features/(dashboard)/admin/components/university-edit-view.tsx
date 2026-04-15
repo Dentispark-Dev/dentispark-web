@@ -60,7 +60,7 @@ function UniversityLogo({ src, name }: { src?: string; name: string }) {
                     {src ? (
                         <Image src={src} alt={name} fill className="object-contain p-4 transition-transform group-hover:scale-110" />
                     ) : (
-                        <div className="text-4xl font-extrabold text-primary-200 uppercase font-jakarta">{name.slice(0, 2)}</div>
+                        <div className="text-4xl font-extrabold text-primary-200 uppercase ">{name.slice(0, 2)}</div>
                     )}
                 </div>
             </div>
@@ -80,9 +80,9 @@ function ImpactMetric({ label, value, color, icon: Icon }: { label: string; valu
         <div className={cn("px-6 py-4 rounded-lg border border-greys-200 bg-white shadow-xs transition-all hover:shadow-md", color)}>
             <div className="flex items-center gap-2 mb-1">
                 <Icon className="h-3 w-3 opacity-60" />
-                <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 font-jakarta">{label}</span>
+                <span className="text-sm text-slate-500 opacity-60 ">{label}</span>
             </div>
-            <p className="text-2xl font-bold font-jakarta tracking-tight">{value}</p>
+            <p className="text-2xl font-bold  tracking-tight">{value}</p>
         </div>
     );
 }
@@ -159,16 +159,16 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 font-jakarta">
+            <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 ">
                 <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
-                <p className="text-greys-500 font-bold uppercase tracking-widest text-xs">Authenticating Academic Credentials...</p>
+                <p className="text-greys-500 font-medium text-sm">Authenticating Academic Credentials...</p>
             </div>
         );
     }
 
     if (error || !university) {
         return (
-            <div className="bg-error-50/50 backdrop-blur-md border border-error-100 rounded-xl p-16 text-center shadow-2xl shadow-error-100/20 max-w-2xl mx-auto mt-12 font-jakarta">
+            <div className="bg-error-50/50 backdrop-blur-md border border-error-100 rounded-xl p-16 text-center shadow-2xl shadow-error-100/20 max-w-2xl mx-auto mt-12 ">
                 <div className="bg-error-100 h-12 w-12 rounded-xl flex items-center justify-center mx-auto mb-8 shadow-inner shadow-error-200">
                     <Trash2 className="h-12 w-12 text-error-500" />
                 </div>
@@ -185,7 +185,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
         <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-12 pb-24 font-jakarta"
+            className="space-y-12 pb-24 "
         >
             {/* ── High-Fidelity University Header (Light Theme) ── */}
             <div className="relative bg-white rounded-xl border border-greys-300 overflow-hidden shadow-sm p-4 md:p-14 text-slate-800 min-h-[400px] flex flex-col justify-center">
@@ -204,12 +204,12 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                     <div className="flex-1 space-y-4 min-w-0">
                         <div className="space-y-4">
                             <div className="flex flex-wrap items-center justify-center xl:justify-start gap-4">
-                                <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase leading-none inline-flex">
+                                <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-xs tracking-wider rounded-full leading-none inline-flex">
                                     Official Institution
                                 </Badge>
-                                <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight w-full">{formData.name || "Registering Institution..."}</h1>
+                                <h1 className="text-2xl md:text-3xl font-semibold tracking-tight leading-tight w-full">{formData.name || "Registering Institution..."}</h1>
                             </div>
-                            <div className="flex flex-wrap items-center justify-center xl:justify-start gap-4 text-greys-400 text-xs font-bold uppercase tracking-widest">
+                            <div className="flex flex-wrap items-center justify-center xl:justify-start gap-4 text-greys-400 text-sm font-medium text-greys-500">
                                 <span className="flex items-center gap-2.5">
                                     <MapPin className="h-4.5 w-4.5 text-error-500/60" />
                                     {formData.location || "Location Pending"}
@@ -236,12 +236,12 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
 
                     <div className="w-full xl:w-96 space-y-4">
                         <div className="bg-greys-100 border border-greys-300 rounded-xl p-4 space-y-4">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-greys-400 text-center">Institutional Authority</h4>
+                            <h4 className="text-sm font-medium text-greys-400 text-center">Institutional Authority</h4>
                             <div className="space-y-3">
                                 <Button 
                                     onClick={handleSubmit}
                                     disabled={updateMutation.isPending}
-                                    className="w-full h-10 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary-100 transition-all active:scale-95 leading-none"
+                                    className="w-full h-10 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm font-semibold shadow-lg shadow-primary-100 transition-all active:scale-95 leading-none"
                                 >
                                     {updateMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2.5" /> : <Save className="h-4 w-4 mr-2.5" />}
                                     Synchronize Registry
@@ -250,7 +250,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                     onClick={() => {
                                         if (confirm("DANGER: This will remove this institution and all associated program linkage. Proceed?")) deleteMutation.mutate();
                                     }}
-                                    className="w-full h-10 rounded-xl bg-white hover:bg-error-50 text-error-600 border border-greys-300 hover:border-error-200 font-bold text-xs uppercase tracking-widest transition-all active:scale-95 shadow-none"
+                                    className="w-full h-10 rounded-xl bg-white hover:bg-error-50 text-error-600 border border-greys-300 hover:border-error-200 font-bold text-sm font-semibold transition-all active:scale-95 shadow-none"
                                 >
                                     <Trash2 className="h-4 w-4 mr-2.5" />
                                     Purge Registry
@@ -270,7 +270,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                 key={tab.key}
                                 onClick={() => setActiveTab(tab.key)}
                                 className={cn(
-                                    "flex items-center gap-3 px-8 py-3.5 rounded-xl text-[11px] font-bold transition-all duration-300 uppercase tracking-widest",
+                                    "flex items-center gap-3 px-8 py-3.5 rounded-xl text-sm font-medium transition-all duration-300",
                                     activeTab === tab.key
                                         ? "bg-white shadow-md text-primary-600 ring-1 ring-black/5"
                                         : "text-greys-400 hover:text-text-heading hover:bg-greys-200"
@@ -294,7 +294,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                 <Card className="border border-greys-300 shadow-xs bg-white rounded-xl p-4 md:p-10 relative overflow-hidden group">
                                     <div className="h-1.5 bg-primary-600 absolute top-0 left-0 w-full opacity-10" />
                                     <CardHeader className="px-0 pb-10">
-                                        <CardTitle className="text-xl font-bold text-slate-800 uppercase tracking-widest flex items-center gap-4">
+                                        <CardTitle className="text-xl font-semibold text-slate-800 flex items-center gap-4">
                                             <div className="p-3 bg-primary-50 text-primary-600 rounded-xl group-hover:rotate-6 transition-transform shadow-xs">
                                                 <Building2 className="h-6 w-6" />
                                             </div>
@@ -304,31 +304,31 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                     <CardContent className="px-0 space-y-4">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div className="space-y-3">
-                                                <Label htmlFor="name" className="text-[10px] font-bold uppercase text-greys-400 tracking-[0.2em] ml-1">Formal Institution Name</Label>
+                                                <Label htmlFor="name" className="text-sm font-medium text-slate-600 ml-1">Formal Institution Name</Label>
                                                 <div className="relative">
-                                                    <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300" />
-                                                    <Input id="name" value={formData.name} onChange={handleChange} className="h-14 pl-14 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold text-base" required />
+                                                    <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-greys-300" />
+                                                    <Input id="name" value={formData.name} onChange={handleChange} className="h-11 pl-10 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold text-base" required />
                                                 </div>
                                             </div>
                                             <div className="space-y-3">
-                                                <Label htmlFor="location" className="text-[10px] font-bold uppercase text-greys-400 tracking-[0.2em] ml-1">Geographic Headquarters</Label>
+                                                <Label htmlFor="location" className="text-sm font-medium text-slate-600 ml-1">Geographic Headquarters</Label>
                                                 <div className="relative">
-                                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300" />
-                                                    <Input id="location" value={formData.location} onChange={handleChange} className="h-14 pl-14 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold text-base" placeholder="e.g. Oxford, United Kingdom" />
+                                                    <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-greys-300" />
+                                                    <Input id="location" value={formData.location} onChange={handleChange} className="h-11 pl-10 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold text-base" placeholder="e.g. Oxford, United Kingdom" />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="space-y-3">
-                                            <Label htmlFor="dentalSchoolPathway" className="text-[10px] font-bold uppercase text-greys-400 tracking-[0.2em] ml-1">Core Admission Pathway</Label>
+                                            <Label htmlFor="dentalSchoolPathway" className="text-sm font-medium text-slate-600 ml-1">Core Admission Pathway</Label>
                                             <div className="relative">
-                                                <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300" />
-                                                <Input id="dentalSchoolPathway" value={formData.dentalSchoolPathway} onChange={handleChange} className="h-14 pl-14 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold" placeholder="e.g. 5-Year Direct Entry BDS" />
+                                                <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-greys-300" />
+                                                <Input id="dentalSchoolPathway" value={formData.dentalSchoolPathway} onChange={handleChange} className="h-11 pl-10 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold" placeholder="e.g. 5-Year Direct Entry BDS" />
                                             </div>
                                         </div>
 
                                         <div className="space-y-3">
-                                            <Label htmlFor="description" className="text-[10px] font-bold uppercase text-greys-400 tracking-[0.2em] ml-1">Institutional Blueprint Narrative</Label>
+                                            <Label htmlFor="description" className="text-sm font-medium text-slate-600 ml-1">Institutional Blueprint Narrative</Label>
                                             <Textarea
                                                 id="description"
                                                 value={formData.description}
@@ -346,11 +346,11 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                     <div className="space-y-12">
                                         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                                             <div className="space-y-3">
-                                                <h3 className="text-2xl font-bold text-slate-800 tracking-tight uppercase">Academic Impact Pulse</h3>
-                                                <p className="text-greys-400 font-bold uppercase tracking-widest text-[10px]">Statistical ranking and institutional performance metrics</p>
+                                                <h3 className="text-2xl font-semibold text-slate-800 tracking-tight">Academic Impact Pulse</h3>
+                                                <p className="text-greys-500 text-sm">Statistical ranking and institutional performance metrics</p>
                                             </div>
                                             <div className="p-6 bg-primary-600 rounded-lg text-white shadow-lg shadow-primary-100">
-                                                <p className="text-[10px] font-bold uppercase tracking-widest opacity-70 mb-2 leading-none">Global Ranking</p>
+                                                <p className="text-sm text-slate-500 opacity-70 mb-2 leading-none">Global Ranking</p>
                                                 <p className="text-4xl font-bold tracking-tight">#{formData.ranking || "—"}</p>
                                             </div>
                                         </div>
@@ -364,19 +364,19 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                                 <div key={i} className={cn("p-8 rounded-lg border border-greys-200 transition-all hover:bg-white hover:shadow-md", stat.bg)}>
                                                     <stat.icon className={cn("h-8 w-8 mb-6", stat.color)} />
                                                     <p className={cn("text-3xl font-bold tracking-tight mb-2", stat.color)}>{stat.value}</p>
-                                                    <p className="text-[10px] font-bold uppercase tracking-widest text-greys-400">{stat.label}</p>
+                                                    <p className="text-sm text-slate-500 text-greys-400">{stat.label}</p>
                                                 </div>
                                             ))}
                                         </div>
                                         
                                         <div className="p-10 bg-greys-50 rounded-lg border border-greys-200 relative overflow-hidden">
                                             <div className="relative z-10">
-                                                <h4 className="text-base font-bold uppercase mb-6 flex items-center gap-3 text-slate-800">
+                                                <h4 className="text-lg font-semibold mb-6 flex items-center gap-3 text-slate-800">
                                                     <History className="h-5 w-5 text-greys-400" />
                                                     Registry Growth Timeline
                                                 </h4>
                                                 <div className="h-40 w-full bg-white rounded-lg border border-dashed border-greys-300 flex items-center justify-center">
-                                                    <p className="text-[11px] font-bold text-greys-400 flex items-center gap-2 uppercase tracking-widest">
+                                                    <p className="text-sm font-medium text-greys-500 flex items-center gap-2">
                                                         <Search className="h-4 w-4" /> Visual Pulse Analytics Loading...
                                                     </p>
                                                 </div>
@@ -390,17 +390,17 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                 <Card className="border border-greys-300 shadow-xs bg-white rounded-xl p-4">
                                     <div className="space-y-12">
                                         <div className="space-y-3">
-                                            <h3 className="text-2xl font-bold text-slate-800 tracking-tight uppercase">Registry Assets & Linkage</h3>
-                                            <p className="text-greys-400 font-bold uppercase tracking-widest text-[10px]">Infrastructure configuration and digital identity management</p>
+                                            <h3 className="text-2xl font-semibold text-slate-800 tracking-tight">Registry Assets & Linkage</h3>
+                                            <p className="text-greys-500 text-sm">Infrastructure configuration and digital identity management</p>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div className="space-y-8">
                                                 <div className="space-y-4">
-                                                    <Label htmlFor="websiteUrl" className="text-[10px] font-bold uppercase text-greys-400 tracking-[0.2em] ml-1">Digital Domain Terminal</Label>
+                                                    <Label htmlFor="websiteUrl" className="text-sm font-medium text-slate-600 ml-1">Digital Domain Terminal</Label>
                                                     <div className="relative">
-                                                        <LinkIcon className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-400" />
-                                                        <Input id="websiteUrl" value={formData.websiteUrl} onChange={handleChange} className="h-14 pl-16 rounded-xl bg-greys-50 border-greys-300 focus:bg-white font-semibold" placeholder="https://university.edu" />
+                                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary-400" />
+                                                        <Input id="websiteUrl" value={formData.websiteUrl} onChange={handleChange} className="h-11 pl-11 rounded-xl bg-greys-50 border-greys-300 focus:bg-white font-semibold" placeholder="https://university.edu" />
                                                         {formData.websiteUrl && (
                                                             <a href={formData.websiteUrl} target="_blank" rel="noopener noreferrer" className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 bg-white rounded-lg shadow-xs text-primary-600 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all">
                                                                 <ExternalLink className="h-4 w-4" />
@@ -409,17 +409,17 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                                     </div>
                                                 </div>
                                                 <div className="space-y-4">
-                                                    <Label htmlFor="logoUrl" className="text-[10px] font-bold uppercase text-greys-400 tracking-[0.2em] ml-1">Archive Asset URL (Hi-Res)</Label>
+                                                    <Label htmlFor="logoUrl" className="text-sm font-medium text-slate-600 ml-1">Archive Asset URL (Hi-Res)</Label>
                                                     <div className="relative">
-                                                        <Globe className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-success-400" />
-                                                        <Input id="logoUrl" value={formData.logoUrl} onChange={handleChange} className="h-14 pl-16 rounded-xl bg-greys-50 border-greys-300 focus:bg-white font-semibold" placeholder="https://cdn.assets.com/logo.png" />
+                                                        <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-success-400" />
+                                                        <Input id="logoUrl" value={formData.logoUrl} onChange={handleChange} className="h-11 pl-11 rounded-xl bg-greys-50 border-greys-300 focus:bg-white font-semibold" placeholder="https://cdn.assets.com/logo.png" />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div className="p-10 bg-greys-100 border border-greys-200 rounded-xl text-slate-800 space-y-4 relative overflow-hidden">
                                                 <div className="absolute top-0 right-0 w-16 h-16 bg-primary-100 opacity-20 rounded-full blur-3xl pointer-events-none" />
-                                                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-greys-400 tracking-tight text-center">Snapshot Preview</h4>
+                                                <h4 className="text-sm font-medium text-greys-400 tracking-tight text-center">Snapshot Preview</h4>
                                                 <div className="flex flex-col items-center gap-4">
                                                     <div className="h-24 w-12 rounded-lg bg-white border border-greys-300 shadow-xs flex items-center justify-center p-3">
                                                         {formData.logoUrl ? (
@@ -430,7 +430,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                                     </div>
                                                     <div className="text-center">
                                                         <p className="text-lg font-bold text-slate-800">{formData.name || "UNSET"}</p>
-                                                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest mt-2">{formData.location || "Undefined Location"}</p>
+                                                        <p className="text-sm text-greys-500 mt-2">{formData.location || "Undefined Location"}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -449,8 +449,8 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                         <div className="absolute top-0 right-0 w-48 h-48 bg-primary-50 rounded-full blur-[80px] pointer-events-none opacity-40" />
                         <CardHeader className="p-0 pb-10 flex flex-row items-center justify-between">
                             <div className="space-y-1.5 border-l-4 border-primary-500 pl-6">
-                                <CardTitle className="text-xl font-bold uppercase tracking-tight">Active programs</CardTitle>
-                                <p className="text-[10px] font-bold text-primary-600/60 uppercase tracking-widest">Enrollment Tracks</p>
+                                <CardTitle className="text-xl font-semibold tracking-tight">Active programs</CardTitle>
+                                <p className="text-sm font-medium text-primary-600/80">Enrollment Tracks</p>
                             </div>
                             <div className="h-12 w-12 rounded-xl bg-primary-100/50 border border-primary-100 flex items-center justify-center font-bold text-primary-600 text-sm shadow-xs">8</div>
                         </CardHeader>
@@ -466,17 +466,17 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                             {prog.name.slice(0, 2).toUpperCase()}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-bold text-xs truncate uppercase tracking-tight mb-1 text-slate-800">{prog.name}</p>
+                                            <p className="font-medium text-sm truncate mb-1 text-slate-800">{prog.name}</p>
                                             <div className="flex items-center gap-3">
-                                                <Badge className="bg-primary-600/10 text-primary-700 border-none text-[8px] font-bold px-2 py-0.5 rounded-full uppercase leading-none">{prog.badge}</Badge>
-                                                <span className="text-[9px] font-bold text-greys-400 uppercase tracking-widest leading-none">{prog.slots}</span>
+                                                <Badge className="bg-primary-600/10 text-primary-700 border-none text-xs font-medium px-2.5 py-0.5 rounded-full leading-none">{prog.badge}</Badge>
+                                                <span className="text-xs text-slate-500 leading-none">{prog.slots}</span>
                                             </div>
                                         </div>
                                         <ArrowUpRight className="h-5 w-5 text-greys-300 group-hover/item:text-primary-600 transition-all" />
                                     </div>
                                 ))}
                             </div>
-                            <Button asChild className="w-full h-10 bg-greys-900 text-white hover:bg-black-800 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl shadow-black-100 transition-all active:scale-95 leading-none">
+                            <Button asChild className="w-full h-10 bg-greys-900 text-white hover:bg-black-800 rounded-xl font-bold text-sm font-semibold shadow-xl shadow-black-100 transition-all active:scale-95 leading-none">
                                 <Link href="/admin/content/courses">View Full Dossier</Link>
                             </Button>
                         </CardContent>
@@ -487,8 +487,8 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                         <div className="absolute top-0 right-0 w-16 h-16 bg-success-50/50 rounded-full blur-3xl pointer-events-none group-hover:bg-success-100 transition-colors" />
                         <CardHeader className="p-0 pb-10 flex flex-row items-center justify-between">
                             <div className="space-y-1.5 border-l-4 border-success-500 pl-6">
-                                <CardTitle className="text-xl font-bold uppercase tracking-tight">Clinical Mentors</CardTitle>
-                                <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">Faculty Affiliates</p>
+                                <CardTitle className="text-xl font-semibold tracking-tight">Clinical Mentors</CardTitle>
+                                <p className="text-sm text-greys-500">Faculty Affiliates</p>
                             </div>
                             <Users className="h-6 w-6 text-success-600 opacity-60" />
                         </CardHeader>
@@ -503,11 +503,11 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                                             {mentor.name.slice(0, 1)}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-bold text-slate-800 uppercase tracking-tight text-xs">{mentor.name}</p>
-                                            <p className="text-[10px] font-bold text-greys-400 mt-0.5 leading-none">{mentor.focus}</p>
+                                            <p className="font-medium text-slate-800 text-sm">{mentor.name}</p>
+                                            <p className="text-sm text-greys-500 mt-0.5 leading-none">{mentor.focus}</p>
                                             <div className="flex items-center gap-1.5 mt-2.5 text-warning-500">
                                                 <Star className="h-3 w-3 fill-current" />
-                                                <span className="text-[9px] font-bold uppercase tracking-widest">{mentor.rating} Rating</span>
+                                                <span className="text-xs text-slate-500">{mentor.rating} Rating</span>
                                             </div>
                                         </div>
                                         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg bg-greys-50 hover:bg-white hover:text-primary-600 border border-transparent hover:border-greys-300 transition-all shadow-none">
@@ -518,7 +518,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                             </div>
                             
                             <div className="pt-8 border-t border-greys-200">
-                                <Button asChild variant="outline" className="w-full h-10 rounded-xl font-bold text-xs uppercase tracking-widest border border-greys-300 hover:bg-greys-50 hover:border-greys-400 transition-all active:scale-95 text-slate-600 leading-none shadow-none">
+                                <Button asChild variant="outline" className="w-full h-10 rounded-xl font-bold text-sm font-semibold border border-greys-300 hover:bg-greys-50 hover:border-greys-400 transition-all active:scale-95 text-slate-600 leading-none shadow-none">
                                     <Link href="/admin/mentors">Audit Academic Faculty</Link>
                                 </Button>
                             </div>
