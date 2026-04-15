@@ -1,6 +1,4 @@
 "use client";
-import { LooseRecord } from "@/src/types/loose";
-
 
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -12,85 +10,44 @@ import {
     Star,
     BookOpen,
     Loader2,
-    ArrowLeft,
-    Save,
     Trash2,
     Building2,
-    Users,
     GraduationCap,
     TrendingUp,
     ShieldCheck,
     Settings,
     ArrowUpRight,
-    ExternalLink,
-    Search,
-    Sparkles,
-    History
+    Users,
+    Activity,
+    Database,
+    Image as ImageIcon
 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Textarea } from "@/src/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
-import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/src/lib/utils";
 
 interface UniversityEditViewProps {
     universityId: string;
 }
 
-type TabKey = "identity" | "impact" | "settings";
+type TabKey = "overview" | "database" | "programs" | "settings";
 
 const tabs: { key: TabKey; label: string; icon: React.ReactNode }[] = [
-    { key: "identity", label: "Core Identity", icon: <Building2 className="h-4 w-4" /> },
-    { key: "impact", label: "Academic Impact", icon: <Sparkles className="h-4 w-4" /> },
-    { key: "settings", label: "Registry Control", icon: <Settings className="h-4 w-4" /> },
+    { key: "overview", label: "Overview", icon: <Activity className="h-4 w-4" /> },
+    { key: "database", label: "Database", icon: <Database className="h-4 w-4" /> },
+    { key: "programs", label: "Programs", icon: <BookOpen className="h-4 w-4" /> },
+    { key: "settings", label: "Settings", icon: <Settings className="h-4 w-4" /> },
 ];
-
-function UniversityLogo({ src, name }: { src?: string; name: string }) {
-    return (
-        <div className="relative group">
-            <div className="h-32 w-16 rounded-xl bg-white p-1 border border-greys-300 shadow-sm group-hover:rotate-2 transition-transform duration-500">
-                <div className="h-full w-full rounded-[2.3rem] bg-white flex items-center justify-center overflow-hidden relative p-4">
-                    {src ? (
-                        <Image src={src} alt={name} fill className="object-contain p-4 transition-transform group-hover:scale-110" />
-                    ) : (
-                        <div className="text-4xl font-extrabold text-primary-200 uppercase ">{name.slice(0, 2)}</div>
-                    )}
-                </div>
-            </div>
-            <motion.div 
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="absolute -bottom-2 -right-2 h-10 w-10 rounded-lg bg-primary-600 border-4 border-white shadow-lg flex items-center justify-center"
-            >
-                <ShieldCheck className="h-5 w-5 text-white" />
-            </motion.div>
-        </div>
-    );
-}
-
-function ImpactMetric({ label, value, color, icon: Icon }: { label: string; value: string | number; color: string; icon: LooseRecord }) {
-    return (
-        <div className={cn("px-6 py-4 rounded-lg border border-greys-200 bg-white shadow-xs transition-all hover:shadow-md", color)}>
-            <div className="flex items-center gap-2 mb-1">
-                <Icon className="h-3 w-3 opacity-60" />
-                <span className="text-sm text-slate-500 opacity-60 ">{label}</span>
-            </div>
-            <p className="text-2xl font-bold  tracking-tight">{value}</p>
-        </div>
-    );
-}
 
 export function UniversityEditView({ universityId }: UniversityEditViewProps) {
     const queryClient = useQueryClient();
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState<TabKey>("identity");
+    const [activeTab, setActiveTab] = useState<TabKey>("overview");
     const [formData, setFormData] = useState({
         name: "",
         location: "",
@@ -125,10 +82,10 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admin-university-detail", universityId] });
             queryClient.invalidateQueries({ queryKey: ["admin-universities"] });
-            toast.success("Institutional registry updated successfully");
+            toast.success("Settings saved successfully");
         },
         onError: () => {
-            toast.error("Failed to update university registry");
+            toast.error("Failed to save changes");
         }
     });
 
@@ -136,11 +93,11 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
         mutationFn: () => adminService.deleteUniversity(universityId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admin-universities"] });
-            toast.success("Institute removed from registry");
+            toast.success("University deleted");
             router.push("/admin/content/universities");
         },
         onError: () => {
-            toast.error("Critical failure during registry deletion");
+            toast.error("Failed to delete university");
         }
     });
 
@@ -152,380 +109,306 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         updateMutation.mutate(formData);
     };
 
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 ">
-                <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
-                <p className="text-greys-500 font-medium text-sm">Authenticating Academic Credentials...</p>
+            <div className="flex bg-[#fafafa] min-h-[500px] items-center justify-center">
+                <Loader2 className="h-6 w-6 text-slate-400 animate-spin" />
             </div>
         );
     }
 
     if (error || !university) {
         return (
-            <div className="bg-error-50/50 backdrop-blur-md border border-error-100 rounded-xl p-16 text-center shadow-2xl shadow-error-100/20 max-w-2xl mx-auto mt-12 ">
-                <div className="bg-error-100 h-12 w-12 rounded-xl flex items-center justify-center mx-auto mb-8 shadow-inner shadow-error-200">
-                    <Trash2 className="h-12 w-12 text-error-500" />
-                </div>
-                <h3 className="text-3xl font-bold text-error-900 mb-4 tracking-tight">Institute Registry Lock</h3>
-                <p className="text-error-700/70 mb-6 font-medium leading-relaxed">The academic institution you are attempting to modify is not currently reachable or has been removed from the global registry.</p>
-                <Button asChild className="bg-error-600 hover:bg-error-700 text-white rounded-lg h-10 px-10 font-bold shadow-xl shadow-error-900/10 active:scale-95 transition-all">
-                    <Link href="/admin/content/universities">Return to Directory</Link>
+            <div className="max-w-3xl mx-auto mt-12 p-6 bg-white border border-greys-200 rounded-lg text-center shadow-sm">
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">University Not Found</h3>
+                <p className="text-sm text-slate-500 mb-6">This institution couldn't be loaded or doesn't exist.</p>
+                <Button asChild variant="outline">
+                    <Link href="/admin/content/universities">Back to Universities</Link>
                 </Button>
             </div>
         );
     }
 
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-12 pb-24 "
-        >
-            {/* ── High-Fidelity University Header (Light Theme) ── */}
-            <div className="relative bg-white rounded-xl border border-greys-300 overflow-hidden shadow-sm p-4 md:p-14 text-slate-800 min-h-[400px] flex flex-col justify-center">
-                <div className="absolute top-0 right-0 h-32 w-32 bg-primary-50 rounded-bl-full opacity-40 pointer-events-none" />
-                
-                <div className="relative z-10 flex flex-col xl:flex-row gap-12 items-center xl:items-start text-center xl:text-left">
-                    <div className="flex flex-col items-center gap-4">
-                        <Button asChild variant="ghost" size="icon" className="rounded-lg h-10 w-10 bg-greys-100 hover:bg-white text-greys-500 border border-transparent hover:border-greys-300 transition-all active:scale-95 mb-2 shadow-none hover:shadow-xs">
-                            <Link href="/admin/content/universities">
-                                <ArrowLeft className="h-6 w-6" />
-                            </Link>
+        <div className="min-h-screen bg-[#fafafa] font-sans pb-24 text-slate-900 border-x border-greys-100 max-w-[1400px] mx-auto shadow-[0_0_40px_-15px_rgba(0,0,0,0.05)]">
+            {/* Header Area */}
+            <div className="px-6 py-5 border-b border-greys-200 bg-white text-sm">
+                <div className="flex items-center justify-between max-w-6xl mx-auto">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-slate-500">
+                            <Link href="/admin/content/universities" className="hover:text-slate-900 transition-colors">Universities</Link>
+                            <span className="text-greys-300">/</span>
+                            <span className="font-medium text-slate-900 truncate max-w-[200px]">{formData.name || universityId}</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Button variant="outline" className="h-8 text-xs font-medium border-greys-200 hover:bg-greys-50 shadow-sm" asChild>
+                           <a href={formData.websiteUrl || "#"} target="_blank" rel="noopener noreferrer">View Site <ArrowUpRight className="ml-1.5 h-3 w-3 text-slate-400"/></a>
                         </Button>
-                        <UniversityLogo src={formData.logoUrl} name={formData.name || "UN"} />
+                        <Button 
+                            onClick={handleSubmit} 
+                            disabled={updateMutation.isPending}
+                            className="h-8 px-4 text-xs font-medium bg-slate-900 hover:bg-slate-800 text-white shadow-sm"
+                        >
+                            {updateMutation.isPending && <Loader2 className="h-3 w-3 mr-2 animate-spin" />}
+                            Save Settings
+                        </Button>
                     </div>
-
-                    <div className="flex-1 space-y-4 min-w-0">
-                        <div className="space-y-4">
-                            <div className="flex flex-wrap items-center justify-center xl:justify-start gap-4">
-                                <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-xs tracking-wider rounded-full leading-none inline-flex">
-                                    Official Institution
-                                </Badge>
-                                <h1 className="text-2xl md:text-3xl font-semibold tracking-tight leading-tight w-full">{formData.name || "Registering Institution..."}</h1>
-                            </div>
-                            <div className="flex flex-wrap items-center justify-center xl:justify-start gap-4 text-greys-400 text-sm font-medium text-greys-500">
-                                <span className="flex items-center gap-2.5">
-                                    <MapPin className="h-4.5 w-4.5 text-error-500/60" />
-                                    {formData.location || "Location Pending"}
-                                </span>
-                                <span className="flex items-center gap-2.5">
-                                    <Globe className="h-4.5 w-4.5 text-primary-500/60" />
-                                    {formData.websiteUrl ? "Official Registry Validated" : "Awaiting Web Linkage"}
-                                </span>
-                                <span className="flex items-center gap-2.5">
-                                    <ShieldCheck className="h-4.5 w-4.5 text-success-500/60" />
-                                    VERIFIED ACADEMIC HUB
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* High-Fidelity Stats Bar */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl">
-                            <ImpactMetric label="Global Rank" value={`#${formData.ranking || "—"}`} color="text-warning-600" icon={Star} />
-                            <ImpactMetric label="Active Tracks" value="8" color="text-indigo-600" icon={BookOpen} />
-                            <ImpactMetric label="Scholarships" value="4" color="text-success-600" icon={GraduationCap} />
-                            <ImpactMetric label="Growth Rate" value="+12%" color="text-primary-600" icon={TrendingUp} />
-                        </div>
-                    </div>
-
-                    <div className="w-full xl:w-96 space-y-4">
-                        <div className="bg-greys-100 border border-greys-300 rounded-xl p-4 space-y-4">
-                            <h4 className="text-sm font-medium text-greys-400 text-center">Institutional Authority</h4>
-                            <div className="space-y-3">
-                                <Button 
-                                    onClick={handleSubmit}
-                                    disabled={updateMutation.isPending}
-                                    className="w-full h-10 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm font-semibold shadow-lg shadow-primary-100 transition-all active:scale-95 leading-none"
-                                >
-                                    {updateMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2.5" /> : <Save className="h-4 w-4 mr-2.5" />}
-                                    Synchronize Registry
-                                </Button>
-                                <Button 
-                                    onClick={() => {
-                                        if (confirm("DANGER: This will remove this institution and all associated program linkage. Proceed?")) deleteMutation.mutate();
-                                    }}
-                                    className="w-full h-10 rounded-xl bg-white hover:bg-error-50 text-error-600 border border-greys-300 hover:border-error-200 font-bold text-sm font-semibold transition-all active:scale-95 shadow-none"
-                                >
-                                    <Trash2 className="h-4 w-4 mr-2.5" />
-                                    Purge Registry
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div className="mt-8 max-w-6xl mx-auto flex items-center gap-4">
+                     <div className="h-12 w-12 bg-white border border-greys-200 rounded-lg p-1 shadow-sm flex items-center justify-center shrink-0">
+                         {formData.logoUrl ? (
+                             <img src={formData.logoUrl} alt={formData.name} className="object-contain h-full w-full rounded-md" />
+                         ) : (
+                             <Building2 className="h-6 w-6 text-slate-300" />
+                         )}
+                     </div>
+                     <div>
+                         <h1 className="text-xl font-semibold tracking-tight leading-tight">{formData.name || "Unnamed University"}</h1>
+                         <div className="flex items-center gap-3 text-xs text-slate-500 mt-1.5 font-medium">
+                             <span className="flex items-center gap-1.5"><MapPin className="h-3 w-3"/> {formData.location || "No location set"}</span>
+                             <span className="text-greys-300">•</span>
+                             <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-emerald-500"/> Verified</span>
+                         </div>
+                     </div>
                 </div>
             </div>
 
-            {/* ── Navigation Hub ── */}
-            <div className="flex flex-col xl:flex-row gap-12">
-                <div className="flex-1 space-y-4 min-w-0">
-                    <div className="flex flex-wrap gap-2 p-1.5 bg-greys-100 rounded-lg w-fit border border-greys-300">
+            {/* Layout Grid */}
+            <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-10">
+                
+                {/* Left Sidebar Tabs */}
+                <div className="w-52 shrink-0 pr-4">
+                    <div className="space-y-1 mb-6">
+                        <p className="px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">Configuration</p>
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
                                 onClick={() => setActiveTab(tab.key)}
                                 className={cn(
-                                    "flex items-center gap-3 px-8 py-3.5 rounded-xl text-sm font-medium transition-all duration-300",
+                                    "w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all group",
                                     activeTab === tab.key
-                                        ? "bg-white shadow-md text-primary-600 ring-1 ring-black/5"
-                                        : "text-greys-400 hover:text-text-heading hover:bg-greys-200"
+                                        ? "bg-indigo-50/70 text-indigo-700"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-greys-100/50"
                                 )}
                             >
-                                {tab.icon}
+                                <div className={cn(
+                                    "transition-colors",
+                                    activeTab === tab.key ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"
+                                )}>
+                                    {tab.icon}
+                                </div>
                                 {tab.label}
                             </button>
                         ))}
                     </div>
-
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={activeTab}
-                            initial={{ opacity: 0, x: 10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -10 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            {activeTab === "identity" && (
-                                <Card className="border border-greys-300 shadow-xs bg-white rounded-xl p-4 md:p-10 relative overflow-hidden group">
-                                    <div className="h-1.5 bg-primary-600 absolute top-0 left-0 w-full opacity-10" />
-                                    <CardHeader className="px-0 pb-10">
-                                        <CardTitle className="text-xl font-semibold text-slate-800 flex items-center gap-4">
-                                            <div className="p-3 bg-primary-50 text-primary-600 rounded-xl group-hover:rotate-6 transition-transform shadow-xs">
-                                                <Building2 className="h-6 w-6" />
-                                            </div>
-                                            Registry Hub Profile
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="px-0 space-y-4">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="space-y-3">
-                                                <Label htmlFor="name" className="text-sm font-medium text-slate-600 ml-1">Formal Institution Name</Label>
-                                                <div className="relative">
-                                                    <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-greys-300" />
-                                                    <Input id="name" value={formData.name} onChange={handleChange} className="h-11 pl-10 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold text-base" required />
-                                                </div>
-                                            </div>
-                                            <div className="space-y-3">
-                                                <Label htmlFor="location" className="text-sm font-medium text-slate-600 ml-1">Geographic Headquarters</Label>
-                                                <div className="relative">
-                                                    <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-greys-300" />
-                                                    <Input id="location" value={formData.location} onChange={handleChange} className="h-11 pl-10 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold text-base" placeholder="e.g. Oxford, United Kingdom" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <Label htmlFor="dentalSchoolPathway" className="text-sm font-medium text-slate-600 ml-1">Core Admission Pathway</Label>
-                                            <div className="relative">
-                                                <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-greys-300" />
-                                                <Input id="dentalSchoolPathway" value={formData.dentalSchoolPathway} onChange={handleChange} className="h-11 pl-10 rounded-xl bg-greys-50 border-greys-300 focus:bg-white transition-all font-semibold" placeholder="e.g. 5-Year Direct Entry BDS" />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <Label htmlFor="description" className="text-sm font-medium text-slate-600 ml-1">Institutional Blueprint Narrative</Label>
-                                            <Textarea
-                                                id="description"
-                                                value={formData.description}
-                                                onChange={handleChange}
-                                                className="min-h-[250px] p-4 rounded-lg bg-greys-50 border-greys-300 focus:bg-white transition-all font-medium leading-relaxed resize-none shadow-none text-sm"
-                                                placeholder="Provide a comprehensive description of the university's clinical focus, research output, and student support infrastructure..."
-                                            />
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )}
-
-                            {activeTab === "impact" && (
-                                <Card className="border border-greys-300 shadow-xs bg-white rounded-xl p-4">
-                                    <div className="space-y-12">
-                                        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                                            <div className="space-y-3">
-                                                <h3 className="text-2xl font-semibold text-slate-800 tracking-tight">Academic Impact Pulse</h3>
-                                                <p className="text-greys-500 text-sm">Statistical ranking and institutional performance metrics</p>
-                                            </div>
-                                            <div className="p-6 bg-primary-600 rounded-lg text-white shadow-lg shadow-primary-100">
-                                                <p className="text-sm text-slate-500 opacity-70 mb-2 leading-none">Global Ranking</p>
-                                                <p className="text-4xl font-bold tracking-tight">#{formData.ranking || "—"}</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                            {[
-                                                { label: "Application Velocity", value: "1.2k+", icon: TrendingUp, color: "text-primary-600", bg: "bg-primary-50/50" },
-                                                { label: "Success Yield", value: "88%", icon: Sparkles, color: "text-success-600", bg: "bg-success-50/50" },
-                                                { label: "Clinical Excellence", value: "4.9/5", icon: Star, color: "text-warning-600", bg: "bg-warning-50/50" }
-                                            ].map((stat, i) => (
-                                                <div key={i} className={cn("p-8 rounded-lg border border-greys-200 transition-all hover:bg-white hover:shadow-md", stat.bg)}>
-                                                    <stat.icon className={cn("h-8 w-8 mb-6", stat.color)} />
-                                                    <p className={cn("text-3xl font-bold tracking-tight mb-2", stat.color)}>{stat.value}</p>
-                                                    <p className="text-sm text-slate-500 text-greys-400">{stat.label}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        
-                                        <div className="p-10 bg-greys-50 rounded-lg border border-greys-200 relative overflow-hidden">
-                                            <div className="relative z-10">
-                                                <h4 className="text-lg font-semibold mb-6 flex items-center gap-3 text-slate-800">
-                                                    <History className="h-5 w-5 text-greys-400" />
-                                                    Registry Growth Timeline
-                                                </h4>
-                                                <div className="h-40 w-full bg-white rounded-lg border border-dashed border-greys-300 flex items-center justify-center">
-                                                    <p className="text-sm font-medium text-greys-500 flex items-center gap-2">
-                                                        <Search className="h-4 w-4" /> Visual Pulse Analytics Loading...
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Card>
-                            )}
-
-                            {activeTab === "settings" && (
-                                <Card className="border border-greys-300 shadow-xs bg-white rounded-xl p-4">
-                                    <div className="space-y-12">
-                                        <div className="space-y-3">
-                                            <h3 className="text-2xl font-semibold text-slate-800 tracking-tight">Registry Assets & Linkage</h3>
-                                            <p className="text-greys-500 text-sm">Infrastructure configuration and digital identity management</p>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="space-y-8">
-                                                <div className="space-y-4">
-                                                    <Label htmlFor="websiteUrl" className="text-sm font-medium text-slate-600 ml-1">Digital Domain Terminal</Label>
-                                                    <div className="relative">
-                                                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary-400" />
-                                                        <Input id="websiteUrl" value={formData.websiteUrl} onChange={handleChange} className="h-11 pl-11 rounded-xl bg-greys-50 border-greys-300 focus:bg-white font-semibold" placeholder="https://university.edu" />
-                                                        {formData.websiteUrl && (
-                                                            <a href={formData.websiteUrl} target="_blank" rel="noopener noreferrer" className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 bg-white rounded-lg shadow-xs text-primary-600 hover:bg-primary-600 hover:text-white flex items-center justify-center transition-all">
-                                                                <ExternalLink className="h-4 w-4" />
-                                                            </a>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className="space-y-4">
-                                                    <Label htmlFor="logoUrl" className="text-sm font-medium text-slate-600 ml-1">Archive Asset URL (Hi-Res)</Label>
-                                                    <div className="relative">
-                                                        <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-success-400" />
-                                                        <Input id="logoUrl" value={formData.logoUrl} onChange={handleChange} className="h-11 pl-11 rounded-xl bg-greys-50 border-greys-300 focus:bg-white font-semibold" placeholder="https://cdn.assets.com/logo.png" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="p-10 bg-greys-100 border border-greys-200 rounded-xl text-slate-800 space-y-4 relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 w-16 h-16 bg-primary-100 opacity-20 rounded-full blur-3xl pointer-events-none" />
-                                                <h4 className="text-sm font-medium text-greys-400 tracking-tight text-center">Snapshot Preview</h4>
-                                                <div className="flex flex-col items-center gap-4">
-                                                    <div className="h-24 w-12 rounded-lg bg-white border border-greys-300 shadow-xs flex items-center justify-center p-3">
-                                                        {formData.logoUrl ? (
-                                                            <img src={formData.logoUrl} alt="Logo" className="h-full w-full object-contain" />
-                                                        ) : (
-                                                            <Globe className="h-8 w-8 text-greys-200" />
-                                                        )}
-                                                    </div>
-                                                    <div className="text-center">
-                                                        <p className="text-lg font-bold text-slate-800">{formData.name || "UNSET"}</p>
-                                                        <p className="text-sm text-greys-500 mt-2">{formData.location || "Undefined Location"}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Card>
-                            )}
-                        </motion.div>
-                    </AnimatePresence>
                 </div>
 
-                {/* ── Linked Registry Sidebar (Light Theme) ── */}
-                <div className="w-full xl:w-[450px] space-y-4">
-                    {/* Program Dossier */}
-                    <Card className="border border-primary-100 shadow-sm bg-white rounded-xl p-4 md:p-10 text-slate-800 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-primary-50 rounded-full blur-[80px] pointer-events-none opacity-40" />
-                        <CardHeader className="p-0 pb-10 flex flex-row items-center justify-between">
-                            <div className="space-y-1.5 border-l-4 border-primary-500 pl-6">
-                                <CardTitle className="text-xl font-semibold tracking-tight">Active programs</CardTitle>
-                                <p className="text-sm font-medium text-primary-600/80">Enrollment Tracks</p>
+                {/* Main Content Area */}
+                <div className="flex-1 min-w-0">
+                    {activeTab === "overview" && (
+                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                            
+                            <div className="grid grid-cols-3 gap-6">
+                                <div>
+                                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Ranking</p>
+                                    <p className="text-2xl font-semibold text-slate-900">#{formData.ranking || "—"}</p>
+                                </div>
+                                <div className="pl-6 border-l border-greys-200">
+                                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Mentors</p>
+                                    <p className="text-2xl font-semibold text-slate-900">12</p>
+                                </div>
+                                <div className="pl-6 border-l border-greys-200">
+                                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Programs</p>
+                                    <p className="text-2xl font-semibold text-slate-900">8</p>
+                                </div>
                             </div>
-                            <div className="h-12 w-12 rounded-xl bg-primary-100/50 border border-primary-100 flex items-center justify-center font-bold text-primary-600 text-sm shadow-xs">8</div>
-                        </CardHeader>
-                        <CardContent className="p-0 space-y-4">
-                            <div className="space-y-3.5">
-                                {[
-                                    { name: "Clinical Dentistry BDS", badge: "Direct Entry", slots: "42 Available" },
-                                    { name: "Maxillofacial Specialist", badge: "Postgraduate", slots: "12 Available" },
-                                    { name: "Oral Research Pathway", badge: "Doctoral", slots: "5 Available" }
-                                ].map((prog, i) => (
-                                    <div key={i} className="flex items-center gap-5 p-4 bg-greys-50 rounded-lg border border-greys-200 hover:bg-white hover:border-primary-300 transition-all cursor-pointer group/item hover:shadow-md">
-                                        <div className="h-12 w-12 rounded-xl bg-white border border-greys-200 flex items-center justify-center font-bold text-xs shadow-xs group-hover/item:rotate-3 transition-transform text-primary-600">
-                                            {prog.name.slice(0, 2).toUpperCase()}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-sm truncate mb-1 text-slate-800">{prog.name}</p>
-                                            <div className="flex items-center gap-3">
-                                                <Badge className="bg-primary-600/10 text-primary-700 border-none text-xs font-medium px-2.5 py-0.5 rounded-full leading-none">{prog.badge}</Badge>
-                                                <span className="text-xs text-slate-500 leading-none">{prog.slots}</span>
-                                            </div>
-                                        </div>
-                                        <ArrowUpRight className="h-5 w-5 text-greys-300 group-hover/item:text-primary-600 transition-all" />
-                                    </div>
-                                ))}
-                            </div>
-                            <Button asChild className="w-full h-10 bg-greys-900 text-white hover:bg-black-800 rounded-xl font-bold text-sm font-semibold shadow-xl shadow-black-100 transition-all active:scale-95 leading-none">
-                                <Link href="/admin/content/courses">View Full Dossier</Link>
-                            </Button>
-                        </CardContent>
-                    </Card>
 
-                    {/* Affiliated Mentors */}
-                    <Card className="border border-greys-300 shadow-xs bg-white rounded-xl p-4 md:p-10 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-16 h-16 bg-success-50/50 rounded-full blur-3xl pointer-events-none group-hover:bg-success-100 transition-colors" />
-                        <CardHeader className="p-0 pb-10 flex flex-row items-center justify-between">
-                            <div className="space-y-1.5 border-l-4 border-success-500 pl-6">
-                                <CardTitle className="text-xl font-semibold tracking-tight">Clinical Mentors</CardTitle>
-                                <p className="text-sm text-greys-500">Faculty Affiliates</p>
+                            <div className="pt-6 border-t border-greys-200">
+                                <h3 className="text-base font-semibold text-slate-900 mb-4">Useful Documentation to read</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                     <div className="p-5 bg-white border border-greys-200 shadow-sm rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+                                         <BookOpen className="h-6 w-6 text-indigo-500 mb-4" />
+                                         <h4 className="text-sm font-semibold text-slate-900 mb-2">Programs Config</h4>
+                                         <p className="text-xs text-slate-500 mb-4 leading-relaxed">Guide to map university specific tracks like BDS and Grad Entry reliably.</p>
+                                         <span className="text-indigo-600 font-medium text-xs flex items-center">Learn more <span className="ml-1">→</span></span>
+                                     </div>
+                                     <div className="p-5 bg-white border border-greys-200 shadow-sm rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+                                         <Globe className="h-6 w-6 text-emerald-500 mb-4" />
+                                         <h4 className="text-sm font-semibold text-slate-900 mb-2">Linkage & Assets</h4>
+                                         <p className="text-xs text-slate-500 mb-4 leading-relaxed">Best practices for using high quality logos and verifying primary domains.</p>
+                                          <span className="text-indigo-600 font-medium text-xs flex items-center">Learn more <span className="ml-1">→</span></span>
+                                     </div>
+                                </div>
                             </div>
-                            <Users className="h-6 w-6 text-success-600 opacity-60" />
-                        </CardHeader>
-                        <CardContent className="p-0 space-y-4">
-                            <div className="space-y-6">
-                                {[
-                                    { name: "Dr. Elena Vance", focus: "Clinical Specialist", rating: "4.9" },
-                                    { name: "Prof. Arthur Dent", focus: "Orthodontic Lead", rating: "5.0" }
-                                ].map((mentor, i) => (
-                                    <div key={i} className="flex items-center gap-5 group/mentor">
-                                        <div className="h-14 w-10 rounded-xl bg-greys-50 border border-greys-200 shadow-xs flex items-center justify-center font-bold text-greys-600 text-base group-hover/mentor:scale-110 group-hover/mentor:rotate-2 transition-all">
-                                            {mentor.name.slice(0, 1)}
+                        </div>
+                    )}
+
+                    {activeTab === "database" && (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                            <div>
+                                <h2 className="text-lg font-semibold text-slate-900">Core Fields</h2>
+                            </div>
+                            <div className="bg-white border border-greys-200 shadow-sm rounded-lg overflow-hidden">
+                                <div className="p-6 space-y-6">
+                                    <div className="grid grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="name" className="text-xs font-semibold text-slate-700">Institution Name</Label>
+                                            <Input id="name" value={formData.name} onChange={handleChange} className="h-9 px-3 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500 bg-white" />
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-slate-800 text-sm">{mentor.name}</p>
-                                            <p className="text-sm text-greys-500 mt-0.5 leading-none">{mentor.focus}</p>
-                                            <div className="flex items-center gap-1.5 mt-2.5 text-warning-500">
-                                                <Star className="h-3 w-3 fill-current" />
-                                                <span className="text-xs text-slate-500">{mentor.rating} Rating</span>
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="location" className="text-xs font-semibold text-slate-700">Location</Label>
+                                            <Input id="location" value={formData.location} onChange={handleChange} className="h-9 px-3 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500 bg-white" />
                                         </div>
-                                        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg bg-greys-50 hover:bg-white hover:text-primary-600 border border-transparent hover:border-greys-300 transition-all shadow-none">
-                                            <ArrowUpRight className="h-4 w-4" />
-                                        </Button>
                                     </div>
-                                ))}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="dentalSchoolPathway" className="text-xs font-semibold text-slate-700">Admission Pathway</Label>
+                                        <Input id="dentalSchoolPathway" value={formData.dentalSchoolPathway} onChange={handleChange} className="h-9 px-3 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500 bg-white" placeholder="e.g. 5-Year BDS" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="description" className="text-xs font-semibold text-slate-700">Description</Label>
+                                        <Textarea
+                                            id="description"
+                                            value={formData.description}
+                                            onChange={handleChange}
+                                            className="min-h-[160px] p-3 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500 bg-white resize-y"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="px-6 py-4 bg-greys-50 border-t border-greys-200 flex items-center justify-end">
+                                    <Button onClick={handleSubmit} disabled={updateMutation.isPending} className="h-8 px-4 text-xs font-medium bg-white border border-greys-200 text-slate-700 hover:bg-greys-100 shadow-sm">
+                                        Save changes
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === "settings" && (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                             <div>
+                                <h2 className="text-lg font-semibold text-slate-900">Project Settings</h2>
                             </div>
                             
-                            <div className="pt-8 border-t border-greys-200">
-                                <Button asChild variant="outline" className="w-full h-10 rounded-xl font-bold text-sm font-semibold border border-greys-300 hover:bg-greys-50 hover:border-greys-400 transition-all active:scale-95 text-slate-600 leading-none shadow-none">
-                                    <Link href="/admin/mentors">Audit Academic Faculty</Link>
-                                </Button>
+                            <div className="bg-white border border-greys-200 shadow-sm rounded-lg overflow-hidden">
+                                <div className="p-6 space-y-6">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="websiteUrl" className="text-xs font-semibold text-slate-700">Primary Domain</Label>
+                                        <Input id="websiteUrl" value={formData.websiteUrl} onChange={handleChange} className="h-9 px-3 text-sm max-w-md focus-visible:ring-1 focus-visible:ring-indigo-500" placeholder="https://..." />
+                                    </div>
+                                    <div className="space-y-2 pt-4 border-t border-greys-100">
+                                        <Label htmlFor="logoUrl" className="text-xs font-semibold text-slate-700">Logo Asset URL</Label>
+                                        <div className="flex gap-4">
+                                            <div className="h-16 w-16 rounded-md border border-greys-200 bg-white flex items-center justify-center shrink-0 shadow-sm p-1">
+                                                {formData.logoUrl ? <img src={formData.logoUrl} className="h-full w-full object-contain" /> : <ImageIcon className="h-6 w-6 text-slate-300" />}
+                                            </div>
+                                            <div className="flex-1 space-y-2 max-w-md">
+                                                <Input id="logoUrl" value={formData.logoUrl} onChange={handleChange} className="h-9 px-3 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500" placeholder="CDN URL" />
+                                                <p className="text-[11px] text-slate-500">Provide an absolute URL to a high-resolution PNG.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="px-6 py-4 bg-greys-50 border-t border-greys-200 flex items-center justify-end">
+                                    <Button onClick={handleSubmit} disabled={updateMutation.isPending} className="h-8 px-4 text-xs font-medium bg-white border border-greys-200 text-slate-700 hover:bg-greys-100 shadow-sm">
+                                        Save changes
+                                    </Button>
+                                </div>
                             </div>
-                        </CardContent>
-                    </Card>
+
+                            <div className="pt-8">
+                                <h3 className="text-base font-semibold text-error-600 mb-4">Danger Zone</h3>
+                                <div className="p-5 border border-error-200 shadow-sm rounded-lg flex items-center justify-between bg-white">
+                                    <div>
+                                        <p className="text-sm font-semibold text-slate-900">Delete University</p>
+                                        <p className="text-xs text-slate-500 mt-1">This action cannot be undone. All database records will be purged.</p>
+                                    </div>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => {
+                                            if (confirm("Are you totally sure? Delete action is permanent.")) deleteMutation.mutate();
+                                        }}
+                                        className="h-8 px-4 text-xs font-medium border-error-200 text-error-600 hover:bg-error-50 bg-white shadow-sm"
+                                    >
+                                        Delete
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {activeTab === "programs" && (
+                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-lg font-semibold text-slate-900">Deployments</h2>
+                                <span className="text-indigo-600 text-xs font-medium cursor-pointer hover:underline cursor-pointer">View all →</span>
+                            </div>
+                            
+                            <div className="bg-white border text-sm border-greys-200 shadow-sm rounded-lg overflow-hidden">
+                                <div className="divide-y divide-greys-100">
+                                    {[
+                                        { name: "Clinical Dentistry BDS", id: "prog_7f8", time: "2 min ago", stat: "Active" },
+                                        { name: "Maxillofacial Specialist", id: "prog_4k9", time: "6 hours ago", stat: "Active" },
+                                        { name: "Undergraduate Hygiene", id: "prog_5y2", time: "12 hours ago", stat: "Active" }
+                                    ].map((prog, i) => (
+                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 hover:bg-greys-50 transition-colors cursor-pointer group">
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-8 w-8 rounded-full bg-slate-100 border border-greys-200 flex items-center justify-center shrink-0">
+                                                    <BookOpen className="h-4 w-4 text-slate-600" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-slate-900">{prog.name}</p>
+                                                    <p className="text-[11px] text-slate-500 mt-0.5">{prog.time}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center justify-between sm:justify-end gap-6 mt-3 sm:mt-0">
+                                                <span className="text-[11px] font-mono text-slate-500">{prog.id}</span>
+                                                <div className="flex items-center gap-3 w-16 justify-end text-[11px]">
+                                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></div>
+                                                </div>
+                                                <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-slate-600 transition-colors" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
+
+                {/* Right Context Meta Info Column */}
+                <div className="w-full xl:w-72 shrink-0 space-y-6 hidden lg:block">
+                    <div>
+                        <h3 className="text-[13px] font-semibold text-slate-900 mb-3">Project Info</h3>
+                        <div className="bg-greys-50/50 border border-greys-200 rounded-lg overflow-hidden text-xs">
+                            <div className="flex justify-between items-center px-4 py-2.5 border-b border-greys-100">
+                                <span className="text-slate-500 font-medium">Region</span>
+                                <span className="flex items-center gap-2"><MapPin className="h-3 w-3 text-slate-400"/>{formData.location ? formData.location.split(',').pop()?.trim() : "Unknown"}</span>
+                            </div>
+                            <div className="flex justify-between items-center px-4 py-2.5">
+                                <span className="text-slate-500 font-medium">Subdomain</span>
+                                <span className="font-mono text-slate-600">{universityId.slice(0, 15).toLowerCase()}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="text-[13px] font-semibold text-slate-900 mb-3">Repository</h3>
+                        <p className="text-[11px] text-slate-500 mb-3">Database is connected via Dentispark main network.</p>
+                        <div className="flex items-center justify-between border border-greys-200 bg-white px-3 py-2.5 rounded-lg text-xs shadow-sm shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                            <span className="flex items-center gap-2 font-medium text-slate-700">
+                                <Database className="h-3.5 w-3.5 text-slate-400" /> core/universities
+                            </span>
+                            <span className="text-indigo-600 font-medium cursor-pointer hover:underline">Edit</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </motion.div>
+        </div>
     );
 }
