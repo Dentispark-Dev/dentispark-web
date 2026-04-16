@@ -142,7 +142,11 @@ export function middleware(request: NextRequest) {
       // Redirect unauthenticated users to login
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
+      
+      const response = NextResponse.redirect(loginUrl);
+      // Force clearing of the client-side userData cookie to prevent React AuthProvider from bouncing them back
+      response.cookies.delete("userData");
+      return response;
     }
 
     // Role-Based Access Control Restrictions
