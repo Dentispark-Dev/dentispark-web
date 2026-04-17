@@ -30,9 +30,12 @@ export const InviteStudentModal = dynamic(() => import("./invite-student-modal")
 export const InviteMentorModal = dynamic(() => import("./invite-mentor-modal").then(mod => mod.InviteMentorModal), { ssr: false });
 export const CreateUniversityModal = dynamic(() => import("./create-university-modal").then(mod => mod.CreateUniversityModal), { ssr: false });
 export const CreateScholarshipModal = dynamic(() => import("./create-scholarship-modal").then(mod => mod.CreateScholarshipModal), { ssr: false });
+export const GraduateStudentProfileView = dynamic(() => import("./student-profile-view").then(mod => mod.StudentProfileView), { ssr: false });
 export const StudentProfileView = dynamic(() => import("./student-profile-view").then(mod => mod.StudentProfileView), { ssr: false });
 export const MentorProfileView = dynamic(() => import("./mentor-profile-view").then(mod => mod.MentorProfileView), { ssr: false });
 export const UniversityEditView = dynamic(() => import("./university-edit-view").then(mod => mod.UniversityEditView), { ssr: false });
+export const CourseEditView = dynamic(() => import("./course-edit-view").then(mod => mod.CourseEditView), { ssr: false });
+export const ScholarshipEditView = dynamic(() => import("./scholarship-edit-view").then(mod => mod.ScholarshipEditView), { ssr: false });
 export const AdminProfileView = dynamic(() => import("./admin-profile-view").then(mod => mod.AdminProfileView), { ssr: false });
 export const ActivityFeed = dynamic(() => import("./activity-feed").then(mod => mod.ActivityFeed), { ssr: false });
 export const LoginHistoryTable = dynamic(() => import("./login-history-table").then(mod => mod.LoginHistoryTable), { ssr: false });
