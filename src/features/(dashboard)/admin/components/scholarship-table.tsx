@@ -50,7 +50,7 @@ export function ScholarshipTable() {
         onSearch: handleSearch
     });
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError, error } = useQuery({
         queryKey: ["admin-scholarships", query],
         queryFn: () => adminService.getScholarshipRecords(query),
     });

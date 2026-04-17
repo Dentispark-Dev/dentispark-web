@@ -27,15 +27,23 @@ import {
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import { CreateCourseModal } from "./create-course-modal";
+import { ProgramFetchModal } from "./program-fetch-modal";
+import { Sparkles, Wand2 } from "lucide-react";
 
-export function CourseTable() {
+interface CourseTableProps {
+    universityId?: string;
+}
+
+export function CourseTable({ universityId }: CourseTableProps) {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isFetchModalOpen, setIsFetchModalOpen] = useState(false);
+    const [fetchedData, setFetchedData] = useState<any>(null);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<AdminCourseQuery>({
         page: 0,
         perPage: 10,
         searchKey: "",
-        universityId: undefined,
+        universityId: universityId,
         degreeType: ""
     });
 
@@ -97,8 +105,19 @@ export function CourseTable() {
                             Filter
                         </Button>
                         <Button
-                            onClick={() => setIsCreateModalOpen(true)}
-                            className="h-10 bg-green-600 hover:bg-green-700 flex gap-2"
+                            variant="outline"
+                            onClick={() => setIsFetchModalOpen(true)}
+                            className="h-10 border-indigo-200 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 flex gap-2 font-bold px-4"
+                        >
+                            <Sparkles className="h-4 w-4" />
+                            Smart Fetch
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setFetchedData(null);
+                                setIsCreateModalOpen(true);
+                            }}
+                            className="h-10 bg-green-600 hover:bg-green-700 flex gap-2 font-bold px-4"
                         >
                             <Plus className="h-4 w-4" />
                             Add Course
@@ -219,7 +238,20 @@ export function CourseTable() {
             </div>
             <CreateCourseModal
                 isOpen={isCreateModalOpen}
-                onClose={() => setIsCreateModalOpen(false)}
+                onClose={() => {
+                    setIsCreateModalOpen(false);
+                    setFetchedData(null);
+                }}
+                initialUniversityHid={universityId}
+                initialData={fetchedData}
+            />
+            <ProgramFetchModal 
+                isOpen={isFetchModalOpen}
+                onClose={() => setIsFetchModalOpen(false)}
+                onDataFetched={(data) => {
+                    setFetchedData(data);
+                    setIsCreateModalOpen(true);
+                }}
             />
         </>
     );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { adminService } from "@/src/connection/admin-service";
 import { CreateCoursePayload } from "@/src/connection/api-types";
@@ -14,9 +14,10 @@ interface CreateCourseModalProps {
     isOpen: boolean;
     onClose: () => void;
     initialUniversityHid?: string;
+    initialData?: any;
 }
 
-export function CreateCourseModal({ isOpen, onClose, initialUniversityHid }: CreateCourseModalProps) {
+export function CreateCourseModal({ isOpen, onClose, initialUniversityHid, initialData }: CreateCourseModalProps) {
     const queryClient = useQueryClient();
     const [formData, setFormData] = useState<CreateCoursePayload>({
         universityHid: initialUniversityHid || "",
@@ -34,6 +35,20 @@ export function CreateCourseModal({ isOpen, onClose, initialUniversityHid }: Cre
         interviewDetails: "",
         courseUrl: ""
     });
+
+    // Handle initialData pre-filling
+    useEffect(() => {
+        if (initialData && isOpen) {
+            setFormData(prev => ({
+                ...prev,
+                courseName: initialData.courseName || prev.courseName,
+                degreeType: initialData.degreeType || prev.degreeType,
+                durationYears: initialData.durationYears || prev.durationYears,
+                entryRequirements: initialData.entryRequirements || prev.entryRequirements,
+                description: initialData.overview || prev.description,
+            }));
+        }
+    }, [initialData, isOpen]);
 
     const { data: universitiesData } = useQuery({
         queryKey: ["admin-universities-all"],

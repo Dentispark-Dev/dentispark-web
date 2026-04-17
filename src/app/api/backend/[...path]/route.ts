@@ -30,17 +30,28 @@ async function proxyRequest(request: NextRequest, pathSegments: string[]) {
     const accessToken = request.cookies.get("accessToken")?.value;
     const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
     const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
-
     const headers: Record<string, string> = {
-      "Content-Type": request.headers.get("content-type") || "application/json",
       Accept: "application/json",
     };
+
+    // Only include Content-Type if we are sending a body
+    if (!["GET", "HEAD"].includes(request.method)) {
+      headers["Content-Type"] = request.headers.get("content-type") || "application/json";
+    }
 
     if (accessToken) {
       headers["Authorization"] = `Bearer ${accessToken}`;
     }
-    if (channelId) headers["Channel-ID"] = channelId;
-    if (channelSecret) headers["Channel-Secret"] = channelSecret;
+
+    // Use normalized header casing to prevent backend mismatches
+    if (channelId) {
+      headers["Channel-ID"] = channelId;
+      headers["channel-id"] = channelId;
+    }
+    if (channelSecret) {
+      headers["Channel-Secret"] = channelSecret;
+      headers["channel-secret"] = channelSecret;
+    }
 
     // Forward the body for non-GET/HEAD methods
     let body: BodyInit | undefined;

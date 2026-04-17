@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/src/lib/utils";
+import { CourseTable } from "./course-table";
 
 interface UniversityEditViewProps {
     universityId: string;
@@ -341,41 +342,18 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                         </div>
                     )}
                     
+import { CourseTable } from "./course-table";
+
+// ... inside the component ...
+
                     {activeTab === "programs" && (
                          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                             <div className="flex items-center justify-between">
-                                <h2 className="text-lg font-semibold text-slate-900">Deployments</h2>
-                                <span className="text-indigo-600 text-xs font-medium cursor-pointer hover:underline cursor-pointer">View all →</span>
+                                <h2 className="text-lg font-semibold text-slate-900">Academic Programs</h2>
+                                <p className="text-xs text-slate-500">Manage courses specifically offered by this institution.</p>
                             </div>
                             
-                            <div className="bg-white border text-sm border-greys-200 shadow-sm rounded-lg overflow-hidden">
-                                <div className="divide-y divide-greys-100">
-                                    {[
-                                        { name: "Clinical Dentistry BDS", id: "prog_7f8", time: "2 min ago", stat: "Active" },
-                                        { name: "Maxillofacial Specialist", id: "prog_4k9", time: "6 hours ago", stat: "Active" },
-                                        { name: "Undergraduate Hygiene", id: "prog_5y2", time: "12 hours ago", stat: "Active" }
-                                    ].map((prog, i) => (
-                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 hover:bg-greys-50 transition-colors cursor-pointer group">
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-8 w-8 rounded-full bg-slate-100 border border-greys-200 flex items-center justify-center shrink-0">
-                                                    <BookOpen className="h-4 w-4 text-slate-600" />
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-medium text-slate-900">{prog.name}</p>
-                                                    <p className="text-[11px] text-slate-500 mt-0.5">{prog.time}</p>
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center justify-between sm:justify-end gap-6 mt-3 sm:mt-0">
-                                                <span className="text-[11px] font-mono text-slate-500">{prog.id}</span>
-                                                <div className="flex items-center gap-3 w-16 justify-end text-[11px]">
-                                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0"></div>
-                                                </div>
-                                                <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-slate-600 transition-colors" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <CourseTable universityId={universityId} />
                         </div>
                     )}
                 </div>

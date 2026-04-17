@@ -36,6 +36,7 @@ export const MentorProfileView = dynamic(() => import("./mentor-profile-view").t
 export const UniversityEditView = dynamic(() => import("./university-edit-view").then(mod => mod.UniversityEditView), { ssr: false });
 export const CourseEditView = dynamic(() => import("./course-edit-view").then(mod => mod.CourseEditView), { ssr: false });
 export const ScholarshipEditView = dynamic(() => import("./scholarship-edit-view").then(mod => mod.ScholarshipEditView), { ssr: false });
+export const ProgramFetchModal = dynamic(() => import("./program-fetch-modal").then(mod => mod.ProgramFetchModal), { ssr: false });
 export const AdminProfileView = dynamic(() => import("./admin-profile-view").then(mod => mod.AdminProfileView), { ssr: false });
 export const ActivityFeed = dynamic(() => import("./activity-feed").then(mod => mod.ActivityFeed), { ssr: false });
 export const LoginHistoryTable = dynamic(() => import("./login-history-table").then(mod => mod.LoginHistoryTable), { ssr: false });

@@ -10,7 +10,8 @@ import {
     CheckCircle2, 
     XCircle,
     Plus,
-    Send
+    Send,
+    AlertCircle
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/src/components/ui/button";
@@ -23,7 +24,7 @@ interface ServicePackageTableProps {
 export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProps) {
     const [page, setPage] = useState(0);
 
-    const { data: response, isLoading } = useQuery({
+    const { data: response, isLoading, isError, error } = useQuery({
         queryKey: ["admin-packages", page],
         queryFn: () => adminService.getServicePackageRecords({ page, perPage: 10 }),
     });
@@ -32,6 +33,29 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
         return (
             <div className="flex items-center justify-center p-12">
                 <div className="animate-spin h-8 w-8 border-4 border-green-500 border-t-transparent rounded-full" />
+            </div>
+        );
+    }
+
+    if (isError) {
+        return (
+            <div className="bg-red-50 border border-red-100 p-8 rounded-2xl text-center space-y-4 shadow-sm animate-in fade-in duration-500">
+                <div className="bg-red-100 h-14 w-14 rounded-2xl flex items-center justify-center mx-auto text-red-600 shadow-sm rotate-3">
+                    <AlertCircle className="h-7 w-7" />
+                </div>
+                <div className="space-y-1">
+                    <h3 className="text-red-900 font-extrabold text-lg">Marketplace Hub Offline</h3>
+                    <p className="text-red-600 text-sm font-medium">{(error as Error)?.message || "Security session mismatch or backend failure detected (Code 95/500)."}</p>
+                </div>
+                <div className="pt-2">
+                    <Button 
+                        variant="outline" 
+                        onClick={() => window.location.reload()} 
+                        className="rounded-xl border-red-200 text-red-700 hover:bg-red-100 font-bold px-8 h-12 transition-all active:scale-95"
+                    >
+                        Retry Connection
+                    </Button>
+                </div>
             </div>
         );
     }
@@ -60,7 +84,7 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
                                 </td>
                             </tr>
                         ) : (
-                            packages.map((pkg) => (
+                            packages.map((pkg: any) => (
                                 <tr key={pkg.externalId} className="hover:bg-gray-50/50 transition-colors group">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
