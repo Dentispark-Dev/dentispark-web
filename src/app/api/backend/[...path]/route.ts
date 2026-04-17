@@ -43,15 +43,10 @@ async function proxyRequest(request: NextRequest, pathSegments: string[]) {
       headers["Authorization"] = `Bearer ${accessToken}`;
     }
 
-    // Use normalized header casing to prevent backend mismatches
-    if (channelId) {
-      headers["Channel-ID"] = channelId;
-      headers["channel-id"] = channelId;
-    }
-    if (channelSecret) {
-      headers["Channel-Secret"] = channelSecret;
-      headers["channel-secret"] = channelSecret;
-    }
+    // Use standard Title-Case headers as expected by the Java backend security filters.
+    // We remove the lowercase duplicates to prevent "multiple header values" errors.
+    if (channelId) headers["Channel-ID"] = channelId;
+    if (channelSecret) headers["Channel-Secret"] = channelSecret;
 
     // Forward the body for non-GET/HEAD methods
     let body: BodyInit | undefined;
