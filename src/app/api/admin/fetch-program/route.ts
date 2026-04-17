@@ -16,23 +16,46 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. Fetch the raw HTML content
-    const response = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-      },
-      timeout: 10000
-    });
+    let cleanContent = "";
+    let methodUsed = "Jina Reader";
 
-    const html = response.data;
-    // Strip script and style tags to reduce token count
-    const cleanContent = html
-      .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "")
-      .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gim, "")
-      .replace(/<[^>]*>?/gm, " ") // Very aggressive stripping for LLM context
-      .substring(0, 15000); // Take first 15k chars
+    // 1. Try Jina Reader as primary scraper (best for Cloudflare/Markdown)
+    try {
+      const jinaUrl = `https://r.jina.ai/${url}`;
+      const jinaResponse = await axios.get(jinaUrl, {
+        timeout: 15000,
+        headers: {
+          'Accept': 'text/plain', // Jina returns text/markdown
+        }
+      });
+      
+      cleanContent = jinaResponse.data.substring(0, 20000); // Jina content is usually very clean
+    } catch (jinaError: any) {
+      console.warn("Jina Reader failed, falling back to basic axios scraper:", jinaError.message);
+      
+      // 2. Fallback to basic axios scraper (original logic)
+      methodUsed = "Legacy Scraper";
+      const response = await axios.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+          'Accept': 'text/html'
+        },
+        timeout: 10000
+      });
 
-    // 2. Use AI to extract structured data
+      const html = response.data;
+      cleanContent = html
+        .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "")
+        .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gim, "")
+        .replace(/<[^>]*>?/gm, " ")
+        .substring(0, 15000);
+    }
+
+    if (!cleanContent || cleanContent.trim().length < 100) {
+      throw new Error("Extracted content is too short or empty. The site might be blocking all access methods.");
+    }
+
+    // 2. Use AI to extract structured data from Markdown/Text
     const { object } = await generateObject({
       model: groq("llama-3.3-70b-versatile"),
       schema: z.object({
@@ -44,7 +67,8 @@ export async function POST(req: Request) {
         fees: z.string().optional().describe("Tuition fees for Home or International students if found"),
         intakeMonth: z.string().optional().describe("Primary intake month, usually September"),
       }),
-      prompt: `You are a data extraction bot. Extract university course details from the following web content:
+      prompt: `You are a high-precision data extraction bot specialized in UK/International University course pages.
+      Extract university course details from the following content (Scraping Method: ${methodUsed}).
       
       URL: ${url}
       
@@ -60,7 +84,10 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Fetch Program API Error:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to fetch or parse program details. The site might be blocking our scraper." }),
+      JSON.stringify({ 
+        error: "Failed to fetch or parse program details. The site might be blocking our scraper or is using heavy bot protection.",
+        details: error.message
+      }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
