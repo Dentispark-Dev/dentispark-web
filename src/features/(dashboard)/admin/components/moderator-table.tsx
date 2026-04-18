@@ -101,36 +101,36 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
     return (
         <div className="space-y-8 pb-20 font-jakarta">
             {/* Professional Header */}
-            <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row gap-8 justify-between items-center relative overflow-hidden">
+            <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden">
                 <div className="absolute top-0 right-0 h-40 w-40 bg-blue-50 rounded-bl-full opacity-40 -mr-10 -mt-10" />
                 
-                <div className="relative z-10 space-y-4 text-center md:text-left">
-                    <div className="flex items-center gap-3 justify-center md:justify-start">
-                        <div className="p-3 bg-blue-600 rounded-2xl text-white shadow-xl shadow-blue-200">
-                            <Users className="h-6 w-6" />
+                <div className="relative z-10 space-y-3 text-center xl:text-left w-full xl:w-auto">
+                    <div className="flex items-center gap-3 justify-center xl:justify-start">
+                        <div className="p-2.5 bg-blue-600 rounded-2xl text-white shadow-xl shadow-blue-200">
+                            <Users className="h-5 w-5" />
                         </div>
-                        <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">Moderator <span className="text-blue-600">Hub</span></h2>
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Moderator <span className="text-blue-600">Hub</span></h2>
                     </div>
-                    <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.3em] max-w-md">
+                    <p className="text-[11px] font-extrabold text-slate-400 uppercase tracking-[0.3em] max-w-md">
                         Platform Ethics & Community Integrity Oversight
                     </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto relative z-10">
+                <div className="flex flex-col sm:flex-row gap-4 w-full xl:w-auto relative z-10">
                     <div className="relative group min-w-[300px]">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-blue-600 transition-colors" />
                         <Input
                             placeholder="Moderator Search..."
-                            className="pl-12 h-14 bg-slate-50/50 border-slate-100 rounded-2xl focus:bg-white focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold text-slate-600"
+                            className="pl-12 h-12 bg-slate-50/50 border-slate-100 rounded-2xl focus:bg-white focus:ring-blue-500/20 focus:border-blue-500 transition-all font-bold text-slate-600 text-sm"
                             value={searchKey}
                             onChange={(e) => setSearchKey(e.target.value)}
                         />
                     </div>
                     <Button
-                        className="bg-blue-600 hover:bg-blue-700 text-white h-14 px-8 rounded-2xl shadow-xl shadow-blue-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group"
+                        className="bg-blue-600 hover:bg-blue-700 text-white h-12 px-8 rounded-2xl shadow-xl shadow-blue-900/10 gap-3 font-extrabold text-[11px] uppercase tracking-widest active:scale-95 transition-all group"
                         onClick={onInviteClick}
                     >
-                        <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                        <Plus className="h-4 w-4 group-hover:scale-110 transition-transform" />
                         Onboard Moderator
                     </Button>
                 </div>
@@ -142,11 +142,11 @@ export function ModeratorTable({ onInviteClick }: ModeratorTableProps) {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-100">
-                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Moderator Entity</th>
-                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Namespace</th>
-                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Permission Set</th>
-                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Status</th>
-                                <th className="px-10 py-6 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em] text-right">Actions</th>
+                                <th className="px-10 py-5 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Moderator Entity</th>
+                                <th className="px-10 py-5 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Namespace</th>
+                                <th className="px-10 py-5 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Permission Set</th>
+                                <th className="px-10 py-5 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em]">Status</th>
+                                <th className="px-10 py-5 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.25em] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50">

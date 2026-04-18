@@ -96,15 +96,15 @@ export function CourseTable({ universityId }: CourseTableProps) {
         <div className={cn("space-y-6", isStandalone && "space-y-10 pb-20")}>
             {/* ── Header Card (Standalone Only) ── */}
             {isStandalone && (
-                <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-10 justify-between items-center relative overflow-hidden shadow-sm">
-                    <div className="absolute top-0 right-0 h-64 w-64 bg-indigo-50 rounded-bl-full opacity-40 pointer-events-none" />
+                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
+                    <div className="absolute top-0 right-0 h-48 w-48 bg-primary-50 rounded-bl-full opacity-40 pointer-events-none" />
                     
-                    <div className="relative z-10 space-y-4 w-full xl:w-auto">
+                    <div className="relative z-10 space-y-3 w-full xl:w-auto">
                         <div>
-                            <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
+                            <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
                                 Program Hub
                             </Badge>
-                            <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Academic <span className="text-primary-600">Inventory</span></h2>
+                            <h2 className="text-3xl md:text-4xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Academic <span className="text-primary-600">Inventory</span></h2>
                         </div>
                         <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
                             <p className="text-[10px] font-bold text-primary-600 uppercase tracking-widest flex items-center gap-2">
@@ -118,22 +118,22 @@ export function CourseTable({ universityId }: CourseTableProps) {
                         </div>
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-6 w-full xl:w-auto relative z-10">
+                    <div className="flex flex-col md:flex-row gap-4 w-full xl:w-auto relative z-10">
                         <div className="relative group flex-1 xl:flex-none">
                             <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-primary-600 transition-colors" />
                             <Input
                                 placeholder="Search by course name or degree type..."
-                                className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-primary-500/10 focus:border-primary-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
+                                className="pl-14 pr-8 h-12 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-primary-500/10 focus:border-primary-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                             />
                         </div>
 
-                        <div className="flex gap-3 shrink-0">
+                        <div className="flex gap-2.5 shrink-0">
                             <Button
                                 variant="outline"
                                 onClick={() => setIsFetchModalOpen(true)}
-                                className="h-14 px-8 border-primary-200 text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-2xl gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
+                                className="h-12 px-6 border-primary-200 text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-2xl gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                             >
                                 <Sparkles className="h-4 w-4" />
                                 Smart Fetch
@@ -143,7 +143,7 @@ export function CourseTable({ universityId }: CourseTableProps) {
                                     setFetchedData(null);
                                     setIsCreateModalOpen(true);
                                 }}
-                                className="bg-green-600 hover:bg-green-500 text-white h-14 px-10 rounded-2xl shadow-lg shadow-green-100 gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
+                                className="bg-green-600 hover:bg-green-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-green-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                             >
                                 <Plus className="h-4 w-4" />
                                 Add Course
@@ -199,14 +199,14 @@ export function CourseTable({ universityId }: CourseTableProps) {
                         <thead>
                             <tr className="bg-greys-100/50">
                                 <th className={cn(
-                                    "py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta",
+                                    "py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta",
                                     isStandalone ? "pl-12 pr-6" : "pl-8 pr-4"
                                 )}>Course</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">University</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Degree</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Duration</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">University</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Degree</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Duration</th>
                                 <th className={cn(
-                                    "py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right",
+                                    "py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right",
                                     isStandalone ? "pr-12 pl-6" : "pr-8 pl-4"
                                 )}>Operations</th>
                             </tr>
@@ -239,38 +239,38 @@ export function CourseTable({ universityId }: CourseTableProps) {
                                         className="group cursor-pointer hover:bg-primary-50/30 transition-all duration-300"
                                     >
                                         <td className={cn(
-                                            "py-8",
+                                            "py-6",
                                             isStandalone ? "pl-12 pr-6" : "pl-8 pr-4"
                                         )}>
-                                            <div className="flex items-center gap-5">
-                                                <div className="h-14 w-14 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                                                    <BookOpen className="h-6 w-6 text-primary-500" />
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-2.5 shadow-xs group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                                                    <BookOpen className="h-5 w-5 text-primary-500" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-base font-semibold text-text-heading group-hover:text-primary-600 transition-colors tracking-tight mb-0.5 font-jakarta truncate">{course.courseName}</p>
+                                                    <p className="text-sm font-semibold text-text-heading group-hover:text-primary-600 transition-colors tracking-tight mb-0.5 font-jakarta truncate">{course.courseName}</p>
                                                     <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta truncate">{course.hid}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex items-center gap-2.5 text-greys-600">
                                                 <GraduationCap className="h-3.5 w-3.5 text-primary-500/50" />
-                                                <span className="text-sm font-medium">{course.universityName}</span>
+                                                <span className="text-xs font-medium">{course.universityName}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
-                                            <Badge variant="outline" className="bg-white text-primary-600 border-primary-100 px-4 py-1 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-primary-50 transition-colors uppercase">
+                                        <td className="px-6 py-6 font-jakarta">
+                                            <Badge variant="outline" className="bg-white text-primary-600 border-primary-100 px-3 py-1 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-primary-50 transition-colors uppercase">
                                                 {course.degreeType || "Undergraduate"}
                                             </Badge>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
-                                            <div className="flex items-center gap-2">
+                                        <td className="px-6 py-6 font-jakarta">
+                                            <div className="flex items-baseline gap-1.5">
                                                 <span className="text-sm font-bold text-text-heading">{course.durationYears || "N/A"}</span>
                                                 <span className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">Years</span>
                                             </div>
                                         </td>
                                         <td className={cn(
-                                            "py-8 text-right font-jakarta",
+                                            "py-6 text-right font-jakarta",
                                             isStandalone ? "pr-12 pl-6" : "pr-8 pl-4"
                                         )} onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu>

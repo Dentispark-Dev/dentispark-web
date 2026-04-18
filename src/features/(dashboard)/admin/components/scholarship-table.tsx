@@ -86,15 +86,14 @@ export function ScholarshipTable() {
     return (
         <div className="space-y-10 pb-20">
             {/* ── Scholarship Registry Header ── */}
-            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-10 justify-between items-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 right-0 h-64 w-64 bg-amber-50 rounded-bl-full opacity-40 pointer-events-none" />
-                
-                <div className="relative z-10 space-y-4 w-full xl:w-auto">
+            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
+                <div className="absolute top-0 right-0 h-48 w-48 bg-amber-50 rounded-bl-full opacity-40 pointer-events-none" />
+ military space-y-3 w-full xl:w-auto relative z-10">
                     <div>
-                        <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
+                        <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
                             Opportunity Registry
                         </Badge>
-                        <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Scholarship <span className="text-amber-600">Hub</span></h2>
+                        <h2 className="text-3xl md:text-4xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Scholarship <span className="text-amber-600">Hub</span></h2>
                     </div>
                     <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
                         <p className="text-[10px] font-bold text-amber-600 uppercase tracking-widest flex items-center gap-2">
@@ -108,12 +107,12 @@ export function ScholarshipTable() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-6 w-full xl:w-auto relative z-10">
+                <div className="flex flex-col md:flex-row gap-4 w-full xl:w-auto relative z-10">
                     <div className="relative group flex-1 xl:flex-none">
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-amber-600 transition-colors" />
                         <Input
                             placeholder="Search by grant title or location..."
-                            className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
+                            className="pl-14 pr-8 h-12 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
                         />
@@ -122,7 +121,7 @@ export function ScholarshipTable() {
                     <div className="flex gap-3 shrink-0">
                         <Button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="bg-primary-600 hover:bg-primary-500 text-white h-14 px-10 rounded-2xl shadow-lg shadow-primary-100 gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
+                            className="bg-primary-600 hover:bg-primary-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-primary-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <Plus className="h-4 w-4" />
                             Add Scholarship
@@ -137,11 +136,11 @@ export function ScholarshipTable() {
                     <table className="w-full text-left border-separate border-spacing-0">
                         <thead>
                             <tr className="bg-greys-100/50">
-                                <th className="pl-12 pr-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Opportunity Node</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Capital Value</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Eligibility Set</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status Node</th>
-                                <th className="pr-12 pl-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Operations</th>
+                                <th className="pl-12 pr-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Opportunity Node</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Capital Value</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Eligibility Set</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status Node</th>
+                                <th className="pr-12 pl-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Operations</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-greys-100">
@@ -171,13 +170,13 @@ export function ScholarshipTable() {
                                         onClick={() => window.location.href = `/admin/content/scholarships/${scholarship.externalId}`}
                                         className="group cursor-pointer hover:bg-amber-50/30 transition-all duration-300"
                                     >
-                                        <td className="pl-12 pr-6 py-8">
-                                            <div className="flex items-center gap-6">
-                                                <div className="h-16 w-16 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
-                                                    <Award className="h-7 w-7 text-amber-500" />
+                                        <td className="pl-12 pr-6 py-6">
+                                            <div className="flex items-center gap-5">
+                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-2.5 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
+                                                    <Award className="h-6 w-6 text-amber-500" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-lg font-semibold text-text-heading group-hover:text-amber-600 transition-colors tracking-tight mb-1 font-jakarta">{scholarship.title}</p>
+                                                    <p className="text-base font-semibold text-text-heading group-hover:text-amber-600 transition-colors tracking-tight mb-0.5 font-jakarta">{scholarship.title}</p>
                                                     <div className="flex items-center gap-2 text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta">
                                                         <Globe className="h-3 w-3" />
                                                         {scholarship.targetLocation || "Global Scope"}
@@ -185,18 +184,18 @@ export function ScholarshipTable() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex flex-col gap-1">
-                                                <div className="text-lg font-extrabold text-text-heading tracking-tight">
+                                                <div className="text-base font-extrabold text-text-heading tracking-tight">
                                                     <span className="text-[10px] text-greys-400 mr-1.5 uppercase tracking-widest">{scholarship.amountCurrency}</span>
                                                     {scholarship.amountValue?.toLocaleString() || "Varies"}
                                                 </div>
                                                 <p className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">{scholarship.fundingType || "External Grant"}</p>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex flex-col gap-2">
-                                                <Badge variant="outline" className="bg-white text-primary-600 border-primary-100 px-4 py-1 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-primary-50 transition-colors uppercase w-fit">
+                                                <Badge variant="outline" className="bg-white text-primary-600 border-primary-100 px-3 py-1 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-primary-50 transition-colors uppercase w-fit">
                                                     {scholarship.targetDegreeLevel || "Any Degree"}
                                                 </Badge>
                                                 <div className="flex items-center gap-2 text-[10px] font-bold text-greys-400 uppercase tracking-widest">
@@ -204,10 +203,10 @@ export function ScholarshipTable() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex items-center gap-3 text-greys-500">
-                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center shadow-xs">
-                                                    <Calendar className="h-5 w-5 text-greys-300" />
+                                                <div className="h-10 w-10 rounded-xl bg-white border border-greys-300 flex items-center justify-center shadow-xs">
+                                                    <Calendar className="h-4 w-4 text-greys-300" />
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <span className="text-[10px] font-bold text-greys-400 uppercase tracking-widest leading-none mb-1">Deadline</span>
@@ -217,7 +216,7 @@ export function ScholarshipTable() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="pr-12 pl-6 py-8 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
+                                        <td className="pr-12 pl-6 py-6 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
                                                     <Button variant="ghost" size="icon" className="h-10 w-10 text-greys-400 hover:text-text-heading hover:bg-white rounded-xl transition-all border border-transparent hover:border-greys-300 shadow-none hover:shadow-xs">

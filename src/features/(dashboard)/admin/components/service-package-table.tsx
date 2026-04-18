@@ -95,15 +95,15 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
     return (
         <div className="space-y-10 pb-20">
             {/* ── Marketplace Header ── */}
-            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-10 justify-between items-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 right-0 h-64 w-64 bg-green-50 rounded-bl-full opacity-40 pointer-events-none" />
+            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
+                <div className="absolute top-0 right-0 h-48 w-48 bg-green-50 rounded-bl-full opacity-40 pointer-events-none" />
                 
-                <div className="relative z-10 space-y-4 w-full xl:w-auto">
+                <div className="relative z-10 space-y-3 w-full xl:w-auto">
                     <div>
-                        <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
+                        <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
                             Service Marketplace
                         </Badge>
-                        <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Professional <span className="text-green-600">Packages</span></h2>
+                        <h2 className="text-3xl md:text-4xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Professional <span className="text-green-600">Packages</span></h2>
                     </div>
                     <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
                         <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest flex items-center gap-2">
@@ -117,12 +117,12 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-6 w-full xl:w-auto relative z-10">
+                <div className="flex flex-col md:flex-row gap-4 w-full xl:w-auto relative z-10">
                     <div className="relative group flex-1 xl:flex-none">
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-green-600 transition-colors" />
                         <Input
                             placeholder="Search by package title or mentor..."
-                            className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-green-500/10 focus:border-green-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
+                            className="pl-14 pr-8 h-12 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-green-500/10 focus:border-orange-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
                         />
@@ -130,7 +130,7 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
 
                     <div className="flex gap-3 shrink-0">
                         <Button
-                            className="bg-primary-600 hover:bg-primary-500 text-white h-14 px-10 rounded-2xl shadow-lg shadow-primary-100 gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
+                            className="bg-primary-600 hover:bg-primary-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-primary-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <Plus className="h-4 w-4" />
                             Create Package
@@ -145,12 +145,12 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
                     <table className="w-full text-left border-separate border-spacing-0">
                         <thead>
                             <tr className="bg-greys-100/50">
-                                <th className="pl-12 pr-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Service Hub</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Mentor Provider</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Type & Runtime</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Commercials</th>
-                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status</th>
-                                <th className="pr-12 pl-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Operations</th>
+                                <th className="pl-12 pr-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Service Hub</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Mentor Provider</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Type & Runtime</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Commercials</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status</th>
+                                <th className="pr-12 pl-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Operations</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-greys-100">
@@ -172,42 +172,42 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
                             ) : (
                                 packages.map((pkg: any) => (
                                     <tr key={pkg.externalId} className="hover:bg-green-50/20 transition-all group cursor-pointer">
-                                        <td className="pl-12 pr-6 py-8">
+                                        <td className="pl-12 pr-6 py-6">
                                             <div className="flex items-center gap-5">
-                                                <div className="h-14 w-14 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
-                                                    <Package className="h-7 w-7 text-green-600" />
+                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-2.5 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
+                                                    <Package className="h-6 w-6 text-green-600" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-base font-semibold text-text-heading group-hover:text-green-600 transition-colors tracking-tight mb-0.5 font-jakarta truncate">{pkg.title}</p>
+                                                    <p className="text-sm font-semibold text-text-heading group-hover:text-green-600 transition-colors tracking-tight mb-0.5 font-jakarta truncate">{pkg.title}</p>
                                                     <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta truncate max-w-[200px] italic">Commercial Resource</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex items-center gap-2.5 text-greys-600">
                                                 <div className="h-2 w-2 rounded-full bg-green-500" />
-                                                <span className="text-sm font-medium">{pkg.mentorUsername}</span>
+                                                <span className="text-xs font-medium">{pkg.mentorUsername}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex flex-col gap-1.5">
                                                 <div className="flex items-center gap-2 text-[10px] text-greys-400 font-bold uppercase tracking-widest">
                                                     <Tag className="h-3 w-3 text-green-500" />
                                                     {pkg.serviceType || "Mentoring"}
                                                 </div>
-                                                <div className="flex items-center gap-2 text-xs text-greys-600 font-bold">
+                                                <div className="flex items-center gap-2 text-[11px] text-greys-600 font-bold">
                                                     <Clock className="h-3 w-3 text-greys-400" />
                                                     {pkg.durationMinutes} Minutes
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta">
-                                            <div className="flex items-baseline gap-1.5 text-lg font-extrabold text-text-heading tracking-tight">
+                                        <td className="px-6 py-6 font-jakarta">
+                                            <div className="flex items-baseline gap-1.5 text-base font-extrabold text-text-heading tracking-tight">
                                                 <span className="text-[10px] text-greys-400 font-bold uppercase tracking-widest">{pkg.currency}</span>
                                                 {pkg.price.toLocaleString()}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-8 font-jakarta text-[10px] font-bold uppercase tracking-widest">
+                                        <td className="px-6 py-6 font-jakarta text-[10px] font-bold uppercase tracking-widest">
                                             {pkg.isActive ? (
                                                 <Badge className="bg-green-50 text-green-600 border-green-200 px-4 py-1.5 rounded-full font-bold">
                                                     <CheckCircle2 className="h-3 w-3 mr-2" />
@@ -220,7 +220,7 @@ export function ServicePackageTable({ onInitiateOrder }: ServicePackageTableProp
                                                 </Badge>
                                             )}
                                         </td>
-                                        <td className="pr-12 pl-6 py-8 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
+                                        <td className="pr-12 pl-6 py-6 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
                                                     <Button variant="ghost" size="icon" className="h-10 w-10 text-greys-400 hover:text-text-heading hover:bg-white rounded-xl transition-all border border-transparent hover:border-greys-300 shadow-none hover:shadow-xs">

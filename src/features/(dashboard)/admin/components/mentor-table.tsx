@@ -131,56 +131,60 @@ export function MentorTable() {
 
     return (
         <div className="space-y-6">
-            {/* Contextual Header */}
-            <div className="bg-white p-8 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 border border-gray-100 flex flex-col md:flex-row gap-6 justify-between items-center relative overflow-hidden">
-                <div className="absolute top-0 right-0 h-32 w-32 bg-secondary-50 rounded-bl-full opacity-50" />
+            {/* ── Professional Mentors Header ── */}
+            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
+                <div className="absolute top-0 right-0 h-48 w-48 bg-emerald-50 rounded-bl-full opacity-40 pointer-events-none" />
                 
-                <div className="relative z-10 space-y-1 w-full md:w-auto">
-                    <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Professional Mentors</h2>
-                    <p className="text-sm font-medium text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                        <Award className="w-3.5 h-3.5" />
-                        Vetting Command
-                    </p>
+                <div className="relative z-10 space-y-3 w-full xl:w-auto">
+                    <div>
+                        <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
+                            Expert Registry
+                        </Badge>
+                        <h2 className="text-3xl md:text-4xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Professional <span className="text-emerald-600">Mentors</span></h2>
+                    </div>
+                    <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
+                        <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest flex items-center gap-2">
+                            <Award className="w-3.5 h-3.5" />
+                            Vetting Command
+                        </p>
+                        <div className="h-1 w-1 rounded-full bg-greys-300" />
+                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
+                            {data?.totalElements || 0} Authorized Experts
+                        </p>
+                    </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto relative z-10">
-                    <div className="relative group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+                <div className="flex flex-col md:flex-row gap-4 w-full xl:w-auto relative z-10">
+                    <div className="relative group flex-1 xl:flex-none">
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-emerald-600 transition-colors" />
                         <Input
                             placeholder="Find mentor by name, email or HID..."
-                            className="pl-12 pr-6 h-12 w-full md:w-[400px] bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 rounded-2xl transition-all font-medium text-sm"
+                            className="pl-14 pr-8 h-12 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
                         />
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 shrink-0">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="h-12 px-6 rounded-2xl border-gray-100 bg-white font-bold text-xs gap-2 shadow-sm hover:shadow-md transition-all">
-                                    <Filter className="h-4 w-4 text-gray-400" />
-                                    Filter View
+                                <Button variant="outline" className="h-12 px-6 rounded-2xl border-greys-300 bg-white font-bold text-[11px] uppercase tracking-widest gap-2 shadow-sm hover:shadow-md transition-all font-jakarta">
+                                    <Filter className="h-4 w-4 text-greys-400" />
+                                    Filter
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Verification</DropdownMenuLabel>
-                                <DropdownMenuSeparator className="bg-gray-50" />
-                                <DropdownMenuItem className="rounded-xl font-bold text-sm" onClick={() => setQuery(prev => ({ ...prev, verified: undefined, page: 0 }))}>All Registries</DropdownMenuItem>
-                                <DropdownMenuItem className="rounded-xl font-bold text-sm text-emerald-600" onClick={() => setQuery(prev => ({ ...prev, verified: true, page: 0 }))}>Verified Mentors</DropdownMenuItem>
-                                <DropdownMenuItem className="rounded-xl font-bold text-sm text-amber-600" onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}>Pending Vetting</DropdownMenuItem>
-                                <DropdownMenuSeparator className="bg-gray-50" />
-                                <DropdownMenuItem 
-                                    className="rounded-xl font-extrabold text-xs text-slate-900 bg-slate-50 uppercase tracking-widest"
-                                    onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", verified: false, page: 0 }))}
-                                >
-                                    Action Required
-                                </DropdownMenuItem>
+                            <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-greys-300 shadow-2xl font-jakarta">
+                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-greys-400 px-3 py-2">Verification</DropdownMenuLabel>
+                                <DropdownMenuSeparator className="bg-greys-50" />
+                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3" onClick={() => setQuery(prev => ({ ...prev, verified: undefined, page: 0 }))}>All Registries</DropdownMenuItem>
+                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3 text-emerald-600" onClick={() => setQuery(prev => ({ ...prev, verified: true, page: 0 }))}>Verified Mentors</DropdownMenuItem>
+                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3 text-amber-600" onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}>Pending Vetting</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
 
                         <Button
                             onClick={() => setIsInviteModalOpen(true)}
-                            className="bg-primary-600 hover:bg-primary-700 text-white h-12 px-6 rounded-2xl shadow-xl shadow-primary-500/10 gap-2 font-bold text-xs active:scale-95 transition-all"
+                            className="bg-emerald-600 hover:bg-emerald-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-emerald-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <UserCheck className="h-4 w-4" />
                             Invite Mentor
@@ -188,22 +192,22 @@ export function MentorTable() {
                     </div>
                 </div>
             </div>
-
+ Broadway
             {/* Premium Interactive Table */}
             <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/40 border border-gray-50 overflow-hidden">
                 <div className="overflow-x-auto overflow-y-hidden">
                     <table className="w-full text-left border-separate border-spacing-0">
                         <thead>
-                            <tr className="bg-gray-50/30">
-                                <th className="pl-10 pr-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Mentor Identity</th>
-                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Handled ID</th>
-                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Expertise</th>
-                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Vetting</th>
-                                <th className="px-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">Status</th>
-                                <th className="pr-10 pl-6 py-6 text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100 text-right">Context</th>
+                            <tr className="bg-greys-100/50">
+                                <th className="pl-12 pr-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Mentor Identity</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Handled ID</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Expertise</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Vetting</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status</th>
+                                <th className="pr-12 pl-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Context</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+ Broadway                        <tbody className="divide-y divide-gray-50">
                             {isLoading ? (
                                 <tr>
                                     <td colSpan={6} className="px-6 py-32 text-center">
@@ -233,49 +237,49 @@ export function MentorTable() {
                                     <tr 
                                         key={mentor.hid} 
                                         onClick={() => router.push(`/admin/mentors/${encodeURIComponent(mentor.hid)}`)}
-                                        className="group cursor-pointer hover:bg-slate-50/50 transition-all duration-300 relative"
+                                        className="group cursor-pointer hover:bg-emerald-50/20 transition-all duration-300 relative"
                                     >
-                                        <td className="pl-10 pr-6 py-6">
+                                        <td className="pl-12 pr-6 py-6 font-jakarta">
                                             <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-extrabold text-sm shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                                                <div className="h-10 w-10 rounded-xl bg-white border border-greys-300 flex items-center justify-center text-emerald-600 font-extrabold text-[11px] shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
                                                     {mentor.mentorName?.[0] || "?"}
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-extrabold text-gray-900 group-hover:text-primary-600 transition-colors leading-tight mb-0.5">
+                                                    <p className="text-sm font-semibold text-text-heading group-hover:text-emerald-600 transition-colors tracking-tight mb-0.5">
                                                         {mentor.mentorName}
                                                     </p>
-                                                    <p className="text-[11px] font-bold text-gray-400 tracking-tight italic">Member since {new Date(mentor.dateStamped).toLocaleDateString("en-GB")}</p>
+                                                    <p className="text-[10px] font-bold text-greys-400 tracking-widest italic uppercase">Member since {new Date(mentor.dateStamped).toLocaleDateString("en-GB")}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-6">
+                                        <td className="px-6 py-6 font-jakarta">
                                             <div className="flex items-center gap-2">
-                                                <Hash className="h-3 w-3 text-gray-300" />
-                                                <span className="text-xs font-extrabold text-slate-500 font-mono tracking-tighter bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">{mentor.hid}</span>
+                                                <Hash className="h-3 w-3 text-greys-300" />
+                                                <span className="text-[10px] font-bold text-greys-500 font-mono tracking-tighter bg-greys-100 px-2 py-1 rounded-lg border border-greys-300 uppercase">{mentor.hid}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-6 text-sm text-gray-600">
-                                            <Badge variant="outline" className="bg-white text-emerald-600 border-emerald-100 px-3 py-1 font-bold text-[10px] tracking-tight rounded-xl group-hover:bg-emerald-50 transition-colors uppercase">
+                                        <td className="px-6 py-6 font-jakarta">
+                                            <Badge variant="outline" className="bg-white text-emerald-600 border-emerald-100 px-3 py-1 font-bold text-[10px] tracking-widest rounded-xl group-hover:bg-emerald-50 transition-colors uppercase">
                                                 {mentor.dentalSchoolGateway || "General Dentistry"}
                                             </Badge>
                                         </td>
-                                        <td className="px-6 py-6">
+                                        <td className="px-6 py-6 font-jakarta">
                                             {mentor.verified ? (
                                                 <div className="flex items-center gap-2 text-emerald-600 bg-emerald-50/50 px-3 py-1.5 rounded-full ring-1 ring-emerald-500/20 w-fit">
                                                     <ShieldCheck className="h-3.5 w-3.5 shadow-sm" />
-                                                    <span className="text-[10px] font-extrabold uppercase tracking-widest">Verified Expert</span>
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest italic">Verified Expert</span>
                                                 </div>
                                             ) : (
-                                                <div className="flex items-center gap-2 text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full ring-1 ring-gray-500/10 w-fit italic">
-                                                    <div className="h-1.5 w-1.5 rounded-full bg-gray-300 animate-pulse" />
-                                                    <span className="text-[10px] font-extrabold uppercase tracking-widest opacity-60">Pending Vetting</span>
+                                                <div className="flex items-center gap-2 text-greys-400 bg-greys-50 px-3 py-1.5 rounded-full ring-1 ring-greys-300 w-fit italic">
+                                                    <div className="h-1.5 w-1.5 rounded-full bg-greys-300 animate-pulse" />
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Pending Vetting</span>
                                                 </div>
                                             )}
                                         </td>
-                                        <td className="px-6 py-6">
+                                        <td className="px-6 py-6 font-jakarta">
                                             {getStatusBadge(mentor.activationStatus)}
                                         </td>
-                                        <td className="pr-10 pl-6 py-6 text-right" onClick={(e) => e.stopPropagation()}>
+                                        <td className="pr-12 pl-6 py-6 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
                                                     <Button variant="ghost" size="icon" className="h-10 w-10 text-gray-400 hover:text-black hover:bg-white rounded-xl transition-all">
