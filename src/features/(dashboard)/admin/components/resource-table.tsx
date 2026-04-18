@@ -11,7 +11,11 @@ import {
     Plus,
     Loader2,
     FileText,
-    Clock
+    Clock,
+    Library,
+    ArrowRight,
+    Trash2,
+    BookOpen
 } from "lucide-react";
 import { adminService } from "../../../../connection/admin-service";
 import { AdminResourceQuery } from "@/src/connection/api-types";
@@ -22,18 +26,22 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
+    DropdownMenuSeparator,
+    DropdownMenuLabel
 } from "@/src/components/ui/dropdown-menu";
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import { CreateResourceModal } from "./create-resource-modal";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/src/lib/utils";
 
 export function ResourceTable() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<AdminResourceQuery>({
         page: 0,
-        perPage: 10,
+        perPage: 15, // Standardized for sleek list
         searchKey: "",
         dentalSchoolPathWay: ""
     });
@@ -59,10 +67,10 @@ export function ResourceTable() {
         mutationFn: (id: string) => adminService.deleteResource(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admin-resources"] });
-            toast.success("Resource deleted successfully");
+            toast.success("Resource decommissioned successfully");
         },
         onError: () => {
-            toast.error("Failed to delete resource");
+            toast.error("Failed to purge resource record");
         }
     });
 
@@ -70,156 +78,210 @@ export function ResourceTable() {
         setQuery(prev => ({ ...prev, page: newPage }));
     };
 
-    const paginatedData = data;
-    const resources = paginatedData?.content || [];
-    const totalPages = paginatedData?.totalPages || 0;
-    const currentPage = paginatedData?.pageNumber || 0;
+    const resources = data?.content || [];
+    const totalPages = data?.totalPages || 0;
+    const currentPage = data?.pageNumber || 0;
 
     return (
-        <>
-            <div className="space-y-4">
-                {/* Filters & Actions */}
-                <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                    <div className="relative w-full md:w-96">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <div className="space-y-10 pb-20">
+            {/* ── Knowledge Base Header ── */}
+            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-10 justify-between items-center relative overflow-hidden shadow-sm">
+                <div className="absolute top-0 right-0 h-64 w-64 bg-orange-50 rounded-bl-full opacity-40 pointer-events-none" />
+                
+                <div className="relative z-10 space-y-4 w-full xl:w-auto">
+                    <div>
+                        <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
+                            Resource Library
+                        </Badge>
+                        <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Knowledge <span className="text-orange-600">Base</span></h2>
+                    </div>
+                    <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
+                        <p className="text-[10px] font-bold text-orange-600 uppercase tracking-widest flex items-center gap-2">
+                            <Library className="w-3.5 h-3.5" />
+                            Global Repository
+                        </p>
+                        <div className="h-1 w-1 rounded-full bg-greys-300" />
+                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
+                            {data?.totalElements || 0} Assets Online
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-6 w-full xl:w-auto relative z-10">
+                    <div className="relative group flex-1 xl:flex-none">
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-orange-600 transition-colors" />
                         <Input
-                            placeholder="Search resources..."
-                            className="pl-10 h-10 bg-gray-50 border-gray-200 focus:bg-white transition-colors"
+                            placeholder="Search by resource title or category..."
+                            className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-orange-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
                         />
                     </div>
 
-                    <div className="flex gap-2 w-full md:w-auto">
-                        <Button variant="outline" className="flex gap-2 h-10 border-gray-200">
-                            <Filter className="h-4 w-4" />
-                            Filter
-                        </Button>
+                    <div className="flex gap-3 shrink-0">
                         <Button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="h-10 bg-green-600 hover:bg-green-700 flex gap-2"
+                            className="bg-primary-600 hover:bg-primary-500 text-white h-14 px-10 rounded-2xl shadow-lg shadow-primary-100 gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <Plus className="h-4 w-4" />
-                            Add Resource
+                            Onboard Asset
                         </Button>
                     </div>
                 </div>
+            </div>
 
-                {/* Table */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-gray-50/50 border-b border-gray-100">
-                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Resource</th>
-                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
-                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
-                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Added Date</th>
-                                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+            {/* ── Table Hub ── */}
+            <div className="bg-white rounded-[2.5rem] shadow-sm border border-greys-300 overflow-hidden relative">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-separate border-spacing-0">
+                        <thead>
+                            <tr className="bg-greys-100/50">
+                                <th className="pl-12 pr-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Resource Hub</th>
+                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Pathway</th>
+                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Author/Type</th>
+                                <th className="px-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Node Created</th>
+                                <th className="pr-12 pl-6 py-8 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-greys-100">
+                            {isLoading ? (
+                                <tr>
+                                    <td colSpan={5} className="p-12 text-center">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <Loader2 className="h-10 w-10 text-orange-600 animate-spin" />
+                                            <p className="text-greys-400 font-bold text-xs uppercase tracking-widest font-jakarta">Synchronizing Repository...</p>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-50">
-                                {isLoading ? (
-                                    <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center">
-                                            <div className="flex flex-col items-center gap-2">
-                                                <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
-                                                <p className="text-gray-400 text-sm">Loading resources...</p>
+                            ) : resources.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5} className="p-24 text-center">
+                                        <div className="bg-greys-50 h-20 w-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner">
+                                            <Library className="h-10 w-10 text-greys-200" />
+                                        </div>
+                                        <h3 className="text-2xl font-semibold text-text-heading tracking-tight font-jakarta mb-4">Library Empty</h3>
+                                        <p className="text-greys-400 font-medium text-sm max-w-sm mx-auto leading-relaxed font-jakarta">No knowledge assets found for current filters. Please onboard new resources to populate the hub.</p>
+                                    </td>
+                                </tr>
+                            ) : (
+                                resources.map((res) => (
+                                    <tr 
+                                        key={res.hid} 
+                                        onClick={() => window.location.href = `/admin/content/resources/${res.hid}`}
+                                        className="group cursor-pointer hover:bg-orange-50/30 transition-all duration-300"
+                                    >
+                                        <td className="pl-12 pr-6 py-8">
+                                            <div className="flex items-center gap-6">
+                                                <div className="h-16 w-16 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500">
+                                                    <FileText className="h-7 w-7 text-orange-500" />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-lg font-semibold text-text-heading group-hover:text-orange-600 transition-colors tracking-tight mb-1 font-jakarta">{res.title}</p>
+                                                    <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest italic font-jakarta truncate max-w-[200px]">{res.dentalSchoolPathWay || "General Knowledge"}</p>
+                                                </div>
                                             </div>
                                         </td>
-                                    </tr>
-                                ) : resources.length === 0 ? (
-                                    <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
-                                            No resources found.
+                                        <td className="px-6 py-8 font-jakarta">
+                                            <div className="flex items-center gap-3 text-greys-600">
+                                                <BookOpen className="h-3.5 w-3.5 text-orange-500/50" />
+                                                <span className="text-sm font-medium">{res.dentalSchoolPathWay || "General"}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-8 font-jakarta">
+                                            <Badge variant="outline" className="bg-white text-greys-600 border-greys-200 px-5 py-1.5 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-greys-50 transition-colors uppercase">
+                                                {res.authorName || "PLATFORM"}
+                                            </Badge>
+                                        </td>
+                                        <td className="px-6 py-8 font-jakarta">
+                                            <div className="flex items-center gap-3 text-greys-500">
+                                                <div className="h-12 w-12 rounded-xl bg-white border border-greys-300 flex items-center justify-center shadow-xs">
+                                                    <Clock className="h-5 w-5 text-greys-300" />
+                                                </div>
+                                                <span className="text-sm font-bold tracking-tight">{new Date(res.createdAt).toLocaleDateString("en-GB")}</span>
+                                            </div>
+                                        </td>
+                                        <td className="pr-12 pl-6 py-8 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button variant="ghost" size="icon" className="h-10 w-10 text-greys-400 hover:text-text-heading hover:bg-white rounded-xl transition-all border border-transparent hover:border-greys-300 shadow-none hover:shadow-xs">
+                                                        <MoreVertical className="h-5 w-5" />
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent align="end" className="w-64 p-3 rounded-2xl border-greys-300 shadow-2xl ring-1 ring-black/5 font-jakarta">
+                                                    <DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-greys-400 px-4 py-3">Operations Terminal</DropdownMenuLabel>
+                                                    <DropdownMenuSeparator className="bg-greys-100 mx-2" />
+                                                    <DropdownMenuItem 
+                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 mb-1" 
+                                                        onClick={() => window.location.href = `/admin/content/resources/${res.hid}`}
+                                                    >
+                                                        <div className="h-10 w-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
+                                                            <ArrowRight className="w-5 h-5" />
+                                                        </div>
+                                                        Architect Blueprint
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuSeparator className="bg-greys-100 mx-2" />
+                                                    <DropdownMenuItem 
+                                                        onClick={() => deleteMutation.mutate(res.hid)} 
+                                                        className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 text-error-600 focus:bg-error-50"
+                                                    >
+                                                        <div className="h-10 w-10 rounded-xl bg-error-50 text-error-600 flex items-center justify-center">
+                                                            <Trash2 className="w-5 h-5" />
+                                                        </div>
+                                                        Hub Purge
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </td>
                                     </tr>
-                                ) : (
-                                    resources.map((res) => (
-                                        <tr key={res.hid} className="hover:bg-gray-50/50 transition-colors group">
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="h-10 w-10 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600">
-                                                        <FileText className="h-5 w-5" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-medium text-gray-900">{res.title}</p>
-                                                        <p className="text-xs text-gray-500 truncate max-w-xs">{res.dentalSchoolPathWay}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-sm text-gray-600">
-                                                {res.dentalSchoolPathWay || "General"}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-200 border-none font-normal uppercase text-[10px]">
-                                                    {res.authorName || "RESOURCE"}
-                                                </Badge>
-                                            </td>
-                                            <td className="px-6 py-4 text-sm text-gray-500">
-                                                <div className="flex items-center gap-1">
-                                                    <Clock className="h-3 w-3" />
-                                                    {new Date(res.createdAt).toLocaleDateString("en-GB")}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-600">
-                                                            <MoreVertical className="h-4 w-4" />
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuItem onClick={() => window.location.href = `/admin/content/resources/${res.hid}`}>
-                                                            Edit Resource
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem onClick={() => deleteMutation.mutate(res.hid)} className="text-red-600">
-                                                            Delete
-                                                        </DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </td>
-                                        </tr>
-                                    ))
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/30">
-                            <p className="text-sm text-gray-500">
-                                Showing <span className="font-medium">{(currentPage * query.perPage!) + 1}</span> to <span className="font-medium">{Math.min((currentPage + 1) * query.perPage!, paginatedData?.totalElements || 0)}</span> of <span className="font-medium">{paginatedData?.totalElements}</span> results
-                            </p>
-                            <div className="flex gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    disabled={currentPage === 0}
-                                    onClick={() => handlePageChange(currentPage - 1)}
-                                    className="h-8 px-2 border-gray-200"
-                                >
-                                    <ChevronLeft className="h-4 w-4" />
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    disabled={currentPage >= totalPages - 1}
-                                    onClick={() => handlePageChange(currentPage + 1)}
-                                    className="h-8 px-2 border-gray-200"
-                                >
-                                    <ChevronRight className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        </div>
-                    )}
+                                ))
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+            {/* ── Pagination Hub ── */}
+            {totalPages > 1 && (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-8 pt-10 border-t border-greys-300 font-jakarta">
+                    <div className="flex items-center gap-4">
+                        <div className="p-4 bg-white rounded-2xl shadow-xs border border-greys-300">
+                            <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
+                                Mapping <span className="text-text-heading">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> Entry Nodes
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4 p-2 bg-greys-100 rounded-3xl border border-greys-300">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={currentPage === 0}
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            className="h-12 w-12 rounded-2xl hover:bg-white text-greys-400 hover:text-text-heading transition-all shadow-none hover:shadow-md"
+                        >
+                            <ChevronLeft className="h-6 w-6" />
+                        </Button>
+                        <div className="flex items-center gap-3 px-8 bg-white rounded-2xl border border-greys-300 shadow-md">
+                            <span className="text-base font-bold text-text-heading tracking-tight">{currentPage + 1}</span>
+                            <span className="h-4 w-px bg-greys-200" />
+                            <span className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">{totalPages} NODES</span>
+                        </div>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={currentPage >= totalPages - 1}
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            className="h-12 w-12 rounded-2xl hover:bg-white text-greys-400 hover:text-text-heading transition-all shadow-none hover:shadow-md"
+                        >
+                            <ChevronRight className="h-6 w-6" />
+                        </Button>
+                    </div>
+                </div>
+            )}
+
             <CreateResourceModal
                 isOpen={isCreateModalOpen}
                 onClose={() => setIsCreateModalOpen(false)}
             />
-        </>
+        </div>
     );
 }
