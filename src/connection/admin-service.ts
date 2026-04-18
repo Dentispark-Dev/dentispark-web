@@ -126,7 +126,12 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     getCourseRecords: (query: AdminCourseQuery) => {
         const params = new URLSearchParams();
         if (query.searchKey) params.append("searchKey", query.searchKey);
-        if (query.universityId) params.append("universityId", query.universityId.toString());
+        if (query.universityId) {
+            const key = typeof query.universityId === "string" && query.universityId.startsWith("UNI")
+                ? "universityHid"
+                : "universityId";
+            params.append(key, query.universityId.toString());
+        }
         if (query.degreeType) params.append("degreeType", query.degreeType);
         if (query.page !== undefined) params.append("pageNumber", query.page.toString());
         if (query.perPage !== undefined) params.append("pageSize", query.perPage.toString());

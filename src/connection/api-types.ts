@@ -550,7 +550,7 @@ export interface CreateUniversityPayload {
 
 export interface AdminCourseQuery {
   searchKey?: string;
-  universityId?: number;
+  universityId?: string | number;
   degreeType?: string;
   page?: number;
   perPage?: number;

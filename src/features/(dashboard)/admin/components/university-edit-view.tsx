@@ -36,11 +36,11 @@ interface UniversityEditViewProps {
     universityId: string;
 }
 
-type TabKey = "overview" | "database" | "programs" | "settings";
+type TabKey = "overview" | "details" | "programs" | "settings";
 
 const tabs: { key: TabKey; label: string; icon: React.ReactNode }[] = [
     { key: "overview", label: "Overview", icon: <Activity className="h-4 w-4" /> },
-    { key: "database", label: "Database", icon: <Database className="h-4 w-4" /> },
+    { key: "details", label: "Institutional Details", icon: <Building2 className="h-4 w-4" /> },
     { key: "programs", label: "Programs", icon: <BookOpen className="h-4 w-4" /> },
     { key: "settings", label: "Settings", icon: <Settings className="h-4 w-4" /> },
 ];
@@ -249,7 +249,7 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                         </div>
                     )}
 
-                    {activeTab === "database" && (
+                    {activeTab === "details" && (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                             <div>
                                 <h2 className="text-lg font-semibold text-slate-900">Core Fields</h2>
@@ -342,9 +342,6 @@ export function UniversityEditView({ universityId }: UniversityEditViewProps) {
                         </div>
                     )}
                     
-import { CourseTable } from "./course-table";
-
-// ... inside the component ...
 
                     {activeTab === "programs" && (
                          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -368,15 +365,15 @@ import { CourseTable } from "./course-table";
                                 <span className="flex items-center gap-2"><MapPin className="h-3 w-3 text-slate-400"/>{formData.location ? formData.location.split(',').pop()?.trim() : "Unknown"}</span>
                             </div>
                             <div className="flex justify-between items-center px-4 py-2.5">
-                                <span className="text-slate-500 font-medium">Subdomain</span>
-                                <span className="font-mono text-slate-600">{universityId.slice(0, 15).toLowerCase()}</span>
+                                <span className="text-slate-500 font-medium">Internal Identifier</span>
+                                <span className="font-mono text-slate-600 uppercase">{universityId.slice(0, 15)}</span>
                             </div>
                         </div>
                     </div>
 
                     <div>
                         <h3 className="text-[13px] font-semibold text-slate-900 mb-3">Repository</h3>
-                        <p className="text-[11px] text-slate-500 mb-3">Database is connected via Dentispark main network.</p>
+                        <p className="text-[11px] text-slate-500 mb-3">Institutional records are synchronized with the primary platform network.</p>
                         <div className="flex items-center justify-between border border-greys-200 bg-white px-3 py-2.5 rounded-lg text-xs shadow-sm shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                             <span className="flex items-center gap-2 font-medium text-slate-700">
                                 <Database className="h-3.5 w-3.5 text-slate-400" /> core/universities
