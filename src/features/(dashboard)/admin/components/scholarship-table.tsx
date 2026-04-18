@@ -88,7 +88,7 @@ export function ScholarshipTable() {
             {/* ── Scholarship Registry Header ── */}
             <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
                 <div className="absolute top-0 right-0 h-48 w-48 bg-amber-50 rounded-bl-full opacity-40 pointer-events-none" />
- military space-y-3 w-full xl:w-auto relative z-10">
+                <div className="relative z-10 space-y-3 w-full xl:w-auto">
                     <div>
                         <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
                             Opportunity Registry

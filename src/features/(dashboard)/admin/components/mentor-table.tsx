@@ -192,7 +192,7 @@ export function MentorTable() {
                     </div>
                 </div>
             </div>
- Broadway
+
             {/* Premium Interactive Table */}
             <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/40 border border-gray-50 overflow-hidden">
                 <div className="overflow-x-auto overflow-y-hidden">
@@ -207,7 +207,7 @@ export function MentorTable() {
                                 <th className="pr-12 pl-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Context</th>
                             </tr>
                         </thead>
- Broadway                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-gray-50">
                             {isLoading ? (
                                 <tr>
                                     <td colSpan={6} className="px-6 py-32 text-center">
