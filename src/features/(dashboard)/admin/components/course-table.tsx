@@ -101,13 +101,13 @@ export function CourseTable({ universityId }: CourseTableProps) {
                     
                     <div className="relative z-10 space-y-4 w-full xl:w-auto">
                         <div>
-                            <Badge variant="outline" className="bg-indigo-50 text-indigo-600 border-indigo-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
+                            <Badge variant="outline" className="bg-primary-50 text-primary-600 border-primary-200 px-4 py-1.5 font-bold text-[10px] tracking-[0.25em] rounded-full uppercase mb-4 leading-none inline-flex font-jakarta">
                                 Program Hub
                             </Badge>
-                            <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Academic <span className="text-indigo-600">Inventory</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Academic <span className="text-primary-600">Inventory</span></h2>
                         </div>
                         <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
-                            <p className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest flex items-center gap-2">
+                            <p className="text-[10px] font-bold text-primary-600 uppercase tracking-widest flex items-center gap-2">
                                 <BookOpen className="w-3.5 h-3.5" />
                                 Course Catalog
                             </p>
@@ -120,10 +120,10 @@ export function CourseTable({ universityId }: CourseTableProps) {
 
                     <div className="flex flex-col md:flex-row gap-6 w-full xl:w-auto relative z-10">
                         <div className="relative group flex-1 xl:flex-none">
-                            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-indigo-600 transition-colors" />
+                            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-primary-600 transition-colors" />
                             <Input
                                 placeholder="Search by course name or degree type..."
-                                className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
+                                className="pl-14 pr-8 h-14 w-full xl:w-[450px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-primary-500/10 focus:border-primary-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                             />
@@ -133,7 +133,7 @@ export function CourseTable({ universityId }: CourseTableProps) {
                             <Button
                                 variant="outline"
                                 onClick={() => setIsFetchModalOpen(true)}
-                                className="h-14 px-8 border-indigo-200 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-2xl gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
+                                className="h-14 px-8 border-primary-200 text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-2xl gap-3 font-bold text-xs uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                             >
                                 <Sparkles className="h-4 w-4" />
                                 Smart Fetch
@@ -170,7 +170,7 @@ export function CourseTable({ universityId }: CourseTableProps) {
                         <Button
                             variant="outline"
                             onClick={() => setIsFetchModalOpen(true)}
-                            className="h-12 border-indigo-200 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 gap-2 font-bold px-5 rounded-xl transition-all font-jakarta text-xs uppercase tracking-widest"
+                            className="h-12 border-primary-200 text-primary-700 bg-primary-50 hover:bg-primary-100 gap-2 font-bold px-5 rounded-xl transition-all font-jakarta text-xs uppercase tracking-widest"
                         >
                             <Sparkles className="h-4 w-4" />
                             Smart Fetch
@@ -244,10 +244,10 @@ export function CourseTable({ universityId }: CourseTableProps) {
                                         )}>
                                             <div className="flex items-center gap-5">
                                                 <div className="h-14 w-14 rounded-xl bg-white border border-greys-300 flex items-center justify-center p-3 shadow-xs group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                                                    <BookOpen className="h-6 w-6 text-indigo-500" />
+                                                    <BookOpen className="h-6 w-6 text-primary-500" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-base font-semibold text-text-heading group-hover:text-indigo-600 transition-colors tracking-tight mb-0.5 font-jakarta truncate">{course.courseName}</p>
+                                                    <p className="text-base font-semibold text-text-heading group-hover:text-primary-600 transition-colors tracking-tight mb-0.5 font-jakarta truncate">{course.courseName}</p>
                                                     <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest font-jakarta truncate">{course.hid}</p>
                                                 </div>
                                             </div>
@@ -259,7 +259,7 @@ export function CourseTable({ universityId }: CourseTableProps) {
                                             </div>
                                         </td>
                                         <td className="px-6 py-8 font-jakarta">
-                                            <Badge variant="outline" className="bg-white text-indigo-600 border-indigo-100 px-4 py-1 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-indigo-50 transition-colors uppercase">
+                                            <Badge variant="outline" className="bg-white text-primary-600 border-primary-100 px-4 py-1 font-bold text-[10px] tracking-widest rounded-full group-hover:bg-primary-50 transition-colors uppercase">
                                                 {course.degreeType || "Undergraduate"}
                                             </Badge>
                                         </td>
@@ -286,7 +286,7 @@ export function CourseTable({ universityId }: CourseTableProps) {
                                                         className="rounded-xl font-bold text-xs uppercase tracking-widest p-4 gap-4 mb-1" 
                                                         onClick={() => window.location.href = `/admin/content/courses/${course.hid}`}
                                                     >
-                                                        <div className="h-10 w-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                                                        <div className="h-10 w-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center">
                                                             <ArrowRight className="w-5 h-5" />
                                                         </div>
                                                         Architect Blueprint
