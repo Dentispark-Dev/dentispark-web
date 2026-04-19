@@ -14,6 +14,8 @@ export const UK_DENTAL_SCHOOLS: University[] = [
     graduateProspects: 96,
     ucasPoints: 144,
     courseDuration: "5 years",
+    officialWebsite: "https://www.ncl.ac.uk/dental/",
+    ucasUrl: "https://www.ucas.com/explore/unis/newcastle-university",
   },
   {
     id: "kings-college",
@@ -29,6 +31,8 @@ export const UK_DENTAL_SCHOOLS: University[] = [
     graduateProspects: 98,
     ucasPoints: 152,
     courseDuration: "5 years",
+    officialWebsite: "https://www.kcl.ac.uk/dentistry",
+    ucasUrl: "https://www.ucas.com/explore/unis/kings-college-london",
   },
   {
     id: "manchester",
@@ -44,6 +48,8 @@ export const UK_DENTAL_SCHOOLS: University[] = [
     graduateProspects: 95,
     ucasPoints: 144,
     courseDuration: "5 years",
+    officialWebsite: "https://www.bmh.manchester.ac.uk/dentistry/",
+    ucasUrl: "https://www.ucas.com/explore/unis/university-manchester",
   },
   {
     id: "cardiff",
@@ -58,5 +64,7 @@ export const UK_DENTAL_SCHOOLS: University[] = [
     graduateProspects: 93,
     ucasPoints: 144,
     courseDuration: "5 years",
+    officialWebsite: "https://www.cardiff.ac.uk/dentistry",
+    ucasUrl: "https://www.ucas.com/explore/unis/cardiff-university",
   },
 ];

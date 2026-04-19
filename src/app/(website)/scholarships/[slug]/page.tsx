@@ -20,6 +20,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { REAL_SCHOLARSHIPS } from "@/src/features/(website)/scholarships/data/scholarships";
+import { ScholarshipApplyButton } from "@/src/features/(website)/scholarships/components/apply-button";
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
@@ -88,12 +89,10 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
             </div>
             
             <div className="flex flex-col gap-4 min-w-[280px]">
-              <Button size="lg" className="h-16 px-10 rounded-2xl shadow-2xl shadow-primary-600/30 text-lg font-extrabold bg-primary-600 hover:bg-primary-700 transition-all hover:scale-[1.02]" asChild>
-                <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
-                  Apply on Official Website
-                  <ExternalLink className="h-5 w-5" />
-                </a>
-              </Button>
+              <ScholarshipApplyButton 
+                url={scholarship.applicationLink || "#"} 
+                scholarshipTitle={scholarship.title} 
+              />
               <p className="text-center text-xs text-gray-400 font-medium">Verified Official Provider Link</p>
             </div>
           </div>
@@ -236,9 +235,11 @@ export default async function ScholarshipDetailsPage(props: { params: Promise<{ 
                           </p>
                           <p className="text-xs text-primary-600 mt-1 font-medium">Please note that DentiSpark does not process applications for this award directly.</p>
                         </div>
-                        <Button className="h-14 px-10 rounded-2xl font-extrabold text-lg bg-slate-900 hover:bg-slate-800" asChild>
-                            <a href={scholarship.applicationLink || "#"} target="_blank" rel="noopener noreferrer">Visit Provider Website</a>
-                        </Button>
+                        <ScholarshipApplyButton 
+                            url={scholarship.applicationLink || "#"} 
+                            scholarshipTitle={scholarship.title}
+                            className="h-14 px-10 rounded-2xl font-extrabold text-lg bg-slate-900 hover:bg-slate-800"
+                        />
                     </div>
                 </section>
             </div>

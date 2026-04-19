@@ -12,6 +12,8 @@ export interface University {
   graduateProspects?: number; // percentage
   ucasPoints?: number;
   courseDuration?: string;
+  officialWebsite?: string;
+  ucasUrl?: string;
 }
 
 export interface UniversityCardProps {

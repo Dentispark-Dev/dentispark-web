@@ -11,6 +11,7 @@ import { cn } from "@/src/lib/utils";
 import { PostHogProvider } from "@/src/providers/posthog-provider";
 import { ThemeProvider } from "@/src/providers/theme-provider";
 import { CookieConsent } from "@/src/components/molecules/cookie-consent";
+import { SideBrowser } from "@/src/components/molecules/side-browser";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.dentispark.com"),
@@ -97,6 +98,7 @@ export default function RootLayout({
               </I18nProvider>
             </ReactQueryProvider>
             <ModalProvider />
+            <SideBrowser />
             <Toaster richColors />
             <CookieConsent />
           </PostHogProvider>

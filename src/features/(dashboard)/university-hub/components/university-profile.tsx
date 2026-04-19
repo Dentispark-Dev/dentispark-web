@@ -18,6 +18,7 @@ import {
 import { Breadcrumb } from "@/src/components/ui/breadcrumb";
 import { Button } from "@/src/components/ui/button";
 import { useField } from "@/src/providers/field-provider";
+import { useSideBrowserStore } from "@/src/store/side-browser-store";
 import { University } from "../types";
 import { LooseRecord } from "@/src/types/loose";
 
@@ -27,6 +28,7 @@ interface UniversityProfileProps {
 
 export function UniversityProfile({ university }: UniversityProfileProps) {
   const { activeField, activeFieldLabel } = useField();
+  const { openBrowser } = useSideBrowserStore();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [strategy, setStrategy] = useState<LooseRecord | null>(null);
 
@@ -135,10 +137,18 @@ export function UniversityProfile({ university }: UniversityProfileProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <Button asChild variant="outline" className="h-11 px-8 rounded-xl border-greys-300 font-bold text-xs uppercase tracking-widest hover:bg-greys-50 transition-all">
-                    <Link href="#">
-                      UCAS Portal Access
-                    </Link>
+                  <Button 
+                    variant="outline" 
+                    className="h-11 px-8 rounded-xl border-greys-300 font-bold text-xs uppercase tracking-widest hover:bg-greys-50 transition-all"
+                    onClick={() => {
+                        if (university.ucasUrl) {
+                            openBrowser(university.ucasUrl, `${university.name} - UCAS Portal`);
+                        } else {
+                            window.open("https://www.ucas.com", "_blank");
+                        }
+                    }}
+                  >
+                    UCAS Portal Access
                   </Button>
                 </motion.div>
                 <motion.div
@@ -146,7 +156,14 @@ export function UniversityProfile({ university }: UniversityProfileProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                 >
-                  <Button className="h-11 px-8 rounded-xl bg-primary-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-primary-500 transition-all shadow-lg shadow-primary-100">
+                  <Button 
+                    className="h-11 px-8 rounded-xl bg-primary-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-primary-500 transition-all shadow-lg shadow-primary-100"
+                    onClick={() => {
+                        if (university.officialWebsite) {
+                            openBrowser(university.officialWebsite, `${university.name} Official Website`);
+                        }
+                    }}
+                  >
                     <Globe className="size-4 mr-2" />
                     Official Website
                   </Button>
