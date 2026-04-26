@@ -5,12 +5,13 @@ import prisma from "@/src/lib/db";
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function DELETE(request: NextRequest, { params }: RouteContext) {
-  const isVercel = process.env.VERCEL === "1";
-  const forceLocal = process.env.NEXT_PUBLIC_USE_LOCAL_AUTH === "true";
-
-  if ((process.env.NODE_ENV === "production" || isVercel) && !forceLocal) {
-    const { id } = await params;
-    return proxyRequest(request, ["admin", "mentors", id]);
+  // Check if database is configured
+  if (!process.env.DATABASE_URL) {
+      return NextResponse.json({
+          responseCode: "99",
+          responseMessage: "DATABASE_URL is not configured",
+          responseData: null
+      }, { status: 500 });
   }
 
   try {
@@ -43,8 +44,8 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     console.error("[Local Admin Delete Mentor Error]", error);
     return NextResponse.json({
       responseCode: "99",
-      responseMessage: "Failed to delete mentor",
-      errors: [error.message]
+      responseMessage: `Database Error: ${error.message}`,
+      errors: [error.code, JSON.stringify(error.meta)]
     }, { 
       status: 500,
       headers: { "X-Local-Override": "true" }
