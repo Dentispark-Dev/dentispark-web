@@ -74,7 +74,9 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
             toast.success("Admin deactivated successfully");
             fetchAdmins();
         } catch (error: any) {
-            const msg = error?.message || error?.responseMessage || "Failed to deactivate admin";
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to deactivate admin"}`;
             toast.error(msg);
         }
     };
@@ -88,7 +90,9 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
             toast.success("Administrator record permanently deleted");
             fetchAdmins();
         } catch (error: any) {
-            const msg = error?.message || error?.responseMessage || "Failed to delete administrator";
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to delete administrator"}`;
             toast.error(msg);
         }
     };

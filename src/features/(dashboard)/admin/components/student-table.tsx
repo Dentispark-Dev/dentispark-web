@@ -105,8 +105,10 @@ export function StudentTable() {
             toast.success("Student account permanently deleted");
         },
         onError: (error: any) => {
-            const msg = error?.message || error?.responseMessage || "Failed to delete student account";
-            toast.error(msg);
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to delete student account"}`;
+            toast.error(msg.trim());
         }
     });
 

@@ -106,8 +106,10 @@ export function MentorTable() {
             toast.success("Mentor account permanently deleted");
         },
         onError: (error: any) => {
-            const msg = error?.message || error?.responseMessage || "Failed to delete mentor account";
-            toast.error(msg);
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to delete mentor account"}`;
+            toast.error(msg.trim());
         }
     });
 
@@ -119,8 +121,10 @@ export function MentorTable() {
             toast.success("Mentor verification updated successfully");
         },
         onError: (error: any) => {
-            const msg = error?.responseMessage || "Failed to update mentor verification";
-            toast.error(msg);
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to update mentor verification"}`;
+            toast.error(msg.trim());
         }
     });
 

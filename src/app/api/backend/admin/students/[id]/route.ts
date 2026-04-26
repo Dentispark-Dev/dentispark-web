@@ -59,6 +59,18 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
 
         const data = await response.json().catch(() => ({}));
         
+        if (!response.ok) {
+            return NextResponse.json({
+                responseCode: "99",
+                responseMessage: data.responseMessage || `Java Backend Error (Status ${response.status})`,
+                message: data.message || data.responseMessage || `Java Backend Error (Status ${response.status})`,
+                errors: data.errors || []
+            }, { 
+                status: response.status,
+                headers: { "X-Proxied-To-Java-Fallback": "true" }
+            });
+        }
+        
         return NextResponse.json(data, { 
             status: response.status,
             headers: { "X-Proxied-To-Java-Fallback": "true" }
@@ -108,7 +120,7 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
       errors: [error.code, JSON.stringify(error.meta)]
     }, { 
       status: 500,
-      headers: { "X-Local-Override": "true" }
+      headers: { "X-Handled-Locally": "true" }
     });
   }
 }

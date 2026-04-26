@@ -240,6 +240,7 @@ export class BaseAPI {
     const message =
       responseData?.error ||
       responseData?.message ||
+      responseData?.responseMessage ||
       (typeof responseData === "string" ? responseData : null) ||
       error?.message ||
       this.getDefaultErrorMessage(statusCode);
@@ -252,7 +253,10 @@ export class BaseAPI {
       stack: error.stack,
     });
 
-    return new Error(message);
+    const err = new Error(message);
+    (err as any).headers = error?.response?.headers;
+    (err as any).status = statusCode;
+    return err;
   }
 
   private getDefaultErrorMessage(statusCode?: number): string {
