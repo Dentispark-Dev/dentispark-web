@@ -33,11 +33,36 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     });
 
     if (!user) {
-        return NextResponse.json({
-            responseCode: "03",
-            responseMessage: "Student record not found",
-            responseData: null
-        }, { status: 404 });
+        // FALLBACK: If not in Prisma, try proxying to the Java backend
+        console.log(`[Student Delete Fallback] User not found in Prisma: ${identifier}. Proxying to Java...`);
+        
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
+        const backendUrl = `${API_URL}/admin/students/${encodeURIComponent(identifier)}`;
+        
+        const accessToken = request.cookies.get("accessToken")?.value;
+        const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
+        const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
+        
+        const headers: Record<string, string> = {
+            "Accept": "application/json",
+            "Authorization": accessToken ? `Bearer ${accessToken}` : "",
+            "Channel-ID": channelId || "",
+            "Channel-Secret": channelSecret || "",
+            "X-Proxy-Fallback": "true"
+        };
+
+        const response = await fetch(backendUrl, {
+            method: "DELETE",
+            headers,
+            cache: "no-store",
+        });
+
+        const data = await response.json().catch(() => ({}));
+        
+        return NextResponse.json(data, { 
+            status: response.status,
+            headers: { "X-Proxied-To-Java-Fallback": "true" }
+        });
     }
 
     // Delete associated records first (if any) or use cascade if defined in schema
