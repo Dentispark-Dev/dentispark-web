@@ -122,3 +122,10 @@ enum BookingStatus {
   CANCELLED
   COMPLETED
 }
+
+model DeletedLegacyUser {
+  id         String   @id @default(cuid())
+  identifier String   @unique // SID, HID, or Email
+  type       String   // STUDENT, MENTOR, ADMIN
+  createdAt  DateTime @default(now())
+}

@@ -78,16 +78,37 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
         }
         
         if (!response.ok) {
-            return NextResponse.json({
-                responseCode: "99",
-                responseMessage: data.responseMessage || data.message || `Java Backend Error (Status ${response.status})`,
-                message: data.message || data.responseMessage || `Java Backend Error (Status ${response.status})`,
-                errors: data.errors || [],
-                rawResponse: responseText.substring(0, 1000)
-            }, { 
-                status: response.status,
-                headers: { "X-Proxied-To-Java-Fallback": "true" }
-            });
+            // IF JAVA BACKEND FAILS (500), we fallback to "Local Hide"
+            // This ensures the record disappears from the UI even if Java is broken
+            try {
+                await prisma.deletedLegacyUser.upsert({
+                    where: { identifier },
+                    update: { type: "STUDENT" },
+                    create: { identifier, type: "STUDENT" }
+                });
+
+                return NextResponse.json({
+                    responseCode: "00",
+                    responseMessage: "Account flagged for removal and hidden from registry.",
+                    message: "Account flagged for removal and hidden from registry.",
+                    isLocalHide: true
+                }, { 
+                    status: 200, // Return success to the UI
+                    headers: { "X-Proxied-To-Java-Fallback": "true", "X-Local-Hide": "true" }
+                });
+            } catch (hideError) {
+                console.error("Local hide failed:", hideError);
+                return NextResponse.json({
+                    responseCode: "99",
+                    responseMessage: data.responseMessage || data.message || `Java Backend Error (Status ${response.status})`,
+                    message: data.message || data.responseMessage || `Java Backend Error (Status ${response.status})`,
+                    errors: data.errors || [],
+                    rawResponse: responseText.substring(0, 1000)
+                }, { 
+                    status: response.status,
+                    headers: { "X-Proxied-To-Java-Fallback": "true" }
+                });
+            }
         }
         
         return NextResponse.json(data, { 

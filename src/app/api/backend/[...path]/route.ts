@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/src/lib/prisma";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
 
@@ -85,7 +86,46 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
     }
 
     // Read the response as ArrayBuffer to be safe with any content type
-    const responseData = await response.arrayBuffer();
+    let responseData = await response.arrayBuffer();
+
+    // INTERCEPT AND FILTER LISTS (Local Hide Feature)
+    if (response.ok && backendPath.endsWith("/records")) {
+      try {
+        const text = new TextDecoder().decode(responseData);
+        const json = JSON.parse(text);
+
+        if (json && Array.isArray(json.content)) {
+          const hiddenUsers = await prisma.deletedLegacyUser.findMany({
+            select: { identifier: true }
+          });
+          const hiddenSet = new Set(hiddenUsers.map(u => u.identifier));
+
+          if (hiddenSet.size > 0) {
+            const originalLength = json.content.length;
+            json.content = json.content.filter((item: any) => 
+              !hiddenSet.has(item.sid) && 
+              !hiddenSet.has(item.hid) && 
+              !hiddenSet.has(item.emailAddress)
+            );
+            
+            // Adjust total count if we filtered something on this page
+            const removedOnThisPage = originalLength - json.content.length;
+            if (removedOnThisPage > 0) {
+              json.totalElements = Math.max(0, (json.totalElements || 0) - removedOnThisPage);
+            }
+
+            const newText = JSON.stringify(json);
+            responseData = new TextEncoder().encode(newText);
+            
+            // Log it for verification
+            console.log(`[Proxy Filter] Removed ${removedOnThisPage} hidden records from ${backendPath}`);
+          }
+        }
+      } catch (e) {
+        console.error(`[Proxy Filter Error] Failed to filter records:`, e);
+        // Continue with original data on error
+      }
+    }
 
     return new NextResponse(responseData, {
       status: response.status,
