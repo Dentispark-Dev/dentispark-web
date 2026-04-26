@@ -33,6 +33,24 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     // Delete associated records first (if any) or use cascade if defined in schema
     // Based on schema, we should delete mentorProfile, AIHistory, etc. if they exist
     
+    // Handle related records that don't have Cascade Delete
+    // Delete all bookings where this user is the student
+    await prisma.booking.deleteMany({
+        where: { studentId: id }
+    });
+
+    // Check if this student also has a mentor profile
+    const mentorProfile = await prisma.mentorProfile.findUnique({
+        where: { userId: id }
+    });
+
+    if (mentorProfile) {
+        // Delete all bookings for this mentor profile
+        await prisma.booking.deleteMany({
+            where: { mentorId: mentorProfile.id }
+        });
+    }
+
     await prisma.user.delete({
       where: { id }
     });

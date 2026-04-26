@@ -30,6 +30,25 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
         }, { status: 404 });
     }
 
+    // Handle related records that don't have Cascade Delete
+    const mentorProfile = await prisma.mentorProfile.findUnique({
+        where: { userId: id }
+    });
+
+    if (mentorProfile) {
+        // Delete all bookings for this mentor
+        await prisma.booking.deleteMany({
+            where: { mentorId: mentorProfile.id }
+        });
+        
+        // Reviews already have Cascade on mentorId in schema
+    }
+
+    // Delete the student bookings if this user was ever a student
+    await prisma.booking.deleteMany({
+        where: { studentId: id }
+    });
+
     await prisma.user.delete({
       where: { id }
     });
