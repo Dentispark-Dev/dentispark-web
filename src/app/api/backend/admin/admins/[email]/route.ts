@@ -60,8 +60,11 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
 
     return NextResponse.json({
       responseCode: "00",
-      responseMessage: "Admin deleted successfully",
-      responseData: "SUCCESS"
+      responseMessage: "Administrator deleted successfully",
+      responseData: identifier
+    }, { 
+      status: 200,
+      headers: { "X-Handled-Locally": "true" }
     });
 
   } catch (error: any) {

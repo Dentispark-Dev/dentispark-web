@@ -63,7 +63,10 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     return NextResponse.json({
       responseCode: "00",
       responseMessage: "Student deleted successfully",
-      responseData: "SUCCESS"
+      responseData: id
+    }, { 
+      status: 200,
+      headers: { "X-Handled-Locally": "true" }
     });
 
   } catch (error: any) {

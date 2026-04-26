@@ -77,6 +77,7 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
     const responseHeaders: Record<string, string> = {
       "X-Proxy-Request-ID": requestId,
       "X-Backend-Status": response.status.toString(),
+      "X-Proxied-To-Java": "true",
     };
 
     if (contentType) {
