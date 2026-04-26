@@ -14,6 +14,14 @@ export async function POST(request: NextRequest) {
   try {
     const { emailAddress, password } = await request.json();
 
+    if (!emailAddress || !password) {
+      return NextResponse.json({
+        responseCode: "07",
+        responseMessage: "Email and password are required",
+        responseData: null
+      }, { status: 400 });
+    }
+
     const user = await prisma.user.findFirst({
       where: { 
         email: emailAddress.toLowerCase().trim(),
