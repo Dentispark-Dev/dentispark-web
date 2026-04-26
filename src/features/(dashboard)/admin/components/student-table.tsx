@@ -15,7 +15,9 @@ import {
     Hash,
     Layers,
     CreditCard,
-    ArrowRight
+    ArrowRight,
+    Trash2,
+    ShieldX
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
 import { StudentQuery, PaginatedResponse, StudentRecord } from "@/src/connection/api-types";
@@ -33,11 +35,13 @@ import {
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import { InviteStudentModal } from "./invite-student-modal";
+import { CreateUserModal } from "./create-user-modal";
 import { cn } from "@/src/lib/utils";
 
 export function StudentTable() {
     const router = useRouter();
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<StudentQuery>({
         page: 0,
@@ -91,6 +95,17 @@ export function StudentTable() {
         },
         onSuccess: () => {
             toast.success("Student status updated successfully");
+        }
+    });
+
+    const deleteStudentMutation = useMutation({
+        mutationFn: (id: string) => adminService.deleteStudent(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["admin-students"] });
+            toast.success("Student account permanently deleted");
+        },
+        onError: () => {
+            toast.error("Failed to delete student account");
         }
     });
 
@@ -171,11 +186,11 @@ export function StudentTable() {
                         </DropdownMenu>
 
                         <Button
-                            onClick={() => setIsInviteModalOpen(true)}
+                            onClick={() => setIsCreateModalOpen(true)}
                             className="bg-indigo-600 hover:bg-indigo-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-indigo-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <UserPlus className="h-4 w-4" />
-                            Invite Member
+                            Direct Create
                         </Button>
                     </div>
                 </div>
@@ -296,9 +311,21 @@ export function StudentTable() {
                                                     <DropdownMenuSeparator className="bg-gray-50" />
                                                     <DropdownMenuItem 
                                                         onClick={() => updateStatusMutation.mutate({ id: student.sid, status: "INACTIVE" })} 
-                                                        className="rounded-xl font-bold text-sm text-rose-600 focus:bg-rose-50 focus:text-rose-700"
+                                                        className="rounded-xl font-bold text-sm text-amber-600 focus:bg-amber-50 focus:text-amber-700 gap-2"
                                                     >
+                                                        <ShieldX className="w-4 h-4" />
                                                         Revoke Access
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem 
+                                                        onClick={() => {
+                                                            if (confirm("Are you sure you want to PERMANENTLY delete this student? This action cannot be undone.")) {
+                                                                deleteStudentMutation.mutate(student.sid);
+                                                            }
+                                                        }} 
+                                                        className="rounded-xl font-bold text-sm text-rose-600 focus:bg-rose-50 focus:text-rose-700 gap-2"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                        Delete Account
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
@@ -353,6 +380,10 @@ export function StudentTable() {
             <InviteStudentModal
                 isOpen={isInviteModalOpen}
                 onClose={() => setIsInviteModalOpen(false)}
+            />
+            <CreateUserModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
             />
         </div>
     );

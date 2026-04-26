@@ -718,6 +718,15 @@ export interface MentorInvitationPayload {
   platformMemberCategory: string;
 }
 
+export interface AdminCreateUserPayload {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  password?: string;
+  memberType: "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "MODERATOR";
+  platformMemberCategory?: string; // For students/mentors
+}
+
 // Role & Permission Management Types
 export interface PlatformPermissionData {
   guid: string;

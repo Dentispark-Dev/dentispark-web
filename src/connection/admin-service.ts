@@ -283,6 +283,18 @@ export const adminService = apiServiceFactory.createCustomService((api) => ({
     inviteMentor: (payload: MentorInvitationPayload) =>
         api.post<string>("/mentors/invite", payload),
 
+    deleteStudent: (id: string) =>
+        api.delete<string>(`/admin/students/${encodeURIComponent(id)}`),
+
+    deleteMentor: (id: string) =>
+        api.delete<string>(`/admin/mentors/${encodeURIComponent(id)}`),
+
+    deleteAdmin: (email: string) =>
+        api.delete<string>(`/admin/admins/${encodeURIComponent(email)}`),
+
+    createUserAdmin: (payload: AdminCreateUserPayload) =>
+        api.post<string>("/admin/users/create", payload),
+
     // --- Audit Logs ---
     getAuditLogs: (query: AuditQuery) => {
         const params = new URLSearchParams();

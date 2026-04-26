@@ -15,7 +15,9 @@ import {
     Lock,
     ShieldCheck,
     Calendar,
-    Globe
+    Globe,
+    Trash2,
+    ShieldX
 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -33,6 +35,7 @@ import {
 import { cn } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { CreateUserModal } from "./create-user-modal";
 
 interface AdminTableProps {
     onInviteClick: () => void;
@@ -43,6 +46,7 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
     const [admins, setAdmins] = useState<AdminRecord[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchKey, setSearchKey] = useState("");
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
     const fetchAdmins = useCallback(async () => {
         setIsLoading(true);
@@ -66,11 +70,24 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
 
     const handleDeactivate = async (email: string) => {
         try {
-            await adminService.deactivateAdmin(email, "Deactivated by super admin");
+            await adminService.deactivateAdmin(email, "Deactivated by administrator");
             toast.success("Admin deactivated successfully");
             fetchAdmins();
         } catch {
             toast.error("Failed to deactivate admin");
+        }
+    };
+
+    const handleDelete = async (email: string) => {
+        if (!confirm("Are you sure you want to PERMANENTLY delete this administrator? This action cannot be undone.")) {
+            return;
+        }
+        try {
+            await adminService.deleteAdmin(email);
+            toast.success("Administrator record permanently deleted");
+            fetchAdmins();
+        } catch {
+            toast.error("Failed to delete administrator");
         }
     };
 
@@ -116,13 +133,22 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
                             onChange={(e) => setSearchKey(e.target.value)}
                         />
                     </div>
-                    <Button
-                        className="bg-slate-900 hover:bg-black text-white h-14 px-8 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group"
-                        onClick={onInviteClick}
-                    >
-                        <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                        Authorize Admin
-                    </Button>
+                    <div className="flex gap-3">
+                        <Button
+                            className="bg-slate-900 hover:bg-black text-white h-14 px-8 rounded-2xl shadow-xl gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group"
+                            onClick={() => setIsCreateModalOpen(true)}
+                        >
+                            <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                            Direct Create
+                        </Button>
+                        <Button
+                            className="bg-teal-600 hover:bg-teal-700 text-white h-14 px-8 rounded-2xl shadow-xl shadow-teal-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group"
+                            onClick={onInviteClick}
+                        >
+                            <Mail className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                            Authorize
+                        </Button>
+                    </div>
                 </div>
             </div>
 
@@ -213,7 +239,7 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
                                             <td className="px-10 py-6 text-sm">
                                                 {getStatusBadge(admin.status)}
                                             </td>
-                                            <td className="px-10 py-6 text-right">
+                                            <td className="px-10 py-6 text-right" onClick={(e) => e.stopPropagation()}>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
                                                         <Button variant="ghost" size="icon" className="h-10 w-10 text-slate-400 hover:text-slate-900 hover:bg-white hover:shadow-md rounded-xl transition-all">
@@ -223,11 +249,14 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
                                                     <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-100 shadow-2xl">
                                                         <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-3 py-2">Operations Terminal</DropdownMenuLabel>
                                                         <DropdownMenuSeparator className="bg-slate-50" />
-                                                        <DropdownMenuItem className="rounded-xl font-bold text-sm gap-3 py-3 px-3 transition-colors cursor-pointer">
-                                                            <ShieldCheck className="h-4 w-4 text-teal-600" /> Modify Clearance
+                                                        <DropdownMenuItem 
+                                                            className="rounded-xl font-bold text-sm gap-3 py-3 px-3 transition-colors cursor-pointer"
+                                                            onClick={() => router.push(`/admin/settings/admins/${encodeURIComponent(admin.emailAddress)}`)}
+                                                        >
+                                                            <ArrowRight className="h-4 w-4 text-teal-600" /> View Details
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="rounded-xl font-bold text-sm gap-3 py-3 px-3 transition-colors cursor-pointer">
-                                                            <Mail className="h-4 w-4 text-emerald-600" /> Ping Architect
+                                                            <ShieldCheck className="h-4 w-4 text-teal-600" /> Modify Clearance
                                                         </DropdownMenuItem>
                                                         <DropdownMenuSeparator className="bg-slate-50" />
                                                         {admin.status === "ACTIVE" ? (
@@ -235,13 +264,19 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
                                                                 className="rounded-xl font-bold text-sm gap-3 py-3 px-3 text-rose-600 focus:bg-rose-50 focus:text-rose-700 transition-colors cursor-pointer"
                                                                 onClick={() => handleDeactivate(admin.emailAddress)}
                                                             >
-                                                                <UserX className="h-4 w-4" /> Revoke Access
+                                                                <ShieldX className="h-4 w-4" /> Revoke Access
                                                             </DropdownMenuItem>
                                                         ) : (
                                                             <DropdownMenuItem className="rounded-xl font-bold text-sm gap-3 py-3 px-3 text-emerald-600 focus:bg-emerald-50 focus:text-emerald-700 transition-colors cursor-pointer">
                                                                 <UserCheck className="h-4 w-4" /> Restore Access
                                                             </DropdownMenuItem>
                                                         )}
+                                                        <DropdownMenuItem
+                                                            className="rounded-xl font-bold text-sm gap-3 py-3 px-3 text-rose-600 focus:bg-rose-50 focus:text-rose-700 transition-colors cursor-pointer"
+                                                            onClick={() => handleDelete(admin.emailAddress)}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" /> Delete Account
+                                                        </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </td>
@@ -253,6 +288,13 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
                     </table>
                 </div>
             </div>
+            <CreateUserModal
+                isOpen={isCreateModalOpen}
+                onClose={() => {
+                    setIsCreateModalOpen(false);
+                    fetchAdmins();
+                }}
+            />
         </div>
     );
 }

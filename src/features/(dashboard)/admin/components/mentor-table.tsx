@@ -15,7 +15,9 @@ import {
     Hash,
     ShieldCheck,
     ArrowRight,
-    Award
+    Award,
+    Trash2,
+    ShieldX
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
 import { MentorQuery, PaginatedResponse, MentorRecord } from "@/src/connection/api-types";
@@ -33,11 +35,13 @@ import {
 import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import { InviteMentorModal } from "./invite-mentor-modal";
+import { CreateUserModal } from "./create-user-modal";
 import { cn } from "@/src/lib/utils";
 
 export function MentorTable() {
     const router = useRouter();
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<MentorQuery>({
         page: 0,
@@ -92,6 +96,17 @@ export function MentorTable() {
         },
         onSuccess: () => {
             toast.success("Mentor status updated successfully");
+        }
+    });
+
+    const deleteMentorMutation = useMutation({
+        mutationFn: (id: string) => adminService.deleteMentor(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
+            toast.success("Mentor account permanently deleted");
+        },
+        onError: () => {
+            toast.error("Failed to delete mentor account");
         }
     });
 
@@ -183,11 +198,11 @@ export function MentorTable() {
                         </DropdownMenu>
 
                         <Button
-                            onClick={() => setIsInviteModalOpen(true)}
+                            onClick={() => setIsCreateModalOpen(true)}
                             className="bg-emerald-600 hover:bg-emerald-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-emerald-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
                         >
                             <UserCheck className="h-4 w-4" />
-                            Invite Mentor
+                            Direct Create
                         </Button>
                     </div>
                 </div>
@@ -299,9 +314,21 @@ export function MentorTable() {
                                                     <DropdownMenuSeparator className="bg-gray-50" />
                                                     <DropdownMenuItem 
                                                         onClick={() => updateStatusMutation.mutate({ id: mentor.hid, status: "INACTIVE" })} 
-                                                        className="rounded-xl font-bold text-sm text-rose-600 focus:bg-rose-50"
+                                                        className="rounded-xl font-bold text-sm text-amber-600 focus:bg-amber-50 focus:text-amber-700 gap-2"
                                                     >
+                                                        <ShieldX className="w-4 h-4" />
                                                         Terminate Access
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem 
+                                                        onClick={() => {
+                                                            if (confirm("Are you sure you want to PERMANENTLY delete this mentor? This action cannot be undone.")) {
+                                                                deleteMentorMutation.mutate(mentor.hid);
+                                                            }
+                                                        }} 
+                                                        className="rounded-xl font-bold text-sm text-rose-600 focus:bg-rose-50 focus:text-rose-700 gap-2"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                        Delete Account
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
@@ -317,7 +344,7 @@ export function MentorTable() {
                 {totalPages > 1 && (
                     <div className="px-10 py-8 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-6 bg-gray-50/10">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-50">
+                            <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-100">
                                 <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
                                     Displaying <span className="text-gray-900">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> Professional Experts
                                 </p>
@@ -355,6 +382,10 @@ export function MentorTable() {
             <InviteMentorModal
                 isOpen={isInviteModalOpen}
                 onClose={() => setIsInviteModalOpen(false)}
+            />
+            <CreateUserModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
             />
         </div>
     );
