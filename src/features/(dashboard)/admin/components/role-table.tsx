@@ -43,7 +43,12 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
         setIsLoading(true);
         try {
             const response = await adminService.getPlatformRoles();
-            setRoles(response);
+            const allowedRoles = ["PLATFORM_ADMIN", "ACADEMIC_MENTOR", "STUDENT", "ADMIN", "MENTOR"];
+            const filtered = response.filter(r => 
+                allowedRoles.includes(r.name.toUpperCase()) || 
+                allowedRoles.includes(r.guid.toUpperCase())
+            );
+            setRoles(filtered);
         } catch (error) {
             console.error("Failed to fetch roles:", error);
             toast.error("Failed to load roles");
@@ -74,15 +79,6 @@ export function RoleTable({ onCreateClick, onEditClick }: RoleTableProps) {
                     </p>
                 </div>
 
-                <div className="flex gap-4 w-full md:w-auto relative z-10">
-                    <Button
-                        className="bg-slate-900 hover:bg-black text-white h-14 px-8 rounded-2xl shadow-xl shadow-slate-900/10 gap-3 font-extrabold text-xs uppercase tracking-widest active:scale-95 transition-all group w-full md:w-auto"
-                        onClick={onCreateClick}
-                    >
-                        <ShieldCheck className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                        Initialize New Role
-                    </Button>
-                </div>
             </div>
 
             {/* Role Intelligence Grid */}

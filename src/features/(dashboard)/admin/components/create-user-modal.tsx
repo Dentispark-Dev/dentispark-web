@@ -143,7 +143,6 @@ export function CreateUserModal({ isOpen, onClose }: CreateUserModalProps) {
                                         <SelectItem value="STUDENT" className="font-bold">Student</SelectItem>
                                         <SelectItem value="ACADEMIC_MENTOR" className="font-bold">Mentor</SelectItem>
                                         <SelectItem value="PLATFORM_ADMIN" className="font-bold">Admin</SelectItem>
-                                        <SelectItem value="MODERATOR" className="font-bold">Moderator</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>

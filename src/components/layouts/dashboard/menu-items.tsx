@@ -217,14 +217,14 @@ const adminMenuItems: MenuItem[] = [
     id: "user-management",
     label: "User Management",
     href: "#",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: Icons.studentMatching,
     children: [
       {
         id: "admin-students",
         label: "Students",
         href: "/admin/students",
-        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
         icon: Icons.studentMatching,
       },
       {
@@ -234,27 +234,20 @@ const adminMenuItems: MenuItem[] = [
         allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
         icon: Icons.studentMatching,
       },
-      {
-        id: "admin-moderators",
-        label: "Moderators",
-        href: "/admin/moderators",
-        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
-        icon: Icons.profile,
-      },
     ],
   },
   {
     id: "content-hubs",
     label: "Content & Hubs",
     href: "#",
-    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+    allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
     icon: Icons.university,
     children: [
       {
         id: "admin-universities",
         label: "University Registry",
         href: "/admin/content/universities",
-        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
         icon: Icons.university,
       },
       {
@@ -275,14 +268,14 @@ const adminMenuItems: MenuItem[] = [
         id: "admin-services",
         label: "Marketplace Hub",
         href: "/admin/content/services",
-        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
         icon: Icons.resources,
       },
       {
         id: "admin-scholarships",
         label: "Opportunity Hub",
         href: "/admin/content/scholarships",
-        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM", "MODERATOR"],
+        allowedMemberTypes: ["PLATFORM_ADMIN", "PLATFORM_SYSTEM"],
         icon: Icons.scholarship,
       },
     ],
@@ -395,7 +388,6 @@ export function getFilteredMenuItems(
     | "ACADEMIC_MENTOR"
     | "PLATFORM_ADMIN"
     | "PLATFORM_SYSTEM"
-    | "MODERATOR"
     | undefined,
 ): MenuItem[] {
   if (!memberType) return [];
