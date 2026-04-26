@@ -58,14 +58,21 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
             cache: "no-store",
         });
 
-        const data = await response.json().catch(() => ({}));
+        const responseText = await response.text();
+        let data: any;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            data = { message: responseText };
+        }
         
         if (!response.ok) {
             return NextResponse.json({
                 responseCode: "99",
-                responseMessage: data.responseMessage || `Java Backend Error (Status ${response.status})`,
+                responseMessage: data.responseMessage || data.message || `Java Backend Error (Status ${response.status})`,
                 message: data.message || data.responseMessage || `Java Backend Error (Status ${response.status})`,
-                errors: data.errors || []
+                errors: data.errors || [],
+                rawResponse: responseText.substring(0, 1000)
             }, { 
                 status: response.status,
                 headers: { "X-Proxied-To-Java-Fallback": "true" }
