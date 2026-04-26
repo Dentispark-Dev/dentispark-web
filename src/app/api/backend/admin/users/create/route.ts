@@ -1,23 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient, Role } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
-
-const prisma = new PrismaClient();
+import { Role } from "@prisma/client";
+import * as bcrypt from "bcryptjs";
+import prisma from "@/src/lib/db";
 
 /**
  * DIRECT USER CREATION OVERRIDE
  * 
  * Allows admins to create users (Admin, Mentor, Student) directly in the local DB.
+ * In production/Vercel, this will still work if DATABASE_URL is configured.
  */
 export async function POST(request: NextRequest) {
-  const isVercel = process.env.VERCEL === "1";
-  const forceLocal = process.env.NEXT_PUBLIC_USE_LOCAL_AUTH === "true";
-  
-  if ((process.env.NODE_ENV === "production" || isVercel) && !forceLocal) {
-    return proxyRequest(request, ["admin", "users", "create"]);
-  }
-
   try {
     const payload = await request.json();
     const { emailAddress, firstName, lastName, password, memberType, platformMemberCategory } = payload;
@@ -58,9 +50,10 @@ export async function POST(request: NextRequest) {
         name: `${firstName} ${lastName}`.trim(),
         password: hashedPassword,
         role,
-        // Set as active immediately for admin-created users
-        // activationStatus is a field in StudentRecord but not directly in User prisma model?
-        // Let's check schema again. 
+        activationStatus: "ACTIVE",
+        memberCategory: platformMemberCategory || "BDS",
+        gateway: "DIRECT_ADMIN",
+        paymentStatus: role === Role.STUDENT ? "FREE" : "PAID",
       }
     });
 
@@ -70,8 +63,11 @@ export async function POST(request: NextRequest) {
             data: {
                 userId: newUser.id,
                 isVerified: true,
-                specialties: platformMemberCategory ? [platformMemberCategory] : [],
-                // Add other defaults
+                title: "Academic Mentor",
+                credentials: platformMemberCategory || "General Dentistry",
+                bio: "Experienced academic mentor added by platform administration.",
+                specialties: platformMemberCategory ? [platformMemberCategory] : ["General Dentistry"],
+                hourlyRate: 50.0,
             }
         });
     }

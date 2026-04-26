@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
-
+import * as bcrypt from "bcryptjs";
 import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
+import prisma from "@/src/lib/db";
 
 /**
  * LOCAL ADMIN LOGIN OVERRIDE

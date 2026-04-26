@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
-
-const prisma = new PrismaClient();
+import prisma from "@/src/lib/db";
 
 type RouteContext = { params: Promise<{ email: string }> };
 
