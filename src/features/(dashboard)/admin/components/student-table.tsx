@@ -104,8 +104,9 @@ export function StudentTable() {
             queryClient.invalidateQueries({ queryKey: ["admin-students"] });
             toast.success("Student account permanently deleted");
         },
-        onError: () => {
-            toast.error("Failed to delete student account");
+        onError: (error: any) => {
+            const msg = error?.message || error?.responseMessage || "Failed to delete student account";
+            toast.error(msg);
         }
     });
 

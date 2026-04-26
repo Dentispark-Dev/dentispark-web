@@ -73,8 +73,9 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
             await adminService.deactivateAdmin(email, "Deactivated by administrator");
             toast.success("Admin deactivated successfully");
             fetchAdmins();
-        } catch {
-            toast.error("Failed to deactivate admin");
+        } catch (error: any) {
+            const msg = error?.message || error?.responseMessage || "Failed to deactivate admin";
+            toast.error(msg);
         }
     };
 
@@ -86,8 +87,9 @@ export function AdminTable({ onInviteClick }: AdminTableProps) {
             await adminService.deleteAdmin(email);
             toast.success("Administrator record permanently deleted");
             fetchAdmins();
-        } catch {
-            toast.error("Failed to delete administrator");
+        } catch (error: any) {
+            const msg = error?.message || error?.responseMessage || "Failed to delete administrator";
+            toast.error(msg);
         }
     };
 

@@ -66,6 +66,7 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     return NextResponse.json({
       responseCode: "99",
       responseMessage: `Database Error: ${error.message}`,
+      message: `Database Error: ${error.message}`,
       errors: [error.code, JSON.stringify(error.meta)]
     }, { 
       status: 500,

@@ -105,8 +105,9 @@ export function MentorTable() {
             queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
             toast.success("Mentor account permanently deleted");
         },
-        onError: () => {
-            toast.error("Failed to delete mentor account");
+        onError: (error: any) => {
+            const msg = error?.message || error?.responseMessage || "Failed to delete mentor account";
+            toast.error(msg);
         }
     });
 
@@ -117,8 +118,9 @@ export function MentorTable() {
             queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
             toast.success("Mentor verification updated successfully");
         },
-        onError: () => {
-            toast.error("Failed to update mentor verification");
+        onError: (error: any) => {
+            const msg = error?.responseMessage || "Failed to update mentor verification";
+            toast.error(msg);
         }
     });
 
