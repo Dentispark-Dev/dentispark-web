@@ -46,6 +46,9 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
             "Authorization": accessToken ? `Bearer ${accessToken}` : "",
             "Channel-ID": channelId || "",
             "Channel-Secret": channelSecret || "",
+            "User-Agent": request.headers.get("user-agent") || "DentiSpark-Proxy/1.0",
+            "Origin": request.headers.get("origin") || "https://www.dentispark.com",
+            "Referer": request.headers.get("referer") || "https://www.dentispark.com/admin",
             "X-Proxy-Fallback": "true"
         };
 
