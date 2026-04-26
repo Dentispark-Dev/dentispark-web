@@ -72,9 +72,10 @@ export default function StudyPlannerPage() {
 
       const data = await response.json();
       setPlan(data);
-    } catch (error: unknown) {
-      console.error(error);
-      setError(error.message || "Failed to generate study plan. Please try again.");
+    } catch (err: unknown) {
+      console.error(err);
+      const errorMessage = err instanceof Error ? err.message : "Failed to generate study plan. Please try again.";
+      setError(errorMessage);
     } finally {
       setIsGenerating(false);
     }
@@ -239,7 +240,7 @@ export default function StudyPlannerPage() {
                     Essential Materials
                   </h4>
                   <ul className="space-y-2 opacity-95 relative z-10">
-                    {plan?.materials?.map((m: string, i: number) => (
+                    {(plan as LooseRecord)?.materials?.map((m: any, i: number) => (
                       <li key={i} className="text-xs font-medium border-l-2 border-white/30 pl-3 py-1">{m}</li>
                     ))}
                   </ul>
@@ -250,7 +251,7 @@ export default function StudyPlannerPage() {
                     <Sparkles className="w-4 h-4 text-emerald-600" /> Pro Tips
                   </h4>
                   <div className="space-y-3">
-                    {plan?.tips?.map((tip: string, i: number) => (
+                    {(plan as LooseRecord)?.tips?.map((tip: any, i: number) => (
                       <p key={i} className="text-[10px] text-gray-500 font-medium leading-relaxed italic border-l-2 border-emerald-200 pl-3">
                         &quot;{tip}&quot;
                       </p>

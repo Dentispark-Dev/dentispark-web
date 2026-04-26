@@ -8,7 +8,7 @@ import { Button } from "@/src/components/ui/button";
 import { Card } from "@/src/components/ui/card";
 import { FileText } from "lucide-react";
 import { cn } from "@/src/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useModalStore } from "@/src/store/modal-store";
 import { SuggestSlotForm } from "./suggest-slot-form";
 import { AcceptBookingModal } from "./accept-booking-modal";
@@ -22,35 +22,6 @@ interface StudentProfilePageProps {
   className?: string;
 }
 
-// Mock student data - will be replaced with API data later
-const MOCK_STUDENT = {
-  id: "1",
-  name: "Daniel Sarabia",
-  year: "Year 12",
-  avatar: "/images/latest-booking.png",
-  preferredSchool: "Bristol University",
-  ucatScore: "2640",
-  aLevelScore: "AAA",
-  booking: {
-    title: "UCAT Student",
-    date: "Wed, 12th July, 2025 | 5pm",
-  },
-  goals: `As a Year 12 student aspiring to study Dental Science at the University of Bristol, my goal is to excel academically while gaining practical experience in the field of dentistry. I aim to achieve top grades in my A-levels, particularly in Biology and Chemistry, to meet the university's entry requirements. Additionally, I plan to engage in relevant extracurricular activities, such as volunteering at local dental clinics and participating in workshops, to enhance my understanding of oral health and patient care.`,
-  whyDentistry: `I aspire to study dentistry because I am deeply passionate about improving people's lives through oral health. The ability to alleviate pain, restore smiles, and enhance confidence in others is incredibly fulfilling. I am drawn to the intricate blend of science and artistry that dentistry offers, allowing me to...`,
-  practiceTests: [
-    {
-      id: "1",
-      title: "Practice Question 1",
-      category: "Verbal Reasoning",
-    },
-    {
-      id: "2",
-      title: "Practice Question 2",
-      category: "Verbal Reasoning",
-    },
-  ],
-};
-
 export function StudentProfilePage({ className }: StudentProfilePageProps) {
   const router = useRouter();
   const [student, setStudent] = useState<LooseRecord | null>(null);
@@ -59,12 +30,10 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
   const [showFullWhy, setShowFullWhy] = useState(false);
   const { openModal, closeModal } = useModalStore();
 
-  // Simulated fetch
-  useState(() => {
+  useEffect(() => {
     async function load() {
         setIsLoading(true);
         try {
-            // In real app, we would get ID from URL params
             const res = await fetch("/api/mentor/student-matches"); 
             const data = await res.json();
             if (data.students && data.students.length > 0) {
@@ -146,6 +115,8 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
       type: "accept-booking",
       size: "md",
       isCustomContent: true,
+      action: () => {},
+      actionTitle: "",
     });
   };
 
@@ -164,6 +135,8 @@ export function StudentProfilePage({ className }: StudentProfilePageProps) {
       type: "suggest-slot",
       size: "2xl",
       isCustomContent: true,
+      action: () => {},
+      actionTitle: "",
     });
   };
 

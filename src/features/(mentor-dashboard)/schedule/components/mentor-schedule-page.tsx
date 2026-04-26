@@ -22,17 +22,17 @@ export function MentorSchedulePage({ className }: SchedulePageProps) {
 
   // Load availability on mount
   useEffect(() => {
-    if (user?.id) {
+    if (user?.guid) {
       loadAvailability();
     }
-  }, [user?.id]);
+  }, [user?.guid]);
 
   const loadAvailability = async () => {
     try {
       setIsLoading(true);
-      const response = await scheduleApi.getAvailability(user!.id);
-      if (response.responseCode === "00" && response.data?.availability) {
-        setScheduleSlots(response.data.availability);
+      const response = await scheduleApi.getAvailability(user!.guid);
+      if (response.responseCode === "00" && response.responseData?.availability) {
+        setScheduleSlots(response.responseData.availability);
       }
     } catch (error) {
       toast.error("Failed to load schedule. Using offline mode.");
@@ -42,11 +42,11 @@ export function MentorSchedulePage({ className }: SchedulePageProps) {
   };
 
   const persistChange = async (newSlots: ScheduleSlot[]) => {
-    if (!user?.id) return;
+    if (!user?.guid) return;
     
     startTransition(async () => {
       try {
-        const response = await scheduleApi.updateAvailability(user.id, newSlots);
+        const response = await scheduleApi.updateAvailability(user.guid, newSlots);
         if (response.responseCode === "00") {
           toast.success("Schedule updated successfully");
         } else {
@@ -67,7 +67,6 @@ export function MentorSchedulePage({ className }: SchedulePageProps) {
       ),
       action: () => {},
       actionTitle: "",
-      className: "rounded-2xl",
       secondaryAction: hideModal,
       secondaryActionTitle: "Cancel",
       type: "create-schedule",
@@ -95,7 +94,6 @@ export function MentorSchedulePage({ className }: SchedulePageProps) {
       ),
       action: () => {},
       actionTitle: "",
-      className: "rounded-lg",
       secondaryAction: hideModal,
       secondaryActionTitle: "Cancel",
       type: "edit-schedule",

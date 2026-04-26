@@ -45,16 +45,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required booking details" }, { status: 400 });
     }
 
-    // Look up mentor profile by their hid
+    // Look up mentor profile by their sid (System Identity) or name
     const mentorProfile = await prisma.mentorProfile.findFirst({
       where: {
         OR: [
-          { hid: mentorSlug },
+          { user: { sid: mentorSlug } },
           { user: { name: { contains: mentorSlug, mode: "insensitive" } } }
         ]
       },
       include: { user: { select: { name: true, email: true } } }
-    });
+    }) as any;
 
     if (!mentorProfile) {
       console.warn(`Mentor not found for slug: ${mentorSlug}`);
@@ -68,8 +68,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid date or time format." }, { status: 400 });
     }
 
-    // If paid session, route through Stripe Checkout
+    // If paid session, create a PENDING booking and return Stripe params
     if (price && price > 0) {
+      const booking = await prisma.booking.create({
+        data: {
+          studentId,
+          mentorId: mentorProfile.id,
+          scheduledAt,
+          durationMins: durationMins || 60,
+          status: "PENDING",
+        }
+      });
+
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.dentispark.com";
       return NextResponse.json({
         requiresPayment: true,
@@ -78,6 +88,8 @@ export async function POST(req: Request) {
           sessionType,
           price,
           mentorSlug,
+          studentId,
+          bookingId: booking.id,
           successUrl: `${baseUrl}/mentorship/${mentorSlug}/booking-confirmed?session=${encodeURIComponent(sessionType)}`,
           cancelUrl: `${baseUrl}/mentorship/${mentorSlug}/checkout?session=${sessionType}`,
         }

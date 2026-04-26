@@ -14,6 +14,11 @@ interface DashboardState {
   // UI Interaction States
   confettiTrigger: boolean;
   
+  // Actions
+  toggleStage: (id: number) => void;
+  completeStage: (id: number) => void;
+  setCurrentStage: (id: number) => void;
+  triggerConfetti: () => void;
   resetProgress: () => void;
   setStages: (stages: StageProgress[]) => void;
 }
@@ -31,14 +36,14 @@ export const useDashboardStore = create<DashboardState>()(
       stages: INITIAL_STAGES,
       confettiTrigger: false,
 
-      completeStage: (id) => set((state) => ({
+      completeStage: (id: number) => set((state) => ({
         stages: state.stages.map((s) => 
           s.id === id ? { ...s, isCompleted: true } : s
         ),
         confettiTrigger: true
       })),
 
-      toggleStage: (id) => set((state) => ({
+      toggleStage: (id: number) => set((state) => ({
         stages: state.stages.map((s) => 
           s.id === id ? { ...s, isCompleted: !s.isCompleted } : s
         ),
@@ -46,7 +51,7 @@ export const useDashboardStore = create<DashboardState>()(
         confettiTrigger: !state.stages.find(s => s.id === id)?.isCompleted
       })),
 
-      setCurrentStage: (id) => set((state) => ({
+      setCurrentStage: (id: number) => set((state) => ({
         stages: state.stages.map((s) => ({
           ...s,
           isCurrent: s.id === id
@@ -57,7 +62,7 @@ export const useDashboardStore = create<DashboardState>()(
       
       resetProgress: () => set({ stages: INITIAL_STAGES }),
       
-      setStages: (stages) => set({ stages })
+      setStages: (stages: StageProgress[]) => set({ stages })
     }),
     {
       name: "dentispark-dashboard-storage",

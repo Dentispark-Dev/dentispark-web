@@ -59,7 +59,7 @@ export function JoinSection() {
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-3xl blur opacity-30 group-hover/btn:opacity-60 transition duration-500" />
               <Button 
                 size="lg" 
-                className="relative h-20 px-16 rounded-[2rem] bg-emerald-500 hover:bg-emerald-600 text-2xl font-extrabold transition-all duration-300 shadow-2xl shadow-emerald-500/40 hover:scale-105 active:scale-95"
+                className="relative h-16 md:h-20 px-8 md:px-16 rounded-[2rem] bg-emerald-500 hover:bg-emerald-600 text-lg md:text-2xl font-extrabold transition-all duration-300 shadow-2xl shadow-emerald-500/40 hover:scale-105 active:scale-95"
               >
                 Start Your Journey for Free
               </Button>

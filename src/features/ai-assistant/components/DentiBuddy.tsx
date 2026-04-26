@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, Send, Bot, Loader2, Zap, MessageSquare } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
-import { useChat } from "@ai-sdk/react";
 import { useField } from "@/src/providers/field-provider";
 
 export function DentiBuddy() {
@@ -15,36 +14,85 @@ export function DentiBuddy() {
   const { activeField, activeFieldLabel, activeFieldIcon } = useField();
 
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status, clearError } = useChat({
-    api: "/api/chat",
-    body: { field: activeField },
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        parts: [{ type: "text", text: `Hi! I'm your AI Admission Assistant. How can I help you supercharge your ${activeFieldLabel} application today?` }],
-      },
-    ],
-  });
-
-  const isLoading = status === "submitted" || status === "streaming";
+  const [messages, setMessages] = useState<Array<{id: string, role: string, content: string}>>([
+    {
+      id: "welcome",
+      role: "assistant",
+      content: `Hi! I'm your AI Admission Assistant. How can I help you supercharge your ${activeFieldLabel} application today?`,
+    },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = async (e?: React.FormEvent) => {
-    e?.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const handleManualSubmit = async (text: string) => {
+    if (!text.trim() || isLoading) return;
 
-    const userMessage = input;
-    setInput("");
+    const userMessage = { id: Date.now().toString(), role: "user", content: text };
+    const newMessages = [...messages, userMessage];
     
+    setMessages(newMessages);
+    setInput("");
+    setIsLoading(true);
+
     try {
-      await sendMessage({ text: userMessage });
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: newMessages,
+          field: activeField,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to send message");
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      
+      let assistantMessage = { id: (Date.now() + 1).toString(), role: "assistant", content: "" };
+      setMessages((prev) => [...prev, assistantMessage]);
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value, { stream: true });
+          
+          let cleanChunk = chunk;
+          if (cleanChunk.startsWith('0:"')) {
+             try {
+                const lines = cleanChunk.split('\\n');
+                let parsedText = '';
+                for (const line of lines) {
+                   if (line.startsWith('0:')) {
+                      parsedText += JSON.parse(line.slice(2));
+                   }
+                }
+                if (parsedText) cleanChunk = parsedText;
+             } catch (e) {
+             }
+          }
+          
+          assistantMessage.content += cleanChunk;
+          setMessages((prev) => [
+            ...prev.slice(0, -1),
+            { ...assistantMessage },
+          ]);
+        }
+      }
     } catch (err) {
       console.error("Failed to send message:", err);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    await handleManualSubmit(input);
   };
 
   useEffect(() => {
@@ -119,7 +167,7 @@ export function DentiBuddy() {
                     }`}
                   >
                     <div className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {msg.parts ? msg.parts.map((part) => part.type === "text" ? (part as { text: string }).text : null) : msg.content}
+                      {msg.content}
                     </div>
                   </div>
                 </motion.div>
@@ -139,7 +187,7 @@ export function DentiBuddy() {
               {quickActions.map((action, i) => (
                 <button
                   key={i}
-                  onClick={() => sendMessage({ text: `Can you help me with: ${action.label}` })}
+                  onClick={() => handleManualSubmit(`Can you help me with: ${action.label}`)}
                   className="flex items-center gap-2 px-4 py-2 bg-white/60 hover:bg-white border border-gray-100 rounded-full text-xs font-bold text-gray-600 transition-all hover:shadow-md hover:text-primary-600 shrink-0"
                 >
                   <action.icon className="h-3 w-3" />

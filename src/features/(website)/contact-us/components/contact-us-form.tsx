@@ -40,6 +40,7 @@ export type ContactFormData = z.infer<typeof contactSchema>;
 
 export function ContactUsForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [messageLength, setMessageLength] = useState(0);
 
   const form = useForm<ContactFormData>({
@@ -72,6 +73,7 @@ export function ContactUsForm() {
       // Reset form on success
       form.reset();
       setMessageLength(0);
+      setIsSuccess(true);
       toast.success("Message sent!", { description: "We'll get back to you soon." });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -116,8 +118,39 @@ export function ContactUsForm() {
       initial="hidden"
       animate="visible"
     >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      {isSuccess ? (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-emerald-50 border border-emerald-100 rounded-[2rem] p-12 text-center space-y-6"
+        >
+          <div className="size-20 bg-emerald-500 rounded-full flex items-center justify-center text-white mx-auto shadow-lg shadow-emerald-500/20">
+             <motion.svg 
+               initial={{ pathLength: 0 }}
+               animate={{ pathLength: 1 }}
+               transition={{ duration: 0.5, delay: 0.2 }}
+               width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+             >
+               <polyline points="20 6 9 17 4 12" />
+             </motion.svg>
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-3xl font-jakarta font-bold text-slate-900">Message Received!</h2>
+            <p className="text-slate-600 font-medium max-w-sm mx-auto">
+              Thank you for reaching out. Our team will review your enquiry and get back to you within 24-48 hours.
+            </p>
+          </div>
+          <Button 
+            onClick={() => setIsSuccess(false)}
+            variant="outline"
+            className="rounded-xl border-emerald-200 text-emerald-700 hover:bg-emerald-100/50"
+          >
+            Send another message
+          </Button>
+        </motion.div>
+      ) : (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* First Name and Last Name */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <motion.div variants={itemVariants}>
@@ -309,6 +342,7 @@ export function ContactUsForm() {
           </motion.div>
         </form>
       </Form>
+      )}
     </motion.div>
   );
 }

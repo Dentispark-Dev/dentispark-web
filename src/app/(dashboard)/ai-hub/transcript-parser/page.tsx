@@ -73,9 +73,9 @@ export default function TranscriptParserPage() {
       const data = await response.json();
       setParsedData(data);
       setShowResults(true);
-    } catch (error: unknown) {
-      console.error(error);
-      const message = error instanceof Error ? error.message : "Failed to parse transcript. Please try again.";
+    } catch (err: unknown) {
+      console.error(err);
+      const message = err instanceof Error ? err.message : "Failed to parse transcript. Please try again.";
       setError(message);
     } finally {
       setIsParsing(false);
@@ -283,20 +283,20 @@ export default function TranscriptParserPage() {
                     )}
                 </div>
 
-                {parsedData && (parsedData as LooseRecord).missingInfo?.length > 0 && (
+                {parsedData && ((parsedData as LooseRecord).missingInfo as string[] | undefined)?.length ? (
                     <div className="p-6 bg-amber-50 rounded-[2rem] border border-amber-100 space-y-3">
                         <div className="flex items-center gap-2 text-amber-700 text-[10px] font-extrabold uppercase tracking-widest">
                             <Target className="w-4 h-4" /> Missing Data Found
                         </div>
                         <ul className="space-y-1">
-                            {(parsedData as LooseRecord).missingInfo.map((info: string, i: number) => (
+                            {((parsedData as LooseRecord).missingInfo as string[]).map((info: string, i: number) => (
                                 <li key={i} className="text-[10px] text-amber-600 font-bold flex items-center gap-2">
                                     <div className="w-1 h-1 rounded-full bg-amber-400" /> {info}
                                 </li>
                             ))}
                         </ul>
                     </div>
-                )}
+                ) : null}
             </div>
 
             {/* Main Results */}

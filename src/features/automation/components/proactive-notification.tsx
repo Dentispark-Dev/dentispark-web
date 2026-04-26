@@ -7,6 +7,10 @@ import { useField } from "@/src/providers/field-provider";
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
 
+import { useDashboardStore } from "@/src/store/dashboard-store";
+import { useNotificationStore } from "@/src/store/notification-store";
+import { MISSIONS_DATA } from "../../(dashboard)/overview/constants";
+
 interface AIRecommendation {
   priority: "high" | "low" | "medium";
   nextStep: string;
@@ -15,20 +19,29 @@ interface AIRecommendation {
 
 export function ProactiveNotification() {
   const { activeField } = useField();
+  const { stages } = useDashboardStore();
+  const { events } = useNotificationStore();
   const [recommendation, setRecommendation] = useState<AIRecommendation | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const fetchRecommendation = async () => {
+      // Find current stage title
+      const currentStageObj = stages.find(s => s.isCurrent) || stages.find(s => !s.isCompleted) || stages[0];
+      const stageData = MISSIONS_DATA.find(m => m.id === currentStageObj.id);
+      
+      // Get recent activity title
+      const latestActivity = events[0]?.title || "Joined DentiSpark";
+
       try {
         const response = await fetch("/api/ai/automation/recommendation", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
-            currentStage: "Personal Statement Draft", 
-            targetUniversities: ["King's College London", "UCL"],
+            currentStage: stageData?.title || "Onboarding", 
+            targetUniversities: ["King's College London", "University of Birmingham"], // Fallback targets
             field: activeField,
-            recentActivity: "Completed Essay Review"
+            recentActivity: latestActivity
           }),
         });
         const data = await response.json();
@@ -39,9 +52,9 @@ export function ProactiveNotification() {
       }
     };
 
-    const timer = setTimeout(fetchRecommendation, 3000);
+    const timer = setTimeout(fetchRecommendation, 3500);
     return () => clearTimeout(timer);
-  }, [activeField]);
+  }, [activeField, stages, events]);
 
   return (
     <AnimatePresence>

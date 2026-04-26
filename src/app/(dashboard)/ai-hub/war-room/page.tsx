@@ -97,7 +97,7 @@ export default function WarRoomPage() {
         <div className="flex items-center gap-4 bg-white p-2 rounded-3xl border border-gray-100 shadow-sm">
             <div className="px-6 py-4 rounded-2xl bg-gray-900 text-white text-center">
                 <span className="block text-[8px] font-bold uppercase tracking-[0.3em] opacity-50 mb-1">Combat Readiness</span>
-                <span className="text-3xl font-jakarta font-bold">{data?.readinessScore}%</span>
+                <span className="text-3xl font-jakarta font-bold">{(data as LooseRecord)?.readinessScore}%</span>
             </div>
             <div className="pr-6">
                 <span className="block text-[8px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-1">Status</span>

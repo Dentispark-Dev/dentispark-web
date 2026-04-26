@@ -10,6 +10,7 @@ interface ProtectedRouteProps {
   fallback?: React.ReactNode;
   redirectTo?: string;
   requiresProfile?: boolean;
+  allowedRoles?: string[];
 }
 
 export function ProtectedRoute({
@@ -17,6 +18,7 @@ export function ProtectedRoute({
   fallback,
   redirectTo = "/login",
   requiresProfile = false,
+  allowedRoles,
 }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading, user } = useAuth();
   const router = useRouter();
@@ -32,6 +34,16 @@ export function ProtectedRoute({
       if (requiresProfile && user?.profileStatus === "PENDING") {
         router.replace("/profile-setup");
         return;
+      }
+
+      // Role authorization check
+      if (allowedRoles && user) {
+        const hasRole = user.roles.some(role => allowedRoles.includes(role));
+        if (!hasRole) {
+          console.warn(`[ProtectedRoute] Access denied for roles: ${user.roles}. Required: ${allowedRoles}`);
+          router.replace("/overview"); // Redirect unauthorized users to their main dashboard
+          return;
+        }
       }
 
       // Redirect from profile setup if profile is already completed
@@ -82,6 +94,12 @@ export function ProtectedRoute({
     window.location.pathname === "/profile-setup"
   ) {
     return null; // Router will handle redirect
+  }
+
+  // Final role check for rendering
+  if (allowedRoles && user) {
+    const hasRole = user.roles.some(role => allowedRoles.includes(role));
+    if (!hasRole) return null;
   }
 
   return <>{children}</>;

@@ -127,6 +127,7 @@ export default function Quiz({ className }: QuizProps) {
           }
         }
         setQuizStarted(true);
+        hideModal();
       },
       actionTitle: isGoodScore ? "Next" : "Retake",
       secondaryAction: () => {
@@ -167,6 +168,7 @@ export default function Quiz({ className }: QuizProps) {
         action: () => {
           setQuizStarted(true);
           setIsInitialized(true);
+          hideModal();
         },
         actionTitle: "Proceed",
         secondaryAction: () => {

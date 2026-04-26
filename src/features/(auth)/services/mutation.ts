@@ -69,9 +69,15 @@ export const useUnifiedLogin = () => {
   return useMutation<ApiResponse<LoginResponseData>, Error, LoginRequest>({
     mutationKey: ["auth", "login"],
     mutationFn: async (data: LoginRequest) => {
+      // Normalize email to fix Item 9: Case-sensitive login
+      const normalizedData = {
+        ...data,
+        emailAddress: data.emailAddress.toLowerCase().trim()
+      };
+
       try {
         // Try Admin login first
-        const response = await authApi.ADMIN_LOGIN(data);
+        const response = await authApi.ADMIN_LOGIN(normalizedData);
 
         // If successful, return immediately
         if (response.responseCode === "00") {
@@ -80,23 +86,34 @@ export const useUnifiedLogin = () => {
 
         // If admin record not found (03) or unauthorized (97), try regular member login
         if (response.responseCode === "03" || response.responseCode === "97") {
-          return await authApi.LOGIN(data);
+          return await authApi.LOGIN(normalizedData);
         }
 
         // Otherwise return the admin failure response (which onSuccess will handle)
         return response;
       } catch (_error: unknown) {
         // If there was a network/structural error in the admin call, fallback to student login as a last resort
-        return await authApi.LOGIN(data);
+        return await authApi.LOGIN(normalizedData);
       }
     },
     onSuccess: async (data) => {
       if (data.responseCode === "00") {
-        const { auth } = data.responseData;
+        const { auth, ...userRest } = data.responseData;
 
+        // Securely set the accessToken as HttpOnly via the server API
         await authCookies.setAccessToken(auth.accessToken, auth.tokenExpiredAt);
-        authCookies.setUserData(data.responseData);
-        login(data.responseData);
+        
+        // Strip the token from userData before saving to client-side cookies
+        const safeUserData = {
+            ...userRest,
+            auth: {
+                tokenExpiredAt: auth.tokenExpiredAt
+                // accessToken is NOT included here
+            }
+        };
+
+        authCookies.setUserData(safeUserData);
+        login(data.responseData); // Note: internal state can still have the token
 
         const memberType = data.responseData.memberType;
         if (memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM") {

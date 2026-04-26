@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Clock, Plus, Trash2, CheckCircle2, Save, 
@@ -45,7 +45,7 @@ export function AvailabilityManager() {
   const [selectedType, setSelectedType] = useState("General Consultation");
 
   // Load existing availability
-  useState(() => {
+  useEffect(() => {
     async function load() {
       if (!user?.guid) return;
       try {

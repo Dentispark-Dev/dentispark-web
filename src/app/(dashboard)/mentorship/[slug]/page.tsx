@@ -49,7 +49,7 @@ const SESSION_TYPES = [
     id: "mmi-prep",
     icon: <Video className="w-5 h-5" />,
     label: "MMI Mock Interview",
-    duration: "60 min",
+    duration: "90 min",
     price: null,
     description: "Full live MMI simulation with GDC & NHS ethics scenarios.",
     color: "text-purple-600",
@@ -85,7 +85,7 @@ const MOCK_REVIEWS = [
 // ─── Stat Chip ────────────────────────────────────────────────
 function StatChip({ label, value, icon }: { label: string; value: string | number; icon: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-1 px-6 py-4 bg-slate-50 rounded-2xl border border-slate-100">
+    <div className="flex flex-col items-center gap-1 px-4 sm:px-6 py-4 bg-slate-50 rounded-2xl border border-slate-100">
       <div className="text-slate-400">{icon}</div>
       <span className="text-2xl font-extrabold text-slate-900">{value}</span>
       <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{label}</span>
@@ -111,12 +111,23 @@ export default function MentorProfilePage() {
     );
   }
 
+  const calculateSessionPrice = (sessionId: string) => {
+    if (sessionId === "intro") return 0;
+    const session = SESSION_TYPES.find(s => s.id === sessionId);
+    if (!session) return mentor.hourlyRate;
+    
+    // MMI Prep is 90 mins (60m interview + 30m feedback) = 1.5x hourly rate
+    if (sessionId === "mmi-prep") return Math.round(mentor.hourlyRate * 1.5);
+    
+    return mentor.hourlyRate;
+  };
+
   const handleBookSession = () => {
     if (!selectedSession) return;
     const session = SESSION_TYPES.find(s => s.id === selectedSession);
     if (!session) return;
 
-    const price = session.price === 0 ? 0 : mentor.hourlyRate;
+    const price = calculateSessionPrice(selectedSession);
     const name = `${mentor.name} — ${session.label}`;
 
     // Route to checkout with encoded params
@@ -270,7 +281,8 @@ export default function MentorProfilePage() {
 
             <div className="space-y-3">
               {SESSION_TYPES.map(session => {
-                const price = session.price === 0 ? "Free" : `${mentor.currency}${mentor.hourlyRate}`;
+                const sPrice = calculateSessionPrice(session.id);
+                const priceLabel = session.id === "intro" ? "Free" : `${mentor.currency}${sPrice}`;
                 const isSelected = selectedSession === session.id;
 
                 return (
@@ -291,7 +303,7 @@ export default function MentorProfilePage() {
                       <div className="flex items-center justify-between gap-2">
                         <p className="font-bold text-slate-900 text-sm">{session.label}</p>
                         <span className={cn("font-extrabold text-sm shrink-0", session.price === 0 ? "text-emerald-600" : "text-slate-900")}>
-                          {price}
+                          {priceLabel}
                         </span>
                       </div>
                       <div className="flex items-center gap-1 mt-0.5">

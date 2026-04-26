@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { LooseRecord } from "@/src/types/loose";
 
 interface InitiateOrderModalProps {
-    package: LooseRecord;
+    package: LooseRecord | null;
     isOpen: boolean;
     onClose: () => void;
 }
@@ -32,8 +32,8 @@ export function InitiateOrderModal({ package: pkg, isOpen, onClose }: InitiateOr
     const initiateMutation = useMutation({
         mutationFn: () => adminService.initiateOrderAdmin({
             studentEmail,
-            mentorEmail: pkg.mentorUsername,
-            packageSlug: pkg.slug,
+            mentorEmail: pkg?.mentorUsername ?? "",
+            packageSlug: pkg?.slug ?? "",
             notes
         }),
         onSuccess: () => {

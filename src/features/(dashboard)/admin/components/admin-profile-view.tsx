@@ -349,7 +349,7 @@ export function AdminProfileView({ adminEmail }: AdminProfileViewProps) {
     );
 }
 
-function MetricPill({ label, value, icon: Icon }: { label: string; value: string; icon: LooseRecord }) {
+function MetricPill({ label, value, icon: Icon }: { label: string; value: string; icon: React.ElementType }) {
     return (
         <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
             <div className="flex items-center gap-3 mb-2">

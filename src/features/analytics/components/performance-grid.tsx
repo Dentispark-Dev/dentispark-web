@@ -118,14 +118,14 @@ export function PerformanceGrid() {
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-3xl font-extrabold text-slate-900">{score}%</span>
-                  <span className="text-[8px] font-extrabold uppercase tracking-widest text-emerald-500">{data?.rank || "Evaluating"}</span>
+                  <span className="text-[8px] font-extrabold uppercase tracking-widest text-emerald-500">{data?.rank ?? "Evaluating"}</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-3 text-xs font-bold">
                 <div className="bg-emerald-50 text-emerald-700 px-4 py-3 rounded-2xl flex items-center justify-center gap-2">
                     <TrendingUp className="w-4 h-4" />
-                    {data?.recentImprovement > 0 ? `+${data.recentImprovement}% Boost` : `Steady Pace`}
+                    {(data?.recentImprovement ?? 0) > 0 ? `+${data?.recentImprovement}% Boost` : `Steady Pace`}
                 </div>
                 <div className="bg-slate-50 text-slate-500 px-4 py-3 rounded-2xl flex items-center justify-center gap-2">
                     <ShieldCheck className="w-4 h-4" />

@@ -16,18 +16,18 @@ export const useAuth = () => {
   useEffect(() => {
     const checkAuthState = () => {
       try {
-        const token = authCookies.getAccessToken();
+        const token = authCookies.getAccessToken(); // May be null if HttpOnly
         const userData = authCookies.getUserData() as LoginResponseData | null;
 
-        if (token && userData) {
-          // Check if token is expired
+        if (userData) {
+          // Check if token is expired (expiry is still in userData)
           const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
           const now = new Date();
 
           if (now < tokenExpiredAt) {
             setIsAuthenticated(true);
             setUser(userData);
-            setAccessToken(token);
+            setAccessToken(token); // Might be null, which is fine
           } else {
             // Token expired, clear auth data
             authCookies.clearAll();
@@ -76,7 +76,7 @@ export const useAuth = () => {
     const token = authCookies.getAccessToken();
     const userData = authCookies.getUserData() as LoginResponseData | null;
 
-    if (token && userData) {
+    if (userData) {
       const tokenExpiredAt = new Date(userData.auth.tokenExpiredAt);
       const now = new Date();
 

@@ -16,7 +16,8 @@ import {
   Phone,
   Check,
   Star as StarIcon,
-  Play
+  Play,
+  Loader2
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -200,9 +201,11 @@ export function MentorOnboardingFlow() {
     }
   };
 
-  const onSubmit = async (data: OnboardingFormData) => {
+   const onSubmit = async (data: OnboardingFormData) => {
     startTransition(async () => {
       try {
+        console.log("[MentorOnboarding] Initiating registration...");
+        
         // Step 1: Account Registration
         const registrationResponse = await authApi.MENTOR_REGISTRATION({
           firstName: data.firstName.trim(),
@@ -215,8 +218,11 @@ export function MentorOnboardingFlow() {
         });
 
         if (registrationResponse.responseCode !== "00") {
+          console.error("[MentorOnboarding] Registration failed:", registrationResponse);
           throw new Error(registrationResponse.responseMessage || "Registration failed. Please check your details and try again.");
         }
+
+        console.log("[MentorOnboarding] Registration successful. Proceeding to verification...");
 
         // Step 2: Profile Verification
         const expertiseMapping: Record<string, string> = {
@@ -247,13 +253,12 @@ export function MentorOnboardingFlow() {
             // Defaults are fine
         }
 
-        // Await verification to ensure account is fully ready
         const documentNames = [
           onboardingData.documents.cv?.name,
           onboardingData.documents.certs?.name,
         ].filter(Boolean) as string[];
 
-        await authApi.MENTOR_VERIFICATION({
+        const verificationResponse = await authApi.MENTOR_VERIFICATION({
           emailAddress: data.emailAddress.trim().toLowerCase(),
           documentUploadLinks: documentNames,
           expertiseDetailsList: mappedExpertise,
@@ -262,13 +267,24 @@ export function MentorOnboardingFlow() {
           interviewTime,
         });
 
-        // ✅ Show success and redirect
+        if (verificationResponse.responseCode !== "00") {
+          console.error("[MentorOnboarding] Verification failed:", verificationResponse);
+          throw new Error(verificationResponse.responseMessage || "Verification setup failed. Please contact support.");
+        }
+
+        console.log("[MentorOnboarding] All steps completed successfully.");
+
+        // ✅ Show success screen
         setIsSuccess(true);
-        toast.success("Account created! Redirecting to email verification...");
+        toast.success("Account created successfully!");
         
-        router.push("/mentor/verify-email?email=" + encodeURIComponent(data.emailAddress.trim().toLowerCase()));
+        // Brief delay so they see the success state before redirect
+        setTimeout(() => {
+          router.push("/mentor/verify-email?email=" + encodeURIComponent(data.emailAddress.trim().toLowerCase()));
+        }, 2000);
 
       } catch (error: unknown) {
+        console.error("[MentorOnboarding] Submission error:", error);
         toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.");
       }
     });
@@ -370,7 +386,23 @@ export function MentorOnboardingFlow() {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="flex-1 shrink-0 h-full"
               >
-                {/* Step Content */}
+                {isSuccess ? (
+                  <div className="flex flex-col items-center justify-center py-12 text-center h-full">
+                    <div className="size-24 rounded-[32px] bg-emerald-500 text-white flex items-center justify-center mb-8 shadow-xl shadow-emerald-500/20">
+                      <CheckCircle size={48} />
+                    </div>
+                    <h2 className="text-4xl font-jakarta font-bold text-slate-900 mb-4">You&apos;re in!</h2>
+                    <p className="text-xl text-slate-500 max-w-md font-medium">
+                      Your application has been received. We&apos;re redirecting you to verify your email...
+                    </p>
+                    <div className="mt-12 flex items-center gap-2 text-emerald-600 font-bold">
+                      <Loader2 className="animate-spin size-5" />
+                      Finalizing your profile
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {/* Step Content */}
                 {currentStep === 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {ROLES.map((role) => (
@@ -665,29 +697,33 @@ export function MentorOnboardingFlow() {
                     </form>
                   </Form>
                 )}
+                </>
+                )}
               </motion.div>
             </AnimatePresence>
 
-            <footer className="mt-12 flex items-center justify-between border-t border-slate-50 pt-8">
-              {currentStep > 0 ? (
-                <button 
-                  onClick={handleBack}
-                  className="flex items-center gap-2 text-slate-400 hover:text-slate-600 font-bold uppercase tracking-widest text-xs transition-colors"
-                >
-                  <ArrowLeft size={16} /> Back
-                </button>
-              ) : <div />}
+            {!isSuccess && (
+              <footer className="mt-12 flex items-center justify-between border-t border-slate-50 pt-8">
+                {currentStep > 0 ? (
+                  <button 
+                    onClick={handleBack}
+                    className="flex items-center gap-2 text-slate-400 hover:text-slate-600 font-bold uppercase tracking-widest text-xs transition-colors"
+                  >
+                    <ArrowLeft size={16} /> Back
+                  </button>
+                ) : <div />}
 
-              {currentStep < STEPS.length - 1 && currentStep !== 0 && currentStep !== 1 && currentStep !== 4 && (
-                <Button 
-                  onClick={handleNext}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-10 font-bold text-lg shadow-xl shadow-emerald-500/20 active:scale-95 transition-all group"
-                >
-                  Continue
-                  <ChevronRight className="size-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              )}
-            </footer>
+                {currentStep < STEPS.length - 1 && currentStep !== 0 && currentStep !== 1 && currentStep !== 4 && (
+                  <Button 
+                    onClick={handleNext}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-10 font-bold text-lg shadow-xl shadow-emerald-500/20 active:scale-95 transition-all group"
+                  >
+                    Continue
+                    <ChevronRight className="size-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                )}
+              </footer>
+            )}
           </div>
         </div>
 

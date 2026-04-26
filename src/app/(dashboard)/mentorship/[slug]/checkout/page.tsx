@@ -15,7 +15,7 @@ const SESSION_META: Record<string, { label: string; duration: string; icon: Reac
   "intro":           { label: "Free Intro Call",          duration: "15 min", icon: <MessageSquare className="w-5 h-5" />, color: "text-emerald-600", bg: "bg-emerald-50" },
   "ucat-mentoring":  { label: "UCAT Strategy Session",    duration: "60 min", icon: <Zap className="w-5 h-5" />,          color: "text-blue-600",    bg: "bg-blue-50" },
   "ps-review":       { label: "Personal Statement Review",duration: "60 min", icon: <FileText className="w-5 h-5" />,     color: "text-indigo-600",  bg: "bg-indigo-50" },
-  "mmi-prep":        { label: "MMI Mock Interview",       duration: "60 min", icon: <Video className="w-5 h-5" />,        color: "text-purple-600",  bg: "bg-purple-50" },
+  "mmi-prep":        { label: "MMI Mock Interview",       duration: "90 min", icon: <Video className="w-5 h-5" />,        color: "text-purple-600",  bg: "bg-purple-50" },
 };
 
 export default function CheckoutRedirectPage() {
@@ -53,7 +53,9 @@ function CheckoutContent() {
     return null;
   }
 
-  const price = sessionId === "intro" ? 0 : mentor.hourlyRate;
+  const price = sessionId === "intro" 
+    ? 0 
+    : (sessionId === "mmi-prep" ? Math.round(mentor.hourlyRate * 1.5) : mentor.hourlyRate);
 
   const handleConfirmBooking = async () => {
     if (!selectedDate || !selectedTime) {
@@ -137,6 +139,7 @@ function CheckoutContent() {
         <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-6">
           <TimeSlotPicker
             mentorName={mentor.name}
+            mentorSlug={slug}
             onSlotSelected={(date, time) => { setSelectedDate(date); setSelectedTime(time); }}
             selectedDate={selectedDate}
             selectedTime={selectedTime}

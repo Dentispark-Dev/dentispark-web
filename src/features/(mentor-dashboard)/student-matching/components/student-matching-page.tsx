@@ -100,7 +100,7 @@ export function StudentMatchingPage({ className }: StudentMatchingPageProps) {
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <StudentMatchingCard
-                  student={student}
+                  student={student as any}
                   onProceed={() => handleProceed(student.id)}
                   onViewProfile={() => handleViewProfile(student.id)}
                 />

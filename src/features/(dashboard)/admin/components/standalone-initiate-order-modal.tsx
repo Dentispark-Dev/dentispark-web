@@ -57,8 +57,8 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
     const initiateMutation = useMutation({
         mutationFn: () => adminService.initiateOrderAdmin({
             studentEmail,
-            mentorEmail: selectedPackage.mentorUsername,
-            packageSlug: selectedPackage.slug,
+            mentorEmail: selectedPackage?.mentorUsername ?? "",
+            packageSlug: selectedPackage?.slug ?? "",
             notes
         }),
         onSuccess: () => {
@@ -142,7 +142,7 @@ export function StandaloneInitiateOrderModal({ isOpen, onClose }: StandaloneInit
                                 <Select 
                                     onValueChange={(val) => {
                                         const pkg = pkgResponse?.content.find((p: LooseRecord) => p.externalId === val);
-                                        setSelectedPackage(pkg);
+                                        setSelectedPackage(pkg ?? null);
                                     }}
                                 >
                                     <SelectTrigger className="h-12 rounded-xl border-gray-200 focus:ring-indigo-500 font-medium">

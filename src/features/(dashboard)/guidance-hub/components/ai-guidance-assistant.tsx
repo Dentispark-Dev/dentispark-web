@@ -1,15 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useChat } from "@ai-sdk/react";
-import { Message } from "ai";
 import { 
   Sparkles, 
   Send, 
   User, 
   Bot, 
   X, 
-  ChevronRight, 
   MessageSquare,
   Loader2,
   BrainCircuit
@@ -19,25 +16,25 @@ import { useField } from "@/src/providers/field-provider";
 import { Button } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 
+interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}
+
 export function AIGuidanceAssistant() {
   const { activeField } = useField();
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status, clearError } = useChat({
-    api: "/api/ai/guide-assistance",
-    body: { field: activeField },
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        parts: [{ type: "text", text: `Hi! I'm your DentiSpark Guidance Assistant. I can help you with UCAS deadlines, prerequisite checks, or explaining any of our expert guides. What's on your mind?` }]
-      }
-    ]
-  });
-
-  const isLoading = status === "submitted" || status === "streaming";
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: "welcome",
+      role: "assistant",
+      content: `Hi! I'm your DentiSpark Guidance Assistant. I can help you with UCAS deadlines, prerequisite checks, or explaining any of our expert guides. What's on your mind?`
+    }
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -50,10 +47,51 @@ export function AIGuidanceAssistant() {
     const userMessage = input;
     setInput("");
     
+    const newUserMsg: ChatMessage = { id: Date.now().toString(), role: "user", content: userMessage };
+    setMessages(prev => [...prev, newUserMsg]);
+    setIsLoading(true);
+
     try {
-      await sendMessage({ text: userMessage });
+      const response = await fetch("/api/ai/guide-assistance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, newUserMsg].map(m => ({ role: m.role, content: m.content })),
+          field: activeField,
+        }),
+      });
+
+      if (!response.ok) throw new Error("API error");
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let assistantText = "";
+      const assistantId = (Date.now() + 1).toString();
+
+      setMessages(prev => [...prev, { id: assistantId, role: "assistant", content: "" }]);
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          const lines = chunk.split("\n");
+          for (const line of lines) {
+            if (line.startsWith("0:")) {
+              try {
+                const text = JSON.parse(line.slice(2));
+                assistantText += text;
+                setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: assistantText } : m));
+              } catch { /* skip */ }
+            }
+          }
+        }
+      }
     } catch (err) {
       console.error("Failed to send message:", err);
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", content: "Sorry, I encountered an error. Please try again." }]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,7 +155,7 @@ export function AIGuidanceAssistant() {
                 ref={scrollRef}
                 className="flex-1 overflow-y-auto p-6 space-y-6 bg-greys-50/50"
             >
-                {messages.map((m: Message) => (
+                {messages.map((m) => (
                     <motion.div
                         key={m.id}
                         initial={{ opacity: 0, y: 10 }}
@@ -139,7 +177,7 @@ export function AIGuidanceAssistant() {
                                 ? "bg-black-800 text-white rounded-tr-none" 
                                 : "bg-white text-black-700 border border-primary-50 rounded-tl-none"
                         )}>
-                            {m.parts ? m.parts.map((part, i) => part.type === "text" ? part.text : null) : m.content}
+                            {m.content}
                         </div>
                     </motion.div>
                 ))}

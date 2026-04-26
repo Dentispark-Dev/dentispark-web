@@ -3,9 +3,9 @@ import prisma from "@/src/lib/db";
 import { DailySessionRoom } from "./components/daily-session-room";
 
 interface SessionPageProps {
-  params: {
+  params: Promise<{
     bookingId: string;
-  };
+  }>;
 }
 
 export default async function SessionPage({ params }: SessionPageProps) {

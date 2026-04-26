@@ -36,6 +36,8 @@ model User {
   aiHistory     AIHistory[]
   reviews       Review[]      @relation("StudentReviews")
   activities    PlatformActivity[]
+  posts         CommunityPost[]
+  comments      CommunityComment[]
 }
 
 model PlatformActivity {
@@ -114,6 +116,29 @@ model Review {
 
   student   User          @relation("StudentReviews", fields: [studentId], references: [id], onDelete: Cascade)
   mentor    MentorProfile @relation("MentorReviews", fields: [mentorId], references: [id], onDelete: Cascade)
+}
+
+model CommunityPost {
+  id        String   @id @default(cuid())
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String   @db.Text
+  category  String?  // e.g., "Ethics", "Clinical", "Admissions"
+  likes     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments  CommunityComment[]
+}
+
+model CommunityComment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String        @db.Text
+  createdAt DateTime      @default(now())
 }
 
 enum Role {

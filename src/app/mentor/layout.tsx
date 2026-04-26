@@ -35,7 +35,7 @@ export default function MentorLayout({
                     menuItems={filteredMenuItems}
                     currentPath={pathname}
                 />
-                <div className="flex w-full flex-col lg:pl-64">
+                <div className="flex w-full flex-col lg:pl-[300px]">
                     <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
                     <main className="bg-background-body flex-1 p-4 md:p-6 lg:p-8">
                         <div className="mx-auto max-w-[1600px]">{children}</div>

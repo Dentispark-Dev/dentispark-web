@@ -6,7 +6,7 @@ import Logo from "../icons/Logo";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { cn } from "@/src/lib/utils";
 import { useAuth } from "@/src/providers/auth-provider";
 
@@ -52,7 +52,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const headerVariants = {
+  const headerVariants: Variants = {
     hidden: { y: -20, opacity: 0 },
     visible: {
       y: 0,
@@ -65,7 +65,7 @@ export default function Header() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: -20, opacity: 0 },
     visible: {
       y: 0,
@@ -76,7 +76,7 @@ export default function Header() {
     },
   };
 
-  const mobileMenuVariants = {
+  const mobileMenuVariants: Variants = {
     closed: {
       opacity: 0,
       x: "100%",
@@ -95,7 +95,7 @@ export default function Header() {
     },
   };
 
-  const mobileItemVariants = {
+  const mobileItemVariants: Variants = {
     closed: { x: 50, opacity: 0 },
     open: {
       x: 0,

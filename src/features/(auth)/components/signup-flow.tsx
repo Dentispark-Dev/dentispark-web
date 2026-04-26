@@ -69,7 +69,18 @@ export function SignupFlow() {
   const [isPending, startTransition] = useTransition();
   const signupMutation = useSignup();
   const oauthSignupMutation = useOAuth2Signup();
-  const { loginWithGoogle } = useGoogleAuth();
+  const { signInWithGoogle } = useGoogleAuth({
+    onSuccess: (authorizationCode: string) => {
+      oauthSignupMutation.mutate({
+        oauth2ProviderAuthorizationCode: authorizationCode,
+        authProvider: "GOOGLE",
+        memberType: "STUDENT",
+      });
+    },
+    onError: (error: unknown) => {
+      console.error("Google sign-in failed:", error);
+    },
+  });
 
   const {
     register,
@@ -95,7 +106,13 @@ export function SignupFlow() {
       if (currentStep < STEPS.length - 1) {
         setCurrentStep(prev => prev + 1);
       } else {
-        await signupMutation.mutateAsync(formData as SignupRequest);
+        await signupMutation.mutateAsync({
+          firstName: formData.fullName?.split(" ")[0] || "",
+          lastName: formData.fullName?.split(" ").slice(1).join(" ") || "",
+          emailAddress: formData.email,
+          password: formData.password,
+          memberType: "STUDENT",
+        });
       }
     }
   };

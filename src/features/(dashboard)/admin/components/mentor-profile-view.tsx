@@ -136,8 +136,9 @@ export function MentorProfileView({ mentorId }: MentorProfileViewProps) {
                             onClick={async () => {
                                 try {
                                     const response = await chatService.upsertPeerConversation({
-                                        participantEmailAddresses: [mentor.emailAddress],
-                                        title: `${mentor.firstName} ${mentor.lastName}`
+                                        participantEmail: mentor.emailAddress,
+                                        participantName: `${mentor.firstName} ${mentor.lastName}`,
+                                        participantType: "MENTOR"
                                     });
                                     if (response.responseData) {
                                         router.push(`/admin/messages?conversationId=${response.responseData.id}`);

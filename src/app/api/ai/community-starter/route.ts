@@ -9,34 +9,27 @@ export async function POST(req: Request) {
 
     const result = await generateText({
       model: groq("llama-3.3-70b-versatile"),
-      system: `You are a community manager for a ${field || 'dental'} admissions platform. 
-Generate a trending, engaging discussion topic or question that would stimulate conversation among dental/medical applicants.
-Return ONLY a JSON object with the following structure:
-{
-  "topic": "string",
-  "suggestedQuestion": "string"
-}`,
-      prompt: `Generate an engaging community post starter for ${field || 'dental'} applicants.`,
+      system: `You are a helpful student community leader for DentiSpark, an elite platform for dental and medical school applicants. 
+Your goal is to suggest a thought-provoking, high-engagement question or topic that a student could post in the community hub.
+The field is ${field}.
+
+Keep the suggestion:
+1. Academic or Career-focused (e.g., UCAT, personal statement, clinical ethics, work experience).
+2. Short and conversational (1-2 sentences max).
+3. Open-ended to encourage peer discussion.
+4. Professional yet approachable.`,
+      prompt: `Suggest a high-engagement community post for a ${field === "DENTAL" ? "dental" : "medical"} applicant.`,
       temperature: 0.8,
     });
 
-    // Extract JSON from response
-    const text = result.text;
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    const jsonStr = jsonMatch ? jsonMatch[0] : text;
-    const data = JSON.parse(jsonStr);
-
-    return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify({ suggestedQuestion: result.text.trim() }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Community Starter Error:", error);
-    return new Response(JSON.stringify({ 
-        error: "Failed to generate community starter.",
-        suggestedQuestion: "What are your top tips for the upcoming admissions cycle?" // Fallback
-    }), {
-      status: 200, // Return 200 with fallback to prevent client crash
+    return new Response(JSON.stringify({ error: "Failed to generate suggestion." }), {
+      status: 500,
       headers: { "Content-Type": "application/json" },
     });
   }

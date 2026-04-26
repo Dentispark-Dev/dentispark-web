@@ -1,21 +1,40 @@
-"use client";
-
-import { useState } from "react";
-import { Sparkles, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sparkles, Loader2, Send } from "lucide-react";
 import { Post } from "../types";
 import { PostItem } from "./post-item";
 import { Textarea } from "@/src/components/ui/textarea";
 import { Button } from "@/src/components/ui/button";
 import { useField } from "@/src/providers/field-provider";
+import { useAuth } from "@/src/providers/auth-provider";
 
 interface PostsSectionProps {
-  posts: Post[];
+  initialPosts: Post[];
 }
 
-export function PostsSection({ posts }: PostsSectionProps) {
+export function PostsSection({ initialPosts }: PostsSectionProps) {
   const { activeField } = useField();
+  const { user } = useAuth();
+  const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [newPost, setNewPost] = useState("");
   const [isSuggesting, setIsSuggesting] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/community/posts");
+        const data = await response.json();
+        if (data.posts) setPosts(data.posts);
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   const handleSuggestTopic = async () => {
     setIsSuggesting(true);
@@ -36,13 +55,38 @@ export function PostsSection({ posts }: PostsSectionProps) {
     }
   };
 
+  const handleSubmitPost = async () => {
+    if (!newPost.trim() || !user) return;
+    setIsPosting(true);
+    try {
+      const response = await fetch("/api/community/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          authorId: user.guid,
+          content: newPost,
+          category: "General"
+        }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setPosts([data.post, ...posts]);
+        setNewPost("");
+      }
+    } catch (error) {
+      console.error("Failed to create post:", error);
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
   return (
     <div className="space-y-10">
       {/* Modern Create Post Module */}
       <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-4">
         <div className="flex gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-700 font-bold font-jakarta shadow-inner">
-            JD
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-700 font-bold font-jakarta shadow-inner overflow-hidden uppercase">
+            {user?.name?.slice(0, 2) || "JD"}
           </div>
           <div className="flex-1 relative">
             <Textarea
@@ -68,10 +112,12 @@ export function PostsSection({ posts }: PostsSectionProps) {
           </div>
           
           <Button 
-            disabled={!newPost.trim()}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 rounded-xl font-bold font-jakarta transition-all shadow-md active:scale-95"
+            disabled={!newPost.trim() || isPosting}
+            onClick={handleSubmitPost}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 rounded-xl font-bold font-jakarta transition-all shadow-md active:scale-95 gap-2"
           >
-            Post Update
+            {isPosting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+            {isPosting ? "Posting..." : "Post Update"}
           </Button>
         </div>
       </div>
@@ -81,6 +127,7 @@ export function PostsSection({ posts }: PostsSectionProps) {
         <div className="flex items-center justify-between px-2">
           <h2 className="text-xl font-bold text-gray-900 font-jakarta">Recent Discussions</h2>
           <div className="flex items-center gap-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
+            {isLoading && <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />}
             <span>Latest</span>
             <span className="opacity-40">|</span>
             <span className="text-emerald-600">Trending</span>
@@ -91,6 +138,11 @@ export function PostsSection({ posts }: PostsSectionProps) {
           {posts.map((post) => (
             <PostItem key={post.id} post={post} />
           ))}
+          {posts.length === 0 && !isLoading && (
+            <div className="py-20 text-center text-gray-400 font-medium bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                No discussions yet. Be the first to start one!
+            </div>
+          )}
         </div>
       </div>
     </div>

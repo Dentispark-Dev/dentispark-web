@@ -112,7 +112,6 @@ export function ProfileRegistration({
       ),
       action: () => {},
       actionTitle: "",
-      className: "rounded-[18px]",
       secondaryAction: hideModal,
       secondaryActionTitle: "Cancel",
       type: "document-upload",

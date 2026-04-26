@@ -71,6 +71,16 @@ const nextConfig: NextConfig = {
         source: "/shadowing",
         destination: "/overview",
         permanent: false,
+      },
+      {
+        source: "/checkout",
+        destination: "/mentorship",
+        permanent: false,
+      },
+      {
+        source: "/payment-bridge",
+        destination: "/overview",
+        permanent: false,
       }
     ];
   },

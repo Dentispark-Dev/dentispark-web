@@ -1,36 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Clock, CheckCircle2, Calendar } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { addDays, format, startOfWeek, isSameDay, isToday } from "date-fns";
 import { LooseRecord } from "@/src/types/loose";
 
-// ─── Mock Availability ────────────────────────────────────────────
-// In production this would be fetched from /api/mentor/:slug/availability
+// ─── Types ─────────────────────────────────────────────────────────
 interface TimeSlotPickerProps {
   mentorName: string;
+  mentorSlug: string;
   onSlotSelected: (date: string, time: string) => void;
   selectedDate?: string;
   selectedTime?: string;
 }
 
-// ─── Component ───────────────────────────────────────────────────
-export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selectedTime }: TimeSlotPickerProps) {
+// ─── Component ─────────────────────────────────────────────────────
+export function TimeSlotPicker({ mentorName, mentorSlug, onSlotSelected, selectedDate, selectedTime }: TimeSlotPickerProps) {
   const today = new Date();
   const [weekOffset, setWeekOffset] = useState(0);
   const [hoveredDate, setHoveredDate] = useState<string | null>(null);
-  
   const [availability, setAvailability] = useState<LooseRecord | null>(null);
-  const [bookedSlots, setBookedSlots] = useState<Array<{date: string, time: string}>>([]);
+  const [bookedSlots, setBookedSlots] = useState<Array<{ date: string; time: string }>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load availability from backend
-  useState(() => {
+  useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`/api/mentorship/any-slug/availability`); // In real app use slug
+        const res = await fetch(`/api/mentorship/${mentorSlug}/availability`);
         const data = await res.json();
         setAvailability(data.availability);
         setBookedSlots(data.bookedSlots || []);
@@ -41,33 +40,27 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
       }
     }
     load();
-  }, []);
+  }, [mentorSlug]);
 
   const weekStart = addDays(startOfWeek(today, { weekStartsOn: 1 }), weekOffset * 7);
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
   const pickedDate = hoveredDate || selectedDate;
-  
-  // Calculate slots for the specific picked date based on weekly availability
+
   const getSlotsForDate = (dateStr: string) => {
     if (!availability) return [];
-    
-    // Parse date in a way that avoids timezone shifts (YYYY-MM-DD)
-    const [y, m, d] = dateStr.split('-').map(Number);
-    const date = new Date(y, m-1, d);
-    
+
+    const [y, m, d] = dateStr.split("-").map(Number);
+    const date = new Date(y, m - 1, d);
     const dayName = format(date, "EEEE");
     const dayData = availability[dayName];
-    
+
     if (!dayData || !dayData.enabled) return [];
-    
-    // Extract all slots for this day
+
     const slots = dayData.slots.map((s: LooseRecord) => s.start);
-    
-    // Filter out booked slots
-    return slots.filter((time: string) => {
-        return !bookedSlots.some(b => b.date === dateStr && b.time === time);
-    });
+    return slots.filter((time: string) =>
+      !bookedSlots.some((b) => b.date === dateStr && b.time === time)
+    );
   };
 
   const slotsForDay = pickedDate ? getSlotsForDate(pickedDate) : [];
@@ -76,10 +69,10 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="font-extrabold text-slate-900 text-lg">Pick a Date & Time</h3>
+        <h3 className="font-extrabold text-slate-900 text-lg">Pick a Date &amp; Time</h3>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => setWeekOffset(w => Math.max(0, w - 1))}
+            onClick={() => setWeekOffset((w) => Math.max(0, w - 1))}
             disabled={weekOffset === 0}
             className="p-2 rounded-xl hover:bg-slate-100 disabled:opacity-30 transition-colors"
           >
@@ -89,7 +82,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
             {format(weekStart, "MMM d")} – {format(addDays(weekStart, 6), "MMM d, yyyy")}
           </span>
           <button
-            onClick={() => setWeekOffset(w => w + 1)}
+            onClick={() => setWeekOffset((w) => w + 1)}
             className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
           >
             <ChevronRight className="w-4 h-4 text-slate-600" />
@@ -117,23 +110,23 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
                 isPast && "opacity-30 cursor-not-allowed",
                 !isAvailable && !isPast && "border-slate-100 bg-slate-50 opacity-50 cursor-not-allowed",
                 isAvailable && !isSelected && "border-slate-200 bg-white hover:border-emerald-400 hover:bg-emerald-50 cursor-pointer",
-                isSelected && "border-emerald-500 bg-emerald-50",
+                isSelected && "border-emerald-500 bg-emerald-50"
               )}
             >
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 {format(day, "EEE")}
               </span>
-              <span className={cn(
-                "font-extrabold text-base",
-                isToday(day) && "text-emerald-600",
-                isSelected ? "text-emerald-700" : "text-slate-800",
-                (!isAvailable || isPast) && "text-slate-400"
-              )}>
+              <span
+                className={cn(
+                  "font-extrabold text-base",
+                  isToday(day) && "text-emerald-600",
+                  isSelected ? "text-emerald-700" : "text-slate-800",
+                  (!isAvailable || isPast) && "text-slate-400"
+                )}
+              >
                 {format(day, "d")}
               </span>
-              {isAvailable && !isPast && (
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              )}
+              {isAvailable && !isPast && <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />}
             </button>
           );
         })}
@@ -157,7 +150,7 @@ export function TimeSlotPicker({ mentorName, onSlotSelected, selectedDate, selec
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-              {slotsForDay.map((time) => {
+              {slotsForDay.map((time: string) => {
                 const isSelected = selectedDate === pickedDate && selectedTime === time;
                 return (
                   <button

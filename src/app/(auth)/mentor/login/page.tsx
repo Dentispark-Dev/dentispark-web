@@ -103,7 +103,7 @@ export default function MentorLoginPage() {
                   <FormItem className="space-y-1.5">
                     <div className="flex items-center justify-between">
                       <FormLabel className="text-xs font-semibold text-gray-700">Password</FormLabel>
-                      <Link href="/mentor/forgot-password" size="sm" className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
+                      <Link href="/mentor/forgot-password"  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
                         Forgot password?
                       </Link>
                     </div>

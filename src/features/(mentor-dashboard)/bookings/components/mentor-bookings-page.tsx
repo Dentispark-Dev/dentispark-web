@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Tabs, TabsContent } from "@/src/components/ui/tabs";
 import { BookingCalendar } from "./booking-calendar";
 import { BookingSession } from "../types";
-import { SAMPLE_BOOKINGS } from "../constants";
 import { cn } from "@/src/lib/utils";
 
 interface MentorBookingsPageProps {
@@ -13,7 +12,6 @@ interface MentorBookingsPageProps {
 }
 
 export function MentorBookingsPage({ className }: MentorBookingsPageProps) {
-  const [bookings] = useState<BookingSession[]>(SAMPLE_BOOKINGS);
   const [activeTab, setActiveTab] = useState<"calendar" | "list">("calendar");
 
   // const handleEventClick = (booking: BookingSession) => {
@@ -62,7 +60,7 @@ export function MentorBookingsPage({ className }: MentorBookingsPageProps) {
       >
         <div className="mt-6">
           <TabsContent value="calendar" className="mt-0">
-            <BookingCalendar bookings={bookings} />
+            <BookingCalendar />
           </TabsContent>
         </div>
       </Tabs>

@@ -1,7 +1,7 @@
 "use client";
 
 import { notFound, useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { MentorProfileView } from "@/src/features/profile/components/mentor-profile-view";
 import { MENTORS_BY_SLUG } from "@/src/features/(website)/mentors/data/mentors";
 
@@ -13,24 +13,27 @@ interface MentorDashboardPageProps {
 
 export default function MentorDashboardPage({ params }: MentorDashboardPageProps) {
   const router = useRouter();
-  const [slug, setSlug] = useState<string>("");
-
-  useEffect(() => {
-    params.then(p => setSlug(p.slug));
-  }, [params]);
+  const { slug } = use(params);
 
   const mentor = MENTORS_BY_SLUG[slug];
 
   if (!mentor && slug) {
-    // Fallback/Redirect or notFound
     notFound();
   }
 
   if (!slug) return null;
 
+  // Normalize mentor to match MentorProfile interface in MentorProfileView
+  const normalizedMentor = mentor ? {
+    ...mentor,
+    availability: mentor.available,
+    stats: mentor.stats || { rating: mentor.rating, sessions: 0, mentees: 0 },
+    services: mentor.services || []
+  } : null;
+
   return (
     <MentorProfileView 
-      mentor={mentor} 
+      mentor={normalizedMentor as any} 
       isDashboard={true} 
       onBack={() => router.push("/mentorship")} 
     />

@@ -55,7 +55,7 @@ export function CommunityHub() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Feed Section */}
           <div className="lg:col-span-2 space-y-8">
-            <PostsSection posts={mockPosts} />
+            <PostsSection initialPosts={mockPosts} />
           </div>
 
           {/* Sidebar Section */}

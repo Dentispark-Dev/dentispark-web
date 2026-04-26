@@ -11,11 +11,11 @@ const getStripe = () => {
 
 export async function POST(req: Request) {
   try {
-    const { mentorName, sessionType, price, mentorSlug, successUrl, cancelUrl } = await req.json();
+    const { mentorName, sessionType, price, mentorSlug, successUrl, cancelUrl, bookingId, studentId } = await req.json();
 
     // Validate required fields
-    if (!mentorName || !sessionType || price === undefined || !mentorSlug) {
-      return NextResponse.json({ error: "Missing required booking fields." }, { status: 400 });
+    if (!mentorName || !sessionType || price === undefined || !mentorSlug || !bookingId) {
+      return NextResponse.json({ error: "Missing required booking fields or bookingId." }, { status: 400 });
     }
 
     const stripe = getStripe();
@@ -26,27 +26,6 @@ export async function POST(req: Request) {
       return NextResponse.json({
         url: `${baseUrl}/mentorship/${mentorSlug}/booking-confirmed?session=${encodeURIComponent(sessionType)}&free=true`,
       });
-    }
-
-    // 1. Create a PENDING booking in our database first
-    // Note: In production we use actual studentId/mentorId from auth & params
-    // Here we use realistic mock fallback for the IDs to bypass complex auth setups
-    const defaultStudent = await prisma.user.findFirst({ where: { role: "STUDENT" }});
-    const defaultMentor = await prisma.mentorProfile.findFirst();
-    
-    // We only create this if we found valid DB records
-    let bookingId = "";
-    if (defaultStudent && defaultMentor) {
-      const booking = await prisma.booking.create({
-        data: {
-          studentId: defaultStudent.id,
-          mentorId: defaultMentor.id,
-          scheduledAt: new Date(Date.now() + 86400000), // Tomorrow
-          durationMins: 60,
-          status: "PENDING",
-        }
-      });
-      bookingId = booking.id;
     }
 
     // 2. Create a Stripe Checkout Session
@@ -73,7 +52,8 @@ export async function POST(req: Request) {
       metadata: {
         mentorSlug,
         sessionType,
-        bookingId: bookingId || "mock_booking_123",
+        bookingId,
+        studentId,
         platform: "dentispark",
       },
       // DentiSpark takes a 10% platform fee (requires Stripe Connect for mentor payouts)

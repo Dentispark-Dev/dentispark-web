@@ -209,7 +209,7 @@ export function AcademicProfileModal({
                       <FormField
                         key={sub.name}
                         control={form.control}
-                        name={sub.name as keyof AcademicModalFormData}
+                        name={sub.name as "ucatVerbal" | "ucatDecision" | "ucatQuant" | "ucatAbstract" | "ucatSituational"}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-[9px] font-extrabold text-slate-500 uppercase flex justify-center mb-1">{sub.label}</FormLabel>

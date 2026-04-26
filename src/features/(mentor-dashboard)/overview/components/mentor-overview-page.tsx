@@ -36,15 +36,17 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
   };
 
   useEffect(() => {
-    if (user?.id) {
+    if (user?.guid) {
       fetchStats();
     }
-  }, [user?.id]);
+  }, [user?.guid]);
+
+  const [bookings, setBookedSlotsData] = useState<any[]>([]);
 
   const fetchStats = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/mentor/stats?userId=${user!.id}`);
+      const response = await fetch(`/api/mentor/stats?userId=${user!.guid}`);
       const data = await response.json();
       if (response.ok) {
         setStats({
@@ -56,6 +58,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
           isVerified: data.isVerified,
           isStripeConnected: data.isStripeConnected
         });
+        setBookedSlotsData(data.recentBookings || []);
       }
     } catch (error) {
       console.error("Failed to fetch mentor stats:", error);
@@ -221,7 +224,7 @@ export function MentorOverviewPage({ className }: MentorOverviewPageProps) {
       </div>
 
       {/* Latest Bookings Section */}
-      {/* <LatestBookingsSection bookings={[]} /> */}
+      <LatestBookingsSection bookings={bookings} />
 
       {/* Webinars Section */}
       <WebinarsSection />

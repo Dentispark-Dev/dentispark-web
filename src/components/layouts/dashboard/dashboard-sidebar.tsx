@@ -23,7 +23,14 @@ export default function DashboardSidebar({
   const { showLogoutModal } = useLogout();
   const router = useRouter();
   const { user, isPremium, isStudent } = useAuth();
-  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(() => {
+    // Auto-expand groups that contain the current path
+    return menuItems
+      .filter(item => 
+        item.children?.some(child => currentPath === child.href)
+      )
+      .map(item => item.id);
+  });
 
   const toggleGroup = (groupId: string) => {
     setExpandedGroups((prev) =>

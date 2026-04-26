@@ -5,6 +5,7 @@ export interface MentorOverviewStats {
   totalHours: number;
   currency: string;
   isVerified: boolean;
+  isStripeConnected: boolean;
 }
 
 export interface PayoutInfo {

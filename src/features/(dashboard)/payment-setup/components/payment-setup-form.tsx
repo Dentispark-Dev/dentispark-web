@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { PaymentSetupStep1 } from "@/src/features/(dashboard)/payment-setup/components/payment-setup-step-1";
 import { PaymentSetupStep2 } from "@/src/features/(dashboard)/payment-setup/components/payment-setup-step-2";
 import { PaymentSetupStep3 } from "@/src/features/(dashboard)/payment-setup/components/payment-setup-step-3";
@@ -167,12 +168,21 @@ export function PaymentSetupForm() {
     }
   };
 
+  if (!user && !formData.emailAddress) {
+    return (
+      <div className="flex h-64 items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       <div className="mb-8 text-center">
-        <h1 className="mb-4 text-3xl font-semibold text-gray-900">
-          Profile Setup
+        <h1 className="mb-4 text-3xl font-jakarta font-bold text-gray-900 tracking-tight">
+          Payment Setup
         </h1>
+        <p className="text-gray-500 mb-6 font-medium">Complete your profile to unlock premium mentorship access.</p>
         <ProgressIndicator currentStep={currentStep} totalSteps={3} />
       </div>
 

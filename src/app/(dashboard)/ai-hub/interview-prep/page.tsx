@@ -28,10 +28,13 @@ import { useField } from "@/src/providers/field-provider";
 import { useAuth } from "@/src/providers/auth-provider";
 import { useSpeechRecognition } from "@/src/hooks/use-speech-recognition";
 
+import { INTERVIEW_QUESTIONS, type InterviewQuestion } from "@/src/features/ai-hub/constants/questions";
+
 export default function InterviewPrepPage() {
   const { activeField, activeFieldLabel } = useField();
   const { user } = useAuth();
   const [sessionState, setSessionState] = useState<"setup" | "active" | "feedback">("setup");
+  const [selectedStyle, setSelectedStyle] = useState<"MMI" | "PANEL" | "ETHICS">("MMI");
   const [stationPhase, setStationPhase] = useState<"prep" | "answer">("prep");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [difficulty, setDifficulty] = useState<"Standard" | "Elite">("Standard");
@@ -54,30 +57,31 @@ export default function InterviewPrepPage() {
     critique: string
   } | null>(null);
 
-  const questions = [
-    `Why do you want to pursue a career in ${activeFieldLabel}? What draws you to our clinical curriculum?`,
-    "Tell me about a time you showed leadership or handled a difficult situation in a healthcare setting.",
-    "A patient is refusing treatment that is clearly in their best interest. How would you handle this ethically?",
-    `What do you believe is the single most important quality a ${activeFieldLabel.replace(' Medicine (MD)', 'doctor').replace(' Dental', 'dentist')} must possess today?`
+  // Filtered Questions based on Field and Style
+  const questions = useMemo(() => {
+    return INTERVIEW_QUESTIONS.filter(q => 
+        (q.field === activeField || q.field === "BOTH") && 
+        (q.style === selectedStyle)
+    ).map(q => q.text);
+  }, [activeField, selectedStyle]);
+
+  // Fallback if no questions match
+  const activeQuestions = questions.length > 0 ? questions : [
+    `Why do you want to pursue a career in ${activeFieldLabel}?`,
+    "Tell me about a time you showed leadership.",
+    "How do you handle stress in a clinical setting?"
   ];
 
   const speakQuestion = useCallback((text: string) => {
     if (typeof window !== "undefined" && window.speechSynthesis) {
-        // Cancel any ongoing speech
         window.speechSynthesis.cancel();
-        
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.95; // Slightly slower for clarity
-        utterance.pitch = 1.0;
-        
-        // Find a professional sounding voice if possible
+        utterance.rate = 0.95;
         const voices = window.speechSynthesis.getVoices();
         const preferredVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("en-GB")) || 
                            voices.find(v => v.lang.includes("en-GB")) ||
                            voices[0];
-        
         if (preferredVoice) utterance.voice = preferredVoice;
-        
         window.speechSynthesis.speak(utterance);
     }
   }, []);
@@ -86,13 +90,11 @@ export default function InterviewPrepPage() {
     setSessionState("active");
     setStationPhase("prep");
     setCurrentQuestionIndex(0);
-    // In MMI, you usually read the prompt first (Prep Phase)
-    // We'll simulate this with a "Start Station" button after reading
   };
 
   const startStation = () => {
       setStationPhase("answer");
-      speakQuestion(questions[currentQuestionIndex]);
+      speakQuestion(activeQuestions[currentQuestionIndex]);
       startListening();
   };
 
@@ -107,23 +109,19 @@ export default function InterviewPrepPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          question: questions[currentQuestionIndex], 
+          question: activeQuestions[currentQuestionIndex], 
           transcript: transcript || "The student provided a thoughtful but somewhat brief answer focusing on clinical excellence.", 
           field: activeField,
           difficulty 
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(response.statusText || "Evaluation failed");
-      }
-
+      if (!response.ok) throw new Error(response.statusText || "Evaluation failed");
       const data = await response.json();
       setResults(data);
     } catch (err: unknown) {
       console.error(err);
-      const message = err instanceof Error ? err.message : "Failed to analyze interview response. Please try again.";
-      setError(message);
+      setError(err instanceof Error ? err.message : "Failed to analyze response.");
     } finally {
       setIsAnalyzing(false);
     }
@@ -131,7 +129,7 @@ export default function InterviewPrepPage() {
 
   const handleNextQuestion = () => {
     stopListening();
-    if (currentQuestionIndex < questions.length - 1) {
+    if (currentQuestionIndex < activeQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
       setStationPhase("prep");
       setTranscript("");
@@ -141,9 +139,9 @@ export default function InterviewPrepPage() {
   };
 
   const setupOptions = [
-    { id: "mmi", title: "MMI Masterclass", desc: "Fast-paced mini stations (7 mins each)", icon: <Clock className="w-5 h-5 text-blue-500" /> },
-    { id: "panel", title: "Traditional Panel", desc: "In-depth 20-minute discussion", icon: <Award className="w-5 h-5 text-purple-500" /> },
-    { id: "ethics", title: "Ethics Deep Dive", desc: "Focus on professionalism & ethics", icon: <BrainCircuit className="w-5 h-5 text-emerald-500" /> }
+    { id: "MMI", title: "MMI Masterclass", desc: "Fast-paced mini stations (2 mins each)", icon: <Clock className="w-5 h-5 text-blue-500" /> },
+    { id: "PANEL", title: "Traditional Panel", desc: "In-depth clinical discussion", icon: <Award className="w-5 h-5 text-purple-500" /> },
+    { id: "ETHICS", title: "Ethics Deep Dive", desc: "Focus on professionalism & ethics", icon: <BrainCircuit className="w-5 h-5 text-emerald-500" /> }
   ];
 
   return (
@@ -192,8 +190,18 @@ export default function InterviewPrepPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
                     {setupOptions.map(opt => (
-                        <button key={opt.id} className="p-6 rounded-3xl border border-gray-100 bg-white hover:border-emerald-500 hover:shadow-md transition-all space-y-4 group">
-                            <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors">
+                        <button 
+                            key={opt.id} 
+                            onClick={() => setSelectedStyle(opt.id as any)}
+                            className={cn(
+                                "p-6 rounded-3xl border transition-all space-y-4 group",
+                                selectedStyle === opt.id ? "bg-emerald-50 border-emerald-500 shadow-md" : "border-gray-100 bg-white hover:border-emerald-500"
+                            )}
+                        >
+                            <div className={cn(
+                                "w-12 h-12 rounded-2xl flex items-center justify-center transition-colors",
+                                selectedStyle === opt.id ? "bg-white text-emerald-600 shadow-sm" : "bg-gray-50 group-hover:bg-emerald-50 group-hover:text-emerald-600"
+                            )}>
                                 {opt.icon}
                             </div>
                             <div>
@@ -244,12 +252,17 @@ export default function InterviewPrepPage() {
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
             <div className="lg:col-span-2 space-y-8">
-                <div className="p-10 rounded-3xl border border-gray-100 bg-white shadow-sm relative overflow-hidden transition-all">
+                <QuestionCarousel 
+                    question={activeQuestions[currentQuestionIndex]} 
+                    index={currentQuestionIndex} 
+                />
+
+                <div className="flex flex-col p-10 rounded-3xl border border-gray-100 gap-8 bg-white shadow-sm relative overflow-hidden transition-all">
                     {stationPhase === "prep" && (
                         <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center px-6">
                             <div className="bg-white p-8 rounded-3xl shadow-xl space-y-4 max-w-sm text-center border border-gray-100 animate-in fade-in zoom-in duration-300">
                                 <h4 className="text-xl font-jakarta font-bold text-gray-900 tracking-tight">Reading Station</h4>
-                                <p className="text-gray-500 text-sm font-medium">Read the prompt below carefully. You have 60 seconds before the station begins.</p>
+                                <p className="text-gray-500 text-sm font-medium">Read the prompt above carefully. You have 60 seconds before the station begins.</p>
                                 <Button 
                                     onClick={startStation}
                                     className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-12 font-jakarta font-bold shadow-sm"
@@ -260,17 +273,6 @@ export default function InterviewPrepPage() {
                         </div>
                     )}
 
-                    <div className="space-y-6 relative z-0">
-                        <div className="flex items-center justify-between">
-                            <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-[10px] font-bold uppercase tracking-widest">Station {currentQuestionIndex + 1} of {questions.length}</span>
-                        </div>
-                        <h3 className="text-2xl font-jakarta font-bold text-gray-900 leading-tight">
-                            {questions[currentQuestionIndex]}
-                        </h3>
-                    </div>
-                </div>
-
-                <div className="flex flex-col p-10 rounded-3xl border border-gray-100 gap-8 bg-white shadow-sm relative overflow-hidden transition-all">
                     {/* Vocal Waveform Simulation */}
                     {isListening && (
                         <div className="absolute top-0 inset-x-0 h-1 flex gap-0.5 opacity-30">
@@ -326,7 +328,7 @@ export default function InterviewPrepPage() {
                             disabled={stationPhase === "prep"}
                             className="bg-gray-900 hover:bg-black text-white h-12 px-8 rounded-xl font-jakarta font-semibold flex items-center gap-2 transform active:translate-x-1 transition-all text-sm disabled:opacity-20 shadow-sm"
                         >
-                            {currentQuestionIndex === questions.length - 1 ? "End Interview" : "Submit & Exit Station"}
+                            {currentQuestionIndex === activeQuestions.length - 1 ? "End Interview" : "Submit & Exit Station"}
                             <ChevronRight className="w-4 h-4" />
                         </Button>
                     </div>
