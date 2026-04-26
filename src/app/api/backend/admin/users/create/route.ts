@@ -11,7 +11,10 @@ const prisma = new PrismaClient();
  * Allows admins to create users (Admin, Mentor, Student) directly in the local DB.
  */
 export async function POST(request: NextRequest) {
-  if (process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_USE_LOCAL_AUTH !== "true") {
+  const isVercel = process.env.VERCEL === "1";
+  const forceLocal = process.env.NEXT_PUBLIC_USE_LOCAL_AUTH === "true";
+  
+  if ((process.env.NODE_ENV === "production" || isVercel) && !forceLocal) {
     return proxyRequest(request, ["admin", "users", "create"]);
   }
 
@@ -89,6 +92,9 @@ export async function POST(request: NextRequest) {
       responseCode: "99",
       responseMessage: "Failed to create user",
       errors: [error.message]
-    }, { status: 500 });
+    }, { 
+      status: 500,
+      headers: { "X-Local-Override": "true" }
+    });
   }
 }

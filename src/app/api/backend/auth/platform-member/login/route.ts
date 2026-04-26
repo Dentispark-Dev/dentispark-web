@@ -14,7 +14,11 @@ import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
  * the mentorship features locally without a Java backend.
  */
 export async function POST(request: NextRequest) {
-  if (process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_USE_LOCAL_AUTH !== "true") {
+  const isVercel = process.env.VERCEL === "1";
+  const forceLocal = process.env.NEXT_PUBLIC_USE_LOCAL_AUTH === "true";
+  
+  // Proxy by default in production or on Vercel, unless local auth is explicitly forced
+  if ((process.env.NODE_ENV === "production" || isVercel) && !forceLocal) {
     return proxyRequest(request, ["auth", "platform-member", "login"]);
   }
 
@@ -87,6 +91,9 @@ export async function POST(request: NextRequest) {
       responseCode: "99",
       responseMessage: "Unexpected system error occurred",
       errors: [error.message]
-    }, { status: 500 });
+    }, { 
+      status: 500,
+      headers: { "X-Local-Override": "true" }
+    });
   }
 }

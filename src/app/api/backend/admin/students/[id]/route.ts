@@ -7,7 +7,10 @@ const prisma = new PrismaClient();
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function DELETE(request: NextRequest, { params }: RouteContext) {
-  if (process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_USE_LOCAL_AUTH !== "true") {
+  const isVercel = process.env.VERCEL === "1";
+  const forceLocal = process.env.NEXT_PUBLIC_USE_LOCAL_AUTH === "true";
+
+  if ((process.env.NODE_ENV === "production" || isVercel) && !forceLocal) {
     const { id } = await params;
     return proxyRequest(request, ["admin", "students", id]);
   }
@@ -47,6 +50,9 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
       responseCode: "99",
       responseMessage: "Failed to delete student",
       errors: [error.message]
-    }, { status: 500 });
+    }, { 
+      status: 500,
+      headers: { "X-Local-Override": "true" }
+    });
   }
 }

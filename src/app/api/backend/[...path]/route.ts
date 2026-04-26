@@ -17,24 +17,34 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
  *  4. Returns the backend response to the browser
  */
 export async function proxyRequest(request: NextRequest, pathSegments: string[]) {
+  const requestId = Math.random().toString(36).substring(7);
   try {
     const backendPath = pathSegments.join("/");
 
     // Preserve the original query string
     const url = new URL(request.url);
-    const queryString = url.search; // includes the leading '?'
+    const queryString = url.search;
 
     const backendUrl = `${API_URL}/${backendPath}${queryString}`;
 
-    // Build headers — this is the critical part the rewrite was missing
+    // Build headers
     const accessToken = request.cookies.get("accessToken")?.value;
     const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
     const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
+    
     const headers: Record<string, string> = {
-      Accept: "application/json",
+      "Accept": "application/json",
+      "User-Agent": request.headers.get("user-agent") || "DentiSpark-Proxy/1.0",
+      "X-Request-ID": requestId,
     };
 
-    // Only include Content-Type if we are sending a body
+    // Forward important security/context headers
+    const origin = request.headers.get("origin");
+    if (origin) headers["Origin"] = origin;
+    
+    const referer = request.headers.get("referer");
+    if (referer) headers["Referer"] = referer;
+
     if (!["GET", "HEAD"].includes(request.method)) {
       headers["Content-Type"] = request.headers.get("content-type") || "application/json";
     }
@@ -43,15 +53,17 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
       headers["Authorization"] = `Bearer ${accessToken}`;
     }
 
-    // Use standard Title-Case headers as expected by the Java backend security filters.
-    // We remove the lowercase duplicates to prevent "multiple header values" errors.
     if (channelId) headers["Channel-ID"] = channelId;
     if (channelSecret) headers["Channel-Secret"] = channelSecret;
 
-    // Forward the body for non-GET/HEAD methods
-    let body: BodyInit | undefined;
+    // Forward the body as ArrayBuffer to preserve binary data and encoding
+    let body: ArrayBuffer | undefined;
     if (!["GET", "HEAD"].includes(request.method)) {
-      body = await request.text();
+      try {
+        body = await request.arrayBuffer();
+      } catch (e) {
+        // Body might be empty or unreadable
+      }
     }
 
     const response = await fetch(backendUrl, {
@@ -61,37 +73,37 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
       cache: "no-store",
     });
 
-    // Read the response
     const contentType = response.headers.get("content-type");
+    const responseHeaders: Record<string, string> = {
+      "X-Proxy-Request-ID": requestId,
+      "X-Backend-Status": response.status.toString(),
+    };
 
-    if (contentType && contentType.includes("application/json")) {
-      const responseBody = await response.text();
-      return new NextResponse(responseBody, {
-        status: response.status,
-        headers: { "Content-Type": "application/json" },
-      });
-    } else {
-      // Non-JSON (HTML error pages, etc.) — wrap in a structured JSON error
-      const text = await response.text();
-      console.error(`[Backend Proxy] Non-JSON from ${backendUrl}:`, text.substring(0, 200));
-      return NextResponse.json(
-        {
-          responseCode: "ERROR",
-          responseMessage: "Backend returned non-JSON response",
-          errors: [],
-        },
-        { status: response.status === 200 ? 502 : response.status }
-      );
+    if (contentType) {
+      responseHeaders["Content-Type"] = contentType;
     }
+
+    // Read the response as ArrayBuffer to be safe with any content type
+    const responseData = await response.arrayBuffer();
+
+    return new NextResponse(responseData, {
+      status: response.status,
+      headers: responseHeaders,
+    });
+
   } catch (error: any) {
-    console.error("[Backend Proxy Error]", error);
+    console.error(`[Backend Proxy Error] [${requestId}]`, error);
     return NextResponse.json(
       {
         responseCode: "ERROR",
-        responseMessage: "Proxy error",
+        responseMessage: "Proxy error occurred",
         errors: [error.message || "Unknown error"],
+        requestId,
       },
-      { status: 502 }
+      { 
+        status: 502,
+        headers: { "X-Proxy-Error": "true", "X-Proxy-Request-ID": requestId }
+      }
     );
   }
 }
