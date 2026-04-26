@@ -8,137 +8,105 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  sid           String?   @unique // System Identity ID (e.g., S-10023)
-  firstName     String?
-  lastName      String?
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
+  id               String             @id @default(cuid())
+  name             String?
+  email            String?            @unique
+  emailVerified    DateTime?
   image            String?
   password         String?
-  resetToken       String?   @unique
+  role             Role               @default(STUDENT)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  resetToken       String?            @unique
   resetTokenExpiry DateTime?
-  role             Role      @default(STUDENT)
-  
-  // Platform Status
-  activationStatus String?   @default("PENDING") // ACTIVE, INACTIVE, PENDING, SUSPENDED
-  memberCategory   String?   // DENTAL_HYGIENE, BDS, DENTAL_NURSING
-  gateway          String?   // e.g., BDS
-  paymentStatus    String?   @default("FREE")    // PAID, FREE
-  
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-
-  // Relationships
-  mentorProfile MentorProfile?
-  bookings      Booking[]     @relation("StudentBookings")
-  aiHistory     AIHistory[]
-  reviews       Review[]      @relation("StudentReviews")
-  activities    PlatformActivity[]
-  posts         CommunityPost[]
-  comments      CommunityComment[]
+  activationStatus String?            @default("PENDING")
+  firstName        String?
+  gateway          String?
+  lastName         String?
+  memberCategory   String?
+  paymentStatus    String?            @default("FREE")
+  sid              String?            @unique
+  aiHistory        AIHistory[]
+  bookings         Booking[]          @relation("StudentBookings")
+  mentorProfile    MentorProfile?
+  activities       PlatformActivity[]
+  reviews          Review[]           @relation("StudentReviews")
 }
 
 model PlatformActivity {
-  id             String   @id @default(cuid())
-  userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  action         String   // e.g., "Updated Personal Statement", "Logged in"
-  details        String?
-  category       String?  // e.g., "AI", "AUTH", "CONTENT"
-  timestamp      DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  details   String?
+  category  String?
+  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AuditLog {
-  id             String   @id @default(cuid())
-  adminId        String
-  action         String   // CREATE, UPDATE, DELETE, LOGIN, LOGOUT
-  entity         String   // Admin, Post, Role, Student
-  entityId       String?
-  adminName      String?
-  details        Json?
-  ipAddress      String?
-  createdAt      DateTime @default(now())
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String
+  entity    String
+  entityId  String?
+  adminName String?
+  details   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
 }
 
 model MentorProfile {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String    @id @default(cuid())
+  userId          String    @unique
   title           String
   credentials     String
-  bio             String   @db.Text
+  bio             String
   specialties     String[]
   hourlyRate      Float
-  currency        String   @default("£")
+  currency        String    @default("£")
   stripeAccountId String?
-  isVerified      Boolean  @default(false)
-  isAvailable     Boolean  @default(true)
+  isVerified      Boolean   @default(false)
+  isAvailable     Boolean   @default(true)
   availability    Json?
-
-  bookings   Booking[] @relation("MentorBookings")
-  reviews    Review[]  @relation("MentorReviews")
+  bookings        Booking[] @relation("MentorBookings")
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviews         Review[]  @relation("MentorReviews")
 }
 
 model Booking {
-  id            String        @id @default(cuid())
-  studentId     String
-  mentorId      String
-  student       User          @relation("StudentBookings", fields: [studentId], references: [id])
-  mentor        MentorProfile @relation("MentorBookings", fields: [mentorId], references: [id])
+  id              String        @id @default(cuid())
+  studentId       String
+  mentorId        String
   scheduledAt     DateTime
   durationMins    Int           @default(60)
   status          BookingStatus @default(PENDING)
-  paymentIntent   String?       // Stripe Payment reference
-  stripeSessionId String?       @unique
-  meetingLink     String?
+  paymentIntent   String?
   createdAt       DateTime      @default(now())
+  meetingLink     String?
+  stripeSessionId String?       @unique
+  mentor          MentorProfile @relation("MentorBookings", fields: [mentorId], references: [id])
+  student         User          @relation("StudentBookings", fields: [studentId], references: [id])
 }
 
 model AIHistory {
   id             String   @id @default(cuid())
   userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   toolIdentifier String
   accomplishment String
   metadata       Json?
   timestamp      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Review {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   rating    Int
-  comment   String?  @db.Text
+  comment   String?
   studentId String
   mentorId  String
-  createdAt DateTime @default(now())
-
-  student   User          @relation("StudentReviews", fields: [studentId], references: [id], onDelete: Cascade)
-  mentor    MentorProfile @relation("MentorReviews", fields: [mentorId], references: [id], onDelete: Cascade)
-}
-
-model CommunityPost {
-  id        String   @id @default(cuid())
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  content   String   @db.Text
-  category  String?  // e.g., "Ethics", "Clinical", "Admissions"
-  likes     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  comments  CommunityComment[]
-}
-
-model CommunityComment {
-  id        String   @id @default(cuid())
-  postId    String
-  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  authorId  String
-  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  content   String        @db.Text
   createdAt DateTime      @default(now())
+  mentor    MentorProfile @relation("MentorReviews", fields: [mentorId], references: [id], onDelete: Cascade)
+  student   User          @relation("StudentReviews", fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

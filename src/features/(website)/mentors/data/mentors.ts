@@ -7,6 +7,7 @@ export interface Mentor {
     id: string;
     slug: string;
     name: string;
+    email: string;
     title: string;
     credentials: string;
     bio: string;
@@ -48,6 +49,7 @@ export const REAL_MENTORS: Mentor[] = [
         id: "dt-marcus-thorne",
         slug: "dt-marcus-thorne",
         name: "Dt. Marcus Thorne",
+        email: "marcus.thorne@dentispark.com",
         title: "Orthodontist, Univ of Pennsylvania",
         credentials: "Elite Orthodontics | 12+ Years Experience",
         bio: "Specializing in advanced orthodontic procedures and guiding pre-dental students through the application process.",

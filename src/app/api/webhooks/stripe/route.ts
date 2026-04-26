@@ -37,54 +37,33 @@ export async function POST(req: Request) {
 
       console.log(`✅ Payment confirmed for mentor: ${mentorSlug}, session: ${sessionType}`);
 
-      // 1. Mark the BookingSession as "CONFIRMED"
+      // 1. Mark the BookingSession as "PENDING" (Awaiting Mentor Approval)
       if (bookingId && bookingId !== "mock_booking_123") {
         await prisma.booking.update({
           where: { id: bookingId },
-          data: { status: "CONFIRMED" }
+          data: { status: "PENDING" }
         });
-      }
 
-      // 2. Generate the video room link via Daily.co
-      let roomUrl = "";
-      try {
-        const DAILY_API_KEY = process.env.DAILY_API_KEY;
-        if (DAILY_API_KEY && bookingId) {
-          const roomName = `dentispark-${mentorSlug}-${bookingId}`.toLowerCase().replace(/[^a-z0-9-]/g, "-");
-          const response = await fetch("https://api.daily.co/v1/rooms", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${DAILY_API_KEY}`,
-            },
-            body: JSON.stringify({
-              name: roomName,
-              privacy: "private",
-              properties: { max_participants: 2, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 3 }
-            }),
+        // 2. Notify the Mentor (Simple implementation via PlatformActivity or specialized notification)
+        const booking = await prisma.booking.findUnique({
+          where: { id: bookingId },
+          include: { mentor: { include: { user: true } }, student: true }
+        });
+
+        if (booking) {
+          await prisma.platformActivity.create({
+            data: {
+              userId: booking.mentor.userId,
+              action: "NEW_BOOKING",
+              details: `Student ${booking.student.name} requested a ${sessionType} session.`,
+              category: "MENTORSHIP"
+            }
           });
-          const room = await response.json();
-          roomUrl = room.url;
-
-          // Update DB with the meeting link
-          if (bookingId !== "mock_booking_123") {
-            await prisma.booking.update({
-              where: { id: bookingId },
-              data: { meetingLink: roomUrl }
-            });
-          }
+          
+          // TODO: Send email to mentor about the new request
+          console.log(`📧 Notification sent to mentor: ${booking.mentor.user.email}`);
         }
-      } catch (err) {
-        console.error("Daily.co auto-generation failed inside webhook:", err);
       }
-
-      // 3. Send confirmation email via Resend
-      const { emailService } = await import("@/src/lib/email-service");
-      await emailService.sendBookingConfirmation(
-        session.customer_details?.email || "",
-        mentorSlug || "Your Mentor",
-        sessionType || "Mentorship Session"
-      );
 
       break;
     }

@@ -7,11 +7,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
     ArrowLeft, Star, Calendar, MessageSquare, Share2, 
     MoreHorizontal, CheckCircle2, Users, Video, Clock, 
-    Award, ShieldCheck, ChevronRight, PlayCircle
+    Award, ShieldCheck, ChevronRight, PlayCircle, Loader2
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useAuth } from "@/src/providers/auth-provider";
 import { Button } from "@/src/components/ui/button";
+
+import { chatService } from "@/src/connection/chat-service";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface MentorStats {
   rating: number;
@@ -26,6 +30,7 @@ interface MentorService {
 
 interface MentorProfile {
   name: string;
+  email: string;
   title: string;
   image: string;
   bio: string;
@@ -70,9 +75,11 @@ const AnimatedCounter = ({ value, duration = 2 }: { value: number, duration?: nu
 };
 
 export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfileViewProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"overview" | "services" | "reviews">("overview");
   const [showStickyHeader, setShowStickyHeader] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const [isMessaging, setIsMessaging] = useState(false);
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,6 +88,34 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleMessageMentor = async () => {
+    if (!isAuthenticated) {
+        router.push(`/login?redirect=/mentor/${mentor.slug}`);
+        return;
+    }
+
+    setIsMessaging(true);
+    try {
+        const response = await chatService.upsertPeerConversation({
+            participantEmail: mentor.email,
+            participantName: mentor.name,
+            participantType: "MENTOR"
+        });
+
+        if (response.responseCode === "200" || response.responseCode === "OK") {
+            toast.success("Conversation started!");
+            router.push("/messages");
+        } else {
+            toast.error("Could not start conversation");
+        }
+    } catch (error) {
+        console.error("Messaging Error:", error);
+        toast.error("Failed to initiate chat");
+    } finally {
+        setIsMessaging(false);
+    }
+  };
 
   if (!mentor) return null;
 
@@ -129,6 +164,15 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                         </div>
                         <div className="flex items-center gap-4">
                             <span className="hidden md:block text-sm font-jakarta font-bold text-emerald-700">${mentor.hourlyRate}/hr</span>
+                            <Button 
+                                onClick={handleMessageMentor}
+                                disabled={isMessaging}
+                                variant="outline" 
+                                className="hidden md:flex rounded-xl h-9 px-4 font-jakarta font-bold text-xs border-slate-200"
+                            >
+                                {isMessaging ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquare className="h-4 w-4 mr-2" />}
+                                Message
+                            </Button>
                             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-9 px-6 font-jakarta font-bold text-xs shadow-sm shadow-emerald-200">
                                 {isDashboard ? "Book Session" : "Book Now"}
                             </Button>
@@ -406,7 +450,17 @@ export function MentorProfileView({ mentor, isDashboard, onBack }: MentorProfile
                                     </Link>
                                 )}
                                 
-                                <p className="text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-2">
+                                    <Button 
+                                        onClick={handleMessageMentor}
+                                        disabled={isMessaging}
+                                        variant="outline"
+                                        className="w-full h-14 rounded-2xl border-slate-200 text-slate-600 font-jakarta font-bold text-base hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        {isMessaging ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageSquare className="h-5 w-5" />}
+                                        Message {mentor.name.split(" ")[0]}
+                                    </Button>
+
+                                    <p className="text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-2">
                                     Satisfaction Guaranteed
                                 </p>
                             </div>
