@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/src/lib/prisma";
+import prisma from "@/src/lib/db";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
 
