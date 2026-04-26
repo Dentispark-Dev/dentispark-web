@@ -16,10 +16,16 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
 
   try {
     const { email } = await params;
-    const emailAddress = decodeURIComponent(email);
+    const identifier = decodeURIComponent(email);
     
-    const user = await prisma.user.findUnique({
-        where: { email: emailAddress }
+    const user = await prisma.user.findFirst({
+        where: {
+            OR: [
+                { email: identifier },
+                { id: identifier },
+                { sid: identifier }
+            ]
+        }
     });
 
     if (!user) {
@@ -49,7 +55,7 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
     }
 
     await prisma.user.delete({
-      where: { email: emailAddress }
+      where: { id: user.id }
     });
 
     return NextResponse.json({

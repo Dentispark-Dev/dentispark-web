@@ -17,9 +17,14 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
   try {
     const { id } = await params;
     
-    // In local DB, mentors are also Users. We try to find by ID first.
-    const user = await prisma.user.findUnique({
-        where: { id }
+    // Search by either cuid or sid (hid)
+    const user = await prisma.user.findFirst({
+        where: {
+            OR: [
+                { id },
+                { sid: id }
+            ]
+        }
     });
 
     if (!user) {
@@ -32,7 +37,7 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
 
     // Handle related records that don't have Cascade Delete
     const mentorProfile = await prisma.mentorProfile.findUnique({
-        where: { userId: id }
+        where: { userId: user.id }
     });
 
     if (mentorProfile) {
@@ -46,11 +51,11 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
 
     // Delete the student bookings if this user was ever a student
     await prisma.booking.deleteMany({
-        where: { studentId: id }
+        where: { studentId: user.id }
     });
 
     await prisma.user.delete({
-      where: { id }
+      where: { id: user.id }
     });
 
     return NextResponse.json({
