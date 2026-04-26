@@ -17,12 +17,17 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
   try {
     const { id } = await params;
     
+    const identifier = decodeURIComponent(id).trim();
+    const lowerIdentifier = identifier.toLowerCase();
+
     // Search by either cuid or sid (hid)
     const user = await prisma.user.findFirst({
         where: {
             OR: [
-                { id },
-                { sid: id }
+                { id: identifier },
+                { sid: identifier },
+                { sid: lowerIdentifier },
+                { email: { equals: lowerIdentifier, mode: 'insensitive' } }
             ]
         }
     });
