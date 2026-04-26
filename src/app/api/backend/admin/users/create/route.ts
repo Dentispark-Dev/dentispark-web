@@ -10,6 +10,15 @@ import prisma from "@/src/lib/db";
  * In production/Vercel, this will still work if DATABASE_URL is configured.
  */
 export async function POST(request: NextRequest) {
+  // Check if database is configured
+  if (!process.env.DATABASE_URL) {
+      return NextResponse.json({
+          responseCode: "99",
+          responseMessage: "DATABASE_URL is not configured in environment variables",
+          responseData: null
+      }, { status: 500 });
+  }
+
   try {
     const payload = await request.json();
     const { emailAddress, firstName, lastName, password, memberType, platformMemberCategory } = payload;
@@ -84,10 +93,20 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error("[Local Admin Create User Error]", error);
+    
+    // Provide more detail in the error response for debugging
+    const errorMessage = error.message || "Failed to create user";
+    const errorCode = error.code || "UNKNOWN_PRISMA_ERROR";
+    const errorMeta = error.meta ? JSON.stringify(error.meta) : "No meta info";
+
     return NextResponse.json({
       responseCode: "99",
-      responseMessage: "Failed to create user",
-      errors: [error.message]
+      responseMessage: `Database Error: ${errorMessage}`,
+      errors: [
+          `Code: ${errorCode}`,
+          `Meta: ${errorMeta}`,
+          `Stack: ${error.stack?.split("\n")[0]}`
+      ]
     }, { 
       status: 500,
       headers: { "X-Local-Override": "true" }
