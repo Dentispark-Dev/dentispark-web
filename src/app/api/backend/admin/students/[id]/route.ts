@@ -43,16 +43,25 @@ export async function DELETE(request: NextRequest, { params }: RouteContext) {
         const channelId = process.env.NEXT_PUBLIC_CHANNEL_ID;
         const channelSecret = process.env.NEXT_PUBLIC_CHANNEL_SECRET;
         
+        const requestId = Math.random().toString(36).substring(7);
         const headers: Record<string, string> = {
             "Accept": "application/json",
-            "Authorization": accessToken ? `Bearer ${accessToken}` : "",
-            "Channel-ID": channelId || "",
-            "Channel-Secret": channelSecret || "",
             "User-Agent": request.headers.get("user-agent") || "DentiSpark-Proxy/1.0",
-            "Origin": request.headers.get("origin") || "https://www.dentispark.com",
-            "Referer": request.headers.get("referer") || "https://www.dentispark.com/admin",
-            "X-Proxy-Fallback": "true"
+            "X-Request-ID": requestId,
         };
+
+        const origin = request.headers.get("origin");
+        if (origin) headers["Origin"] = origin;
+        
+        const referer = request.headers.get("referer");
+        if (referer) headers["Referer"] = referer;
+
+        if (accessToken) {
+            headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+
+        if (channelId) headers["Channel-ID"] = channelId;
+        if (channelSecret) headers["Channel-Secret"] = channelSecret;
 
         const response = await fetch(backendUrl, {
             method: "DELETE",
