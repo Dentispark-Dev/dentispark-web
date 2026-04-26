@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
+
 /**
  * LOCAL ADMIN LOGIN OVERRIDE
  * 
@@ -11,6 +13,10 @@ const prisma = new PrismaClient();
  * and validates them against the local Prisma database.
  */
 export async function POST(request: NextRequest) {
+  if (process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_USE_LOCAL_AUTH !== "true") {
+    return proxyRequest(request, ["auth", "login"]);
+  }
+
   try {
     const { emailAddress, password } = await request.json();
 

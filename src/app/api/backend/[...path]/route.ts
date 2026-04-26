@@ -16,7 +16,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dentispark.com";
  *  3. Forwards the request (including body + query params) to the Java backend
  *  4. Returns the backend response to the browser
  */
-async function proxyRequest(request: NextRequest, pathSegments: string[]) {
+export async function proxyRequest(request: NextRequest, pathSegments: string[]) {
   try {
     const backendPath = pathSegments.join("/");
 

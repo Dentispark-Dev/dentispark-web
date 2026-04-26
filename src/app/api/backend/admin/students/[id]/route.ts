@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
 
 const prisma = new PrismaClient();
 
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function DELETE(request: NextRequest, { params }: RouteContext) {
+  if (process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_USE_LOCAL_AUTH !== "true") {
+    const { id } = await params;
+    return proxyRequest(request, ["admin", "students", id]);
+  }
+
   try {
     const { id } = await params;
     

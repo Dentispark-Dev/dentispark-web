@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient, Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { proxyRequest } from "@/src/app/api/backend/[...path]/route";
 
 const prisma = new PrismaClient();
 
@@ -10,6 +11,10 @@ const prisma = new PrismaClient();
  * Allows admins to create users (Admin, Mentor, Student) directly in the local DB.
  */
 export async function POST(request: NextRequest) {
+  if (process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_USE_LOCAL_AUTH !== "true") {
+    return proxyRequest(request, ["admin", "users", "create"]);
+  }
+
   try {
     const payload = await request.json();
     const { emailAddress, firstName, lastName, password, memberType, platformMemberCategory } = payload;
