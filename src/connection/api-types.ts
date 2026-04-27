@@ -723,6 +723,7 @@ export interface AdminCreateUserPayload {
   lastName: string;
   emailAddress: string;
   password?: string;
+  sid?: string; // Human-readable ID
   memberType: "STUDENT" | "ACADEMIC_MENTOR" | "PLATFORM_ADMIN" | "MODERATOR";
   platformMemberCategory?: string; // For students/mentors
 }

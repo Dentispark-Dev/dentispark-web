@@ -37,6 +37,7 @@ import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import { InviteMentorModal } from "./invite-mentor-modal";
 import { CreateUserModal } from "./create-user-modal";
+import { EditSidModal } from "./edit-sid-modal";
 import { cn } from "@/src/lib/utils";
 
 export function MentorTable() {
@@ -44,6 +45,12 @@ export function MentorTable() {
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isSyncing, setIsSyncing] = useState(false);
+    const [editSidData, setEditSidData] = useState<{ isOpen: boolean; userId: string; sid: string; name: string }>({
+        isOpen: false,
+        userId: "",
+        sid: "",
+        name: ""
+    });
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<MentorQuery>({
         page: 0,
@@ -321,6 +328,18 @@ export function MentorTable() {
                                                         </button>
                                                         <span>|</span>
                                                         <button 
+                                                            onClick={() => setEditSidData({
+                                                                isOpen: true,
+                                                                userId: mentor.sid, // The backend ID or current SID
+                                                                sid: mentor.sid,
+                                                                name: mentor.mentorName || ""
+                                                            })}
+                                                            className="text-indigo-600 hover:text-indigo-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            Edit ID
+                                                        </button>
+                                                        <span>|</span>
+                                                        <button 
                                                             onClick={() => {
                                                                 if (confirm("Are you sure you want to PERMANENTLY delete this mentor? This action cannot be undone.")) {
                                                                     deleteMentorMutation.mutate(mentor.hid);
@@ -400,6 +419,13 @@ export function MentorTable() {
             <CreateUserModal
                 isOpen={isCreateModalOpen}
                 onClose={() => setIsCreateModalOpen(false)}
+            />
+            <EditSidModal
+                isOpen={editSidData.isOpen}
+                onClose={() => setEditSidData(prev => ({ ...prev, isOpen: false }))}
+                userId={editSidData.userId}
+                currentSid={editSidData.sid}
+                userName={editSidData.name}
             />
         </div>
     );

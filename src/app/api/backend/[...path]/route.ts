@@ -98,7 +98,7 @@ async function handleStudentRecords(request: NextRequest): Promise<NextResponse>
 
   const content = students.map(s => ({
     sid:              s.sid || s.id,
-    hid:              s.id,
+    hid:              s.sid || s.id, // Use sid for links consistently
     emailAddress:     s.email,
     firstName:        s.firstName,
     lastName:         s.lastName,
@@ -118,9 +118,6 @@ async function handleStudentRecords(request: NextRequest): Promise<NextResponse>
 
   return paginatedResponse(content, total, page, pageSize, { needsSync });
 }
-
-
-
 // ─────────────────────────────────────────────────────────────────────────────
 // INTERCEPT: mentor/records — fully served from Prisma
 // ─────────────────────────────────────────────────────────────────────────────
@@ -157,7 +154,7 @@ async function handleMentorRecords(request: NextRequest): Promise<NextResponse> 
 
   let content = mentors.map(m => ({
     sid:                 m.sid || m.id,
-    hid:                 m.id,
+    hid:                 m.sid || m.id, // Consistent with single record lookup
     emailAddress:        m.email,
     firstName:           m.firstName,
     lastName:            m.lastName,
@@ -178,6 +175,80 @@ async function handleMentorRecords(request: NextRequest): Promise<NextResponse> 
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// INTERCEPT: single student lookup
+// ─────────────────────────────────────────────────────────────────────────────
+async function handleStudentDetail(identifier: string): Promise<NextResponse | null> {
+  const user = await prisma.user.findFirst({
+    where: {
+      role: "STUDENT",
+      deletedAt: null,
+      OR: [{ sid: identifier }, { id: identifier }, { email: identifier }],
+    },
+  });
+
+  if (!user) return null;
+
+  const data = {
+    sid:              user.sid || user.id,
+    hid:              user.sid || user.id, // Support human-readable IDs in URL
+    emailAddress:     user.email,
+    firstName:        user.firstName,
+    lastName:         user.lastName,
+    name:             user.name,
+    activationStatus: user.activationStatus,
+    dentalSchoolGateway: user.gateway || "Standard Entry",
+    currentAcademicYear: user.memberCategory || null,
+    dateStamped:      user.createdAt.toISOString(),
+    paymentStatus:    user.paymentStatus,
+  };
+
+  return NextResponse.json({
+    responseCode: "00",
+    responseMessage: "Success",
+    responseData: data
+  }, { status: 200, headers: { "X-Source": "Prisma" } });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INTERCEPT: single mentor lookup
+// ─────────────────────────────────────────────────────────────────────────────
+async function handleMentorDetail(identifier: string): Promise<NextResponse | null> {
+  const user = await prisma.user.findFirst({
+    where: {
+      role: "MENTOR",
+      deletedAt: null,
+      OR: [{ sid: identifier }, { id: identifier }, { email: identifier }],
+    },
+    include: { mentorProfile: true }
+  });
+
+  if (!user) return null;
+
+  const data = {
+    sid:                 user.sid || user.id,
+    hid:                 user.sid || user.id, // Support human-readable IDs in URL
+    emailAddress:        user.email,
+    firstName:           user.firstName,
+    lastName:            user.lastName,
+    mentorName:          user.name,
+    activationStatus:    user.activationStatus,
+    dentalSchoolGateway: user.gateway || "General Dentistry",
+    verified:            user.mentorProfile?.isVerified || false,
+    dateStamped:         user.createdAt.toISOString(),
+    bio:                 user.mentorProfile?.bio || "",
+    credentials:         user.mentorProfile?.credentials || "",
+    specialties:         user.mentorProfile?.specialties || [],
+    hourlyRate:          user.mentorProfile?.hourlyRate || 0,
+  };
+
+  return NextResponse.json({
+    responseCode: "00",
+    responseMessage: "Success",
+    responseData: data
+  }, { status: 200, headers: { "X-Source": "Prisma" } });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Main proxy — forward to Java
 // ─────────────────────────────────────────────────────────────────────────────
 export async function proxyRequest(request: NextRequest, pathSegments: string[]) {
@@ -190,11 +261,29 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
 
   try {
     // ── Prisma intercepts ─────────────────────────────────────────────────
-    if (isGet && backendPath.includes("students/records")) {
-      return await handleStudentRecords(request);
-    }
-    if (isGet && backendPath.includes("mentors/records")) {
-      return await handleMentorRecords(request);
+    if (isGet) {
+      if (backendPath === "students/records") {
+        return await handleStudentRecords(request);
+      }
+      if (backendPath === "mentors/records") {
+        return await handleMentorRecords(request);
+      }
+
+      // Single record lookup: mentors/records/[id] or students/records/[id]
+      if (backendPath.startsWith("mentors/records/")) {
+        const id = backendPath.split("/").pop();
+        if (id && id !== "records") {
+           const res = await handleMentorDetail(id);
+           if (res) return res;
+        }
+      }
+      if (backendPath.startsWith("students/records/")) {
+        const id = backendPath.split("/").pop();
+        if (id && id !== "records") {
+           const res = await handleStudentDetail(id);
+           if (res) return res;
+        }
+      }
     }
 
     // ── Forward to Java ───────────────────────────────────────────────────

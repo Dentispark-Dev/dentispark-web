@@ -19,6 +19,7 @@ import { Input } from "@/src/components/ui/input";
 import { toast } from "sonner";
 import { InviteStudentModal } from "./invite-student-modal";
 import { CreateUserModal } from "./create-user-modal";
+import { EditSidModal } from "./edit-sid-modal";
 import { cn } from "@/src/lib/utils";
 
 export function StudentTable() {
@@ -26,6 +27,12 @@ export function StudentTable() {
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isSyncing, setIsSyncing] = useState(false);
+    const [editSidData, setEditSidData] = useState<{ isOpen: boolean; userId: string; sid: string; name: string }>({
+        isOpen: false,
+        userId: "",
+        sid: "",
+        name: ""
+    });
     const queryClient = useQueryClient();
 
     // Row selection state
@@ -388,6 +395,18 @@ export function StudentTable() {
                                                                 Edit
                                                             </button>
                                                             <span>|</span>
+                                                            <button 
+                                                                onClick={() => setEditSidData({
+                                                                    isOpen: true,
+                                                                    userId: student.sid,
+                                                                    sid: student.sid,
+                                                                    name: `${student.firstName} ${student.lastName}`
+                                                                })}
+                                                                className="text-indigo-600 hover:text-indigo-800 hover:underline"
+                                                            >
+                                                                Edit ID
+                                                            </button>
+                                                            <span>|</span>
                                                             <button
                                                                 onClick={() => {
                                                                     if (confirm("Permanently remove this student? This cannot be undone.")) {
@@ -476,6 +495,13 @@ export function StudentTable() {
             <CreateUserModal
                 isOpen={isCreateModalOpen}
                 onClose={() => setIsCreateModalOpen(false)}
+            />
+            <EditSidModal
+                isOpen={editSidData.isOpen}
+                onClose={() => setEditSidData(prev => ({ ...prev, isOpen: false }))}
+                userId={editSidData.userId}
+                currentSid={editSidData.sid}
+                userName={editSidData.name}
             />
         </div>
     );

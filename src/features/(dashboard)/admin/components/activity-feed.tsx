@@ -57,23 +57,23 @@ export function ActivityFeed() {
     };
 
     return (
-        <div className="group bg-white/60 backdrop-blur-xl p-8 rounded-3xl shadow-2xl shadow-gray-200/40 border border-white/50 h-full overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between mb-8">
+        <div className="group bg-white p-10 rounded-[3rem] shadow-[0_30px_70px_rgba(0,0,0,0.04)] border border-slate-50 h-full overflow-hidden flex flex-col font-jakarta">
+            <div className="flex items-center justify-between mb-10">
                 <div>
-                    <h3 className="text-xl font-extrabold text-gray-900 tracking-tight">Global Activity</h3>
-                    <p className="text-sm text-gray-500 font-medium">Real-time platform events</p>
+                    <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">System <span className="text-indigo-600 font-medium">Activity</span></h3>
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Real-time platform events</p>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-primary-600 hover:bg-primary-50 rounded-2xl transition-all duration-300">
-                    Live View <ArrowRight className="h-3 w-3" />
+                <button className="flex items-center gap-2 px-6 py-2.5 text-[10px] font-extrabold uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 rounded-2xl transition-all duration-300 border border-indigo-100 shadow-sm">
+                    View Audit Log <ArrowRight className="h-3 w-3" />
                 </button>
             </div>
 
-            <div className="space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-8 flex-1 overflow-y-auto pr-2 custom-scrollbar">
                 <AnimatePresence mode="popLayout">
                     {activities.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center text-gray-400 gap-3 py-10">
-                            <Clock className="h-10 w-10 opacity-20" />
-                            <p className="text-sm font-medium">Monitoring platform activity...</p>
+                        <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-4 py-20">
+                            <Clock className="h-12 w-12 opacity-10 animate-pulse" />
+                            <p className="text-xs font-extrabold uppercase tracking-widest">Awaiting Live Events...</p>
                         </div>
                     ) : (
                         activities.map((activity, index) => (
@@ -81,28 +81,28 @@ export function ActivityFeed() {
                                 key={activity.userId + activity.timeAndDate}
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.4, delay: index * 0.05 }}
-                                className="flex items-start gap-4 relative group/item"
+                                transition={{ duration: 0.5, delay: index * 0.05 }}
+                                className="flex items-start gap-5 relative group/item"
                             >
                                 {/* Activity Line */}
                                 {index !== activities.length - 1 && (
-                                    <div className="absolute left-[13px] top-[26px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-100 to-transparent" />
+                                    <div className="absolute left-[15px] top-[30px] bottom-[-32px] w-[2px] bg-slate-50" />
                                 )}
 
-                                <div className="z-10 h-7 w-7 rounded-full bg-white shadow-md ring-1 ring-black/5 flex items-center justify-center flex-shrink-0">
+                                <div className="z-10 h-8 w-8 rounded-xl bg-white shadow-lg ring-1 ring-slate-100 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
                                     {getActionIcon(activity.action)}
                                 </div>
 
                                 <div className="flex-1 min-w-0">
-                                    <div className="flex items-center justify-between gap-2">
-                                        <p className="text-sm font-bold text-gray-900 truncate">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <p className="text-sm font-extrabold text-slate-900 truncate tracking-tight">
                                             {activity.fullName}
                                         </p>
-                                        <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100 tracking-tight">
+                                        <span className="text-[9px] font-extrabold text-slate-400 whitespace-nowrap bg-slate-50 px-3 py-1 rounded-full border border-slate-100 tracking-widest uppercase">
                                             {getTimeAgo(activity.timeAndDate)}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-gray-500 mt-0.5 line-clamp-1 group-hover/item:text-gray-700 transition-colors">
+                                    <p className="text-[11px] font-medium text-slate-400 mt-1 line-clamp-1 group-hover/item:text-slate-600 transition-colors uppercase tracking-wide">
                                         {activity.action}
                                     </p>
                                 </div>
@@ -112,10 +112,13 @@ export function ActivityFeed() {
                 </AnimatePresence>
             </div>
             
-            <div className="mt-8 pt-6 border-t border-gray-100/50">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">
-                    Updating every 30s
-                </p>
+            <div className="mt-10 pt-8 border-t border-slate-50">
+                <div className="flex items-center justify-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <p className="text-[9px] font-extrabold text-slate-300 uppercase tracking-[0.3em]">
+                        Live Sync Operational
+                    </p>
+                </div>
             </div>
         </div>
     );

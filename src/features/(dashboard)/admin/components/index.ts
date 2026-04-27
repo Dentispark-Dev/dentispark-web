@@ -43,3 +43,4 @@ export const LoginHistoryTable = dynamic(() => import("./login-history-table").t
 export const NewsletterForm = dynamic(() => import("./newsletter-form").then(mod => mod.NewsletterForm), { ssr: false });
 export const NewsletterHistory = dynamic(() => import("./newsletter-history").then(mod => mod.NewsletterHistory), { ssr: false });
 export const SMTPSettings = dynamic(() => import("./smtp-settings").then(mod => mod.SMTPSettings), { ssr: false });
+export const EditSidModal = dynamic(() => import("./edit-sid-modal").then(mod => mod.EditSidModal), { ssr: false });
