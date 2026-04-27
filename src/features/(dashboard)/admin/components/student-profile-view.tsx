@@ -70,10 +70,10 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
         mutationFn: (status: string) => adminService.updateStudentStatus(studentId, { status }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admin-student-detail", studentId] });
-            toast.success("Identity status updated");
+            toast.success("Account status updated successfully.");
         },
         onError: () => {
-            toast.error("Failed to propagate status change");
+            toast.error("Failed to update account status. Please try again.");
         }
     });
 
@@ -81,14 +81,12 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
         mutationFn: () => adminService.deleteStudent(studentId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admin-students"] });
-            toast.success("Student account archived and hidden successfully");
+            toast.success("Student account has been removed from the platform.");
             router.push("/admin/students");
         },
         onError: (error: any) => {
-            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
-                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
-            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to archive student account"}`;
-            toast.error(msg.trim());
+            const msg = error?.message || error?.responseMessage || "Failed to remove student account. Please try again.";
+            toast.error(msg);
         }
     });
 
@@ -124,23 +122,26 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                 <div className="flex items-center justify-between max-w-6xl mx-auto">
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2 text-slate-500">
-                            <Link href="/admin/students" className="hover:text-slate-900 transition-colors">Students Registry</Link>
+                            <Link href="/admin/students" className="hover:text-slate-900 transition-colors">Students</Link>
                             <span className="text-greys-300">/</span>
                             <span className="font-medium text-slate-900 truncate max-w-[200px]">{fullName}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
-                        <Button variant="outline" className="h-8 px-4 text-xs font-medium border-greys-200 hover:bg-greys-50 shadow-sm gap-2">
-                           <Mail className="h-3.5 w-3.5 text-slate-400"/> Send Message
-                        </Button>
+                        <a
+                            href={`mailto:${student.emailAddress}`}
+                            className="inline-flex items-center gap-2 h-8 px-4 text-xs font-medium border border-slate-200 rounded-md bg-white hover:bg-slate-50 shadow-sm text-slate-700 transition-colors"
+                        >
+                            <Mail className="h-3.5 w-3.5 text-slate-400"/> Send Message
+                        </a>
                         <Button 
                             onClick={() => updateStatusMutation.mutate(student.activationStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE")}
                             disabled={updateStatusMutation.isPending}
                             className={cn(
                                 "h-8 px-4 text-xs font-medium text-white shadow-sm transition-all",
                                 student.activationStatus === "ACTIVE" 
-                                    ? "bg-slate-900 hover:bg-slate-800" 
-                                    : "bg-emerald-600 hover:bg-emerald-700"
+                                    ? "bg-rose-600 hover:bg-rose-700" 
+                                    : "bg-teal-600 hover:bg-teal-700"
                             )}
                         >
                             {updateStatusMutation.isPending && <Loader2 className="h-3 w-3 mr-2 animate-spin" />}
@@ -149,8 +150,8 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     </div>
                 </div>
                 <div className="mt-8 max-w-6xl mx-auto flex items-center gap-4">
-                     <div className="h-12 w-12 bg-white border border-greys-200 rounded-lg shadow-sm flex items-center justify-center shrink-0">
-                         <span className="text-slate-900 font-bold text-lg">{student.firstName[0]}{student.lastName[0]}</span>
+                     <div className="h-12 w-12 bg-teal-600 rounded-lg shadow-sm flex items-center justify-center shrink-0">
+                         <span className="text-white font-bold text-lg">{student.firstName[0]}{student.lastName[0]}</span>
                      </div>
                      <div>
                          <h1 className="text-xl font-semibold tracking-tight leading-tight flex items-center gap-2">
@@ -183,13 +184,13 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                 className={cn(
                                     "w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all group",
                                     activeTab === tab.key
-                                        ? "bg-indigo-50/70 text-indigo-700"
-                                        : "text-slate-600 hover:text-slate-900 hover:bg-greys-100/50"
+                                        ? "bg-teal-50 text-teal-700"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/60"
                                 )}
                             >
                                 <div className={cn(
                                     "transition-colors",
-                                    activeTab === tab.key ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"
+                                    activeTab === tab.key ? "text-teal-600" : "text-slate-400 group-hover:text-slate-600"
                                 )}>
                                     {tab.icon}
                                 </div>
@@ -214,7 +215,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                     <div className="relative flex justify-between items-start px-4 py-4">
                                         <div className="absolute top-[34px] left-8 w-[calc(100%-4rem)] h-[2px] bg-slate-100" />
                                         <div 
-                                            className="absolute top-[34px] left-8 h-[2px] bg-indigo-500 transition-all duration-1000" 
+                                            className="absolute top-[34px] left-8 h-[2px] bg-teal-500 transition-all duration-1000" 
                                             style={{ width: student.ucatScore ? (student.whyDentistry ? "100%" : "50%") : "10%" }}
                                         />
                                         
@@ -226,7 +227,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                             <div key={i} className="relative z-10 flex flex-col items-center gap-3">
                                                 <div className={cn(
                                                     "h-8 w-8 rounded-full flex items-center justify-center transition-all bg-white border-2",
-                                                    step.active ? "border-indigo-500 text-indigo-600 shadow-sm" : "border-slate-200 text-slate-400"
+                                                    step.active ? "border-teal-500 text-teal-600 shadow-sm" : "border-slate-200 text-slate-400"
                                                 )}>
                                                     <step.icon className="h-4 w-4" />
                                                 </div>
@@ -252,7 +253,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                         </div>
                                         <div className="flex justify-between p-4 bg-slate-50/50">
                                             <span className="text-slate-500 font-medium">UCAT Score</span>
-                                            <span className="text-indigo-600 font-semibold">{student.ucatScore || "Not Recorded"}</span>
+                                            <span className="text-teal-600 font-semibold">{student.ucatScore || "Not Recorded"}</span>
                                         </div>
                                         <div className="flex justify-between p-4">
                                             <span className="text-slate-500 font-medium">CASPer Assessment</span>
@@ -268,7 +269,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                     </div>
                                     <div className="p-5 flex-1 bg-slate-50/50">
                                         {student.whyDentistry ? (
-                                            <p className="text-sm text-slate-700 leading-relaxed italic border-l-2 border-indigo-200 pl-4">
+                                            <p className="text-sm text-slate-700 leading-relaxed italic border-l-2 border-teal-200 pl-4">
                                                 &ldquo;{student.whyDentistry}&rdquo;
                                             </p>
                                         ) : (
@@ -280,18 +281,21 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                 </div>
                             </div>
                             
-                            <div className="pt-6 border-t border-greys-200">
-                                <h3 className="text-sm font-semibold text-slate-900 mb-4">Administrative Actions</h3>
+                            <div className="pt-6 border-t border-slate-200">
+                                <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-4">Administrative Actions</h3>
                                 <div className="grid grid-cols-2 gap-4">
-                                     <div className="p-4 bg-white border border-greys-200 shadow-sm rounded-lg hover:shadow-md transition-shadow cursor-pointer group">
-                                         <Mail className="h-5 w-5 text-indigo-500 mb-3" />
+                                     <a
+                                         href={`mailto:${student.emailAddress}`}
+                                         className="p-4 bg-white border border-slate-200 shadow-sm rounded-lg hover:border-teal-300 hover:shadow-md transition-all cursor-pointer group block"
+                                     >
+                                         <Mail className="h-5 w-5 text-teal-500 mb-3" />
                                          <h4 className="text-xs font-semibold text-slate-900 mb-1">Send Notification Email</h4>
-                                         <p className="text-[11px] text-slate-500 leading-relaxed">Send an email notification to this student.</p>
-                                     </div>
-                                     <div className="p-4 bg-white border border-greys-200 shadow-sm rounded-lg hover:shadow-md transition-shadow cursor-pointer group">
-                                         <History className="h-5 w-5 text-emerald-500 mb-3" />
-                                         <h4 className="text-xs font-semibold text-slate-900 mb-1">View Activity Log</h4>
-                                         <p className="text-[11px] text-slate-500 leading-relaxed">View a complete record of all account activity and administrative changes.</p>
+                                         <p className="text-[11px] text-slate-500 leading-relaxed">Compose an email to this student via your default mail client.</p>
+                                     </a>
+                                     <div className="p-4 bg-white border border-slate-200 shadow-sm rounded-lg hover:border-teal-300 hover:shadow-md transition-all cursor-pointer group">
+                                         <History className="h-5 w-5 text-teal-500 mb-3" />
+                                         <h4 className="text-xs font-semibold text-slate-900 mb-1">Audit History</h4>
+                                         <p className="text-[11px] text-slate-500 leading-relaxed">Review a complete log of account activity and administrative changes.</p>
                                      </div>
                                 </div>
                             </div>
@@ -370,8 +374,8 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                         className={cn(
                                             "h-8 px-4 text-xs font-medium bg-white shadow-sm transition-all",
                                             student.activationStatus === "ACTIVE" 
-                                                ? "text-error-600 border-error-200 hover:bg-error-50" 
-                                                : "text-emerald-600 border-emerald-200 hover:bg-emerald-50"
+                                                ? "text-rose-600 border-rose-200 hover:bg-rose-50" 
+                                                : "text-teal-600 border-teal-200 hover:bg-teal-50"
                                         )}
                                     >
                                         {student.activationStatus === "ACTIVE" ? "Suspend Access" : "Reinstate Access"}
@@ -379,7 +383,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                 </div>
                                 <div className="p-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
                                      <div>
-                                        <p className="text-sm font-semibold text-slate-900 italic">Remove Account</p>
+                                        <p className="text-sm font-semibold text-slate-900">Remove Account</p>
                                         <p className="text-xs text-slate-500 mt-0.5">Permanently remove this student account from the platform.</p>
                                     </div>
                                     <Button 
@@ -409,19 +413,19 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     {/* Linked Accounts */}
                     <div>
                         <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">Linked Accounts</h3>
-                        <div className="bg-white border border-greys-200 rounded-lg overflow-hidden shadow-sm text-sm divide-y divide-greys-100">
-                            <div className="flex flex-col p-4 hover:bg-slate-50 transition-colors group cursor-pointer">
+                        <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm text-sm divide-y divide-slate-100">
+                            <div className="flex flex-col p-4 hover:bg-teal-50/40 transition-colors group cursor-pointer">
                                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Assigned Mentor</span>
                                 <div className="flex items-center justify-between">
-                                    <span className="font-semibold text-slate-900 group-hover:text-indigo-600">Pending Assignment</span>
-                                    <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-indigo-600" />
+                                    <span className="font-semibold text-slate-900 group-hover:text-teal-600">Pending Assignment</span>
+                                    <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-teal-600" />
                                 </div>
                             </div>
-                            <div className="flex flex-col p-4 hover:bg-slate-50 transition-colors group cursor-pointer">
+                            <div className="flex flex-col p-4 hover:bg-teal-50/40 transition-colors group cursor-pointer">
                                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Learning Pathway</span>
                                 <div className="flex items-center justify-between">
-                                    <span className="font-semibold text-slate-900 group-hover:text-indigo-600">Standard Pathway</span>
-                                    <LinkIcon className="h-3.5 w-3.5 text-slate-300 group-hover:text-indigo-600" />
+                                    <span className="font-semibold text-slate-900 group-hover:text-teal-600">Standard Pathway</span>
+                                    <LinkIcon className="h-3.5 w-3.5 text-slate-300 group-hover:text-teal-600" />
                                 </div>
                             </div>
                         </div>

@@ -275,5 +275,38 @@ export async function PATCH(request: NextRequest, { params }: RouteContext) {
 
 export async function DELETE(request: NextRequest, { params }: RouteContext) {
   const { path } = await params;
-  return proxyRequest(request, path);
+  const response = await proxyRequest(request, path);
+
+  // After a successful DELETE, persist the identifier to the local hidden-user filter
+  // so the record is immediately removed from all list and detail views.
+  if (response.status === 200 || response.status === 204) {
+    try {
+      const lastSegment = decodeURIComponent(path[path.length - 1] || "").trim();
+      if (lastSegment && lastSegment !== "records") {
+        // Determine type from path
+        const pathStr = path.join("/").toLowerCase();
+        const type = pathStr.includes("mentor") ? "MENTOR" : "STUDENT";
+
+        await prisma.deletedLegacyUser.upsert({
+          where: { identifier: lastSegment },
+          update: {},
+          create: { identifier: lastSegment, type },
+        });
+        // Also try to add the lowercase version for email-based lookups
+        const lower = lastSegment.toLowerCase();
+        if (lower !== lastSegment) {
+          await prisma.deletedLegacyUser.upsert({
+            where: { identifier: lower },
+            update: {},
+            create: { identifier: lower, type },
+          });
+        }
+        console.log(`[Proxy DELETE] Auto-hidden: ${lastSegment} (${type})`);
+      }
+    } catch (e) {
+      console.error("[Proxy DELETE] Failed to persist hidden user:", e);
+    }
+  }
+
+  return response;
 }
