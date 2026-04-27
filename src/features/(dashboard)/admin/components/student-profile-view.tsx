@@ -50,10 +50,10 @@ interface StudentProfileViewProps {
 type TabKey = "profile" | "insights" | "history" | "management";
 
 const tabs: { key: TabKey; label: string; icon: React.ReactNode }[] = [
-    { key: "profile", label: "Dossier", icon: <User className="h-4 w-4" /> },
-    { key: "insights", label: "Readiness Pulse", icon: <Sparkles className="h-4 w-4" /> },
-    { key: "history", label: "Academic Log", icon: <History className="h-4 w-4" /> },
-    { key: "management", label: "Administrative", icon: <ShieldCheck className="h-4 w-4" /> },
+    { key: "profile", label: "Overview", icon: <User className="h-4 w-4" /> },
+    { key: "insights", label: "Application Readiness", icon: <Sparkles className="h-4 w-4" /> },
+    { key: "history", label: "Academic Record", icon: <History className="h-4 w-4" /> },
+    { key: "management", label: "Account Management", icon: <ShieldCheck className="h-4 w-4" /> },
 ];
 
 export function StudentProfileView({ studentId }: StudentProfileViewProps) {
@@ -104,9 +104,9 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
         return (
             <div className="max-w-3xl mx-auto mt-12 p-6 bg-white border border-greys-200 rounded-lg text-center shadow-sm">
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">Student Not Found</h3>
-                <p className="text-sm text-slate-500 mb-6">This registry entry couldn't be loaded or doesn't exist.</p>
+                <p className="text-sm text-slate-500 mb-6">This student record could not be loaded or does not exist.</p>
                 <Button asChild variant="outline">
-                    <Link href="/admin/students">Back to Student Hub</Link>
+                    <Link href="/admin/students">Back to Students</Link>
                 </Button>
             </div>
         );
@@ -131,7 +131,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     </div>
                     <div className="flex items-center gap-3">
                         <Button variant="outline" className="h-8 px-4 text-xs font-medium border-greys-200 hover:bg-greys-50 shadow-sm gap-2">
-                           <Mail className="h-3.5 w-3.5 text-slate-400"/> Message Client
+                           <Mail className="h-3.5 w-3.5 text-slate-400"/> Send Message
                         </Button>
                         <Button 
                             onClick={() => updateStatusMutation.mutate(student.activationStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE")}
@@ -144,7 +144,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                             )}
                         >
                             {updateStatusMutation.isPending && <Loader2 className="h-3 w-3 mr-2 animate-spin" />}
-                            {student.activationStatus === "ACTIVE" ? "Suspend Identity" : "Reinstate Identity"}
+                            {student.activationStatus === "ACTIVE" ? "Suspend Account" : "Reinstate Account"}
                         </Button>
                     </div>
                 </div>
@@ -174,7 +174,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                 {/* Left Sidebar Tabs */}
                 <div className="w-52 shrink-0 pr-4">
                     <div className="space-y-1 mb-6">
-                        <p className="px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">Identity Profile</p>
+                        <p className="px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">Student Profile</p>
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
@@ -203,12 +203,12 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     {activeTab === "profile" && (
                         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
                              <div>
-                                <h2 className="text-lg font-semibold text-slate-900">Dossier Overview</h2>
+                                <h2 className="text-lg font-semibold text-slate-900">Profile Overview</h2>
                             </div>
                             
                             <div className="bg-white border border-greys-200 shadow-sm rounded-lg overflow-hidden">
                                 <div className="p-6">
-                                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-6">Admission Milestone Pathway</h3>
+                                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-6">Application Progress</h3>
                                     
                                     <div className="relative flex justify-between items-start px-4 py-4">
                                         <div className="absolute top-[34px] left-8 w-[calc(100%-4rem)] h-[2px] bg-slate-100" />
@@ -242,20 +242,20 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                 <div className="bg-white border text-sm border-greys-200 shadow-sm rounded-lg overflow-hidden">
                                     <div className="p-5 border-b border-greys-100 flex items-center gap-2">
                                         <Target className="h-4 w-4 text-slate-400" />
-                                        <h3 className="font-semibold text-slate-900">Core Profile Attributes</h3>
+                                        <h3 className="font-semibold text-slate-900">Academic Profile</h3>
                                     </div>
                                     <div className="divide-y divide-greys-100 text-sm">
                                         <div className="flex justify-between p-4">
-                                            <span className="text-slate-500 font-medium">Entry Gateway</span>
+                                            <span className="text-slate-500 font-medium">Entry Route</span>
                                             <span className="text-slate-900 font-medium">{student.dentalSchoolGateway || "Standard Entry"}</span>
                                         </div>
                                         <div className="flex justify-between p-4 bg-slate-50/50">
                                             <span className="text-slate-500 font-medium">UCAT Score</span>
-                                            <span className="text-indigo-600 font-semibold">{student.ucatScore || "Not Logged"}</span>
+                                            <span className="text-indigo-600 font-semibold">{student.ucatScore || "Not Recorded"}</span>
                                         </div>
                                         <div className="flex justify-between p-4">
-                                            <span className="text-slate-500 font-medium">CASPer Node</span>
-                                            <span className="text-slate-900 font-medium">{student.casperScore || "Pending"}</span>
+                                            <span className="text-slate-500 font-medium">CASPer Assessment</span>
+                                            <span className="text-slate-900 font-medium">{student.casperScore || "Not Submitted"}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +263,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                 <div className="bg-white border text-sm border-greys-200 shadow-sm rounded-lg overflow-hidden flex flex-col">
                                     <div className="p-5 border-b border-greys-100 flex items-center gap-2">
                                         <FileText className="h-4 w-4 text-slate-400" />
-                                        <h3 className="font-semibold text-slate-900">Motivation Statement</h3>
+                                        <h3 className="font-semibold text-slate-900">Personal Statement</h3>
                                     </div>
                                     <div className="p-5 flex-1 bg-slate-50/50">
                                         {student.whyDentistry ? (
@@ -272,7 +272,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                             </p>
                                         ) : (
                                             <div className="h-full flex items-center justify-center min-h-[100px]">
-                                                <p className="text-xs font-medium text-slate-400 italic">No motivation statement provided yet.</p>
+                                                <p className="text-xs font-medium text-slate-400 italic">No personal statement submitted.</p>
                                             </div>
                                         )}
                                     </div>
@@ -280,17 +280,17 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                             </div>
                             
                             <div className="pt-6 border-t border-greys-200">
-                                <h3 className="text-sm font-semibold text-slate-900 mb-4">Registry Actions</h3>
+                                <h3 className="text-sm font-semibold text-slate-900 mb-4">Administrative Actions</h3>
                                 <div className="grid grid-cols-2 gap-4">
                                      <div className="p-4 bg-white border border-greys-200 shadow-sm rounded-lg hover:shadow-md transition-shadow cursor-pointer group">
                                          <Mail className="h-5 w-5 text-indigo-500 mb-3" />
-                                         <h4 className="text-xs font-semibold text-slate-900 mb-1">Send Engagement Email</h4>
-                                         <p className="text-[11px] text-slate-500 leading-relaxed">Trigger a standardized platform engagement notification.</p>
+                                         <h4 className="text-xs font-semibold text-slate-900 mb-1">Send Notification Email</h4>
+                                         <p className="text-[11px] text-slate-500 leading-relaxed">Send an email notification to this student.</p>
                                      </div>
                                      <div className="p-4 bg-white border border-greys-200 shadow-sm rounded-lg hover:shadow-md transition-shadow cursor-pointer group">
                                          <History className="h-5 w-5 text-emerald-500 mb-3" />
-                                         <h4 className="text-xs font-semibold text-slate-900 mb-1">View Full Audit Log</h4>
-                                         <p className="text-[11px] text-slate-500 leading-relaxed">Review every state change and interaction recorded for this SID.</p>
+                                         <h4 className="text-xs font-semibold text-slate-900 mb-1">View Activity Log</h4>
+                                         <p className="text-[11px] text-slate-500 leading-relaxed">View a complete record of all account activity and administrative changes.</p>
                                      </div>
                                 </div>
                             </div>
@@ -300,29 +300,29 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     {activeTab === "insights" && (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                              <div className="flex items-center justify-between">
-                                <h2 className="text-lg font-semibold text-slate-900">Admission Readiness Pulse</h2>
+                                <h2 className="text-lg font-semibold text-slate-900">Application Readiness Assessment</h2>
                                 <span className="text-xs text-slate-500 font-medium">Algorithmic evaluation</span>
                             </div>
                             
                             <div className="bg-white border border-greys-200 shadow-sm rounded-lg overflow-hidden flex flex-col md:flex-row">
                                 <div className="flex-1 divide-y divide-greys-100">
                                      <div className="flex items-center justify-between p-5 hover:bg-slate-50 transition-colors">
-                                        <span className="text-sm font-medium text-slate-700">Identity Completeness</span>
+                                        <span className="text-sm font-medium text-slate-700">Profile Completeness</span>
                                         <span className="px-3 py-1 rounded-md text-[10px] font-semibold uppercase tracking-widest bg-emerald-50 text-emerald-700 border border-emerald-100">Professional</span>
                                     </div>
                                     <div className="flex items-center justify-between p-5 hover:bg-slate-50 transition-colors">
-                                        <span className="text-sm font-medium text-slate-700">Engagement Metrics</span>
+                                        <span className="text-sm font-medium text-slate-700">Platform Engagement</span>
                                         <span className="px-3 py-1 rounded-md text-[10px] font-semibold uppercase tracking-widest bg-indigo-50 text-indigo-700 border border-indigo-100">Standard</span>
                                     </div>
                                     <div className="flex items-center justify-between p-5 hover:bg-slate-50 transition-colors">
-                                        <span className="text-sm font-medium text-slate-700">Registry Density</span>
+                                        <span className="text-sm font-medium text-slate-700">Application Strength</span>
                                         <span className="px-3 py-1 rounded-md text-[10px] font-semibold uppercase tracking-widest bg-emerald-50 text-emerald-700 border border-emerald-100">Elite</span>
                                     </div>
                                 </div>
                                 <div className="w-64 bg-slate-50 border-l border-greys-100 p-8 flex flex-col items-center justify-center text-center">
                                     <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Consolidated Rating</p>
                                     <div className="text-6xl font-bold text-slate-900 tracking-tighter">A<span className="text-indigo-600">+</span></div>
-                                    <p className="text-[11px] text-slate-500 font-medium mt-4">Calculated from 14 nodes.</p>
+                                    <p className="text-[11px] text-slate-500 font-medium mt-4">Based on 14 assessment criteria.</p>
                                 </div>
                             </div>
                         </div>
@@ -331,11 +331,11 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     {activeTab === "history" && (
                          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                             <div>
-                                <h2 className="text-lg font-semibold text-slate-900">Academic Target Nodes</h2>
+                                <h2 className="text-lg font-semibold text-slate-900">Target Universities</h2>
                             </div>
                             
                             <div className="bg-white border text-sm border-greys-200 shadow-sm rounded-lg overflow-hidden p-6">
-                                <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-4">Declared Ambitions</h3>
+                                <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-4">Selected Universities</h3>
                                 {targetSchoolsArr.length > 0 ? (
                                     <div className="flex flex-wrap gap-2">
                                         {targetSchoolsArr.map((school: string, i: number) => (
@@ -345,7 +345,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-slate-500 italic">No specific university targets declared.</p>
+                                    <p className="text-sm text-slate-500 italic">No universities selected yet.</p>
                                 )}
                             </div>
                         </div>
@@ -354,7 +354,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     {activeTab === "management" && (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                              <div className="flex items-center justify-between">
-                                <h2 className="text-lg font-semibold text-slate-900">Identity Governance</h2>
+                                <h2 className="text-lg font-semibold text-slate-900">Account Management</h2>
                             </div>
                             
                             <div className="bg-white border border-greys-200 shadow-sm rounded-lg overflow-hidden">
@@ -378,13 +378,13 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                 </div>
                                 <div className="p-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
                                      <div>
-                                        <p className="text-sm font-semibold text-slate-900 italic">Archive Identity</p>
-                                        <p className="text-xs text-slate-500 mt-0.5">Flag this registry entry for permanent archival.</p>
+                                        <p className="text-sm font-semibold text-slate-900 italic">Remove Account</p>
+                                        <p className="text-xs text-slate-500 mt-0.5">Permanently remove this student account from the platform.</p>
                                     </div>
                                     <Button 
                                         variant="outline" 
                                         onClick={() => {
-                                            if (confirm("Are you sure you want to flag this registry entry for permanent archival?")) {
+                                            if (confirm("Are you sure you want to permanently remove this student account? This action cannot be undone.")) {
                                                 deleteStudentMutation.mutate();
                                             }
                                         }}
@@ -392,7 +392,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                         className="h-8 px-4 text-xs font-medium border-greys-200 text-slate-400 hover:text-error-600 hover:bg-error-50 hover:border-error-200 bg-white shadow-sm transition-colors"
                                     >
                                         {deleteStudentMutation.isPending && <Loader2 className="h-3 w-3 mr-2 animate-spin" />}
-                                        Archive Record
+                                        Remove Account
                                     </Button>
                                 </div>
                             </div>
@@ -403,17 +403,17 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                 {/* Right Context Meta Info Column */}
                 <div className="w-full xl:w-64 shrink-0 space-y-6 hidden lg:block">
                     <div>
-                        <h3 className="text-[12px] font-semibold text-slate-900 mb-3 uppercase tracking-wider">Ecosystem Ties</h3>
+                        <h3 className="text-[12px] font-semibold text-slate-900 mb-3 uppercase tracking-wider">Linked Accounts</h3>
                         <div className="bg-white border border-greys-200 rounded-lg overflow-hidden text-sm shadow-sm">
                             <div className="flex flex-col p-4 border-b border-greys-100 hover:bg-slate-50 transition-colors group cursor-pointer text-left">
-                                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Primary Mentor</span>
+                                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Assigned Mentor</span>
                                 <div className="flex items-center justify-between">
                                     <span className="font-semibold text-slate-900 group-hover:text-indigo-600">Pending Assignment</span>
                                     <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-indigo-600" />
                                 </div>
                             </div>
                             <div className="flex flex-col p-4 hover:bg-slate-50 transition-colors group cursor-pointer text-left">
-                                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Portfolio</span>
+                                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Learning Pathway</span>
                                 <div className="flex items-center justify-between">
                                     <span className="font-semibold text-slate-900 group-hover:text-indigo-600">Standard Pathway</span>
                                     <LinkIcon className="h-3.5 w-3.5 text-slate-300 group-hover:text-indigo-600" />
@@ -423,8 +423,8 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     </div>
 
                     <div>
-                        <h3 className="text-[12px] font-semibold text-slate-900 mb-3 uppercase tracking-wider">System State</h3>
-                        <p className="text-[11px] text-slate-500 mb-3 leading-relaxed">Profile synchronized directly from identity pool.</p>
+                        <h3 className="text-[12px] font-semibold text-slate-900 mb-3 uppercase tracking-wider">Account Information</h3>
+                        <p className="text-[11px] text-slate-500 mb-3 leading-relaxed">Profile data is synchronised with the central student registry.</p>
                         <div className="flex items-center justify-between border border-greys-200 bg-slate-50 px-3 py-2.5 rounded-lg text-xs">
                             <span className="flex items-center gap-2 font-medium text-slate-700">
                                 <Database className="h-3.5 w-3.5 text-slate-400" /> core/students
