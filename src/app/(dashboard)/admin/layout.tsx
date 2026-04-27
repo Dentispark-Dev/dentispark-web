@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
 
   const isAdmin =
-    user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM";
+    user?.memberType === "PLATFORM_ADMIN" || user?.memberType === "PLATFORM_SYSTEM" || user?.memberType === "MODERATOR";
 
   useEffect(() => {
     if (!isLoading && user && !isAdmin) {

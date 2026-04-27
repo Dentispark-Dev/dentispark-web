@@ -111,7 +111,7 @@ export function middleware(request: NextRequest) {
   // by the catch-all route at /api/backend/[...path]/route.ts.
 
   const memberType = getUserMemberType(request);
-  const isAdmin = memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM";
+  const isAdmin = memberType === "PLATFORM_ADMIN" || memberType === "PLATFORM_SYSTEM" || memberType === "MODERATOR";
   const isMentor = memberType === "ACADEMIC_MENTOR";
 
   // Allow public routes
