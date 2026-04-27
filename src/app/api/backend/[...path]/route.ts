@@ -60,7 +60,60 @@ function paginatedResponse(content: unknown[], total: number, page: number, page
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// INTERCEPT: student/records — fully served from Prisma
+// Helper: seed one page of students from Java into Prisma
+// ─────────────────────────────────────────────────────────────────────────────
+async function seedStudentsFromJava(headers: Record<string, string>): Promise<number> {
+  let page = 0;
+  const pageSize = 100;
+  let totalPages = 1;
+  let seeded = 0;
+
+  while (page < totalPages) {
+    try {
+      const res = await fetch(
+        `${API_URL}/students/records?pageNumber=${page}&pageSize=${pageSize}`,
+        { headers, cache: "no-store" }
+      );
+      if (!res.ok) break;
+      const json = await res.json();
+      totalPages = json.totalPages ?? 1;
+
+      for (const s of (json.content ?? [])) {
+        if (!s.emailAddress) continue;
+        try {
+          await prisma.user.upsert({
+            where:  { email: s.emailAddress },
+            update: {
+              sid: s.sid || null, firstName: s.firstName || null, lastName: s.lastName || null,
+              name: s.name || `${s.firstName||""} ${s.lastName||""}`.trim() || null,
+              activationStatus: s.activationStatus || "ACTIVE",
+              gateway: s.dentalSchoolGateway || null,
+              memberCategory: s.currentAcademicYear ? String(s.currentAcademicYear) : null,
+              role: "STUDENT", deletedAt: null,
+            },
+            create: {
+              email: s.emailAddress, sid: s.sid || null, firstName: s.firstName || null,
+              lastName: s.lastName || null,
+              name: s.name || `${s.firstName||""} ${s.lastName||""}`.trim() || null,
+              activationStatus: s.activationStatus || "ACTIVE",
+              gateway: s.dentalSchoolGateway || null,
+              memberCategory: s.currentAcademicYear ? String(s.currentAcademicYear) : null,
+              role: "STUDENT", deletedAt: null,
+            },
+          });
+          seeded++;
+        } catch { /* skip duplicates */ }
+      }
+    } catch { break; }
+    page++;
+  }
+
+  console.log(`[Prisma Seed] Auto-seeded ${seeded} students from Java.`);
+  return seeded;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INTERCEPT: student/records — Prisma-first with auto-seed fallback
 // ─────────────────────────────────────────────────────────────────────────────
 async function handleStudentRecords(request: NextRequest): Promise<NextResponse> {
   const urlParams  = new URL(request.url).searchParams;
@@ -69,30 +122,35 @@ async function handleStudentRecords(request: NextRequest): Promise<NextResponse>
   const searchKey  = (urlParams.get("searchKey") || "").toLowerCase().trim();
   const statusFilter = urlParams.get("activationStatus") || null;
 
-  const where: Record<string, unknown> = {
-    role:      "STUDENT",
-    deletedAt: null, // ← Only return non-deleted students
-  };
+  // Check if Prisma has any students yet
+  const existingCount = await prisma.user.count({ where: { role: "STUDENT", deletedAt: null } });
 
+  if (existingCount === 0) {
+    // First access — auto-seed from Java using the request's auth token
+    console.log("[Prisma] No local students found — triggering auto-seed from Java...");
+    const seedHeaders = buildHeaders(request, "seed");
+    const seeded = await seedStudentsFromJava(seedHeaders);
+    if (seeded === 0) {
+      // Java returned nothing (likely no auth on this request yet) — return empty
+      console.log("[Prisma] Auto-seed returned 0 records. Returning empty list.");
+    }
+  }
+
+  const where: Record<string, unknown> = { role: "STUDENT", deletedAt: null };
   if (searchKey) {
     where["OR"] = [
-      { firstName:    { contains: searchKey, mode: "insensitive" } },
-      { lastName:     { contains: searchKey, mode: "insensitive" } },
-      { email:        { contains: searchKey, mode: "insensitive" } },
-      { sid:          { contains: searchKey, mode: "insensitive" } },
-      { name:         { contains: searchKey, mode: "insensitive" } },
+      { firstName: { contains: searchKey, mode: "insensitive" } },
+      { lastName:  { contains: searchKey, mode: "insensitive" } },
+      { email:     { contains: searchKey, mode: "insensitive" } },
+      { sid:       { contains: searchKey, mode: "insensitive" } },
+      { name:      { contains: searchKey, mode: "insensitive" } },
     ];
   }
-  if (statusFilter) {
-    where["activationStatus"] = statusFilter;
-  }
+  if (statusFilter) where["activationStatus"] = statusFilter;
 
   const [students, total] = await Promise.all([
     prisma.user.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      skip:  page * pageSize,
-      take:  pageSize,
+      where, orderBy: { createdAt: "desc" }, skip: page * pageSize, take: pageSize,
     }),
     prisma.user.count({ where }),
   ]);
@@ -114,6 +172,7 @@ async function handleStudentRecords(request: NextRequest): Promise<NextResponse>
   console.log(`[Prisma] Serving ${content.length}/${total} students (page ${page})`);
   return paginatedResponse(content, total, page, pageSize);
 }
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // INTERCEPT: mentor/records — fully served from Prisma
