@@ -57,6 +57,30 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
     if (channelId) headers["Channel-ID"] = channelId;
     if (channelSecret) headers["Channel-Secret"] = channelSecret;
 
+    // INTERCEPT DELETED PROFILES BEFORE CALLING JAVA (Local Hide Feature)
+    // If the path contains an identifier that we've locally hidden, return 404 immediately.
+    const lastSegment = pathSegments[pathSegments.length - 1];
+    if (lastSegment && lastSegment !== "records" && request.method === "GET") {
+        const decodedSegment = decodeURIComponent(lastSegment).trim().toLowerCase();
+        try {
+            const hiddenUser = await prisma.deletedLegacyUser.findFirst({
+                where: { identifier: { equals: decodedSegment, mode: 'insensitive' } }
+            });
+            
+            if (hiddenUser) {
+                console.log(`[Proxy] Blocked access to locally hidden user: ${decodedSegment}`);
+                return NextResponse.json({
+                    responseCode: "404",
+                    responseMessage: "Account not found or has been archived.",
+                    message: "Account not found or has been archived.",
+                    errors: []
+                }, { status: 404, headers: { "X-Local-Hide": "true" } });
+            }
+        } catch (e) {
+            console.error("[Proxy Filter Error] Pre-flight check failed:", e);
+        }
+    }
+
     // Forward the body as ArrayBuffer to preserve binary data and encoding
     let body: ArrayBuffer | undefined;
     if (!["GET", "HEAD"].includes(request.method)) {
@@ -98,15 +122,21 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
           const hiddenUsers = await prisma.deletedLegacyUser.findMany({
             select: { identifier: true }
           });
-          const hiddenSet = new Set(hiddenUsers.map(u => u.identifier));
+          const hiddenSet = new Set(hiddenUsers.map(u => String(u.identifier).trim().toLowerCase()));
 
           if (hiddenSet.size > 0) {
             const originalLength = json.content.length;
-            json.content = json.content.filter((item: any) => 
-              !hiddenSet.has(item.sid) && 
-              !hiddenSet.has(item.hid) && 
-              !hiddenSet.has(item.emailAddress)
-            );
+            json.content = json.content.filter((item: any) => {
+              const sid = String(item.sid || '').trim().toLowerCase();
+              const hid = String(item.hid || '').trim().toLowerCase();
+              const email = String(item.emailAddress || '').trim().toLowerCase();
+              
+              const isHidden = hiddenSet.has(sid) || hiddenSet.has(hid) || hiddenSet.has(email);
+              if (isHidden) {
+                  console.log(`[Proxy Filter] HIDING user: sid=${sid}, hid=${hid}, email=${email}`);
+              }
+              return !isHidden;
+            });
             
             // Adjust total count if we filtered something on this page
             const removedOnThisPage = originalLength - json.content.length;
