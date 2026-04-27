@@ -169,8 +169,9 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
             </div>
 
             {/* Layout Grid */}
-            <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-10">
-                
+            <div className="max-w-6xl mx-auto px-6 py-8">
+                <div className="flex flex-col md:flex-row gap-10">
+
                 {/* Left Sidebar Tabs */}
                 <div className="w-52 shrink-0 pr-4">
                     <div className="space-y-1 mb-6">
@@ -198,7 +199,7 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                     </div>
                 </div>
 
-                {/* Main Content Area */}
+                {/* Main Content Area — full width, no right sidebar */}
                 <div className="flex-1 min-w-0">
                     {activeTab === "profile" && (
                         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -398,21 +399,25 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                             </div>
                         </div>
                     )}
-                </div>
+                </div>{/* end main content */}
 
-                {/* Right Context Meta Info Column */}
-                <div className="w-full xl:w-64 shrink-0 space-y-6 hidden lg:block">
+                </div>{/* end flex row (sidebar + main) */}
+
+                {/* Bottom Metadata Row — Linked Accounts + Account Information */}
+                <div className="mt-8 pt-6 border-t border-greys-200 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    {/* Linked Accounts */}
                     <div>
-                        <h3 className="text-[12px] font-semibold text-slate-900 mb-3 uppercase tracking-wider">Linked Accounts</h3>
-                        <div className="bg-white border border-greys-200 rounded-lg overflow-hidden text-sm shadow-sm">
-                            <div className="flex flex-col p-4 border-b border-greys-100 hover:bg-slate-50 transition-colors group cursor-pointer text-left">
+                        <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">Linked Accounts</h3>
+                        <div className="bg-white border border-greys-200 rounded-lg overflow-hidden shadow-sm text-sm divide-y divide-greys-100">
+                            <div className="flex flex-col p-4 hover:bg-slate-50 transition-colors group cursor-pointer">
                                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Assigned Mentor</span>
                                 <div className="flex items-center justify-between">
                                     <span className="font-semibold text-slate-900 group-hover:text-indigo-600">Pending Assignment</span>
                                     <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-indigo-600" />
                                 </div>
                             </div>
-                            <div className="flex flex-col p-4 hover:bg-slate-50 transition-colors group cursor-pointer text-left">
+                            <div className="flex flex-col p-4 hover:bg-slate-50 transition-colors group cursor-pointer">
                                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Learning Pathway</span>
                                 <div className="flex items-center justify-between">
                                     <span className="font-semibold text-slate-900 group-hover:text-indigo-600">Standard Pathway</span>
@@ -422,18 +427,31 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                         </div>
                     </div>
 
+                    {/* Account Information */}
                     <div>
-                        <h3 className="text-[12px] font-semibold text-slate-900 mb-3 uppercase tracking-wider">Account Information</h3>
-                        <p className="text-[11px] text-slate-500 mb-3 leading-relaxed">Profile data is synchronised with the central student registry.</p>
-                        <div className="flex items-center justify-between border border-greys-200 bg-slate-50 px-3 py-2.5 rounded-lg text-xs">
-                            <span className="flex items-center gap-2 font-medium text-slate-700">
-                                <Database className="h-3.5 w-3.5 text-slate-400" /> core/students
-                            </span>
+                        <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">Account Information</h3>
+                        <div className="bg-white border border-greys-200 rounded-lg overflow-hidden shadow-sm text-sm divide-y divide-greys-100">
+                            <div className="flex items-center justify-between p-4">
+                                <span className="text-slate-500 font-medium">Data Source</span>
+                                <span className="flex items-center gap-1.5 font-semibold text-slate-700">
+                                    <Database className="h-3.5 w-3.5 text-slate-400" /> core/students
+                                </span>
+                            </div>
+                            <div className="flex items-center justify-between p-4 bg-slate-50/50">
+                                <span className="text-slate-500 font-medium">Sync Status</span>
+                                <span className="flex items-center gap-1.5 text-emerald-600 font-semibold text-xs">
+                                    <CheckCircle className="h-3.5 w-3.5" /> Synchronised
+                                </span>
+                            </div>
+                            <div className="p-4">
+                                <p className="text-[11px] text-slate-400 leading-relaxed">Profile data is synchronised with the central student registry.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
+                </div>{/* end bottom metadata row */}
+
+            </div>{/* end max-w-6xl */}
         </div>
     );
 }
