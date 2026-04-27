@@ -40,11 +40,11 @@ function buildHeaders(request: NextRequest, requestId: string, includeBody = fal
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Helper: standard paginated Prisma-list response
+// Helper: standard paginated Prisma-list response with DentiSpark wrapper
 // ─────────────────────────────────────────────────────────────────────────────
-function paginatedResponse(content: unknown[], total: number, page: number, pageSize: number) {
+function paginatedResponse(content: unknown[], total: number, page: number, pageSize: number, extra = {}) {
   const totalPages = Math.ceil(total / pageSize) || 1;
-  return NextResponse.json({
+  const data = {
     content,
     pageable:         { pageNumber: page, pageSize },
     last:             page >= totalPages - 1,
@@ -56,6 +56,14 @@ function paginatedResponse(content: unknown[], total: number, page: number, page
     first:            page === 0,
     numberOfElements: content.length,
     empty:            content.length === 0,
+    ...extra
+  };
+
+  return NextResponse.json({
+    responseCode:    "00",
+    responseMessage: "Success",
+    errors:          [],
+    responseData:    data,
   }, { status: 200, headers: { "X-Source": "Prisma" } });
 }
 
@@ -108,21 +116,7 @@ async function handleStudentRecords(request: NextRequest): Promise<NextResponse>
 
   console.log(`[Prisma] Serving ${content.length}/${total} students (page ${page}, needsSync=${needsSync})`);
 
-  const totalPages = Math.ceil(total / pageSize) || 1;
-  return NextResponse.json({
-    content,
-    pageable:         { pageNumber: page, pageSize },
-    last:             page >= totalPages - 1,
-    totalElements:    total,
-    totalPages,
-    size:             pageSize,
-    number:           page,
-    sort:             { empty: false, sorted: true, unsorted: false },
-    first:            page === 0,
-    numberOfElements: content.length,
-    empty:            content.length === 0,
-    needsSync,        // UI reads this to show the "Sync from Java" banner
-  }, { status: 200, headers: { "X-Source": "Prisma" } });
+  return paginatedResponse(content, total, page, pageSize, { needsSync });
 }
 
 
@@ -180,7 +174,7 @@ async function handleMentorRecords(request: NextRequest): Promise<NextResponse> 
   }
 
   console.log(`[Prisma] Serving ${content.length}/${total} mentors (page ${page})`);
-  return paginatedResponse(content, content.length, page, pageSize);
+  return paginatedResponse(content, total, page, pageSize);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

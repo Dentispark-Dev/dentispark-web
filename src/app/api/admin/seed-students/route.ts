@@ -43,14 +43,16 @@ export async function POST(request: NextRequest) {
     );
 
     if (!res.ok) {
-      console.error(`[Seed] Java returned ${res.status} on page ${page}`);
+      console.error(`[Seed Students] Java returned ${res.status} on page ${page}`);
       break;
     }
 
     const json = await res.json();
-    totalPages = json.totalPages ?? 1;
+    // Java responses are wrapped in responseData
+    const data = json.responseData || json;
+    totalPages = data.totalPages ?? 1;
 
-    const students: any[] = json.content ?? [];
+    const students: any[] = data.content ?? [];
     for (const s of students) {
       if (!s.emailAddress) continue;
       try {
@@ -82,17 +84,71 @@ export async function POST(request: NextRequest) {
         });
         totalSeeded++;
       } catch (e) {
-        console.error(`[Seed] Failed to upsert ${s.emailAddress}:`, e);
+        console.error(`[Seed Students] Failed to upsert ${s.emailAddress}:`, e);
       }
     }
-
-    console.log(`[Seed] Page ${page + 1}/${totalPages}: processed ${students.length} students`);
     page++;
   }
+
+  // --- Mentor Seeding ---
+  let mentorPage = 0;
+  let totalMentorsSeeded = 0;
+  let totalMentorPages = 1;
+
+  while (mentorPage < totalMentorPages) {
+    try {
+      const res = await fetch(
+        `${API_URL}/mentors/records?pageNumber=${mentorPage}&pageSize=${pageSize}`,
+        { headers, cache: "no-store" }
+      );
+      if (!res.ok) break;
+
+      const json = await res.json();
+      const data = json.responseData || json;
+      totalMentorPages = data.totalPages ?? 1;
+
+      const mentors: any[] = data.content ?? [];
+      for (const m of mentors) {
+        if (!m.emailAddress) continue;
+        try {
+          await prisma.user.upsert({
+            where: { email: m.emailAddress },
+            update: {
+              sid:              m.sid || null,
+              firstName:        m.firstName || null,
+              lastName:         m.lastName || null,
+              name:             m.name || m.mentorName || `${m.firstName || ""} ${m.lastName || ""}`.trim() || null,
+              activationStatus: m.activationStatus || "ACTIVE",
+              gateway:          m.dentalSchoolGateway || null,
+              role:             "MENTOR",
+              deletedAt:        null,
+            },
+            create: {
+              email:            m.emailAddress,
+              sid:              m.sid || null,
+              firstName:        m.firstName || null,
+              lastName:         m.lastName || null,
+              name:             m.name || m.mentorName || `${m.firstName || ""} ${m.lastName || ""}`.trim() || null,
+              activationStatus: m.activationStatus || "ACTIVE",
+              gateway:          m.dentalSchoolGateway || null,
+              role:             "MENTOR",
+              deletedAt:        null,
+            },
+          });
+          totalMentorsSeeded++;
+        } catch {}
+      }
+    } catch { break; }
+    mentorPage++;
+  }
+
+  console.log(`[Seed] Completed. Students: ${totalSeeded}, Mentors: ${totalMentorsSeeded}`);
 
   return NextResponse.json({
     success: true,
     totalSeeded,
-    message: `Successfully seeded ${totalSeeded} students into Prisma.`,
+    totalMentorsSeeded,
+    message: `Successfully seeded ${totalSeeded} students and ${totalMentorsSeeded} mentors into Prisma.`,
   });
 }
+

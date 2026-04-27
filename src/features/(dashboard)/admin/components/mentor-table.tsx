@@ -10,6 +10,7 @@ import {
     ChevronRight,
     MoreVertical,
     Loader2,
+    RefreshCw,
     UserCheck,
     Calendar,
     Hash,
@@ -42,6 +43,7 @@ export function MentorTable() {
     const router = useRouter();
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
     const queryClient = useQueryClient();
     const [query, setQuery] = useState<MentorQuery>({
         page: 0,
@@ -64,10 +66,32 @@ export function MentorTable() {
         onSearch: handleSearch
     });
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ["admin-mentors", query],
         queryFn: () => adminService.getMentorRecords(query),
+        retry: 1,
     });
+
+    const handleSync = async () => {
+        setIsSyncing(true);
+        try {
+            const res = await fetch("/api/admin/seed-students", {
+                method: "POST",
+                headers: { Authorization: "Bearer dentispark-seed" },
+            });
+            const json = await res.json();
+            if (res.ok) {
+                toast.success(`Sync complete — ${json.totalMentorsSeeded ?? 0} mentors imported.`);
+                queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
+            } else {
+                toast.error("Sync failed. Check server logs.");
+            }
+        } catch (e) {
+            toast.error("Sync request failed.");
+        } finally {
+            setIsSyncing(false);
+        }
+    };
 
     const updateStatusMutation = useMutation({
         mutationFn: ({ id, status }: { id: string; status: string }) =>
@@ -150,6 +174,8 @@ export function MentorTable() {
     const totalPages = data?.totalPages || 0;
     const currentPage = data?.pageNumber || 0;
 
+    const needsSync = (data as any)?.needsSync === true;
+
     return (
         <div className="space-y-4 pb-20 font-sans">
             {/* WordPress Style Header */}
@@ -164,6 +190,32 @@ export function MentorTable() {
                     Add New Mentor
                 </Button>
             </div>
+
+            {/* Sync Banner */}
+            {(needsSync || isError) && (
+                <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-md px-4 py-3 text-sm">
+                    <div className="flex items-center gap-2 text-amber-800">
+                        <RefreshCw className="h-4 w-4 text-amber-600" />
+                        <span>
+                            {isError 
+                                ? "Could not load mentors. Click Sync to import from the legacy system."
+                                : "No local mentor data found. Sync once to import all mentors from the legacy system."}
+                        </span>
+                    </div>
+                    <Button 
+                        size="sm"
+                        disabled={isSyncing}
+                        onClick={handleSync}
+                        className="h-7 px-3 text-xs bg-amber-600 hover:bg-amber-700 text-white border-0 ml-4"
+                    >
+                        {isSyncing ? (
+                            <><Loader2 className="h-3 w-3 mr-1 animate-spin" /> Syncing…</>
+                        ) : (
+                            <><RefreshCw className="h-3 w-3 mr-1" /> Sync from Java</>
+                        )}
+                    </Button>
+                </div>
+            )}
 
             {/* Sub Nav */}
             <div className="flex gap-3 text-[13px] text-slate-500 mb-4">
