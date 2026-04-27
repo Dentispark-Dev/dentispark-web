@@ -81,6 +81,77 @@ export async function proxyRequest(request: NextRequest, pathSegments: string[])
         }
     }
 
+    // INTERCEPT MENTOR RECORDS: Serve exclusively from local Prisma database
+    if (backendPath.includes("mentors/records") && request.method === "GET") {
+        try {
+            const prismaMentors = await prisma.user.findMany({
+                where: { role: "MENTOR" },
+                include: { mentorProfile: true },
+                orderBy: { createdAt: 'desc' }
+            });
+            
+            const formattedPrismaMentors = prismaMentors.map(m => ({
+                sid: m.sid || m.id,
+                hid: m.id,
+                emailAddress: m.email,
+                firstName: m.firstName,
+                lastName: m.lastName,
+                mentorName: m.name,
+                activationStatus: m.activationStatus,
+                dentalSchoolGateway: m.gateway || "General Dentistry",
+                verified: m.mentorProfile?.isVerified || false,
+                dateStamped: m.createdAt.toISOString()
+            }));
+
+            // Handle basic pagination via query params
+            const urlParams = new URL(request.url).searchParams;
+            const page = parseInt(urlParams.get("pageNumber") || urlParams.get("page") || "0");
+            const pageSize = parseInt(urlParams.get("pageSize") || urlParams.get("perPage") || "10");
+            
+            const searchKey = (urlParams.get("searchKey") || "").toLowerCase();
+            const verifiedParam = urlParams.get("verified");
+            
+            // Filter by searchKey
+            let filteredMentors = formattedPrismaMentors;
+            if (searchKey) {
+                filteredMentors = filteredMentors.filter(m => 
+                    (m.mentorName && m.mentorName.toLowerCase().includes(searchKey)) ||
+                    (m.emailAddress && m.emailAddress.toLowerCase().includes(searchKey)) ||
+                    (m.hid && m.hid.toLowerCase().includes(searchKey))
+                );
+            }
+            
+            // Filter by verified
+            if (verifiedParam !== null) {
+                const isVer = verifiedParam === 'true';
+                filteredMentors = filteredMentors.filter(m => m.verified === isVer);
+            }
+
+            const totalElements = filteredMentors.length;
+            const totalPages = Math.ceil(totalElements / pageSize);
+            const content = filteredMentors.slice(page * pageSize, (page + 1) * pageSize);
+
+            console.log(`[Proxy Intercept] Serving ${content.length} mentors from Prisma (Total: ${totalElements})`);
+
+            return NextResponse.json({
+                content,
+                pageable: { pageNumber: page, pageSize: pageSize },
+                last: page >= totalPages - 1,
+                totalElements,
+                totalPages,
+                size: pageSize,
+                number: page,
+                sort: { empty: false, sorted: true, unsorted: false },
+                first: page === 0,
+                numberOfElements: content.length,
+                empty: content.length === 0
+            }, { status: 200, headers: { "X-Proxied-To-Java": "false", "X-Source": "Prisma" } });
+        } catch (e) {
+            console.error("[Proxy Merge Error] Failed to fetch Prisma mentors:", e);
+            // Fallback to Java if Prisma fails
+        }
+    }
+
     // Forward the body as ArrayBuffer to preserve binary data and encoding
     let body: ArrayBuffer | undefined;
     if (!["GET", "HEAD"].includes(request.method)) {
