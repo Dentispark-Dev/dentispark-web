@@ -77,6 +77,21 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
         }
     });
 
+    const deleteStudentMutation = useMutation({
+        mutationFn: () => adminService.deleteStudent(studentId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["admin-students"] });
+            toast.success("Student account archived and hidden successfully");
+            router.push("/admin/students");
+        },
+        onError: (error: any) => {
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+                        error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to archive student account"}`;
+            toast.error(msg.trim());
+        }
+    });
+
     if (isLoading) {
         return (
             <div className="flex bg-[#fafafa] min-h-[500px] items-center justify-center">
@@ -366,7 +381,17 @@ export function StudentProfileView({ studentId }: StudentProfileViewProps) {
                                         <p className="text-sm font-semibold text-slate-900 italic">Archive Identity</p>
                                         <p className="text-xs text-slate-500 mt-0.5">Flag this registry entry for permanent archival.</p>
                                     </div>
-                                    <Button variant="outline" className="h-8 px-4 text-xs font-medium border-greys-200 text-slate-400 hover:text-slate-900 bg-white shadow-sm">
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => {
+                                            if (confirm("Are you sure you want to flag this registry entry for permanent archival?")) {
+                                                deleteStudentMutation.mutate();
+                                            }
+                                        }}
+                                        disabled={deleteStudentMutation.isPending}
+                                        className="h-8 px-4 text-xs font-medium border-greys-200 text-slate-400 hover:text-error-600 hover:bg-error-50 hover:border-error-200 bg-white shadow-sm transition-colors"
+                                    >
+                                        {deleteStudentMutation.isPending && <Loader2 className="h-3 w-3 mr-2 animate-spin" />}
                                         Archive Record
                                     </Button>
                                 </div>
