@@ -7,7 +7,7 @@ import {
     ChevronLeft,
     ChevronRight,
     Loader2,
-    Trash2,
+    RefreshCw,
     CheckCircle2,
     XCircle,
 } from "lucide-react";
@@ -25,6 +25,7 @@ export function StudentTable() {
     const router = useRouter();
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
     const queryClient = useQueryClient();
 
     // Row selection state
@@ -51,10 +52,33 @@ export function StudentTable() {
         onSearch: handleSearch
     });
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ["admin-students", query],
         queryFn: () => adminService.getStudentRecords(query),
+        retry: 1,
     });
+
+    // Triggered by the "Sync from Java" banner — calls the seed endpoint once
+    const handleSync = async () => {
+        setIsSyncing(true);
+        try {
+            const res = await fetch("/api/admin/seed-students", {
+                method: "POST",
+                headers: { Authorization: "Bearer dentispark-seed" },
+            });
+            const json = await res.json();
+            if (res.ok) {
+                toast.success(`Sync complete — ${json.totalSeeded ?? 0} students imported.`);
+                queryClient.invalidateQueries({ queryKey: ["admin-students"] });
+            } else {
+                toast.error("Sync failed. Check server logs.");
+            }
+        } catch (e) {
+            toast.error("Sync request failed.");
+        } finally {
+            setIsSyncing(false);
+        }
+    };
 
     const updateStatusMutation = useMutation({
         mutationFn: ({ id, status }: { id: string; status: string }) =>
@@ -174,6 +198,8 @@ export function StudentTable() {
         );
     };
 
+    const needsSync = (data as any)?.needsSync === true;
+
     return (
         <div className="space-y-4 pb-20 font-sans">
             {/* Page Header */}
@@ -188,6 +214,32 @@ export function StudentTable() {
                     Add New Student
                 </Button>
             </div>
+
+            {/* Sync Banner — shown only when local DB has no students yet */}
+            {(needsSync || isError) && (
+                <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-md px-4 py-3 text-sm">
+                    <div className="flex items-center gap-2 text-amber-800">
+                        <RefreshCw className="h-4 w-4 text-amber-600" />
+                        <span>
+                            {isError
+                                ? "Could not load students. Click Sync to import from the legacy system."
+                                : "No local student data found. Sync once to import all students from the legacy system."}
+                        </span>
+                    </div>
+                    <Button
+                        size="sm"
+                        disabled={isSyncing}
+                        onClick={handleSync}
+                        className="h-7 px-3 text-xs bg-amber-600 hover:bg-amber-700 text-white border-0 ml-4"
+                    >
+                        {isSyncing ? (
+                            <><Loader2 className="h-3 w-3 mr-1 animate-spin" /> Syncing…</>
+                        ) : (
+                            <><RefreshCw className="h-3 w-3 mr-1" /> Sync from Java</>
+                        )}
+                    </Button>
+                </div>
+            )}
 
             {/* Sub Nav Filters */}
             <div className="flex gap-3 text-[13px] text-slate-500 mb-4">
