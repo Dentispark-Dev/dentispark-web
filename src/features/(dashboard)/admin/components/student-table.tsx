@@ -4,35 +4,18 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-    Search,
-    Filter,
     ChevronLeft,
     ChevronRight,
-    MoreVertical,
     Loader2,
-    UserPlus,
-    Calendar,
-    Hash,
-    Layers,
-    CreditCard,
-    ArrowRight,
     Trash2,
-    ShieldX
+    CheckCircle2,
+    XCircle,
 } from "lucide-react";
 import { adminService } from "@/src/connection/admin-service";
 import { StudentQuery, PaginatedResponse, StudentRecord } from "@/src/connection/api-types";
 import { useSearch } from "@/src/hooks/use-search";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-    DropdownMenuSeparator,
-    DropdownMenuLabel
-} from "@/src/components/ui/dropdown-menu";
-import { Badge } from "@/src/components/ui/badge";
 import { toast } from "sonner";
 import { InviteStudentModal } from "./invite-student-modal";
 import { CreateUserModal } from "./create-user-modal";
@@ -43,6 +26,11 @@ export function StudentTable() {
     const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const queryClient = useQueryClient();
+
+    // Row selection state
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+    const [bulkAction, setBulkAction] = useState("bulk");
+
     const [query, setQuery] = useState<StudentQuery>({
         page: 0,
         perPage: 10,
@@ -102,46 +90,97 @@ export function StudentTable() {
         mutationFn: (id: string) => adminService.deleteStudent(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["admin-students"] });
-            toast.success("Student account permanently deleted");
+            toast.success("Student removed successfully");
         },
         onError: (error: any) => {
-            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' : 
+            const diag = error?.headers?.['x-handled-locally'] ? '[LOCAL]' :
                         error?.headers?.['x-proxied-to-java-fallback'] ? '[FALLBACK]' : '';
-            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to delete student account"}`;
+            const msg = `${diag} ${error?.message || error?.responseMessage || "Failed to remove student"}`;
             toast.error(msg.trim());
         }
     });
-
-    const handlePageChange = (newPage: number) => {
-        setQuery(prev => ({ ...prev, page: newPage }));
-    };
-
-    const getStatusBadge = (status: string) => {
-        const s = status.toUpperCase();
-        const config: Record<string, string> = {
-            ACTIVE: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500/20",
-            INACTIVE: "bg-slate-50 text-slate-700 ring-1 ring-slate-500/20",
-            SUSPENDED: "bg-rose-50 text-rose-700 ring-1 ring-rose-500/20",
-            PENDING: "bg-amber-50 text-amber-700 ring-1 ring-amber-500/20",
-        };
-        return (
-            <Badge className={cn("px-3 py-1 border-none font-extrabold text-[10px] uppercase tracking-widest", config[s] || "bg-blue-50 text-blue-700 ring-1 ring-blue-500/20")}>
-                {status}
-            </Badge>
-        );
-    };
 
     const students = data?.content || [];
     const totalPages = data?.totalPages || 0;
     const currentPage = data?.pageNumber || 0;
 
+    // ── Selection helpers ────────────────────────────────────────────────────
+    const allIds = students.map(s => s.sid);
+    const allSelected = allIds.length > 0 && allIds.every(id => selectedIds.has(id));
+    const someSelected = allIds.some(id => selectedIds.has(id));
+
+    const toggleAll = () => {
+        if (allSelected) {
+            setSelectedIds(new Set());
+        } else {
+            setSelectedIds(new Set(allIds));
+        }
+    };
+
+    const toggleOne = (id: string) => {
+        setSelectedIds(prev => {
+            const next = new Set(prev);
+            next.has(id) ? next.delete(id) : next.add(id);
+            return next;
+        });
+    };
+
+    // ── Bulk apply ───────────────────────────────────────────────────────────
+    const handleBulkApply = async () => {
+        if (bulkAction === "bulk" || selectedIds.size === 0) {
+            if (bulkAction === "bulk") toast.error("Please select a bulk action first.");
+            if (selectedIds.size === 0) toast.error("Please select at least one student.");
+            return;
+        }
+
+        if (bulkAction === "delete") {
+            if (!confirm(`Permanently remove ${selectedIds.size} selected student${selectedIds.size > 1 ? "s" : ""}? This cannot be undone.`)) return;
+            const ids = Array.from(selectedIds);
+            let successCount = 0;
+            for (const id of ids) {
+                try {
+                    await adminService.deleteStudent(id);
+                    successCount++;
+                } catch {
+                    toast.error(`Failed to remove student ${id}`);
+                }
+            }
+            if (successCount > 0) toast.success(`${successCount} student${successCount > 1 ? "s" : ""} removed successfully.`);
+            setSelectedIds(new Set());
+            queryClient.invalidateQueries({ queryKey: ["admin-students"] });
+        }
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setQuery(prev => ({ ...prev, page: newPage }));
+        setSelectedIds(new Set());
+    };
+
+    // ── Status badge ─────────────────────────────────────────────────────────
+    const getStatusBadge = (status: string) => {
+        const s = (status || "").toUpperCase();
+        const map: Record<string, { label: string; cls: string }> = {
+            ACTIVE:    { label: "Active",    cls: "bg-emerald-50 text-emerald-700 border border-emerald-200" },
+            COMPLETED: { label: "Completed", cls: "bg-indigo-50 text-indigo-700 border border-indigo-200" },
+            INACTIVE:  { label: "Inactive",  cls: "bg-slate-100 text-slate-500 border border-slate-200" },
+            SUSPENDED: { label: "Suspended", cls: "bg-rose-50 text-rose-700 border border-rose-200" },
+            PENDING:   { label: "Pending",   cls: "bg-amber-50 text-amber-700 border border-amber-200" },
+        };
+        const cfg = map[s] || { label: status, cls: "bg-slate-100 text-slate-600 border border-slate-200" };
+        return (
+            <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide", cfg.cls)}>
+                {cfg.label}
+            </span>
+        );
+    };
+
     return (
         <div className="space-y-4 pb-20 font-sans">
-            {/* WordPress Style Header */}
+            {/* Page Header */}
             <div className="flex items-center gap-4 mb-2 mt-4">
                 <h1 className="text-2xl font-normal text-slate-800">Students</h1>
-                <Button 
-                    variant="outline" 
+                <Button
+                    variant="outline"
                     size="sm"
                     className="h-8 px-3 text-xs border-teal-600 text-teal-600 font-medium hover:bg-teal-50"
                     onClick={() => setIsCreateModalOpen(true)}
@@ -150,21 +189,21 @@ export function StudentTable() {
                 </Button>
             </div>
 
-            {/* Sub Nav */}
+            {/* Sub Nav Filters */}
             <div className="flex gap-3 text-[13px] text-slate-500 mb-4">
-                <span 
+                <span
                     className={cn("cursor-pointer", !query.platformMemberProfileStatus ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
                     onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "", page: 0 }))}
                 >
                     All <span className="text-slate-500 font-normal">({!query.platformMemberProfileStatus ? data?.totalElements || 0 : ''})</span>
-                </span> | 
-                <span 
+                </span> |
+                <span
                     className={cn("cursor-pointer", query.platformMemberProfileStatus === "ACTIVE" ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
                     onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "ACTIVE", page: 0 }))}
                 >
                     Active
-                </span> | 
-                <span 
+                </span> |
+                <span
                     className={cn("cursor-pointer", query.platformMemberProfileStatus === "INACTIVE" ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
                     onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", page: 0 }))}
                 >
@@ -172,129 +211,184 @@ export function StudentTable() {
                 </span>
             </div>
 
-            {/* Top Controls */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-2 gap-4">
+            {/* Bulk Action Bar */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-3">
                 <div className="flex items-center gap-2">
-                    <select className="text-[13px] border-slate-400 rounded-sm px-2 py-1 bg-white h-8 w-32 focus:ring-1 focus:ring-teal-500 focus:border-teal-500 text-slate-700">
-                        <option>Bulk actions</option>
+                    <select
+                        value={bulkAction}
+                        onChange={e => setBulkAction(e.target.value)}
+                        className="text-[13px] border border-slate-300 rounded-sm px-2 py-1 bg-white h-8 w-36 focus:ring-1 focus:ring-teal-500 focus:border-teal-500 text-slate-700"
+                    >
+                        <option value="bulk">Bulk actions</option>
                         <option value="delete">Delete</option>
                     </select>
-                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-400 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">Apply</Button>
+                    <Button
+                        variant="outline"
+                        className="h-8 px-3 text-xs border-slate-300 text-slate-700 bg-slate-50 hover:bg-white rounded-sm"
+                        onClick={handleBulkApply}
+                        disabled={selectedIds.size === 0 || bulkAction === "bulk"}
+                    >
+                        Apply
+                        {selectedIds.size > 0 && bulkAction !== "bulk" && (
+                            <span className="ml-1.5 bg-teal-600 text-white text-[10px] rounded-full px-1.5 py-0.5 font-bold leading-none">
+                                {selectedIds.size}
+                            </span>
+                        )}
+                    </Button>
+                    {selectedIds.size > 0 && (
+                        <span className="text-[12px] text-slate-500">
+                            {selectedIds.size} selected
+                        </span>
+                    )}
                 </div>
                 <div className="flex items-center gap-2">
-                    <Input 
-                        placeholder="" 
-                        className="h-8 w-48 text-[13px] rounded-sm border-slate-400 focus:border-teal-500"
+                    <Input
+                        placeholder="Search students…"
+                        className="h-8 w-52 text-[13px] rounded-sm border-slate-300 focus:border-teal-500"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                     />
-                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-400 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">Search Users</Button>
+                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-300 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">
+                        Search Users
+                    </Button>
                 </div>
             </div>
 
-            {/* WordPress Style Table */}
-            <div className="bg-white border border-slate-300 shadow-sm">
+            {/* Table */}
+            <div className="bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-[13px] text-slate-700 border-collapse">
                         <thead>
-                            <tr className="border-b border-slate-300 bg-slate-50 text-slate-800">
-                                <th className="w-10 py-2 px-3 text-center border-r border-slate-200">
-                                    <input type="checkbox" className="rounded-sm border-slate-400" />
+                            <tr className="border-b border-slate-200 bg-slate-50 text-slate-600 text-[11px] uppercase tracking-wider">
+                                <th className="w-10 py-3 px-4 text-center">
+                                    <input
+                                        type="checkbox"
+                                        className="rounded-sm border-slate-400 cursor-pointer"
+                                        checked={allSelected}
+                                        ref={el => { if (el) el.indeterminate = someSelected && !allSelected; }}
+                                        onChange={toggleAll}
+                                    />
                                 </th>
-                                <th className="py-2 px-3 font-semibold">System ID</th>
-                                <th className="py-2 px-3 font-semibold">Name</th>
-                                <th className="py-2 px-3 font-semibold">Email</th>
-                                <th className="py-2 px-3 font-semibold">Gateway</th>
-                                <th className="py-2 px-3 font-semibold">Status</th>
+                                <th className="py-3 px-4 font-semibold">System ID</th>
+                                <th className="py-3 px-4 font-semibold">Name</th>
+                                <th className="py-3 px-4 font-semibold">Email</th>
+                                <th className="py-3 px-4 font-semibold">Gateway</th>
+                                <th className="py-3 px-4 font-semibold">Status</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-200">
+                        <tbody className="divide-y divide-slate-100">
                             {isLoading ? (
-                                Array.from({ length: 5 }).map((_, i) => (
+                                Array.from({ length: 6 }).map((_, i) => (
                                     <tr key={`skeleton-${i}`} className="animate-pulse bg-white">
-                                        <td className="py-3 px-3 border-r border-slate-100"></td>
-                                        <td className="py-3 px-3"><div className="h-4 w-24 bg-slate-200 rounded" /></td>
-                                        <td className="py-3 px-3"><div className="h-4 w-40 bg-slate-200 rounded" /></td>
-                                        <td className="py-3 px-3"><div className="h-4 w-48 bg-slate-200 rounded" /></td>
-                                        <td className="py-3 px-3"><div className="h-4 w-20 bg-slate-200 rounded" /></td>
-                                        <td className="py-3 px-3"><div className="h-4 w-16 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-4"><div className="h-4 w-4 bg-slate-200 rounded mx-auto" /></td>
+                                        <td className="py-3 px-4"><div className="h-4 w-28 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-4"><div className="h-4 w-36 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-4"><div className="h-4 w-44 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-4"><div className="h-4 w-16 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-4"><div className="h-4 w-20 bg-slate-200 rounded" /></td>
                                     </tr>
                                 ))
                             ) : students.length === 0 ? (
                                 <tr>
-                                    <td colSpan={6} className="py-8 px-4 text-center text-slate-500">
-                                        No users found.
+                                    <td colSpan={6} className="py-12 px-4 text-center text-slate-400 text-sm">
+                                        No students found.
                                     </td>
                                 </tr>
                             ) : (
-                                students.map((student, idx) => (
-                                    <tr 
-                                        key={student.sid}
-                                        className={cn(
-                                            "group transition-colors",
-                                            idx % 2 === 0 ? "bg-white" : "bg-[#f9f9f9]"
-                                        )}
-                                    >
-                                        <td className="w-10 py-3 px-3 text-center align-top border-r border-slate-100">
-                                            <input type="checkbox" className="rounded-sm border-slate-400 mt-1" />
-                                        </td>
-                                        <td className="py-3 px-3 align-top">
-                                            <div className="flex items-start gap-3">
-                                                <div className="h-8 w-8 rounded-sm bg-slate-100 flex flex-shrink-0 items-center justify-center text-slate-600 font-bold text-xs mt-0.5">
-                                                    {(student.firstName?.[0] || "")}{(student.lastName?.[0] || "")}
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <strong className="text-teal-700 text-[14px]">{student.sid}</strong>
-                                                    <div className="flex flex-wrap gap-2 text-xs mt-1 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity min-h-[16px]">
-                                                        <button 
+                                students.map((student) => {
+                                    const isSelected = selectedIds.has(student.sid);
+                                    return (
+                                        <tr
+                                            key={student.sid}
+                                            className={cn(
+                                                "group transition-colors hover:bg-indigo-50/30",
+                                                isSelected ? "bg-indigo-50/50" : ""
+                                            )}
+                                        >
+                                            {/* Checkbox */}
+                                            <td className="w-10 py-3 px-4 text-center align-middle">
+                                                <input
+                                                    type="checkbox"
+                                                    className="rounded-sm border-slate-400 cursor-pointer"
+                                                    checked={isSelected}
+                                                    onChange={() => toggleOne(student.sid)}
+                                                />
+                                            </td>
+
+                                            {/* System ID + row actions */}
+                                            <td className="py-3 px-4 align-middle">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-8 w-8 rounded-md bg-slate-100 border border-slate-200 flex flex-shrink-0 items-center justify-center text-slate-600 font-bold text-xs">
+                                                        {(student.firstName?.[0] || "")}{(student.lastName?.[0] || "")}
+                                                    </div>
+                                                    <div className="flex flex-col min-w-0">
+                                                        <button
                                                             onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
-                                                            className="text-teal-600 hover:text-teal-800 hover:underline focus:opacity-100"
+                                                            className="text-teal-700 font-semibold hover:text-teal-900 hover:underline text-left truncate"
                                                         >
-                                                            Edit
+                                                            {student.sid}
                                                         </button>
-                                                        <span>|</span>
-                                                        <button 
-                                                            onClick={() => {
-                                                                if (confirm("Are you sure you want to PERMANENTLY delete this student? This action cannot be undone.")) {
-                                                                    deleteStudentMutation.mutate(student.sid);
-                                                                }
-                                                            }}
-                                                            className="text-rose-600 hover:text-rose-800 hover:underline focus:opacity-100"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                        <span>|</span>
-                                                        <button 
-                                                            onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
-                                                            className="text-teal-600 hover:text-teal-800 hover:underline focus:opacity-100"
-                                                        >
-                                                            View
-                                                        </button>
+                                                        <div className="flex gap-2 text-[11px] mt-0.5 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <button
+                                                                onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
+                                                                className="text-teal-600 hover:text-teal-800 hover:underline"
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <span>|</span>
+                                                            <button
+                                                                onClick={() => {
+                                                                    if (confirm("Permanently remove this student? This cannot be undone.")) {
+                                                                        deleteStudentMutation.mutate(student.sid);
+                                                                    }
+                                                                }}
+                                                                className="text-rose-500 hover:text-rose-700 hover:underline"
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                            <span>|</span>
+                                                            <button
+                                                                onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
+                                                                className="text-teal-600 hover:text-teal-800 hover:underline"
+                                                            >
+                                                                View
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="py-3 px-3 align-top text-slate-700">
-                                            {student.firstName} {student.lastName}
-                                        </td>
-                                        <td className="py-3 px-3 align-top">
-                                            <a href={`mailto:${student.emailAddress}`} className="text-teal-600 hover:underline">{student.emailAddress}</a>
-                                        </td>
-                                        <td className="py-3 px-3 align-top text-slate-700">
-                                            {student.dentalSchoolGateway || "BDS"}
-                                        </td>
-                                        <td className="py-3 px-3 align-top">
-                                            {student.activationStatus}
-                                        </td>
-                                    </tr>
-                                ))
+                                            </td>
+
+                                            {/* Name */}
+                                            <td className="py-3 px-4 align-middle font-medium text-slate-800">
+                                                {student.firstName} {student.lastName}
+                                            </td>
+
+                                            {/* Email */}
+                                            <td className="py-3 px-4 align-middle">
+                                                <a href={`mailto:${student.emailAddress}`} className="text-teal-600 hover:underline">
+                                                    {student.emailAddress}
+                                                </a>
+                                            </td>
+
+                                            {/* Gateway */}
+                                            <td className="py-3 px-4 align-middle text-slate-600">
+                                                {student.dentalSchoolGateway || "BDS"}
+                                            </td>
+
+                                            {/* Status */}
+                                            <td className="py-3 px-4 align-middle">
+                                                {getStatusBadge(student.activationStatus)}
+                                            </td>
+                                        </tr>
+                                    );
+                                })
                             )}
                         </tbody>
                     </table>
                 </div>
-                
-                {/* WordPress Style Pagination */}
-                <div className="bg-slate-50 border-t border-slate-300 py-2 px-3 flex justify-between items-center text-xs text-slate-500">
+
+                {/* Pagination Footer */}
+                <div className="bg-slate-50 border-t border-slate-200 py-2.5 px-4 flex justify-between items-center text-xs text-slate-500">
                     <div>{data?.totalElements || 0} items</div>
                     {totalPages > 1 && (
                         <div className="flex items-center gap-2">
@@ -303,17 +397,17 @@ export function StudentTable() {
                                 size="sm"
                                 disabled={currentPage === 0}
                                 onClick={() => handlePageChange(currentPage - 1)}
-                                className="h-6 px-2 text-xs border-slate-300 rounded-sm"
+                                className="h-7 px-2 text-xs border-slate-300 rounded-sm"
                             >
                                 <ChevronLeft className="h-3 w-3" />
                             </Button>
-                            <span>{currentPage + 1} of {totalPages}</span>
+                            <span className="font-medium text-slate-700">{currentPage + 1} of {totalPages}</span>
                             <Button
                                 variant="outline"
                                 size="sm"
                                 disabled={currentPage >= totalPages - 1}
                                 onClick={() => handlePageChange(currentPage + 1)}
-                                className="h-6 px-2 text-xs border-slate-300 rounded-sm"
+                                className="h-7 px-2 text-xs border-slate-300 rounded-sm"
                             >
                                 <ChevronRight className="h-3 w-3" />
                             </Button>
@@ -321,7 +415,8 @@ export function StudentTable() {
                     )}
                 </div>
             </div>
-            {/* Contextual Modals */}
+
+            {/* Modals */}
             <InviteStudentModal
                 isOpen={isInviteModalOpen}
                 onClose={() => setIsInviteModalOpen(false)}
