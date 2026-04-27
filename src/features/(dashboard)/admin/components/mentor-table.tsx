@@ -151,193 +151,159 @@ export function MentorTable() {
     const currentPage = data?.pageNumber || 0;
 
     return (
-        <div className="space-y-6">
-            {/* ── Professional Mentors Header ── */}
-            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 right-0 h-48 w-48 bg-emerald-50 rounded-bl-full opacity-40 pointer-events-none" />
-                
-                <div className="relative z-10 space-y-3 w-full xl:w-auto">
-                    <div>
-                        <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
-                            Expert Registry
-                        </Badge>
-                        <h2 className="text-3xl md:text-4xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Professional <span className="text-emerald-600">Mentors</span></h2>
-                    </div>
-                    <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
-                        <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest flex items-center gap-2">
-                            <Award className="w-3.5 h-3.5" />
-                            Vetting Command
-                        </p>
-                        <div className="h-1 w-1 rounded-full bg-greys-300" />
-                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
-                            {data?.totalElements || 0} Authorized Experts
-                        </p>
-                    </div>
+        <div className="space-y-4 pb-20 font-sans">
+            {/* WordPress Style Header */}
+            <div className="flex items-center gap-4 mb-2 mt-4">
+                <h1 className="text-2xl font-normal text-slate-800">Mentors</h1>
+                <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-8 px-3 text-xs border-teal-600 text-teal-600 font-medium hover:bg-teal-50"
+                    onClick={() => setIsCreateModalOpen(true)}
+                >
+                    Add New Mentor
+                </Button>
+            </div>
+
+            {/* Sub Nav */}
+            <div className="flex gap-3 text-[13px] text-slate-500 mb-4">
+                <span 
+                    className={cn("cursor-pointer", query.verified === undefined ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
+                    onClick={() => setQuery(prev => ({ ...prev, verified: undefined, page: 0 }))}
+                >
+                    All <span className="text-slate-500 font-normal">({query.verified === undefined ? data?.totalElements || 0 : ''})</span>
+                </span> | 
+                <span 
+                    className={cn("cursor-pointer", query.verified === true ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
+                    onClick={() => setQuery(prev => ({ ...prev, verified: true, page: 0 }))}
+                >
+                    Verified
+                </span> | 
+                <span 
+                    className={cn("cursor-pointer", query.verified === false ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
+                    onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}
+                >
+                    Pending
+                </span>
+            </div>
+
+            {/* Top Controls */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-2 gap-4">
+                <div className="flex items-center gap-2">
+                    <select className="text-[13px] border-slate-400 rounded-sm px-2 py-1 bg-white h-8 w-32 focus:ring-1 focus:ring-teal-500 focus:border-teal-500 text-slate-700">
+                        <option>Bulk actions</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-400 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">Apply</Button>
                 </div>
-
-                <div className="flex flex-col md:flex-row gap-4 w-full xl:w-auto relative z-10">
-                    <div className="relative group flex-1 xl:flex-none">
-                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-emerald-600 transition-colors" />
-                        <Input
-                            placeholder="Find mentor by name, email or HID..."
-                            className="pl-14 pr-8 h-12 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="flex gap-3 shrink-0">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="h-12 px-6 rounded-2xl border-greys-300 bg-white font-bold text-[11px] uppercase tracking-widest gap-2 shadow-sm hover:shadow-md transition-all font-jakarta">
-                                    <Filter className="h-4 w-4 text-greys-400" />
-                                    Filter
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-greys-300 shadow-2xl font-jakarta">
-                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-greys-400 px-3 py-2">Verification</DropdownMenuLabel>
-                                <DropdownMenuSeparator className="bg-greys-50" />
-                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3" onClick={() => setQuery(prev => ({ ...prev, verified: undefined, page: 0 }))}>All Registries</DropdownMenuItem>
-                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3 text-emerald-600" onClick={() => setQuery(prev => ({ ...prev, verified: true, page: 0 }))}>Verified Mentors</DropdownMenuItem>
-                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3 text-amber-600" onClick={() => setQuery(prev => ({ ...prev, verified: false, page: 0 }))}>Pending Vetting</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-
-                        <Button
-                            onClick={() => setIsCreateModalOpen(true)}
-                            className="bg-emerald-600 hover:bg-emerald-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-emerald-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
-                        >
-                            <UserCheck className="h-4 w-4" />
-                            Direct Create
-                        </Button>
-                    </div>
+                <div className="flex items-center gap-2">
+                    <Input 
+                        placeholder="" 
+                        className="h-8 w-48 text-[13px] rounded-sm border-slate-400 focus:border-teal-500"
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
+                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-400 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">Search Users</Button>
                 </div>
             </div>
 
-            {/* Premium Interactive Table */}
-            <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/40 border border-gray-50 overflow-hidden">
-                <div className="overflow-x-auto overflow-y-hidden">
-                    <table className="w-full text-left border-separate border-spacing-0">
+            {/* WordPress Style Table */}
+            <div className="bg-white border border-slate-300 shadow-sm">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-[13px] text-slate-700 border-collapse">
                         <thead>
-                            <tr className="bg-greys-100/50">
-                                <th className="pl-12 pr-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Mentor Identity</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Handled ID</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Expertise</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Vetting</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status</th>
-                                <th className="pr-12 pl-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Context</th>
+                            <tr className="border-b border-slate-300 bg-slate-50 text-slate-800">
+                                <th className="w-10 py-2 px-3 text-center border-r border-slate-200">
+                                    <input type="checkbox" className="rounded-sm border-slate-400" />
+                                </th>
+                                <th className="py-2 px-3 font-semibold">System ID</th>
+                                <th className="py-2 px-3 font-semibold">Name</th>
+                                <th className="py-2 px-3 font-semibold">Gateway</th>
+                                <th className="py-2 px-3 font-semibold">Verified</th>
+                                <th className="py-2 px-3 font-semibold">Status</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-slate-200">
                             {isLoading ? (
-                                <tr>
-                                    <td colSpan={6} className="px-6 py-32 text-center">
-                                        <div className="flex flex-col items-center gap-4">
-                                            <div className="relative">
-                                                <div className="h-16 w-16 rounded-full border-t-2 border-b-2 border-secondary-600 animate-spin" />
-                                                <Award className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-secondary-600 animate-pulse" />
-                                            </div>
-                                            <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Accessing Mentor Registry...</p>
-                                        </div>
-                                    </td>
-                                </tr>
+                                Array.from({ length: 5 }).map((_, i) => (
+                                    <tr key={`skeleton-${i}`} className="animate-pulse bg-white">
+                                        <td className="py-3 px-3 border-r border-slate-100"></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-24 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-40 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-32 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-16 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-16 bg-slate-200 rounded" /></td>
+                                    </tr>
+                                ))
                             ) : mentors.length === 0 ? (
                                 <tr>
-                                    <td colSpan={6} className="px-6 py-32 text-center">
-                                        <div className="flex flex-col items-center gap-3">
-                                            <div className="p-4 bg-gray-50 rounded-full mb-2">
-                                                <Search className="h-8 w-8 text-gray-300" />
-                                            </div>
-                                            <p className="text-gray-900 font-extrabold tracking-tight text-xl">No Mentors Found</p>
-                                            <p className="text-gray-400 font-medium text-sm">Expand your search to find more professionals.</p>
-                                        </div>
+                                    <td colSpan={6} className="py-8 px-4 text-center text-slate-500">
+                                        No users found.
                                     </td>
                                 </tr>
                             ) : (
-                                mentors.map((mentor) => (
+                                mentors.map((mentor, idx) => (
                                     <tr 
-                                        key={mentor.hid} 
-                                        onClick={() => router.push(`/admin/mentors/${encodeURIComponent(mentor.hid)}`)}
-                                        className="group cursor-pointer hover:bg-emerald-50/20 transition-all duration-300 relative"
+                                        key={mentor.hid}
+                                        className={cn(
+                                            "group transition-colors",
+                                            idx % 2 === 0 ? "bg-white" : "bg-[#f9f9f9]"
+                                        )}
                                     >
-                                        <td className="pl-12 pr-6 py-6 font-jakarta">
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-10 w-10 rounded-xl bg-white border border-greys-300 flex items-center justify-center text-emerald-600 font-extrabold text-[11px] shadow-sm group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                                        <td className="w-10 py-3 px-3 text-center align-top border-r border-slate-100">
+                                            <input type="checkbox" className="rounded-sm border-slate-400 mt-1" />
+                                        </td>
+                                        <td className="py-3 px-3 align-top">
+                                            <div className="flex items-start gap-3">
+                                                <div className="h-8 w-8 rounded-sm bg-slate-100 flex flex-shrink-0 items-center justify-center text-slate-600 font-bold text-xs mt-0.5">
                                                     {mentor.mentorName?.[0] || "?"}
                                                 </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-text-heading group-hover:text-emerald-600 transition-colors tracking-tight mb-0.5">
-                                                        {mentor.mentorName}
-                                                    </p>
-                                                    <p className="text-[10px] font-bold text-greys-400 tracking-widest italic uppercase">Member since {new Date(mentor.dateStamped).toLocaleDateString("en-GB")}</p>
+                                                <div className="flex flex-col">
+                                                    <strong className="text-teal-700 text-[14px]">{mentor.hid}</strong>
+                                                    <div className="flex flex-wrap gap-2 text-xs mt-1 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity min-h-[16px]">
+                                                        <button 
+                                                            onClick={() => router.push(`/admin/mentors/${encodeURIComponent(mentor.hid)}`)}
+                                                            className="text-teal-600 hover:text-teal-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <span>|</span>
+                                                        <button 
+                                                            onClick={() => {
+                                                                if (confirm("Are you sure you want to PERMANENTLY delete this mentor? This action cannot be undone.")) {
+                                                                    deleteMentorMutation.mutate(mentor.hid);
+                                                                }
+                                                            }}
+                                                            className="text-rose-600 hover:text-rose-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                        <span>|</span>
+                                                        <button 
+                                                            onClick={() => router.push(`/admin/mentors/${encodeURIComponent(mentor.hid)}`)}
+                                                            className="text-teal-600 hover:text-teal-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            View
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            <div className="flex items-center gap-2">
-                                                <Hash className="h-3 w-3 text-greys-300" />
-                                                <span className="text-[10px] font-bold text-greys-500 font-mono tracking-tighter bg-greys-100 px-2 py-1 rounded-lg border border-greys-300 uppercase">{mentor.hid}</span>
-                                            </div>
+                                        <td className="py-3 px-3 align-top text-slate-700">
+                                            {mentor.mentorName}
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            <Badge variant="outline" className="bg-white text-emerald-600 border-emerald-100 px-3 py-1 font-bold text-[10px] tracking-widest rounded-xl group-hover:bg-emerald-50 transition-colors uppercase">
-                                                {mentor.dentalSchoolGateway || "General Dentistry"}
-                                            </Badge>
+                                        <td className="py-3 px-3 align-top text-slate-700">
+                                            {mentor.dentalSchoolGateway || "General Dentistry"}
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
+                                        <td className="py-3 px-3 align-top">
                                             {mentor.verified ? (
-                                                <div className="flex items-center gap-2 text-emerald-600 bg-emerald-50/50 px-3 py-1.5 rounded-full ring-1 ring-emerald-500/20 w-fit">
-                                                    <ShieldCheck className="h-3.5 w-3.5 shadow-sm" />
-                                                    <span className="text-[10px] font-bold uppercase tracking-widest italic">Verified Expert</span>
-                                                </div>
+                                                <span className="text-emerald-600 font-semibold">Yes</span>
                                             ) : (
-                                                <div className="flex items-center gap-2 text-greys-400 bg-greys-50 px-3 py-1.5 rounded-full ring-1 ring-greys-300 w-fit italic">
-                                                    <div className="h-1.5 w-1.5 rounded-full bg-greys-300 animate-pulse" />
-                                                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Pending Vetting</span>
-                                                </div>
+                                                <span className="text-slate-500">No</span>
                                             )}
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            {getStatusBadge(mentor.activationStatus)}
-                                        </td>
-                                        <td className="pr-12 pl-6 py-6 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-10 w-10 text-gray-400 hover:text-black hover:bg-white rounded-xl transition-all">
-                                                        <MoreVertical className="h-4 w-4" />
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                                    <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Management</DropdownMenuLabel>
-                                                    <DropdownMenuSeparator className="bg-gray-50" />
-                                                    <DropdownMenuItem className="rounded-xl font-bold text-sm gap-2" onClick={() => router.push(`/admin/mentors/${encodeURIComponent(mentor.hid)}`)}>
-                                                        <ArrowRight className="w-4 h-4 text-emerald-500" />
-                                                        Explore Profile
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem className="rounded-xl font-bold text-sm" onClick={() => verifyMentorMutation.mutate({ id: mentor.hid, verify: !mentor.verified })}>
-                                                        {mentor.verified ? "Revoke Verification" : "Authorize Expert"}
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuSeparator className="bg-gray-50" />
-                                                    <DropdownMenuItem 
-                                                        onClick={() => updateStatusMutation.mutate({ id: mentor.hid, status: "INACTIVE" })} 
-                                                        className="rounded-xl font-bold text-sm text-amber-600 focus:bg-amber-50 focus:text-amber-700 gap-2"
-                                                    >
-                                                        <ShieldX className="w-4 h-4" />
-                                                        Terminate Access
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem 
-                                                        onClick={() => {
-                                                            if (confirm("Are you sure you want to PERMANENTLY delete this mentor? This action cannot be undone.")) {
-                                                                deleteMentorMutation.mutate(mentor.hid);
-                                                            }
-                                                        }} 
-                                                        className="rounded-xl font-bold text-sm text-rose-600 focus:bg-rose-50 focus:text-rose-700 gap-2"
-                                                    >
-                                                        <Trash2 className="w-4 h-4" />
-                                                        Delete Account
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
+                                        <td className="py-3 px-3 align-top">
+                                            {mentor.activationStatus}
                                         </td>
                                     </tr>
                                 ))
@@ -346,43 +312,33 @@ export function MentorTable() {
                     </table>
                 </div>
 
-                {/* Intelligent Pagination */}
-                {totalPages > 1 && (
-                    <div className="px-10 py-8 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-6 bg-gray-50/10">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                                    Displaying <span className="text-gray-900">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> Professional Experts
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
+                {/* WordPress Style Pagination */}
+                <div className="bg-slate-50 border-t border-slate-300 py-2 px-3 flex justify-between items-center text-xs text-slate-500">
+                    <div>{data?.totalElements || 0} items</div>
+                    {totalPages > 1 && (
+                        <div className="flex items-center gap-2">
                             <Button
                                 variant="outline"
                                 size="sm"
                                 disabled={currentPage === 0}
                                 onClick={() => handlePageChange(currentPage - 1)}
-                                className="h-10 px-4 rounded-xl border-gray-100 bg-white hover:bg-gray-50 shadow-sm transition-all text-xs font-bold"
+                                className="h-6 px-2 text-xs border-slate-300 rounded-sm"
                             >
-                                <ChevronLeft className="h-4 w-4" />
+                                <ChevronLeft className="h-3 w-3" />
                             </Button>
-                            <div className="flex items-center gap-2 px-6 bg-slate-900 rounded-xl border border-slate-800 shadow-xl">
-                                <span className="text-xs font-extrabold text-white">{currentPage + 1}</span>
-                                <span className="text-[10px] font-extrabold text-white/30 uppercase tracking-widest px-1">/</span>
-                                <span className="text-[10px] font-extrabold text-white/40 uppercase tracking-widest">{totalPages}</span>
-                            </div>
+                            <span>{currentPage + 1} of {totalPages}</span>
                             <Button
                                 variant="outline"
                                 size="sm"
                                 disabled={currentPage >= totalPages - 1}
                                 onClick={() => handlePageChange(currentPage + 1)}
-                                className="h-10 px-4 rounded-xl border-gray-100 bg-white hover:bg-gray-50 shadow-sm transition-all text-xs font-bold"
+                                className="h-6 px-2 text-xs border-slate-300 rounded-sm"
                             >
-                                <ChevronRight className="h-4 w-4" />
+                                <ChevronRight className="h-3 w-3" />
                             </Button>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
             {/* Contextual Modals */}
             <InviteMentorModal

@@ -136,202 +136,155 @@ export function StudentTable() {
     const currentPage = data?.pageNumber || 0;
 
     return (
-        <div className="space-y-6">
-            {/* ── Student Community Header ── */}
-            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-greys-300 flex flex-col xl:flex-row gap-8 justify-between items-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 right-0 h-48 w-48 bg-indigo-50 rounded-bl-full opacity-40 pointer-events-none" />
-                
-                <div className="relative z-10 space-y-3 w-full xl:w-auto">
-                    <div>
-                        <Badge variant="outline" className="bg-indigo-50 text-indigo-600 border-indigo-200 px-4 py-1.5 font-extrabold text-[11px] tracking-[0.3em] rounded-full uppercase mb-3 leading-none inline-flex font-jakarta">
-                            User Directory
-                        </Badge>
-                        <h2 className="text-3xl md:text-4xl font-semibold text-text-heading tracking-tight font-jakarta leading-tight">Student <span className="text-indigo-600">Community</span></h2>
-                    </div>
-                    <div className="flex items-center gap-4 text-greys-500 font-medium font-jakarta">
-                        <p className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                            <Layers className="w-3.5 h-3.5" />
-                            Management Engine
-                        </p>
-                        <div className="h-1 w-1 rounded-full bg-greys-300" />
-                        <p className="text-[10px] font-bold text-greys-400 uppercase tracking-widest">
-                            {data?.totalElements || 0} Registered Members
-                        </p>
-                    </div>
+        <div className="space-y-4 pb-20 font-sans">
+            {/* WordPress Style Header */}
+            <div className="flex items-center gap-4 mb-2 mt-4">
+                <h1 className="text-2xl font-normal text-slate-800">Students</h1>
+                <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-8 px-3 text-xs border-teal-600 text-teal-600 font-medium hover:bg-teal-50"
+                    onClick={() => setIsCreateModalOpen(true)}
+                >
+                    Add New Student
+                </Button>
+            </div>
+
+            {/* Sub Nav */}
+            <div className="flex gap-3 text-[13px] text-slate-500 mb-4">
+                <span 
+                    className={cn("cursor-pointer", !query.platformMemberProfileStatus ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
+                    onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "", page: 0 }))}
+                >
+                    All <span className="text-slate-500 font-normal">({!query.platformMemberProfileStatus ? data?.totalElements || 0 : ''})</span>
+                </span> | 
+                <span 
+                    className={cn("cursor-pointer", query.platformMemberProfileStatus === "ACTIVE" ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
+                    onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "ACTIVE", page: 0 }))}
+                >
+                    Active
+                </span> | 
+                <span 
+                    className={cn("cursor-pointer", query.platformMemberProfileStatus === "INACTIVE" ? "font-semibold text-slate-800" : "text-teal-600 hover:underline")}
+                    onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", page: 0 }))}
+                >
+                    Inactive
+                </span>
+            </div>
+
+            {/* Top Controls */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-2 gap-4">
+                <div className="flex items-center gap-2">
+                    <select className="text-[13px] border-slate-400 rounded-sm px-2 py-1 bg-white h-8 w-32 focus:ring-1 focus:ring-teal-500 focus:border-teal-500 text-slate-700">
+                        <option>Bulk actions</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-400 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">Apply</Button>
                 </div>
-
-                <div className="flex flex-col md:flex-row gap-4 w-full xl:w-auto relative z-10">
-                    <div className="relative group flex-1 xl:flex-none">
-                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-greys-300 group-focus-within:text-indigo-600 transition-colors" />
-                        <Input
-                            placeholder="Find student by name, email or SID..."
-                            className="pl-14 pr-8 h-12 w-full xl:w-[400px] bg-greys-100 border-greys-300 text-text-heading placeholder:text-greys-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600/50 rounded-2xl transition-all font-medium text-sm font-jakarta"
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="flex gap-3 shrink-0">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="h-12 px-6 rounded-2xl border-greys-300 bg-white font-bold text-[11px] uppercase tracking-widest gap-2 shadow-sm hover:shadow-md transition-all font-jakarta">
-                                    <Filter className="h-4 w-4 text-greys-400" />
-                                    Filter
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-greys-300 shadow-2xl font-jakarta">
-                                <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-greys-400 px-3 py-2">Account Status</DropdownMenuLabel>
-                                <DropdownMenuSeparator className="bg-greys-50" />
-                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3" onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "", page: 0 }))}>All Residents</DropdownMenuItem>
-                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3 text-emerald-600" onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "ACTIVE", page: 0 }))}>Active Members</DropdownMenuItem>
-                                <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest p-3 text-rose-600" onClick={() => setQuery(prev => ({ ...prev, platformMemberProfileStatus: "INACTIVE", page: 0 }))}>Inactive Accounts</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-
-                        <Button
-                            onClick={() => setIsCreateModalOpen(true)}
-                            className="bg-indigo-600 hover:bg-indigo-500 text-white h-12 px-8 rounded-2xl shadow-lg shadow-indigo-100 gap-2 font-bold text-[11px] uppercase tracking-widest active:scale-95 transition-all font-jakarta leading-none"
-                        >
-                            <UserPlus className="h-4 w-4" />
-                            Direct Create
-                        </Button>
-                    </div>
+                <div className="flex items-center gap-2">
+                    <Input 
+                        placeholder="" 
+                        className="h-8 w-48 text-[13px] rounded-sm border-slate-400 focus:border-teal-500"
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
+                    <Button variant="outline" className="h-8 px-3 text-xs border-slate-400 text-slate-700 bg-slate-50 hover:bg-white rounded-sm">Search Users</Button>
                 </div>
             </div>
 
-            {/* Premium Interactive Table */}
-            <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/40 border border-gray-50 overflow-hidden">
-                <div className="overflow-x-auto overflow-y-hidden">
-                    <table className="w-full text-left border-separate border-spacing-0">
+            {/* WordPress Style Table */}
+            <div className="bg-white border border-slate-300 shadow-sm">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-[13px] text-slate-700 border-collapse">
                         <thead>
-                            <tr className="bg-greys-100/50">
-                                <th className="pl-12 pr-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Student Identity</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">System ID</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Gateway</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Billing</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Status</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta">Registered</th>
-                                <th className="pr-12 pl-6 py-5 text-[10px] font-bold text-greys-400 uppercase tracking-[0.2em] font-jakarta text-right">Context</th>
+                            <tr className="border-b border-slate-300 bg-slate-50 text-slate-800">
+                                <th className="w-10 py-2 px-3 text-center border-r border-slate-200">
+                                    <input type="checkbox" className="rounded-sm border-slate-400" />
+                                </th>
+                                <th className="py-2 px-3 font-semibold">System ID</th>
+                                <th className="py-2 px-3 font-semibold">Name</th>
+                                <th className="py-2 px-3 font-semibold">Email</th>
+                                <th className="py-2 px-3 font-semibold">Gateway</th>
+                                <th className="py-2 px-3 font-semibold">Status</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-slate-200">
                             {isLoading ? (
-                                <tr>
-                                    <td colSpan={7} className="px-6 py-32 text-center">
-                                        <div className="flex flex-col items-center gap-4">
-                                            <div className="relative">
-                                                <div className="h-16 w-16 rounded-full border-t-2 border-b-2 border-primary-600 animate-spin" />
-                                                <Layers className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-primary-600 animate-pulse" />
-                                            </div>
-                                            <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Syncing Platform Members...</p>
-                                        </div>
-                                    </td>
-                                </tr>
+                                Array.from({ length: 5 }).map((_, i) => (
+                                    <tr key={`skeleton-${i}`} className="animate-pulse bg-white">
+                                        <td className="py-3 px-3 border-r border-slate-100"></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-24 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-40 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-48 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-20 bg-slate-200 rounded" /></td>
+                                        <td className="py-3 px-3"><div className="h-4 w-16 bg-slate-200 rounded" /></td>
+                                    </tr>
+                                ))
                             ) : students.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="px-6 py-32 text-center">
-                                        <div className="flex flex-col items-center gap-3">
-                                            <div className="p-4 bg-gray-50 rounded-full mb-2">
-                                                <Search className="h-8 w-8 text-gray-300" />
-                                            </div>
-                                            <p className="text-gray-900 font-extrabold tracking-tight text-xl">No Members Found</p>
-                                            <p className="text-gray-400 font-medium text-sm">Adjust your filters to see more of the community.</p>
-                                        </div>
+                                    <td colSpan={6} className="py-8 px-4 text-center text-slate-500">
+                                        No users found.
                                     </td>
                                 </tr>
                             ) : (
-                                students.map((student) => (
+                                students.map((student, idx) => (
                                     <tr 
-                                        key={student.sid} 
-                                        onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
-                                        className="group cursor-pointer hover:bg-indigo-50/20 transition-all duration-300 relative"
+                                        key={student.sid}
+                                        className={cn(
+                                            "group transition-colors",
+                                            idx % 2 === 0 ? "bg-white" : "bg-[#f9f9f9]"
+                                        )}
                                     >
-                                        <td className="pl-12 pr-6 py-6">
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-10 w-10 rounded-xl bg-white border border-greys-300 flex items-center justify-center text-indigo-600 font-extrabold text-[11px] shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                                        <td className="w-10 py-3 px-3 text-center align-top border-r border-slate-100">
+                                            <input type="checkbox" className="rounded-sm border-slate-400 mt-1" />
+                                        </td>
+                                        <td className="py-3 px-3 align-top">
+                                            <div className="flex items-start gap-3">
+                                                <div className="h-8 w-8 rounded-sm bg-slate-100 flex flex-shrink-0 items-center justify-center text-slate-600 font-bold text-xs mt-0.5">
                                                     {(student.firstName?.[0] || "")}{(student.lastName?.[0] || "")}
                                                 </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-text-heading group-hover:text-indigo-600 transition-colors tracking-tight mb-0.5 font-jakarta">
-                                                        {student.firstName} {student.lastName}
-                                                    </p>
-                                                    <p className="text-[10px] font-bold text-greys-400 truncate tracking-widest uppercase italic font-jakarta">{student.emailAddress}</p>
+                                                <div className="flex flex-col">
+                                                    <strong className="text-teal-700 text-[14px]">{student.sid}</strong>
+                                                    <div className="flex flex-wrap gap-2 text-xs mt-1 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity min-h-[16px]">
+                                                        <button 
+                                                            onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
+                                                            className="text-teal-600 hover:text-teal-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <span>|</span>
+                                                        <button 
+                                                            onClick={() => {
+                                                                if (confirm("Are you sure you want to PERMANENTLY delete this student? This action cannot be undone.")) {
+                                                                    deleteStudentMutation.mutate(student.sid);
+                                                                }
+                                                            }}
+                                                            className="text-rose-600 hover:text-rose-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                        <span>|</span>
+                                                        <button 
+                                                            onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}
+                                                            className="text-teal-600 hover:text-teal-800 hover:underline focus:opacity-100"
+                                                        >
+                                                            View
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            <div className="flex items-center gap-2">
-                                                <Hash className="h-3 w-3 text-greys-300" />
-                                                <span className="text-[10px] font-bold text-greys-500 font-mono tracking-tighter bg-greys-100 px-2 py-1 rounded-lg border border-greys-300 uppercase">{student.sid}</span>
-                                            </div>
+                                        <td className="py-3 px-3 align-top text-slate-700">
+                                            {student.firstName} {student.lastName}
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            <Badge variant="outline" className="bg-white text-greys-500 border-greys-300 px-3 py-1 font-bold text-[10px] tracking-widest uppercase rounded-xl group-hover:border-indigo-200 group-hover:text-indigo-700 transition-colors">
-                                                {student.dentalSchoolGateway || "BDS"}
-                                            </Badge>
+                                        <td className="py-3 px-3 align-top">
+                                            <a href={`mailto:${student.emailAddress}`} className="text-teal-600 hover:underline">{student.emailAddress}</a>
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            <div className="flex items-center gap-2">
-                                                {student.paymentStatus === "PAID" ? (
-                                                    <div className="flex items-center gap-2 text-indigo-600">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,0.5)]" />
-                                                        <span className="text-[10px] font-bold uppercase tracking-widest italic">Elite Hub</span>
-                                                    </div>
-                                                ) : (
-                                                    <div className="flex items-center gap-2 text-greys-400">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-greys-300" />
-                                                        <span className="text-[10px] font-bold uppercase tracking-widest italic">Community</span>
-                                                    </div>
-                                                )}
-                                            </div>
+                                        <td className="py-3 px-3 align-top text-slate-700">
+                                            {student.dentalSchoolGateway || "BDS"}
                                         </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            {getStatusBadge(student.activationStatus)}
-                                        </td>
-                                        <td className="px-6 py-6 font-jakarta">
-                                            <div className="flex items-center gap-2 text-greys-400">
-                                                <Calendar className="h-3 w-3" />
-                                                <span className="text-[11px] font-bold text-greys-500 tracking-tight">{new Date(student.dateStamped).toLocaleDateString("en-GB")}</span>
-                                            </div>
-                                        </td>
-                                        <td className="pr-12 pl-6 py-6 text-right font-jakarta" onClick={(e) => e.stopPropagation()}>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-10 w-10 text-gray-400 hover:text-black hover:bg-white rounded-xl transition-all">
-                                                        <MoreVertical className="h-4 w-4" />
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-gray-100 shadow-2xl">
-                                                    <DropdownMenuLabel className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 px-3 py-2">Quick Commands</DropdownMenuLabel>
-                                                    <DropdownMenuSeparator className="bg-gray-50" />
-                                                    <DropdownMenuItem className="rounded-xl font-bold text-sm gap-2" onClick={() => router.push(`/admin/students/${encodeURIComponent(student.sid)}`)}>
-                                                        <ArrowRight className="w-4 h-4 text-primary-500" />
-                                                        Go to Profile
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem className="rounded-xl font-bold text-sm" onClick={() => updateStatusMutation.mutate({ id: student.sid, status: "ACTIVE" })}>
-                                                        Verify Activation
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuSeparator className="bg-gray-50" />
-                                                    <DropdownMenuItem 
-                                                        onClick={() => updateStatusMutation.mutate({ id: student.sid, status: "INACTIVE" })} 
-                                                        className="rounded-xl font-bold text-sm text-amber-600 focus:bg-amber-50 focus:text-amber-700 gap-2"
-                                                    >
-                                                        <ShieldX className="w-4 h-4" />
-                                                        Revoke Access
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem 
-                                                        onClick={() => {
-                                                            if (confirm("Are you sure you want to PERMANENTLY delete this student? This action cannot be undone.")) {
-                                                                deleteStudentMutation.mutate(student.sid);
-                                                            }
-                                                        }} 
-                                                        className="rounded-xl font-bold text-sm text-rose-600 focus:bg-rose-50 focus:text-rose-700 gap-2"
-                                                    >
-                                                        <Trash2 className="w-4 h-4" />
-                                                        Delete Account
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
+                                        <td className="py-3 px-3 align-top">
+                                            {student.activationStatus}
                                         </td>
                                     </tr>
                                 ))
@@ -339,45 +292,34 @@ export function StudentTable() {
                         </tbody>
                     </table>
                 </div>
-
-                {/* Intelligent Pagination */}
-                {totalPages > 1 && (
-                    <div className="px-10 py-8 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-6 bg-gray-50/20">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <p className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                                    Displaying <span className="text-gray-900">{(currentPage * query.perPage!) + 1}—{Math.min((currentPage + 1) * query.perPage!, data?.totalElements || 0)}</span> of <span className="text-gray-900">{data?.totalElements}</span> Elite Members
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
+                
+                {/* WordPress Style Pagination */}
+                <div className="bg-slate-50 border-t border-slate-300 py-2 px-3 flex justify-between items-center text-xs text-slate-500">
+                    <div>{data?.totalElements || 0} items</div>
+                    {totalPages > 1 && (
+                        <div className="flex items-center gap-2">
                             <Button
                                 variant="outline"
                                 size="sm"
                                 disabled={currentPage === 0}
                                 onClick={() => handlePageChange(currentPage - 1)}
-                                className="h-10 px-4 rounded-xl border-gray-100 bg-white hover:bg-gray-50 shadow-sm transition-all text-xs font-bold gap-2"
+                                className="h-6 px-2 text-xs border-slate-300 rounded-sm"
                             >
-                                <ChevronLeft className="h-4 w-4" />
-                                Previous
+                                <ChevronLeft className="h-3 w-3" />
                             </Button>
-                            <div className="flex items-center gap-2 px-4 bg-white rounded-xl border border-gray-100 shadow-sm">
-                                <span className="text-xs font-extrabold text-primary-600">{currentPage + 1}</span>
-                                <span className="text-[10px] font-extrabold text-gray-300 uppercase tracking-widest">of {totalPages}</span>
-                            </div>
+                            <span>{currentPage + 1} of {totalPages}</span>
                             <Button
                                 variant="outline"
                                 size="sm"
                                 disabled={currentPage >= totalPages - 1}
                                 onClick={() => handlePageChange(currentPage + 1)}
-                                className="h-10 px-4 rounded-xl border-gray-100 bg-white hover:bg-gray-50 shadow-sm transition-all text-xs font-bold gap-2"
+                                className="h-6 px-2 text-xs border-slate-300 rounded-sm"
                             >
-                                Next
-                                <ChevronRight className="h-4 w-4" />
+                                <ChevronRight className="h-3 w-3" />
                             </Button>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
             {/* Contextual Modals */}
             <InviteStudentModal
